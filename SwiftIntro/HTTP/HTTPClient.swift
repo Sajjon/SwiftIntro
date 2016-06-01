@@ -7,9 +7,20 @@
 //
 
 import Foundation
+import Alamofire
 
 typealias Params = [String: AnyObject]
 
-protocol HTTPClient {
+protocol HTTPClientProtocol {
     func get(path: String, parameters: Params?, done: Done)
+}
+
+class HTTPClient {
+
+}
+
+extension HTTPClient: HTTPClientProtocol {
+    func get(path: String, parameters: Params?, done: Done) {
+//        Alamo
+    }
 }
