@@ -1,0 +1,27 @@
+disabled_rules:
+  - trailing_newline
+  - trailing_whitespace
+  - todo
+included:
+  - SwiftIntro
+excluded:
+  - Carthage
+  - Pods
+  - SwiftIntro/Enums/Generated
+line_length: 200
+type_name:
+  min_length: 4
+  max_length:
+    warning: 80
+    error: 120
+type_body_length:
+  warning: 300
+  error: 400
+
+function_parameter_count:
+  warning: 3
+  error: 4
+
+function_body_length:
+  warning: 10
+  error: 20
