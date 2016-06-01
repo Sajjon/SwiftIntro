@@ -10,6 +10,10 @@ import UIKit
 
 class MemoryDataSourceAndDelegate: NSObject {
     var models: [CardModel]?
+
+    init(_ models: [CardModel]) {
+        self.models = models
+    }
 }
 
 private extension MemoryDataSourceAndDelegate {

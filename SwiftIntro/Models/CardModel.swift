@@ -8,10 +8,26 @@
 
 import Foundation
 
-protocol Model {}
+protocol Model: ResponseCollectionSerializable, ResponseObjectSerializable {}
 
 struct CardModel {
-    var imageUrl: String
+    var imageUrl: String!
 }
 
-extension CardModel: Model {}
+extension CardModel: Model {
+    init?(response: NSHTTPURLResponse, representation: AnyObject) {
+        //swiftlint:disable force_cast
+        self.imageUrl = representation.valueForKeyPath("name") as! String
+    }
+
+    static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [CardModel] {
+        guard let representation = representation as? [[String: AnyObject]] else { return [] }
+        var cardModels: [CardModel] = []
+        for cardRepresentation in representation {
+            guard let card = CardModel(response: response, representation: cardRepresentation) else { continue }
+            cardModels.append(card)
+        }
+
+        return cardModels
+    }
+}
