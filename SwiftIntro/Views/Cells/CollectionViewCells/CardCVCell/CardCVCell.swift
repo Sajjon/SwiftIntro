@@ -9,7 +9,8 @@
 import UIKit
 
 protocol CellProtocol {
-    var cellIdentifier: String {get}
+    static var cellIdentifier: String {get}
+    func updateWithModel(model: Model)
 }
 
 class CardCVCell: UICollectionViewCell {
@@ -17,7 +18,11 @@ class CardCVCell: UICollectionViewCell {
 }
 
 extension CardCVCell: CellProtocol {
-    var cellIdentifier: String {
+    static var cellIdentifier: String {
         return "Do this"
+    }
+
+    func updateWithModel(model: Model) {
+        print("implement me")
     }
 }
