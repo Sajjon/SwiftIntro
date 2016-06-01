@@ -1,0 +1,6 @@
+framework module Pods_SwiftIntro {
+  umbrella header "Pods-SwiftIntro-umbrella.h"
+
+  export *
+  module * { export * }
+}
