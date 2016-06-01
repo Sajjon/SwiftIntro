@@ -12,6 +12,10 @@
 		7B21A5B41CFF5CAC002E5EE5 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5B31CFF5CAC002E5EE5 /* APIClient.swift */; };
 		7B21A5B61CFF5DAE002E5EE5 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5B51CFF5DAE002E5EE5 /* HTTPClient.swift */; };
 		7B21A5B81CFF5E7B002E5EE5 /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5B71CFF5E7B002E5EE5 /* GameVC.swift */; };
+		7B21A5BB1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5BA1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift */; };
+		7B21A5C01CFF636D002E5EE5 /* CardCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B21A5BF1CFF636D002E5EE5 /* CardCVCell.xib */; };
+		7B21A5C21CFF639D002E5EE5 /* CardCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5C11CFF639D002E5EE5 /* CardCVCell.swift */; };
+		7B21A5C51CFF6586002E5EE5 /* NSObject_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5C41CFF6586002E5EE5 /* NSObject_Extension.swift */; };
 		7B75422E1CFF3F9E009B2629 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B75422C1CFF3F9E009B2629 /* Main.storyboard */; };
 		7B7542301CFF3F9E009B2629 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B75422F1CFF3F9E009B2629 /* Assets.xcassets */; };
 		7B7542331CFF3F9E009B2629 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B7542311CFF3F9E009B2629 /* LaunchScreen.storyboard */; };
@@ -23,6 +27,10 @@
 		7B21A5B31CFF5CAC002E5EE5 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		7B21A5B51CFF5DAE002E5EE5 /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		7B21A5B71CFF5E7B002E5EE5 /* GameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
+		7B21A5BA1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryDataSourceAndDelegate.swift; sourceTree = "<group>"; };
+		7B21A5BF1CFF636D002E5EE5 /* CardCVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardCVCell.xib; sourceTree = "<group>"; };
+		7B21A5C11CFF639D002E5EE5 /* CardCVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCVCell.swift; sourceTree = "<group>"; };
+		7B21A5C41CFF6586002E5EE5 /* NSObject_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSObject_Extension.swift; sourceTree = "<group>"; };
 		7B7542231CFF3F9E009B2629 /* SwiftIntro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftIntro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B75422D1CFF3F9E009B2629 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7B75422F1CFF3F9E009B2629 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -67,6 +75,7 @@
 		7B21A5AF1CFF5C17002E5EE5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7B21A5BC1CFF62FE002E5EE5 /* Cells */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -78,6 +87,47 @@
 				7B21A5B51CFF5DAE002E5EE5 /* HTTPClient.swift */,
 			);
 			path = HTTP;
+			sourceTree = "<group>";
+		};
+		7B21A5B91CFF6238002E5EE5 /* DataSourceAndDelegates */ = {
+			isa = PBXGroup;
+			children = (
+				7B21A5BA1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift */,
+			);
+			path = DataSourceAndDelegates;
+			sourceTree = "<group>";
+		};
+		7B21A5BC1CFF62FE002E5EE5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				7B21A5BD1CFF62FE002E5EE5 /* CollectionViewCells */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		7B21A5BD1CFF62FE002E5EE5 /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				7B21A5BE1CFF62FE002E5EE5 /* CardCVCell */,
+			);
+			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		7B21A5BE1CFF62FE002E5EE5 /* CardCVCell */ = {
+			isa = PBXGroup;
+			children = (
+				7B21A5BF1CFF636D002E5EE5 /* CardCVCell.xib */,
+				7B21A5C11CFF639D002E5EE5 /* CardCVCell.swift */,
+			);
+			path = CardCVCell;
+			sourceTree = "<group>";
+		};
+		7B21A5C31CFF6573002E5EE5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7B21A5C41CFF6586002E5EE5 /* NSObject_Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		7B75421A1CFF3F9E009B2629 = {
@@ -100,6 +150,8 @@
 			isa = PBXGroup;
 			children = (
 				7B75422F1CFF3F9E009B2629 /* Assets.xcassets */,
+				7B21A5B91CFF6238002E5EE5 /* DataSourceAndDelegates */,
+				7B21A5C31CFF6573002E5EE5 /* Extensions */,
 				7B21A5B21CFF5C8E002E5EE5 /* HTTP */,
 				7B7542311CFF3F9E009B2629 /* LaunchScreen.storyboard */,
 				7B75422C1CFF3F9E009B2629 /* Main.storyboard */,
@@ -170,6 +222,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B21A5C01CFF636D002E5EE5 /* CardCVCell.xib in Resources */,
 				7B21A5B11CFF5C17002E5EE5 /* Info.plist in Resources */,
 				7B7542331CFF3F9E009B2629 /* LaunchScreen.storyboard in Resources */,
 				7B7542301CFF3F9E009B2629 /* Assets.xcassets in Resources */,
@@ -202,7 +255,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B21A5B01CFF5C17002E5EE5 /* AppDelegate.swift in Sources */,
+				7B21A5BB1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift in Sources */,
+				7B21A5C21CFF639D002E5EE5 /* CardCVCell.swift in Sources */,
 				7B21A5B41CFF5CAC002E5EE5 /* APIClient.swift in Sources */,
+				7B21A5C51CFF6586002E5EE5 /* NSObject_Extension.swift in Sources */,
 				7B21A5B81CFF5E7B002E5EE5 /* GameVC.swift in Sources */,
 				7B21A5B61CFF5DAE002E5EE5 /* HTTPClient.swift in Sources */,
 			);
