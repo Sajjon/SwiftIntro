@@ -22,6 +22,7 @@
 		7BAD45931CFF6F3A00C7D7EF /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45921CFF6F3900C7D7EF /* Router.swift */; };
 		7BAD45951CFF70FA00C7D7EF /* Request_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */; };
 		7BAD45971CFF765B00C7D7EF /* UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45961CFF765B00C7D7EF /* UIViewController_Extension.swift */; };
+		7BAD45991CFF8D6000C7D7EF /* MediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45981CFF8D6000C7D7EF /* MediaModel.swift */; };
 		97DEEB47780C576B8BBAC42C /* Pods_SwiftIntro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243E0AB5281AC3E2E446E4FF /* Pods_SwiftIntro.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		7BAD45921CFF6F3900C7D7EF /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request_Extension.swift; sourceTree = "<group>"; };
 		7BAD45961CFF765B00C7D7EF /* UIViewController_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController_Extension.swift; sourceTree = "<group>"; };
+		7BAD45981CFF8D6000C7D7EF /* MediaModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaModel.swift; sourceTree = "<group>"; };
 		FB6C211E60AF751181C395A1 /* Pods-SwiftIntro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftIntro.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftIntro/Pods-SwiftIntro.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				7B21A5C61CFF67DA002E5EE5 /* CardModel.swift */,
+				7BAD45981CFF8D6000C7D7EF /* MediaModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 			files = (
 				7B21A5B01CFF5C17002E5EE5 /* AppDelegate.swift in Sources */,
 				7B21A5BB1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift in Sources */,
+				7BAD45991CFF8D6000C7D7EF /* MediaModel.swift in Sources */,
 				7B21A5C21CFF639D002E5EE5 /* CardCVCell.swift in Sources */,
 				7B21A5B41CFF5CAC002E5EE5 /* APIClient.swift in Sources */,
 				7BAD45931CFF6F3A00C7D7EF /* Router.swift in Sources */,

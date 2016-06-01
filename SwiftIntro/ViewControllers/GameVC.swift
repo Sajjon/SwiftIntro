@@ -21,18 +21,24 @@ class GameVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
         fetchData()
     }
 }
 
 private extension GameVC {
+    private func setupViews() {
+        collectionView.registerNib(CardCVCell.nib, forCellWithReuseIdentifier: CardCVCell.cellIdentifier)
+    }
+
     private func fetchData() {
         showLoader()
         APIClient.sharedInstance.getPhotos {
-            (result: Result<CardModel>) in
-            guard let models = result.models else { return }
+            (result: Result<MediaModel>) in
             self.hideLoader()
-            self.dataSourceAndDelegate = MemoryDataSourceAndDelegate(models)
+            guard let model = result.model else { return }
+            let cards = model.cardModels
+            self.dataSourceAndDelegate = MemoryDataSourceAndDelegate(cards)
         }
     }
 }

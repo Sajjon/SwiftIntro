@@ -49,3 +49,9 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
         cell.updateWithModel(model)
     }
 }
+
+extension MemoryDataSourceAndDelegate: UICollectionViewDelegateFlowLayout {
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CardCVCell.size
+    }
+}

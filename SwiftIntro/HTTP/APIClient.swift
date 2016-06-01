@@ -22,6 +22,6 @@ class APIClient {
 extension APIClient: APIClientProtocol {
 
     func getPhotos<T: Model>(done: (Result<T>) -> Void) {
-        httpClient.collectionRequest(.Photos, done: done)
+        httpClient.request(.Photos, done: done)
     }
 }
