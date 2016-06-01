@@ -31,7 +31,7 @@ extension CardCVCell: CellProtocol {
     }
 
     static var size: CGSize {
-        return CGSizeMake(200, 200)
+        return CGSizeMake(120, 120)
     }
 
     func updateWithModel(model: Model) {
