@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7B21A5B01CFF5C17002E5EE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5AC1CFF5C17002E5EE5 /* AppDelegate.swift */; };
-		7B21A5B11CFF5C17002E5EE5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B21A5AD1CFF5C17002E5EE5 /* Info.plist */; };
 		7B21A5B41CFF5CAC002E5EE5 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5B31CFF5CAC002E5EE5 /* APIClient.swift */; };
 		7B21A5B61CFF5DAE002E5EE5 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5B51CFF5DAE002E5EE5 /* HTTPClient.swift */; };
 		7B21A5B81CFF5E7B002E5EE5 /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5B71CFF5E7B002E5EE5 /* GameVC.swift */; };
@@ -223,7 +222,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B21A5C01CFF636D002E5EE5 /* CardCVCell.xib in Resources */,
-				7B21A5B11CFF5C17002E5EE5 /* Info.plist in Resources */,
 				7B7542331CFF3F9E009B2629 /* LaunchScreen.storyboard in Resources */,
 				7B7542301CFF3F9E009B2629 /* Assets.xcassets in Resources */,
 				7B75422E1CFF3F9E009B2629 /* Main.storyboard in Resources */,
