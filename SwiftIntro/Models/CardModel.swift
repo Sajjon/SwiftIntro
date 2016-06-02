@@ -7,18 +7,34 @@
 //
 
 import Foundation
+import Alamofire
 
 typealias JSON = [String: AnyObject]
 
 protocol Model: ResponseCollectionSerializable, ResponseObjectSerializable {}
 
+typealias Closure = () -> Void
+func onMain(closure: Closure) {
+    dispatch_async(dispatch_get_main_queue(), {
+        () -> Void in
+        closure()
+    })
+}
+
 final class CardModel {
-    let imageUrl: NSURL
+    var image: UIImage!
 
     var flipped: Bool = false
 
     init(imageUrl: NSURL) {
-        self.imageUrl = imageUrl
+        Alamofire.request(.GET, imageUrl).responseImage {
+            response in
+            if let image = response.result.value {
+                onMain {
+                    self.image = image
+                }
+            }
+        }
     }
 }
 

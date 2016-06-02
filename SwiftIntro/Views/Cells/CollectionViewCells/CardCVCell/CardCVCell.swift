@@ -49,6 +49,7 @@ extension CardCVCell: CellProtocol {
 
     func updateWithModel(model: Model) {
         guard let card = model as? CardModel else { return }
-        cardFrontImageView.af_setImageWithURL(card.imageUrl)
+        guard let image = card.image else { return }
+        cardFrontImageView.image = image
     }
 }
