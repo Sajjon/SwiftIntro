@@ -14,20 +14,28 @@
                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Do6-7w-Drs">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Do6-7w-Drs" userLabel="Card Front Image View">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kld-Su-gHh" userLabel="Card Back Image View">
                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
+                <constraint firstItem="kld-Su-gHh" firstAttribute="centerX" secondItem="Do6-7w-Drs" secondAttribute="centerX" id="50r-xe-giV"/>
+                <constraint firstItem="kld-Su-gHh" firstAttribute="centerY" secondItem="Do6-7w-Drs" secondAttribute="centerY" id="M3b-Tr-qoJ"/>
+                <constraint firstItem="kld-Su-gHh" firstAttribute="height" secondItem="Do6-7w-Drs" secondAttribute="height" id="M6t-xF-2Cr"/>
                 <constraint firstItem="Do6-7w-Drs" firstAttribute="top" secondItem="wX1-yD-fYC" secondAttribute="top" id="VNE-Nw-Odh"/>
                 <constraint firstItem="Do6-7w-Drs" firstAttribute="leading" secondItem="wX1-yD-fYC" secondAttribute="leading" id="k7y-bt-b1O"/>
+                <constraint firstItem="kld-Su-gHh" firstAttribute="width" secondItem="Do6-7w-Drs" secondAttribute="width" id="l0u-3h-upK"/>
                 <constraint firstAttribute="trailing" secondItem="Do6-7w-Drs" secondAttribute="trailing" id="sLW-Za-DpT"/>
                 <constraint firstAttribute="bottom" secondItem="Do6-7w-Drs" secondAttribute="bottom" id="yQi-lj-bcS"/>
             </constraints>
             <connections>
-                <outlet property="imageView" destination="Do6-7w-Drs" id="Tea-7h-Ef0"/>
+                <outlet property="cardBackImageView" destination="kld-Su-gHh" id="UcH-GL-M6n"/>
+                <outlet property="cardFrontImageView" destination="Do6-7w-Drs" id="SnJ-tm-I6p"/>
             </connections>
             <point key="canvasLocation" x="427" y="309"/>
         </collectionViewCell>

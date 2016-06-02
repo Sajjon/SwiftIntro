@@ -12,12 +12,29 @@ import AlamofireImage
 protocol CellProtocol {
     static var cellIdentifier: String {get}
     static var nib: UINib {get}
-    static var size: CGSize {get}
     func updateWithModel(model: Model)
 }
 
 class CardCVCell: UICollectionViewCell {
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var cardFrontImageView: UIImageView!
+    @IBOutlet weak var cardBackImageView: UIImageView!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        cardBackImageView.backgroundColor = UIColor.greenColor()
+    }
+
+    func flipCard(cardModel: CardModel) {
+        let flipped = cardModel.flipped
+        let fromView = flipped ? cardBackImageView : cardFrontImageView
+        let toView = flipped ? cardFrontImageView : cardBackImageView
+        let flipDirection: UIViewAnimationOptions = flipped ? .TransitionFlipFromRight : .TransitionFlipFromLeft
+        let options: UIViewAnimationOptions = [flipDirection, .ShowHideTransitionViews]
+        UIView.transitionFromView(fromView, toView: toView, duration: 0.6, options: options) {
+            finished in
+            cardModel.flipped = !flipped
+        }
+    }
 }
 
 extension CardCVCell: CellProtocol {
@@ -30,12 +47,8 @@ extension CardCVCell: CellProtocol {
         return className
     }
 
-    static var size: CGSize {
-        return CGSizeMake(120, 120)
-    }
-
     func updateWithModel(model: Model) {
         guard let card = model as? CardModel else { return }
-        imageView.af_setImageWithURL(card.imageUrl)
+        cardFrontImageView.af_setImageWithURL(card.imageUrl)
     }
 }

@@ -40,7 +40,8 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDataSource {
 extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         guard let model = modelForIndexPath(indexPath) else { return }
-        print("Do stuff")
+        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CardCVCell else { return }
+        cell.flipCard(model)
     }
 
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
@@ -52,6 +53,10 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
 
 extension MemoryDataSourceAndDelegate: UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CardCVCell.size
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return CGSizeZero }
+        let margin = flowLayout.minimumInteritemSpacing
+        let side: CGFloat = collectionView.frame.width/2 - margin
+        let size = CGSizeMake(side, side)
+        return size
     }
 }

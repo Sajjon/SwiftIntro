@@ -44,7 +44,6 @@ extension HTTPClient: HTTPClientProtocol {
         }
     }
 
-
     func collectionRequest<T: Model>(route: Router, done: (Result<T>) -> Void) {
         Alamofire.request(route)
             .validate()
