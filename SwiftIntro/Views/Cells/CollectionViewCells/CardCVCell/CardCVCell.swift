@@ -59,5 +59,9 @@ extension CardCVCell: CellProtocol {
         guard let card = model as? CardModel else { return }
         guard let cachedImage = ImagePrefetcher.sharedInstance.imageFromCache(card.imageUrl) else { return }
         cardFrontImageView.image = cachedImage
+        if card.flipped {
+            cardFrontImageView.hidden = false
+            cardBackImageView.hidden = true
+        }
     }
 }
