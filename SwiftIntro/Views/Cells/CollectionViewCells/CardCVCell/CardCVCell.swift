@@ -7,17 +7,35 @@
 //
 
 import UIKit
+import AlamofireImage
 
 protocol CellProtocol {
-    var cellIdentifier: String {get}
+    static var cellIdentifier: String {get}
+    static var nib: UINib {get}
+    static var size: CGSize {get}
+    func updateWithModel(model: Model)
 }
 
 class CardCVCell: UICollectionViewCell {
-
+    @IBOutlet weak var imageView: UIImageView!
 }
 
 extension CardCVCell: CellProtocol {
-    var cellIdentifier: String {
-        return "Do this"
+
+    static var nib: UINib {
+        return UINib(nibName: className, bundle: nil)
+    }
+
+    static var cellIdentifier: String {
+        return className
+    }
+
+    static var size: CGSize {
+        return CGSizeMake(120, 120)
+    }
+
+    func updateWithModel(model: Model) {
+        guard let card = model as? CardModel else { return }
+        imageView.af_setImageWithURL(card.imageUrl)
     }
 }

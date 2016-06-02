@@ -8,8 +8,20 @@
 
 import Foundation
 
-typealias Done = (AnyObject) -> Void
-
 protocol APIClientProtocol {
-    func getPhotos(done: Done)
+    func getPhotos<T: Model>(done: (Result<T>) -> Void)
+}
+
+class APIClient {
+
+    static let sharedInstance: APIClientProtocol = APIClient()
+
+    private let httpClient: HTTPClientProtocol = HTTPClient.sharedInstance
+}
+
+extension APIClient: APIClientProtocol {
+
+    func getPhotos<T: Model>(done: (Result<T>) -> Void) {
+        httpClient.request(.Photos, done: done)
+    }
 }
