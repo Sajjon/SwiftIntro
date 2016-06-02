@@ -19,6 +19,13 @@ class CardCVCell: UICollectionViewCell {
     @IBOutlet weak var cardFrontImageView: UIImageView!
     @IBOutlet weak var cardBackImageView: UIImageView!
 
+    private var flipped: Bool = false {
+        didSet {
+            cardFrontImageView.visible = flipped
+            cardBackImageView.hidden = flipped
+        }
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         cardBackImageView.backgroundColor = UIColor.greenColor()
@@ -27,8 +34,7 @@ class CardCVCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         cardFrontImageView.image = nil
-        cardFrontImageView.hidden = true
-        cardBackImageView.hidden = false
+        flipped = false
     }
 
     func flipCard(cardModel: CardModel) {
@@ -59,9 +65,6 @@ extension CardCVCell: CellProtocol {
         guard let card = model as? CardModel else { return }
         guard let cachedImage = ImagePrefetcher.sharedInstance.imageFromCache(card.imageUrl) else { return }
         cardFrontImageView.image = cachedImage
-        if card.flipped {
-            cardFrontImageView.hidden = false
-            cardBackImageView.hidden = true
-        }
+        flipped = card.flipped
     }
 }
