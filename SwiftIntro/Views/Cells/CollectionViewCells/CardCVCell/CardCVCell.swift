@@ -24,10 +24,17 @@ class CardCVCell: UICollectionViewCell {
         cardBackImageView.backgroundColor = UIColor.greenColor()
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cardFrontImageView.image = nil
+        cardFrontImageView.hidden = true
+        cardBackImageView.hidden = false
+    }
+
     func flipCard(cardModel: CardModel) {
         let flipped = cardModel.flipped
-        let fromView = flipped ? cardBackImageView : cardFrontImageView
-        let toView = flipped ? cardFrontImageView : cardBackImageView
+        let fromView = flipped ? cardFrontImageView : cardBackImageView
+        let toView = flipped ? cardBackImageView : cardFrontImageView
         let flipDirection: UIViewAnimationOptions = flipped ? .TransitionFlipFromRight : .TransitionFlipFromLeft
         let options: UIViewAnimationOptions = [flipDirection, .ShowHideTransitionViews]
         UIView.transitionFromView(fromView, toView: toView, duration: 0.6, options: options) {
@@ -36,6 +43,7 @@ class CardCVCell: UICollectionViewCell {
         }
     }
 }
+
 
 extension CardCVCell: CellProtocol {
 
@@ -49,7 +57,7 @@ extension CardCVCell: CellProtocol {
 
     func updateWithModel(model: Model) {
         guard let card = model as? CardModel else { return }
-        guard let image = card.image else { return }
-        cardFrontImageView.image = image
+        guard let cachedImage = ImagePrefetcher.sharedInstance.imageFromCache(card.imageUrl) else { return }
+        cardFrontImageView.image = cachedImage
     }
 }

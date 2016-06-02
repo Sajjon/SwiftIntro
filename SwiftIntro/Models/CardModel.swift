@@ -18,19 +18,12 @@ func onMain(closure: Closure) {
 }
 
 final class CardModel {
-    var image: UIImage!
+    let imageUrl: NSURL
 
     var flipped: Bool = false
 
     init(imageUrl: NSURL) {
-        Alamofire.request(.GET, imageUrl).responseImage {
-            response in
-            if let image = response.result.value {
-                onMain {
-                    self.image = image
-                }
-            }
-        }
+        self.imageUrl = imageUrl
     }
 }
 

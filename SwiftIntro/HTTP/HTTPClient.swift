@@ -12,7 +12,6 @@ import Alamofire
 protocol HTTPClientProtocol {
     func request<T: Model>(route: Router, done: (Result<T>) -> Void)
     func collectionRequest<T: Model>(route: Router, done: (Result<T>) -> Void)
-    func image(url: NSURL, done: ImageDone)
 }
 
 class HTTPClient {
@@ -43,13 +42,6 @@ extension HTTPClient: HTTPClientProtocol {
                 done(result)
         }
     }
-
-    func image(url: NSURL, done: ImageDone) {
-        Alamofire.request(.GET, url).responseImage {
-            response in
-            done(response.result.value)
-        }
-    }
 }
 
 struct Result<T: Model> {
@@ -66,4 +58,3 @@ struct Result<T: Model> {
 
 typealias JSON = [String: AnyObject]
 protocol Model: ResponseCollectionSerializable, ResponseObjectSerializable {}
-typealias ImageDone = (UIImage?) -> Void

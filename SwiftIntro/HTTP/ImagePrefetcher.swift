@@ -12,6 +12,7 @@ import AlamofireImage
 
 protocol ImagePrefetcherProtocol {
     func prefetchImages(urls: [URLRequestConvertible], done: Closure)
+    func imageFromCache(url: NSURL) -> UIImage?
 }
 
 class ImagePrefetcher {
@@ -22,24 +23,37 @@ class ImagePrefetcher {
     init() {
         self.imageDownloader = ImageDownloader(
             configuration: ImageDownloader.defaultURLSessionConfiguration(),
-            downloadPrioritization: .FIFO,
-            maximumActiveDownloads: 4,
-            imageCache: AutoPurgingImageCache()
+            downloadPrioritization: .FIFO
         )
+    }
+
+    var imageCache: ImageRequestCache? {
+        return imageDownloader.imageCache
     }
 }
 
 extension ImagePrefetcher: ImagePrefetcherProtocol {
 
+
+    func imageFromCache(url: NSURL) -> UIImage? {
+        guard let cache = imageCache else { return nil }
+        let imageFromCache = cache.imageForRequest(NSURLRequest(URL: url), withAdditionalIdentifier: nil)
+        return imageFromCache
+    }
+
     func prefetchImages(urls: [URLRequestConvertible], done: Closure) {
 
-        let queue = dispatch_queue_create("my_serial_background_thread", DISPATCH_QUEUE_SERIAL)
-
-        imageDownloader.downloadImages(URLRequests: urls, filter: nil, progress: { (bytesRead, totalBytesRead, totalExpectedBytesToRead) in
-            print("Size: \(totalExpectedBytesToRead), read: \(totalBytesRead)")
-        }, progressQueue: queue) {
+        imageDownloader.downloadImages(URLRequests: urls) {
             response in
             done()
         }
+    }
+}
+
+struct URL: URLRequestConvertible {
+    let url: NSURL
+    //swiftlint:disable variable_name
+    var URLRequest: NSMutableURLRequest {
+        return NSMutableURLRequest(URL: url)
     }
 }
