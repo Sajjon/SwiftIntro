@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -20,42 +21,40 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cJU-4Y-KWZ" userLabel="Label View">
-                                <rect key="frame" x="10" y="30" width="580" height="120"/>
+                                <rect key="frame" x="10" y="20" width="580" height="120"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="3np-VA-nKx">
-                                        <rect key="frame" x="0.0" y="0.0" width="580" height="120"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5X-rW-4un">
-                                                <rect key="frame" x="0.0" y="40" width="280" height="41"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="41" id="Xq7-Vh-Gtg"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="32"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0 p" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qd8-Jy-kHY">
-                                                <rect key="frame" x="300" y="43" width="280" height="36"/>
-                                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="28"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5X-rW-4un">
+                                        <rect key="frame" x="185" y="40" width="105" height="41"/>
+                                        <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="32"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 p" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qd8-Jy-kHY">
+                                        <rect key="frame" x="310" y="42" width="50.5" height="36"/>
+                                        <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="28"/>
+                                        <color key="textColor" red="0.46650361608223623" green="0.41025423694578694" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="U5X-rW-4un" firstAttribute="leading" secondItem="Qd8-Jy-kHY" secondAttribute="trailing" constant="20" id="CFL-wU-pPh"/>
                                     <constraint firstAttribute="height" constant="120" id="KfS-yC-FF8"/>
-                                    <constraint firstItem="3np-VA-nKx" firstAttribute="top" secondItem="cJU-4Y-KWZ" secondAttribute="top" id="W3x-JU-UWa"/>
-                                    <constraint firstItem="3np-VA-nKx" firstAttribute="centerX" secondItem="cJU-4Y-KWZ" secondAttribute="centerX" id="ZXF-zh-8wa"/>
-                                    <constraint firstAttribute="trailing" secondItem="3np-VA-nKx" secondAttribute="trailing" id="fip-1O-yJR"/>
-                                    <constraint firstItem="3np-VA-nKx" firstAttribute="centerY" secondItem="cJU-4Y-KWZ" secondAttribute="centerY" id="hXX-WB-fpx"/>
-                                    <constraint firstItem="3np-VA-nKx" firstAttribute="leading" secondItem="cJU-4Y-KWZ" secondAttribute="leading" id="ixX-T9-Ko9"/>
-                                    <constraint firstAttribute="bottom" secondItem="3np-VA-nKx" secondAttribute="bottom" id="svT-Au-gx4"/>
+                                    <constraint firstItem="Qd8-Jy-kHY" firstAttribute="height" secondItem="U5X-rW-4un" secondAttribute="height" id="aaV-9Y-KBH"/>
+                                    <constraint firstAttribute="centerX" secondItem="U5X-rW-4un" secondAttribute="trailing" id="gz1-nB-EWH"/>
+                                    <constraint firstItem="Qd8-Jy-kHY" firstAttribute="centerY" secondItem="cJU-4Y-KWZ" secondAttribute="centerY" id="pBT-dX-D9F"/>
+                                    <constraint firstItem="U5X-rW-4un" firstAttribute="centerY" secondItem="cJU-4Y-KWZ" secondAttribute="centerY" id="q1o-3a-uhs"/>
+                                    <constraint firstItem="Qd8-Jy-kHY" firstAttribute="leading" secondItem="U5X-rW-4un" secondAttribute="trailing" constant="20" id="vOH-2o-THF"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="aaV-9Y-KBH"/>
+                                        <exclude reference="CFL-wU-pPh"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GRS-IT-4p7">
-                                <rect key="frame" x="10" y="160" width="580" height="430"/>
+                                <rect key="frame" x="10" y="150" width="580" height="440"/>
                                 <color key="backgroundColor" red="0.60000002384185791" green="0.40000000596046448" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="GRS-IT-4p7" secondAttribute="height" multiplier="1:1" id="GoG-hz-mzG"/>
@@ -74,7 +73,7 @@
                                 </variation>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="cJU-4Y-KWZ" firstAttribute="width" secondItem="AKw-RB-s4c" secondAttribute="width" id="0r1-Qw-2bf"/>
                             <constraint firstItem="cJU-4Y-KWZ" firstAttribute="top" secondItem="xqT-y1-FEE" secondAttribute="bottom" constant="10" id="9pM-NR-KBM"/>
@@ -83,6 +82,7 @@
                             <constraint firstAttribute="trailing" secondItem="cJU-4Y-KWZ" secondAttribute="trailing" constant="10" id="Mcb-Y3-RPy"/>
                             <constraint firstItem="GRS-IT-4p7" firstAttribute="leading" secondItem="AKw-RB-s4c" secondAttribute="leading" constant="10" id="PSH-1L-JQN"/>
                             <constraint firstItem="GRS-IT-4p7" firstAttribute="top" secondItem="cJU-4Y-KWZ" secondAttribute="bottom" constant="10" id="Qcj-hW-D4z"/>
+                            <constraint firstItem="cJU-4Y-KWZ" firstAttribute="top" secondItem="xqT-y1-FEE" secondAttribute="bottom" id="SwJ-fD-sEZ"/>
                             <constraint firstItem="ALj-FO-7p3" firstAttribute="top" secondItem="GRS-IT-4p7" secondAttribute="bottom" constant="10" id="YT7-TE-PLB"/>
                             <constraint firstItem="cJU-4Y-KWZ" firstAttribute="leading" secondItem="AKw-RB-s4c" secondAttribute="leading" constant="10" id="aqG-in-1Ws"/>
                             <constraint firstItem="cJU-4Y-KWZ" firstAttribute="height" secondItem="AKw-RB-s4c" secondAttribute="height" multiplier="0.2" id="dhM-K7-gmn"/>
@@ -90,20 +90,23 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="0r1-Qw-2bf"/>
+                                <exclude reference="9pM-NR-KBM"/>
+                                <exclude reference="dhM-K7-gmn"/>
                                 <exclude reference="K3m-4Y-QJw"/>
                                 <exclude reference="oJg-i8-AWq"/>
-                                <exclude reference="0r1-Qw-2bf"/>
-                                <exclude reference="dhM-K7-gmn"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="GRS-IT-4p7" id="GJv-5O-v2x"/>
+                        <outlet property="labelsView" destination="cJU-4Y-KWZ" id="9P7-k5-XO9"/>
+                        <outlet property="scoreLabel" destination="Qd8-Jy-kHY" id="jjh-qH-1d7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mcg-8F-uDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-409" y="-861"/>
+            <point key="canvasLocation" x="-507" y="-651"/>
         </scene>
     </scenes>
 </document>

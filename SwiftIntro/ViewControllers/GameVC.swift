@@ -11,6 +11,9 @@ import UIKit
 class GameVC: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var labelsView: UIView!
+    
     private var dataSourceAndDelegate: MemoryDataSourceAndDelegate! {
         didSet {
             collectionView.dataSource = dataSourceAndDelegate
@@ -21,12 +24,18 @@ class GameVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupStyling()
         setupViews()
         fetchData()
     }
 }
 
 private extension GameVC {
+    private func setupStyling(){
+        labelsView.backgroundColor = .blackColor()
+        collectionView.backgroundColor = .blackColor()
+    }
+    
     private func setupViews() {
         collectionView.registerNib(CardCVCell.nib, forCellWithReuseIdentifier: CardCVCell.cellIdentifier)
     }
