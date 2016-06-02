@@ -9,22 +9,10 @@
 import Foundation
 import Alamofire
 
-protocol Done {}
-struct Result<T: Model>: Done {
-    var model: T?
-    var models: [T]?
-    var error: NSError?
-
-    init(model: T? = nil, models: [T]? = nil, error: NSError? = nil) {
-        self.model = model
-        self.models = models
-        self.error = error
-    }
-}
-
 protocol HTTPClientProtocol {
     func request<T: Model>(route: Router, done: (Result<T>) -> Void)
     func collectionRequest<T: Model>(route: Router, done: (Result<T>) -> Void)
+    func image(url: NSURL, done: ImageDone)
 }
 
 class HTTPClient {
@@ -55,4 +43,27 @@ extension HTTPClient: HTTPClientProtocol {
                 done(result)
         }
     }
+
+    func image(url: NSURL, done: ImageDone) {
+        Alamofire.request(.GET, url).responseImage {
+            response in
+            done(response.result.value)
+        }
+    }
 }
+
+struct Result<T: Model> {
+    var model: T?
+    var models: [T]?
+    var error: NSError?
+
+    init(model: T? = nil, models: [T]? = nil, error: NSError? = nil) {
+        self.model = model
+        self.models = models
+        self.error = error
+    }
+}
+
+typealias JSON = [String: AnyObject]
+protocol Model: ResponseCollectionSerializable, ResponseObjectSerializable {}
+typealias ImageDone = (UIImage?) -> Void

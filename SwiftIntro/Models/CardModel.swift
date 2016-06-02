@@ -7,11 +7,7 @@
 //
 
 import Foundation
-import Alamofire
 
-typealias JSON = [String: AnyObject]
-
-protocol Model: ResponseCollectionSerializable, ResponseObjectSerializable {}
 
 typealias Closure = () -> Void
 func onMain(closure: Closure) {
