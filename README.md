@@ -7,7 +7,7 @@ A memory game implementation fetching images from Instagram. This project aims t
 1. Change the color of the START GAME button
 2. Change this distance between view X and Y
 
-### I think I got a good grip of it
+### I think I've got a good grip of it
 1. Change the duration of the flip card animation
 2. Make it possible to add a custom size of the memory game board
 
