@@ -48,6 +48,10 @@ private extension GameVC {
 
     private func setupViews() {
         collectionView.registerNib(CardCVCell.nib, forCellWithReuseIdentifier: CardCVCell.cellIdentifier)
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.minimumLineSpacing = 10
+        flowLayout.minimumInteritemSpacing = 10
+        collectionView.collectionViewLayout = flowLayout
         setupStyling()
     }
 
@@ -93,28 +97,5 @@ private extension GameVC {
         ImagePrefetcher.sharedInstance.prefetchImages(urls) {
             self.collectionView.reloadData()
         }
-    }
-}
-
-extension Array {
-    var shuffled: Array {
-        var elements = self
-        for index in indices.dropLast() {
-            guard
-                case let swapIndex = Int(arc4random_uniform(UInt32(count - index))) + index
-                where swapIndex != index else { continue }
-            swap(&elements[index], &elements[swapIndex])
-        }
-        return elements
-    }
-    mutating func shuffle() {
-        self = shuffled
-    }
-
-    var chooseOne: Element {
-        return self[Int(arc4random_uniform(UInt32(count)))]
-    }
-    func choose(count: Int) -> [Element] {
-        return Array(shuffled.prefix(count))
     }
 }

@@ -29,10 +29,11 @@ func delay(delay: Double, closure: Closure) {
     )
 }
 
-
-func localizedString(key: String) -> String {
+func localizedString(key: String, args: AnyObject...) -> String {
     let localized = NSLocalizedString(key, comment: "")
-    return localized
+    guard args.count > 0 else { return localized }
+    let formatted = NSString(format: localized, args) as String
+    return formatted
 }
 
 private func showNetworkLoadingInStatusBar(show show: Bool) {

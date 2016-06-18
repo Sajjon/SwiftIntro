@@ -27,6 +27,7 @@
 		7B86085F1D1597FB00037D36 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B86085D1D1597FB00037D36 /* Localizable.strings */; };
 		7B8608621D15993400037D36 /* UIButton_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8608611D15993400037D36 /* UIButton_Extension.swift */; };
 		7B8608641D15999500037D36 /* UILabel_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8608631D15999500037D36 /* UILabel_Extension.swift */; };
+		7B8608661D15A1DB00037D36 /* Array_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8608651D15A1DB00037D36 /* Array_Extension.swift */; };
 		7BAD45931CFF6F3A00C7D7EF /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45921CFF6F3900C7D7EF /* Router.swift */; };
 		7BAD45951CFF70FA00C7D7EF /* Request_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */; };
 		7BAD45971CFF765B00C7D7EF /* UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45961CFF765B00C7D7EF /* UIViewController_Extension.swift */; };
@@ -60,6 +61,7 @@
 		7B8608601D15980F00037D36 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B8608611D15993400037D36 /* UIButton_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButton_Extension.swift; sourceTree = "<group>"; };
 		7B8608631D15999500037D36 /* UILabel_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabel_Extension.swift; sourceTree = "<group>"; };
+		7B8608651D15A1DB00037D36 /* Array_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array_Extension.swift; sourceTree = "<group>"; };
 		7BAD45921CFF6F3900C7D7EF /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request_Extension.swift; sourceTree = "<group>"; };
 		7BAD45961CFF765B00C7D7EF /* UIViewController_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController_Extension.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				7B2F90AB1D00C88800613325 /* UIView_Extension.swift */,
 				7B8608611D15993400037D36 /* UIButton_Extension.swift */,
 				7B8608631D15999500037D36 /* UILabel_Extension.swift */,
+				7B8608651D15A1DB00037D36 /* Array_Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				7B21A5B81CFF5E7B002E5EE5 /* GameVC.swift in Sources */,
 				7B21A5B61CFF5DAE002E5EE5 /* HTTPClient.swift in Sources */,
 				7BAD45951CFF70FA00C7D7EF /* Request_Extension.swift in Sources */,
+				7B8608661D15A1DB00037D36 /* Array_Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
