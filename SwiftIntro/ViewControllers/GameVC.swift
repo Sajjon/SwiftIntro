@@ -50,8 +50,8 @@ private extension GameVC {
 
             let cardModels = model.cardModels
             let memoryCards = self.memoryCardsFromModels(cardModels,
-                                                         cardCount: self.gameSettings.level.rawValue)
-            self.dataSourceAndDelegate = MemoryDataSourceAndDelegate(memoryCards)
+                                                         cardCount: self.gameSettings.level.nbrOfCards)
+            self.dataSourceAndDelegate = MemoryDataSourceAndDelegate(memoryCards, level: self.gameSettings.level)
             self.prefetchImagesForCard(memoryCards)
         }
     }
