@@ -48,8 +48,8 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="aaV-9Y-KBH"/>
                                         <exclude reference="CFL-wU-pPh"/>
+                                        <exclude reference="aaV-9Y-KBH"/>
                                     </mask>
                                 </variation>
                             </view>

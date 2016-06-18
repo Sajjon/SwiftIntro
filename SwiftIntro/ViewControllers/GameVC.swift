@@ -24,7 +24,6 @@ class GameVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupStyling()
         setupViews()
         fetchData()
     }
@@ -35,9 +34,10 @@ private extension GameVC {
         labelsView.backgroundColor = .blackColor()
         collectionView.backgroundColor = .blackColor()
     }
-    
+
     private func setupViews() {
         collectionView.registerNib(CardCVCell.nib, forCellWithReuseIdentifier: CardCVCell.cellIdentifier)
+        setupStyling()
     }
 
     private func fetchData() {
@@ -46,19 +46,59 @@ private extension GameVC {
             (result: Result<MediaModel>) in
             self.hideLoader()
             guard let model = result.model else { return }
-            let cards = model.cardModels
-            self.dataSourceAndDelegate = MemoryDataSourceAndDelegate(cards)
-            self.prefetchImagesForCard(cards)
+
+            let cardModels = model.cardModels
+            let memoryCards = self.memoryCardsFromModels(cardModels, cardCount: 6)
+            self.dataSourceAndDelegate = MemoryDataSourceAndDelegate(memoryCards)
+            self.prefetchImagesForCard(memoryCards)
         }
+    }
+
+    private func memoryCardsFromModels(cardModels: [CardModel], cardCount: Int) -> [CardModel] {
+        let cardCount = min(cardModels.count, cardCount)
+        var memoryCards = cardModels
+        memoryCards.shuffle()
+        memoryCards = memoryCards.choose(cardCount/2)
+        memoryCards.duplicate()
+        memoryCards.shuffle()
+        if memoryCards.count != cardCount {
+            fatalError("Buh")
+        }
+        return memoryCards
     }
 
     private func prefetchImagesForCard(cards: [CardModel]) {
         let urls: [URLRequestConvertible] = cards.map { return URL(url: $0.imageUrl) }
-
         ImagePrefetcher.sharedInstance.prefetchImages(urls) {
-            print("images fetched")
             self.collectionView.reloadData()
         }
+    }
+}
 
+
+extension Array {
+    var shuffled: Array {
+        var elements = self
+        for index in indices.dropLast() {
+            guard
+                case let swapIndex = Int(arc4random_uniform(UInt32(count - index))) + index
+                where swapIndex != index else { continue }
+            swap(&elements[index], &elements[swapIndex])
+        }
+        return elements
+    }
+    mutating func shuffle() {
+        self = shuffled
+    }
+
+    mutating func duplicate() {
+        self += self
+    }
+
+    var chooseOne: Element {
+        return self[Int(arc4random_uniform(UInt32(count)))]
+    }
+    func choose(count: Int) -> [Element] {
+        return Array(shuffled.prefix(count))
     }
 }
