@@ -178,10 +178,10 @@
 		7B75421A1CFF3F9E009B2629 = {
 			isa = PBXGroup;
 			children = (
-				7B7542251CFF3F9E009B2629 /* SwiftIntro */,
-				7B7542241CFF3F9E009B2629 /* Products */,
-				06272239F9B7BEB579F0ACF7 /* Pods */,
 				37F92D951497B76C0D43697E /* Frameworks */,
+				06272239F9B7BEB579F0ACF7 /* Pods */,
+				7B7542241CFF3F9E009B2629 /* Products */,
+				7B7542251CFF3F9E009B2629 /* SwiftIntro */,
 			);
 			sourceTree = "<group>";
 		};

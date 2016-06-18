@@ -37,7 +37,7 @@
                 <outlet property="cardBackImageView" destination="kld-Su-gHh" id="UcH-GL-M6n"/>
                 <outlet property="cardFrontImageView" destination="Do6-7w-Drs" id="SnJ-tm-I6p"/>
             </connections>
-            <point key="canvasLocation" x="427" y="309"/>
+            <point key="canvasLocation" x="64" y="156"/>
         </collectionViewCell>
     </objects>
 </document>
