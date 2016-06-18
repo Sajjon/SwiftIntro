@@ -15,10 +15,12 @@ public protocol GameLevel {
     var nbrOfCards: Int { get }
 }
 
-enum Level: GameLevel {
-    case Easy, Normal, Hard
-    
-    var nbrOfCards: Int{
+enum Level: Int {
+    case Easy = 6
+    case Normal = 9
+    case Hard = 12
+
+  var nbrOfCards: Int{
         switch self {
         case .Easy:
             return 6
@@ -28,31 +30,23 @@ enum Level: GameLevel {
             return 20
         }
     }
-    
-    var columnCount: Int{
-        switch self {
-        case .Easy:
-            return 2
-        case .Normal:
-            return 3
-        case .Hard:
-            return 4
-        }
-    }
 
-    var rowCount: Int{
+    var title: String {
+        let localizedKey: String
         switch self {
         case .Easy:
-            return 3
+            localizedKey = "Easy"
         case .Normal:
-            return 4
+            localizedKey = "Normal"
         case .Hard:
-            return 5
+            localizedKey = "Hard"
         }
+        let title = localizedString(localizedKey)
+        return title
     }
 }
 
-struct GameSettings{
+struct GameSettings {
     var level: Level = .Normal
     var username: String = "netlightconsulting"
 }
@@ -60,6 +54,7 @@ struct GameSettings{
 class SettingsVC: UIViewController {
     
     @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var levelSegmentedControl: UISegmentedControl!
     @IBOutlet weak var startGameButton: UIButton!
     
@@ -67,6 +62,7 @@ class SettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
@@ -75,7 +71,7 @@ class SettingsVC: UIViewController {
         }
 
         if segue?.identifier == "startGameSegue" {
-            if let vc = segue?.destinationViewController as? GameVC{
+            if let vc = segue?.destinationViewController as? GameVC {
                 vc.gameSettings = settings
             }
             
@@ -83,16 +79,43 @@ class SettingsVC: UIViewController {
     }
 
     @IBAction func changedLevel(sender: UISegmentedControl) {
-        
-        switch sender.selectedSegmentIndex{
+        let level = levelAtIndex(sender.selectedSegmentIndex)
+        settings.level = level
+    }
+}
+
+private extension SettingsVC {
+
+    private func levelAtIndex(index: Int) -> Level {
+        let level: Level
+        switch index {
         case 0:
-            settings.level = .Easy
+        level = .Easy
         case 1:
-            settings.level = .Normal
+        level = .Normal
         case 2:
-            settings.level = .Hard
+        level = .Hard
         default:
-            break
+            fatalError("Should not be possible")
+        }
+        return level
+
+    }
+
+    private func setupViews() {
+        setupLocalizableStrings()
+    }
+
+    private func setupLocalizableStrings() {
+        setupLocalizationForSegmentedControl()
+        usernameLabel.setLocalizedText("Username")
+        startGameButton.setLocalizedTitle("StartGame")
+    }
+
+    private func setupLocalizationForSegmentedControl() {
+        for i in 0...2 {
+            let title = levelAtIndex(i).title
+            levelSegmentedControl.setTitle(title, forSegmentAtIndex: i)
         }
     }
 }

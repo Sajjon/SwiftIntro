@@ -30,8 +30,18 @@ class GameVC: UIViewController {
     }
 }
 
+extension GameVC: GameDelegate {
+    func foundMatch(matches: Int) {
+        scoreLabel.text = "\(matches)"
+    }
+
+    func gameOver(result: GameResult) {
+        print("Game over: \(result.clickCount)")
+    }
+}
+
 private extension GameVC {
-    private func setupStyling(){
+    private func setupStyling() {
         labelsView.backgroundColor = .blackColor()
         collectionView.backgroundColor = .blackColor()
     }
@@ -46,14 +56,16 @@ private extension GameVC {
         APIClient.sharedInstance.getPhotos(gameSettings.username) {
             (result: Result<MediaModel>) in
             self.hideLoader()
-            guard let model = result.model else { return }
-
-            let cardModels = model.cardModels
-            let memoryCards = self.memoryCardsFromModels(cardModels,
-                                                         cardCount: self.gameSettings.level.nbrOfCards)
-            self.dataSourceAndDelegate = MemoryDataSourceAndDelegate(memoryCards, level: self.gameSettings.level)
-            self.prefetchImagesForCard(memoryCards)
+            self.setupWithModel(result.model)
         }
+    }
+
+    private func setupWithModel(model: MediaModel?) {
+        guard let model = model else { return }
+        let cardModels = model.cardModels
+        let memoryCards = memoryCardsFromModels(cardModels, cardCount: gameSettings.level.nbrOfCards)
+        dataSourceAndDelegate = MemoryDataSourceAndDelegate(memoryCards, delegate: self)
+        prefetchImagesForCard(memoryCards)
     }
 
     private func memoryCardsFromModels(cardModels: [CardModel], cardCount: Int) -> [CardModel] {
@@ -61,14 +73,19 @@ private extension GameVC {
         var memoryCards = cardModels
         memoryCards.shuffle()
         memoryCards = memoryCards.choose(cardCount/2)
-        var withDuplicates: [CardModel] = []
-        for memoryCard in memoryCards {
+        var duplicated = duplicatedMemoryCards(memoryCards)
+        duplicated.shuffle()
+        return duplicated
+    }
+
+    private func duplicatedMemoryCards(cards: [CardModel]) -> [CardModel] {
+        var duplicated: [CardModel] = []
+        for memoryCard in cards {
             let duplicate = CardModel(imageUrl: memoryCard.imageUrl)
-            withDuplicates.append(duplicate)
-            withDuplicates.append(memoryCard)
+            duplicated.append(duplicate)
+            duplicated.append(memoryCard)
         }
-        withDuplicates.shuffle()
-        return withDuplicates
+        return duplicated
     }
 
     private func prefetchImagesForCard(cards: [CardModel]) {
@@ -78,7 +95,6 @@ private extension GameVC {
         }
     }
 }
-
 
 extension Array {
     var shuffled: Array {

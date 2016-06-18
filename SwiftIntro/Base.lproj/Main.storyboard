@@ -240,6 +240,7 @@ Username:</string>
                     <connections>
                         <outlet property="levelSegmentedControl" destination="WkT-ah-UQ7" id="oAg-qA-uc1"/>
                         <outlet property="startGameButton" destination="lBM-hZ-rVu" id="QPd-K4-Tk1"/>
+                        <outlet property="usernameLabel" destination="weo-QR-9rA" id="1UW-F4-YxA"/>
                         <outlet property="usernameTextField" destination="lTc-eh-7Cw" id="Gth-qu-xfB"/>
                     </connections>
                 </viewController>
