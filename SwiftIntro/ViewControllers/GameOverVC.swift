@@ -24,6 +24,6 @@ class GameOverVC: UIViewController {
 private extension GameOverVC {
 
     private func setupViews() {
-//        clickCountLabel.text =
+        clickCountLabel.setLocalizedText("ClickCountUnformatted", args: gameResult.clickCount)
     }
 }
