@@ -8,15 +8,6 @@
 
 import Foundation
 
-
-typealias Closure = () -> Void
-func onMain(closure: Closure) {
-    dispatch_async(dispatch_get_main_queue(), {
-        () -> Void in
-        closure()
-    })
-}
-
 final class CardModel {
     let imageUrl: NSURL
 
@@ -27,14 +18,21 @@ final class CardModel {
     }
 }
 
+//MARK: Equatable
+extension CardModel: Equatable {}
+func == (lhs: CardModel, rhs: CardModel) -> Bool {
+    let same = lhs.imageUrl == rhs.imageUrl
+    return same
+}
+
+//MARK: Model
 extension CardModel: Model {
 
     convenience init?(response: NSHTTPURLResponse, representation: AnyObject) {
-        //swiftlint:disable force_cast
-        let media = representation["images"] as! JSON
-        let image = media["standard_resolution"] as! JSON
-        let imageUrlString = image["url"] as! String
-        let imageUrl = NSURL(string: imageUrlString)!
+        guard let media = representation["images"] as? JSON else { return nil }
+        guard let image = media["standard_resolution"] as? JSON else { return nil }
+        guard let imageUrlString = image["url"] as? String else { return nil }
+        guard let imageUrl = NSURL(string: imageUrlString) else { return nil }
         self.init(imageUrl: imageUrl)
     }
 

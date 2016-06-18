@@ -16,7 +16,7 @@ enum Level: Int {
     case Hard = 2
 }
 
-struct GameSettings{
+struct GameSettings {
     var level: Level = .Normal
     var username: String = "netlightconsulting"
 }
@@ -36,7 +36,7 @@ class SettingsVC: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
         if segue?.identifier == "startGameSegue" {
-            if let vc = segue?.destinationViewController as? GameVC{
+            if let vc = segue?.destinationViewController as? GameVC {
                 //vc.setupWithSettings(settings)
             }
             
@@ -45,7 +45,7 @@ class SettingsVC: UIViewController {
 
     @IBAction func changeLevel(sender: UISegmentedControl) {
         
-        switch sender.selectedSegmentIndex{
+        switch sender.selectedSegmentIndex {
         case 0:
             settings.level = .Easy
         case 1:
