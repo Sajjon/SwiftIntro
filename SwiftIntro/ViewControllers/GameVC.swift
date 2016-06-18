@@ -28,6 +28,13 @@ class GameVC: UIViewController {
         setupViews()
         fetchData()
     }
+    
+    @IBAction func quitAction(sender: AnyObject) {
+       self.dismissViewControllerAnimated(true) {
+        
+        }
+    }
+    
 }
 
 extension GameVC: GameDelegate {
