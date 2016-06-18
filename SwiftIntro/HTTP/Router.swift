@@ -10,9 +10,9 @@ import Foundation
 import Alamofire
 
 enum Router: URLRequestConvertible {
-    static let baseURLString = "https://www.instagram.com/netlightconsulting/"
+    static let baseURLString = "https://www.instagram.com/"
 
-    case Photos
+    case Photos(String)
 
     var method: Alamofire.Method {
         switch self {
@@ -23,8 +23,8 @@ enum Router: URLRequestConvertible {
 
     var path: String {
         switch self {
-        case .Photos:
-            return "media"
+        case .Photos(let username):
+            return "\(username)/media/"
         }
     }
 

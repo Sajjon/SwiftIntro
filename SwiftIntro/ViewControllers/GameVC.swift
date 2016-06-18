@@ -14,6 +14,7 @@ class GameVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var labelsView: UIView!
+    var gameSettings: GameSettings = GameSettings()
     
     private var dataSourceAndDelegate: MemoryDataSourceAndDelegate! {
         didSet {
@@ -42,13 +43,14 @@ private extension GameVC {
 
     private func fetchData() {
         showLoader()
-        APIClient.sharedInstance.getPhotos {
+        APIClient.sharedInstance.getPhotos(gameSettings.username) {
             (result: Result<MediaModel>) in
             self.hideLoader()
             guard let model = result.model else { return }
 
             let cardModels = model.cardModels
-            let memoryCards = self.memoryCardsFromModels(cardModels, cardCount: 6)
+            let memoryCards = self.memoryCardsFromModels(cardModels,
+                                                         cardCount: self.gameSettings.level.rawValue)
             self.dataSourceAndDelegate = MemoryDataSourceAndDelegate(memoryCards)
             self.prefetchImagesForCard(memoryCards)
         }

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol APIClientProtocol {
-    func getPhotos<T: Model>(done: (Result<T>) -> Void)
+    func getPhotos<T: Model>(username: String, done: (Result<T>) -> Void)
 }
 
 class APIClient {
@@ -21,7 +21,7 @@ class APIClient {
 
 extension APIClient: APIClientProtocol {
 
-    func getPhotos<T: Model>(done: (Result<T>) -> Void) {
-        httpClient.request(.Photos, done: done)
+    func getPhotos<T: Model>(username: String, done: (Result<T>) -> Void) {
+        httpClient.request(.Photos(username), done: done)
     }
 }
