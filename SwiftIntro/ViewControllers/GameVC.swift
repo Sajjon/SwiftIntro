@@ -59,12 +59,14 @@ private extension GameVC {
         var memoryCards = cardModels
         memoryCards.shuffle()
         memoryCards = memoryCards.choose(cardCount/2)
-        memoryCards.duplicate()
-        memoryCards.shuffle()
-        if memoryCards.count != cardCount {
-            fatalError("Buh")
+        var withDuplicates: [CardModel] = []
+        for memoryCard in memoryCards {
+            let duplicate = CardModel(imageUrl: memoryCard.imageUrl)
+            withDuplicates.append(duplicate)
+            withDuplicates.append(memoryCard)
         }
-        return memoryCards
+        withDuplicates.shuffle()
+        return withDuplicates
     }
 
     private func prefetchImagesForCard(cards: [CardModel]) {
@@ -89,10 +91,6 @@ extension Array {
     }
     mutating func shuffle() {
         self = shuffled
-    }
-
-    mutating func duplicate() {
-        self += self
     }
 
     var chooseOne: Element {
