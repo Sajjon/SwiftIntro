@@ -11,11 +11,6 @@ import UIKit
 struct GameResult {
     let level: Level
     let clickCount: Int
-
-    init(cardCount: Int, clickCount: Int) {
-        level = Level(rawValue: cardCount)!
-        self.clickCount = clickCount
-    }
 }
 
 protocol GameDelegate: class {
@@ -47,7 +42,7 @@ class MemoryDataSourceAndDelegate: NSObject {
     private var gameOver: Bool = false {
         didSet {
             guard gameOver else { return }
-            let result = GameResult(cardCount: cardCount, clickCount: clickCount)
+            let result = GameResult(level: gameLevel, clickCount: clickCount)
             delegate?.gameOver(result)
         }
     }

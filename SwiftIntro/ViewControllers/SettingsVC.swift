@@ -9,10 +9,8 @@
 import Foundation
 import UIKit
 
-enum Level: Int {
-    case Easy = 6
-    case Normal = 9
-    case Hard = 12
+enum Level {
+    case Easy, Normal, Hard
 
   var nbrOfCards: Int{
         return self.rowCount*self.columnCount
