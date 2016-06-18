@@ -8,9 +8,14 @@
 
 import Foundation
 
-typealias JSON = [String: AnyObject]
 
-protocol Model: ResponseCollectionSerializable, ResponseObjectSerializable {}
+typealias Closure = () -> Void
+func onMain(closure: Closure) {
+    dispatch_async(dispatch_get_main_queue(), {
+        () -> Void in
+        closure()
+    })
+}
 
 final class CardModel {
     let imageUrl: NSURL

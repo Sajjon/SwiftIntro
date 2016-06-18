@@ -17,6 +17,8 @@
 		7B21A5C21CFF639D002E5EE5 /* CardCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5C11CFF639D002E5EE5 /* CardCVCell.swift */; };
 		7B21A5C51CFF6586002E5EE5 /* NSObject_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5C41CFF6586002E5EE5 /* NSObject_Extension.swift */; };
 		7B21A5C71CFF67DA002E5EE5 /* CardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5C61CFF67DA002E5EE5 /* CardModel.swift */; };
+		7B2F90AA1D00B9A400613325 /* ImagePrefetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2F90A91D00B9A400613325 /* ImagePrefetcher.swift */; };
+		7B2F90AC1D00C88800613325 /* UIView_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2F90AB1D00C88800613325 /* UIView_Extension.swift */; };
 		7B75422E1CFF3F9E009B2629 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B75422C1CFF3F9E009B2629 /* Main.storyboard */; };
 		7B7542301CFF3F9E009B2629 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B75422F1CFF3F9E009B2629 /* Assets.xcassets */; };
 		7B7542331CFF3F9E009B2629 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B7542311CFF3F9E009B2629 /* LaunchScreen.storyboard */; };
@@ -41,6 +43,8 @@
 		7B21A5C11CFF639D002E5EE5 /* CardCVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCVCell.swift; sourceTree = "<group>"; };
 		7B21A5C41CFF6586002E5EE5 /* NSObject_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSObject_Extension.swift; sourceTree = "<group>"; };
 		7B21A5C61CFF67DA002E5EE5 /* CardModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardModel.swift; sourceTree = "<group>"; };
+		7B2F90A91D00B9A400613325 /* ImagePrefetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePrefetcher.swift; sourceTree = "<group>"; };
+		7B2F90AB1D00C88800613325 /* UIView_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView_Extension.swift; sourceTree = "<group>"; };
 		7B7542231CFF3F9E009B2629 /* SwiftIntro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftIntro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B75422D1CFF3F9E009B2629 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7B75422F1CFF3F9E009B2629 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -123,6 +127,7 @@
 				7B21A5B51CFF5DAE002E5EE5 /* HTTPClient.swift */,
 				7BAD45921CFF6F3900C7D7EF /* Router.swift */,
 				7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */,
+				7B2F90A91D00B9A400613325 /* ImagePrefetcher.swift */,
 			);
 			path = HTTP;
 			sourceTree = "<group>";
@@ -165,6 +170,7 @@
 			children = (
 				7B21A5C41CFF6586002E5EE5 /* NSObject_Extension.swift */,
 				7BAD45961CFF765B00C7D7EF /* UIViewController_Extension.swift */,
+				7B2F90AB1D00C88800613325 /* UIView_Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -345,12 +351,14 @@
 				45773A371D00C088002E6F56 /* SettingsVC.swift in Sources */,
 				7B21A5B01CFF5C17002E5EE5 /* AppDelegate.swift in Sources */,
 				7B21A5BB1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift in Sources */,
+				7B2F90AC1D00C88800613325 /* UIView_Extension.swift in Sources */,
 				7BAD45991CFF8D6000C7D7EF /* MediaModel.swift in Sources */,
 				7B21A5C21CFF639D002E5EE5 /* CardCVCell.swift in Sources */,
 				7B21A5B41CFF5CAC002E5EE5 /* APIClient.swift in Sources */,
 				7BAD45931CFF6F3A00C7D7EF /* Router.swift in Sources */,
 				7B21A5C51CFF6586002E5EE5 /* NSObject_Extension.swift in Sources */,
 				7BAD45971CFF765B00C7D7EF /* UIViewController_Extension.swift in Sources */,
+				7B2F90AA1D00B9A400613325 /* ImagePrefetcher.swift in Sources */,
 				7B21A5C71CFF67DA002E5EE5 /* CardModel.swift in Sources */,
 				7B21A5B81CFF5E7B002E5EE5 /* GameVC.swift in Sources */,
 				7B21A5B61CFF5DAE002E5EE5 /* HTTPClient.swift in Sources */,

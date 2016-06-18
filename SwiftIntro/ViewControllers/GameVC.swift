@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class GameVC: UIViewController {
     
@@ -18,7 +19,6 @@ class GameVC: UIViewController {
         didSet {
             collectionView.dataSource = dataSourceAndDelegate
             collectionView.delegate = dataSourceAndDelegate
-            collectionView.reloadData()
         }
     }
 
@@ -48,6 +48,17 @@ private extension GameVC {
             guard let model = result.model else { return }
             let cards = model.cardModels
             self.dataSourceAndDelegate = MemoryDataSourceAndDelegate(cards)
+            self.prefetchImagesForCard(cards)
         }
+    }
+
+    private func prefetchImagesForCard(cards: [CardModel]) {
+        let urls: [URLRequestConvertible] = cards.map { return URL(url: $0.imageUrl) }
+
+        ImagePrefetcher.sharedInstance.prefetchImages(urls) {
+            print("images fetched")
+            self.collectionView.reloadData()
+        }
+
     }
 }
