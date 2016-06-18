@@ -25,15 +25,14 @@ protocol GameDelegate: class {
 
 class MemoryDataSourceAndDelegate: NSObject {
 
-    private var models: [CardModel]?
-
-    var gameLevel: Level?
+    private let models: [CardModel]
+    private let gameLevel: Level
     private weak var delegate: GameDelegate?
 
     private var clickCount = 0
 
     private var cardCount: Int {
-        return models?.count ?? 0
+        return models.count
     }
 
     private var flippedCardIndexPath: NSIndexPath?
@@ -53,7 +52,7 @@ class MemoryDataSourceAndDelegate: NSObject {
         }
     }
 
-    init(_ models: [CardModel], delegate: GameDelegate) {
+    init(_ models: [CardModel], level: Level, delegate: GameDelegate) {
         self.models = models
         self.gameLevel = level
         self.delegate = delegate
@@ -61,13 +60,20 @@ class MemoryDataSourceAndDelegate: NSObject {
 }
 
 private extension MemoryDataSourceAndDelegate {
+    
     private func modelForIndexPath(indexPath: NSIndexPath) -> CardModel? {
-        guard let models = models else { return nil }
         guard indexPath.row < models.count else { return nil }
-        let model = models[indexPath.row]
+        let index = indexFromIndexPath(indexPath)
+        let model = models[index]
         return model
     }
-
+    
+    private func indexFromIndexPath(indexPath: NSIndexPath) -> Int {
+        let numberOfItemsInSection = gameLevel.columnCount
+        let index = indexPath.row + (numberOfItemsInSection * indexPath.section)
+        return index
+    }
+    
     private func didSelectCardAtIndexPath(indexPath: NSIndexPath, inCollectionView collectionView: UICollectionView) {
         guard let card = modelForIndexPath(indexPath) else { return }
         guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CardCVCell else { return }
@@ -99,11 +105,11 @@ private extension MemoryDataSourceAndDelegate {
 
 extension MemoryDataSourceAndDelegate: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return gameLevel?.columnCount ?? 0
+        return gameLevel.columnCount
     }
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return gameLevel?.rowCount ?? 0
+        return gameLevel.rowCount
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -130,12 +136,6 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
 
 extension MemoryDataSourceAndDelegate: UICollectionViewDelegateFlowLayout {
     
-//    func collectionView(collectionView: UICollectionView,
-//                          layout collectionViewLayout: UICollectionViewLayout,
-//                                 minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat{
-//        return 50
-//    }
-    
     func collectionView(collectionView: UICollectionView,
                           layout collectionViewLayout: UICollectionViewLayout,
                                  insetForSectionAtIndex section: Int) -> UIEdgeInsets{
@@ -146,14 +146,14 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return CGSizeZero }
         
-        let rownCount = gameLevel?.rowCount ?? 0
+        let rownCount = gameLevel.rowCount
         let totalSpaceHeight = flowLayout.sectionInset.top
             + flowLayout.sectionInset.bottom
             + (flowLayout.minimumLineSpacing * CGFloat(rownCount - 1))
         let miniumumHeight = Int((collectionView.bounds.height - totalSpaceHeight) / CGFloat(rownCount))
     print(flowLayout.minimumLineSpacing)
         
-        let columnCount = gameLevel?.columnCount ?? 0
+        let columnCount = gameLevel.columnCount
         let totalSpaceWidth = flowLayout.sectionInset.left
             + flowLayout.sectionInset.right
             + (flowLayout.minimumInteritemSpacing * CGFloat(columnCount - 1))

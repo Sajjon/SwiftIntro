@@ -9,26 +9,13 @@
 import Foundation
 import UIKit
 
-public protocol GameLevel {
-    var rowCount: Int { get }
-    var columnCount: Int { get }
-    var nbrOfCards: Int { get }
-}
-
 enum Level: Int {
     case Easy = 6
     case Normal = 9
     case Hard = 12
 
   var nbrOfCards: Int{
-        switch self {
-        case .Easy:
-            return 6
-        case .Normal:
-            return 12
-        case .Hard:
-            return 20
-        }
+        return self.rowCount*self.columnCount
     }
 
     var title: String {
@@ -43,6 +30,28 @@ enum Level: Int {
         }
         let title = localizedString(localizedKey)
         return title
+    }
+    
+    var columnCount: Int{
+        switch self {
+        case .Easy:
+            return 2
+        case .Normal:
+            return 3
+        case .Hard:
+            return 4
+        }
+    }
+    
+    var rowCount: Int{
+        switch self {
+        case .Easy:
+            return 3
+        case .Normal:
+            return 4
+        case .Hard:
+            return 5
+        }
     }
 }
 

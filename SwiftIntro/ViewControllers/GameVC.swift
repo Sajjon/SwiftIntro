@@ -64,7 +64,7 @@ private extension GameVC {
         guard let model = model else { return }
         let cardModels = model.cardModels
         let memoryCards = memoryCardsFromModels(cardModels, cardCount: gameSettings.level.nbrOfCards)
-        dataSourceAndDelegate = MemoryDataSourceAndDelegate(memoryCards, delegate: self)
+        dataSourceAndDelegate = MemoryDataSourceAndDelegate(memoryCards, level: gameSettings.level, delegate: self)
         prefetchImagesForCard(memoryCards)
     }
 
