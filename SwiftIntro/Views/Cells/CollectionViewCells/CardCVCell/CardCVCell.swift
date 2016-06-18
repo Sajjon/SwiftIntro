@@ -28,7 +28,7 @@ class CardCVCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        cardBackImageView.backgroundColor = UIColor.greenColor()
+        cardBackImageView.backgroundColor = UIColor.brownColor()
     }
 
     override func prepareForReuse() {

@@ -11,9 +11,9 @@ import UIKit
 
 
 enum Level: Int {
-    case Easy = 0
-    case Normal = 1
-    case Hard = 2
+    case Easy = 6
+    case Normal = 9
+    case Hard = 12
 }
 
 struct GameSettings {
@@ -31,19 +31,22 @@ class SettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //setupDefaultSettings()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
+        if let username: String = usernameTextField.text where !username.isEmpty{
+            settings.username = username
+        }
+
         if segue?.identifier == "startGameSegue" {
             if let vc = segue?.destinationViewController as? GameVC {
-                //vc.setupWithSettings(settings)
+                vc.gameSettings = settings
             }
             
         }
     }
 
-    @IBAction func changeLevel(sender: UISegmentedControl) {
+    @IBAction func changedLevel(sender: UISegmentedControl) {
         
         switch sender.selectedSegmentIndex {
         case 0:
@@ -55,15 +58,5 @@ class SettingsVC: UIViewController {
         default:
             break
         }
-        print(settings.level)
     }
 }
-
-//private extension SettingsVC {
-//    
-//    
-//    
-//    private func setupSettings(){
-//        
-//    }
-//}

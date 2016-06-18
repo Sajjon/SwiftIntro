@@ -60,7 +60,7 @@
                                     <constraint firstAttribute="width" secondItem="GRS-IT-4p7" secondAttribute="height" multiplier="1:1" id="GoG-hz-mzG"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="BLp-Po-rT3">
-                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="itemSize" width="40" height="40"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -107,7 +107,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mcg-8F-uDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1138.5" y="-861.5"/>
+            <point key="canvasLocation" x="-1388.5" y="-884.5"/>
         </scene>
         <!--SettingsVC-->
         <scene sceneID="m3W-VU-yuJ">
@@ -172,7 +172,7 @@ Username:</string>
                                                         </segments>
                                                         <color key="tintColor" red="0.67637350368921711" green="0.59481874540807955" blue="0.72778212810256415" alpha="1" colorSpace="calibratedRGB"/>
                                                         <connections>
-                                                            <action selector="changeLevel:" destination="baJ-kx-4T7" eventType="valueChanged" id="LKe-rG-Sms"/>
+                                                            <action selector="changedLevel:" destination="baJ-kx-4T7" eventType="valueChanged" id="vke-0J-VhJ"/>
                                                         </connections>
                                                     </segmentedControl>
                                                 </subviews>
