@@ -14,6 +14,20 @@ enum Level: Int {
     case Easy = 6
     case Normal = 9
     case Hard = 12
+
+    var title: String {
+        let localizedKey: String
+        switch self {
+        case .Easy:
+            localizedKey = "Easy"
+        case .Normal:
+            localizedKey = "Normal"
+        case .Hard:
+            localizedKey = "Hard"
+        }
+        let title = localizedString(localizedKey)
+        return title
+    }
 }
 
 struct GameSettings {
@@ -24,6 +38,7 @@ struct GameSettings {
 class SettingsVC: UIViewController {
     
     @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var levelSegmentedControl: UISegmentedControl!
     @IBOutlet weak var startGameButton: UIButton!
     
@@ -31,6 +46,7 @@ class SettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
@@ -47,16 +63,43 @@ class SettingsVC: UIViewController {
     }
 
     @IBAction func changedLevel(sender: UISegmentedControl) {
-        
-        switch sender.selectedSegmentIndex {
+        let level = levelAtIndex(sender.selectedSegmentIndex)
+        settings.level = level
+    }
+}
+
+private extension SettingsVC {
+
+    private func levelAtIndex(index: Int) -> Level {
+        let level: Level
+        switch index {
         case 0:
-            settings.level = .Easy
+        level = .Easy
         case 1:
-            settings.level = .Normal
+        level = .Normal
         case 2:
-            settings.level = .Hard
+        level = .Hard
         default:
-            break
+            fatalError("Should not be possible")
+        }
+        return level
+
+    }
+
+    private func setupViews() {
+        setupLocalizableStrings()
+    }
+
+    private func setupLocalizableStrings() {
+        setupLocalizationForSegmentedControl()
+        usernameLabel.setLocalizedText("Username")
+        startGameButton.setLocalizedTitle("StartGame")
+    }
+
+    private func setupLocalizationForSegmentedControl() {
+        for i in 0...2 {
+            let title = levelAtIndex(i).title
+            levelSegmentedControl.setTitle(title, forSegmentAtIndex: i)
         }
     }
 }

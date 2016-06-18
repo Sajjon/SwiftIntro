@@ -1,0 +1,17 @@
+//
+//  Localizable.strings
+//  SwiftIntro
+//
+//  Created by Alexander Georgii-Hemming Cyon on 10/01/16.
+//  Copyright © 2016 intranet3. All rights reserved.
+//
+
+"StartGame" = "Starta spel";
+"Level" = "Nivå";
+"Username" = "Instagram användarnamn";
+"Easy" = "Lätt";
+"Normal" = "Normal";
+"Hard" = "Svårt";
+"PairsFoundUnformatted" = "Par funna: %d";
+"GameOver" = "Game over";
+"ClickCountUnformatted" = "Antal klick: %d";

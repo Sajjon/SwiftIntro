@@ -29,6 +29,12 @@ func delay(delay: Double, closure: Closure) {
     )
 }
 
+
+func localizedString(key: String) -> String {
+    let localized = NSLocalizedString(key, comment: "")
+    return localized
+}
+
 private func showNetworkLoadingInStatusBar(show show: Bool) {
     UIApplication.sharedApplication().networkActivityIndicatorVisible = show
 }

@@ -35,13 +35,13 @@ extension GameVC: GameDelegate {
         scoreLabel.text = "\(matches)"
     }
 
-    func gameOver(clickCount: Int) {
-        print("Game over: \(clickCount)")
+    func gameOver(result: GameResult) {
+        print("Game over: \(result.clickCount)")
     }
 }
 
 private extension GameVC {
-    private func setupStyling(){
+    private func setupStyling() {
         labelsView.backgroundColor = .blackColor()
         collectionView.backgroundColor = .blackColor()
     }
@@ -95,7 +95,6 @@ private extension GameVC {
         }
     }
 }
-
 
 extension Array {
     var shuffled: Array {
