@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 private let gameOverSeque = "gameOverSeque"
 class GameVC: UIViewController, Configurable {
@@ -16,34 +15,25 @@ class GameVC: UIViewController, Configurable {
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var labelsView: UIView!
     var config: GameConfiguration!
-    private var gameResult: GameResult!
+    var memoryCards: [CardModel]!
+    private var result: GameResult!
     
-    private var dataSourceAndDelegate: MemoryDataSourceAndDelegate! {
-        didSet {
-            collectionView.dataSource = dataSourceAndDelegate
-            collectionView.delegate = dataSourceAndDelegate
-        }
-    }
+    private lazy var dataSourceAndDelegate: MemoryDataSourceAndDelegate = {
+        let dataSourceAndDelegate = MemoryDataSourceAndDelegate(self.memoryCards, level: self.config.level, delegate: self)
+        return dataSourceAndDelegate
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        fetchData()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-        guard segue?.identifier == gameOverSeque else { return }
+        guard var configurable = segue?.destinationViewController as? Configurable else { return }
+        configurable.config = config
         guard let vc = segue?.destinationViewController as? GameOverVC else { return }
-        vc.config = config
-        vc.result = gameResult
+        vc.result = result
     }
-
-    @IBAction func quitAction(sender: AnyObject) {
-       self.dismissViewControllerAnimated(true) {
-        
-        }
-    }
-    
 }
 
 //MARK: GameDelegate
@@ -54,7 +44,8 @@ extension GameVC: GameDelegate {
     }
 
     func gameOver(result: GameResult) {
-        self.gameResult = result
+        self.result = result
+        self.result.cards = memoryCards
         performSegueWithIdentifier(gameOverSeque, sender: self)
     }
     
@@ -65,8 +56,7 @@ extension GameVC: GameDelegate {
     }
 }
 
-
-//MARK: Setup and Styling
+//MARK: Private Methods
 private extension GameVC {
     private func setupStyling() {
         setScoreLabel(0)
@@ -75,52 +65,9 @@ private extension GameVC {
     }
 
     private func setupViews() {
+        collectionView.dataSource = dataSourceAndDelegate
+        collectionView.delegate = dataSourceAndDelegate
         collectionView.registerNib(CardCVCell.nib, forCellWithReuseIdentifier: CardCVCell.cellIdentifier)
         setupStyling()
     }
-
-    private func fetchData() {
-        showLoader()
-        APIClient.sharedInstance.getPhotos(config.username) {
-            (result: Result<MediaModel>) in
-            self.hideLoader()
-            self.setupWithModel(result.model)
-        }
-    }
-
-    private func setupWithModel(model: MediaModel?) {
-        guard let model = model else { return }
-        let cardModels = model.cardModels
-        let memoryCards = memoryCardsFromModels(cardModels, cardCount: config.level.nbrOfCards)
-        dataSourceAndDelegate = MemoryDataSourceAndDelegate(memoryCards, level: config.level, delegate: self)
-        prefetchImagesForCard(memoryCards)
-    }
-
-    private func memoryCardsFromModels(cardModels: [CardModel], cardCount: Int) -> [CardModel] {
-        let cardCount = min(cardModels.count, cardCount)
-        var memoryCards = cardModels
-        memoryCards.shuffle()
-        memoryCards = memoryCards.choose(cardCount/2)
-        var duplicated = duplicatedMemoryCards(memoryCards)
-        duplicated.shuffle()
-        return duplicated
-    }
-
-    private func duplicatedMemoryCards(cards: [CardModel]) -> [CardModel] {
-        var duplicated: [CardModel] = []
-        for memoryCard in cards {
-            let duplicate = CardModel(imageUrl: memoryCard.imageUrl)
-            duplicated.append(duplicate)
-            duplicated.append(memoryCard)
-        }
-        return duplicated
-    }
-
-    private func prefetchImagesForCard(cards: [CardModel]) {
-        let urls: [URLRequestConvertible] = cards.map { return URL(url: $0.imageUrl) }
-        ImagePrefetcher.sharedInstance.prefetchImages(urls) {
-            self.collectionView.reloadData()
-        }
-    }
-
 }
