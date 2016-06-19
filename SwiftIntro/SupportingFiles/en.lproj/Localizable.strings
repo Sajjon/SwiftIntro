@@ -15,3 +15,5 @@
 "PairsFoundUnformatted" = "Pairs found: %d";
 "GameOver" = "Game over";
 "ClickCountUnformatted" = "Click count: %d";
+"Quit" = "Quit";
+"Restart" = "Restart";

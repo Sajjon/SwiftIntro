@@ -121,6 +121,89 @@
             </objects>
             <point key="canvasLocation" x="-1388.5" y="-884.5"/>
         </scene>
+        <!--Game OverVC-->
+        <scene sceneID="ywi-y6-hqi">
+            <objects>
+                <viewController id="GMX-QS-y1A" customClass="GameOverVC" customModule="SwiftIntro" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9AY-R0-qvb"/>
+                        <viewControllerLayoutGuide type="bottom" id="0yN-Mb-RII"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iHd-AE-oDB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB: Game Over" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jEj-tz-Epk" userLabel="Game Over Label">
+                                <rect key="frame" x="16" y="100" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB: Click count: 45" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZU-fa-bS7" userLabel="Click Count Label">
+                                <rect key="frame" x="16" y="141" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="10S-PU-iL9" userLabel="Restart Button">
+                                <rect key="frame" x="65" y="179" width="100" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="69g-zy-RTh"/>
+                                    <constraint firstAttribute="height" constant="50" id="vbn-K4-OGU"/>
+                                </constraints>
+                                <state key="normal" title="Restart"/>
+                                <connections>
+                                    <action selector="restartButtonPressed:" destination="GMX-QS-y1A" eventType="touchUpInside" id="Die-fg-lsT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LmE-2h-LFI" userLabel="Quit Button">
+                                <rect key="frame" x="210" y="179" width="100" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Kw3-ci-LBI"/>
+                                    <constraint firstAttribute="height" constant="50" id="rv2-B9-v2V"/>
+                                </constraints>
+                                <state key="normal" title="Quit"/>
+                                <connections>
+                                    <action selector="quitButtonPressed:" destination="GMX-QS-y1A" eventType="touchUpInside" id="sYr-wu-8lT"/>
+                                </connections>
+                            </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UcQ-7o-Jk7" userLabel="Layout Guide View For Buttons">
+                                <rect key="frame" x="185" y="202" width="5" height="5"/>
+                                <color key="backgroundColor" red="0.96265388259999995" green="0.0" blue="0.11550617019999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="5" id="Bzw-7G-Tvu"/>
+                                    <constraint firstAttribute="height" constant="5" id="Ejy-qR-XKX"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="jEj-tz-Epk" secondAttribute="trailing" constant="16" id="98z-xQ-LGb"/>
+                            <constraint firstItem="10S-PU-iL9" firstAttribute="centerY" secondItem="UcQ-7o-Jk7" secondAttribute="centerY" id="Aqz-h0-BqR"/>
+                            <constraint firstItem="AZU-fa-bS7" firstAttribute="top" secondItem="jEj-tz-Epk" secondAttribute="bottom" constant="20" id="D8d-bC-Zwl"/>
+                            <constraint firstAttribute="trailing" secondItem="AZU-fa-bS7" secondAttribute="trailing" constant="16" id="Fwx-RH-Vte"/>
+                            <constraint firstItem="UcQ-7o-Jk7" firstAttribute="centerX" secondItem="AZU-fa-bS7" secondAttribute="centerX" id="Jy4-ao-HSR"/>
+                            <constraint firstItem="jEj-tz-Epk" firstAttribute="leading" secondItem="iHd-AE-oDB" secondAttribute="leading" constant="16" id="Rip-HA-QgB"/>
+                            <constraint firstItem="jEj-tz-Epk" firstAttribute="top" secondItem="9AY-R0-qvb" secondAttribute="bottom" constant="80" id="TQR-VK-YyV"/>
+                            <constraint firstItem="AZU-fa-bS7" firstAttribute="leading" secondItem="iHd-AE-oDB" secondAttribute="leading" constant="16" id="bCS-ry-nUM"/>
+                            <constraint firstItem="LmE-2h-LFI" firstAttribute="leading" secondItem="UcQ-7o-Jk7" secondAttribute="trailing" constant="20" id="m48-F9-B5n"/>
+                            <constraint firstItem="LmE-2h-LFI" firstAttribute="centerY" secondItem="UcQ-7o-Jk7" secondAttribute="centerY" id="wkg-gv-Avi"/>
+                            <constraint firstItem="UcQ-7o-Jk7" firstAttribute="top" secondItem="AZU-fa-bS7" secondAttribute="bottom" constant="40" id="wrI-bv-sTf"/>
+                            <constraint firstItem="UcQ-7o-Jk7" firstAttribute="leading" secondItem="10S-PU-iL9" secondAttribute="trailing" constant="20" id="yc2-Jz-kn4"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="clickCountLabel" destination="AZU-fa-bS7" id="5B1-ep-rpI"/>
+                        <outlet property="gameOverLabel" destination="jEj-tz-Epk" id="VBU-hM-HWs"/>
+                        <outlet property="quitButton" destination="LmE-2h-LFI" id="kCX-5w-dCE"/>
+                        <outlet property="restartButton" destination="10S-PU-iL9" id="kDU-Aa-dyt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="luj-rO-Pkf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-836.5" y="-918.5"/>
+        </scene>
         <!--SettingsVC-->
         <scene sceneID="m3W-VU-yuJ">
             <objects>
