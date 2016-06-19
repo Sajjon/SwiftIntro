@@ -42,22 +42,22 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cJU-4Y-KWZ" userLabel="Label View">
                                 <rect key="frame" x="10" y="10" width="355" height="60"/>
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="SB: Pairs found 1 of 10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5X-rW-4un">
+                                        <rect key="frame" x="41.5" y="15" width="272" height="31"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="23"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fi6-Al-yPL">
-                                        <rect key="frame" x="300" y="-4.5" width="39" height="39"/>
-                                        <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="16"/>
-                                        <state key="normal" title="Quit">
+                                        <rect key="frame" x="322.5" y="-8" width="30" height="46"/>
+                                        <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="30"/>
+                                        <state key="normal" title="x">
                                             <color key="titleColor" red="0.17929026234606274" green="0.70492666120064795" blue="0.85350560897435901" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <segue destination="baJ-kx-4T7" kind="showDetail" id="rFB-Oy-WG2"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Pairs found 1 of 10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5X-rW-4un">
-                                        <rect key="frame" x="41.5" y="15" width="272" height="31"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="23"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -66,7 +66,7 @@
                                     <constraint firstAttribute="height" constant="60" id="KfS-yC-FF8"/>
                                     <constraint firstItem="U5X-rW-4un" firstAttribute="centerY" secondItem="cJU-4Y-KWZ" secondAttribute="centerY" id="eZl-T1-ALA"/>
                                     <constraint firstAttribute="centerX" secondItem="U5X-rW-4un" secondAttribute="trailing" id="gz1-nB-EWH"/>
-                                    <constraint firstItem="Fi6-Al-yPL" firstAttribute="centerX" secondItem="cJU-4Y-KWZ" secondAttribute="centerX" multiplier="1.8" id="iMT-rb-9cZ"/>
+                                    <constraint firstItem="Fi6-Al-yPL" firstAttribute="centerX" secondItem="cJU-4Y-KWZ" secondAttribute="centerX" multiplier="1.9" id="iMT-rb-9cZ"/>
                                     <constraint firstItem="U5X-rW-4un" firstAttribute="centerY" secondItem="cJU-4Y-KWZ" secondAttribute="centerY" id="q1o-3a-uhs"/>
                                 </constraints>
                                 <variation key="default">
@@ -430,7 +430,7 @@ memory.</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="rFB-Oy-WG2"/>
         <segue reference="9pj-Zu-XUd"/>
-        <segue reference="cVp-ZS-IAw"/>
     </inferredMetricsTieBreakers>
 </document>
