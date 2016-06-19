@@ -49,7 +49,7 @@
                                             <color key="titleColor" red="0.17929026234606274" green="0.70492666120064795" blue="0.85350560897435901" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="quitAction:" destination="Rhk-Tt-u83" eventType="touchUpInside" id="Fmu-MK-Fc1"/>
+                                            <segue destination="baJ-kx-4T7" kind="showDetail" id="rFB-Oy-WG2"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Pairs found 1 of 10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5X-rW-4un">
@@ -112,7 +112,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mcg-8F-uDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1486.5" y="-884.5"/>
+            <point key="canvasLocation" x="-1302.5" y="-892.5"/>
         </scene>
         <!--Game OverVC-->
         <scene sceneID="ywi-y6-hqi">
@@ -181,7 +181,7 @@ even better score!</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="quitButtonPressed:" destination="GMX-QS-y1A" eventType="touchUpInside" id="sYr-wu-8lT"/>
+                                    <segue destination="baJ-kx-4T7" kind="showDetail" id="cVp-ZS-IAw"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="10S-PU-iL9" userLabel="Restart Button">
@@ -197,7 +197,7 @@ even better score!</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="restartButtonPressed:" destination="GMX-QS-y1A" eventType="touchUpInside" id="Die-fg-lsT"/>
+                                    <segue destination="Rhk-Tt-u83" kind="showDetail" id="nFE-04-PdV"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -252,7 +252,7 @@ even better score!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="luj-rO-Pkf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-978.5" y="-884.5"/>
+            <point key="canvasLocation" x="-812.5" y="-884.5"/>
         </scene>
         <!--SettingsVC-->
         <scene sceneID="m3W-VU-yuJ">
@@ -286,7 +286,7 @@ even better score!</string>
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="Rhk-Tt-u83" kind="show" identifier="startGameSegue" id="FMX-1q-b8c"/>
+                                    <segue destination="F3G-8R-nDL" kind="showDetail" id="HKY-iM-Vze"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB: What is your Instagram username?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="weo-QR-9rA">
@@ -379,10 +379,58 @@ memory.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PpQ-Av-naL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1884" y="-1012"/>
+            <point key="canvasLocation" x="-2242" y="-1046"/>
+        </scene>
+        <!--Loading DataVC-->
+        <scene sceneID="PsU-2b-ZtN">
+            <objects>
+                <viewController id="F3G-8R-nDL" customClass="LoadingDataVC" customModule="SwiftIntro" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bhP-w9-Sfk"/>
+                        <viewControllerLayoutGuide type="bottom" id="In9-9h-13R"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KN8-n2-FLI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB: Loading...." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6wf-Ed-Vhp" userLabel="Loading Label">
+                                <rect key="frame" x="16" y="309" width="343" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="JqS-hj-oMB">
+                                <rect key="frame" x="169" y="377.5" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6wf-Ed-Vhp" firstAttribute="centerX" secondItem="KN8-n2-FLI" secondAttribute="centerX" id="E9h-bE-HIU"/>
+                            <constraint firstAttribute="trailing" secondItem="6wf-Ed-Vhp" secondAttribute="trailing" constant="16" id="EpD-cF-p9W"/>
+                            <constraint firstItem="6wf-Ed-Vhp" firstAttribute="centerY" secondItem="KN8-n2-FLI" secondAttribute="centerY" id="L7m-c2-b3I"/>
+                            <constraint firstItem="JqS-hj-oMB" firstAttribute="centerX" secondItem="6wf-Ed-Vhp" secondAttribute="centerX" id="S4f-xK-U4c"/>
+                            <constraint firstItem="JqS-hj-oMB" firstAttribute="top" secondItem="6wf-Ed-Vhp" secondAttribute="bottom" constant="20" id="brT-LU-KVc"/>
+                            <constraint firstItem="6wf-Ed-Vhp" firstAttribute="leading" secondItem="KN8-n2-FLI" secondAttribute="leading" constant="16" id="ey7-oQ-3F6"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="E9h-bE-HIU"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="loadingLabel" destination="6wf-Ed-Vhp" id="FrV-UL-MaW"/>
+                        <segue destination="Rhk-Tt-u83" kind="showDetail" identifier="startGameSegue" id="9pj-Zu-XUd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CAR-0l-EpO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1805.5" y="-642.5"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ipz-pj-UEw"/>
+        <segue reference="9pj-Zu-XUd"/>
+        <segue reference="cVp-ZS-IAw"/>
     </inferredMetricsTieBreakers>
 </document>
