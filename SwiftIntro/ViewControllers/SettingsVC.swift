@@ -76,7 +76,7 @@ private extension SettingsVC {
     }
 
     private func setupLocalizableStrings() {
-        usernameTextField.placeholder = localizedString("Username")
+        usernameTextField.placeholder = localizedString("UsernamePlaceholder")
         segmentTitleLabel.setLocalizedText("Level")
         setupLocalizationForSegmentedControl()
         usernameLabel.setLocalizedText("Username")

@@ -9,6 +9,7 @@
 "StartGame" = "Spela!";
 "Level" = "Hur bra är ditt minne?";
 "Username" = "Vad är ditt Instagram användarnamn?";
+"UsernamePlaceholder" = "användarnamn";
 "Easy" = "n00b";
 "Normal" = "Okei";
 "Hard" = "Kick-Ass";

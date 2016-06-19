@@ -8,6 +8,7 @@
 
 "StartGame" = "Play!";
 "Level" = "How good is your memory?";
+"UsernamePlaceholder" = "username";
 "Username" = "What's your Instagram username?";
 "Easy" = "n00b";
 "Normal" = "A-OK!";
