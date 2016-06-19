@@ -61,7 +61,7 @@
                                             <color key="titleColor" red="0.17929026234606274" green="0.70492666120064795" blue="0.85350560897435901" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="quitAction:" destination="Rhk-Tt-u83" eventType="touchUpInside" id="Fmu-MK-Fc1"/>
+                                            <segue destination="baJ-kx-4T7" kind="showDetail" id="iZG-ku-GDC"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -120,7 +120,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mcg-8F-uDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1388.5" y="-884.5"/>
+            <point key="canvasLocation" x="-1308.5" y="-884.5"/>
         </scene>
         <!--Game OverVC-->
         <scene sceneID="ywi-y6-hqi">
@@ -154,7 +154,7 @@
                                 </constraints>
                                 <state key="normal" title="Restart"/>
                                 <connections>
-                                    <action selector="restartButtonPressed:" destination="GMX-QS-y1A" eventType="touchUpInside" id="Die-fg-lsT"/>
+                                    <segue destination="Rhk-Tt-u83" kind="showDetail" id="3my-fw-M6z"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LmE-2h-LFI" userLabel="Quit Button">
@@ -165,7 +165,7 @@
                                 </constraints>
                                 <state key="normal" title="Quit"/>
                                 <connections>
-                                    <action selector="quitButtonPressed:" destination="GMX-QS-y1A" eventType="touchUpInside" id="sYr-wu-8lT"/>
+                                    <segue destination="baJ-kx-4T7" kind="showDetail" id="Pyb-0V-OGT"/>
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UcQ-7o-Jk7" userLabel="Layout Guide View For Buttons">
@@ -199,13 +199,11 @@
                         <outlet property="gameOverLabel" destination="jEj-tz-Epk" id="VBU-hM-HWs"/>
                         <outlet property="quitButton" destination="LmE-2h-LFI" id="kCX-5w-dCE"/>
                         <outlet property="restartButton" destination="10S-PU-iL9" id="kDU-Aa-dyt"/>
-                        <segue destination="Rhk-Tt-u83" kind="showDetail" identifier="restartSegue" id="ipz-pj-UEw"/>
-                        <segue destination="baJ-kx-4T7" kind="showDetail" identifier="quitSegue" id="Bnb-Ut-YNh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="luj-rO-Pkf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-978.5" y="-884.5"/>
+            <point key="canvasLocation" x="-775.5" y="-884.5"/>
         </scene>
         <!--SettingsVC-->
         <scene sceneID="m3W-VU-yuJ">
@@ -219,29 +217,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBM-hZ-rVu">
-                                <rect key="frame" x="100" y="335" width="120" height="50"/>
-                                <color key="backgroundColor" red="0.54503205128205123" green="0.076284507326139103" blue="0.41484855094439638" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="3FZ-6e-S5t"/>
-                                    <constraint firstAttribute="width" constant="120" id="BkT-lh-cnH"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="eSL-pE-QuF"/>
-                                    <constraint firstAttribute="height" constant="50" id="tmf-jF-2wU"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="20"/>
-                                <state key="normal" title="Play!">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="3FZ-6e-S5t"/>
-                                        <exclude reference="eSL-pE-QuF"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <segue destination="Rhk-Tt-u83" kind="show" identifier="startGameSegue" id="FMX-1q-b8c"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is your Instagram username?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="weo-QR-9rA">
                                 <rect key="frame" x="0.0" y="148" width="320" height="40"/>
                                 <constraints>
@@ -292,6 +267,29 @@ memory.</string>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBM-hZ-rVu">
+                                <rect key="frame" x="100" y="335" width="120" height="50"/>
+                                <color key="backgroundColor" red="0.54503205128205123" green="0.076284507326139103" blue="0.41484855094439638" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="3FZ-6e-S5t"/>
+                                    <constraint firstAttribute="width" constant="120" id="BkT-lh-cnH"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="eSL-pE-QuF"/>
+                                    <constraint firstAttribute="height" constant="50" id="tmf-jF-2wU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="20"/>
+                                <state key="normal" title="Play!">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="3FZ-6e-S5t"/>
+                                        <exclude reference="eSL-pE-QuF"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <segue destination="wcc-91-uDd" kind="showDetail" id="T4W-CS-umf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -331,10 +329,58 @@ memory.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PpQ-Av-naL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1884" y="-1012"/>
+            <point key="canvasLocation" x="-2271" y="-1015"/>
+        </scene>
+        <!--Loading DataVC-->
+        <scene sceneID="vhG-AL-Hjh">
+            <objects>
+                <viewController id="wcc-91-uDd" customClass="LoadingDataVC" customModule="SwiftIntro" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CF3-9e-fpc"/>
+                        <viewControllerLayoutGuide type="bottom" id="Wfv-IS-4K4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LDf-id-Fg6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB: Loading...." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="765-kw-AYE" userLabel="Loading Label">
+                                <rect key="frame" x="16" y="309" width="343" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="eRO-Rd-rSh">
+                                <rect key="frame" x="169" y="377.5" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="765-kw-AYE" secondAttribute="trailing" constant="16" id="J8w-b8-3jP"/>
+                            <constraint firstItem="765-kw-AYE" firstAttribute="leading" secondItem="LDf-id-Fg6" secondAttribute="leading" constant="16" id="MxV-40-pfE"/>
+                            <constraint firstItem="eRO-Rd-rSh" firstAttribute="centerX" secondItem="765-kw-AYE" secondAttribute="centerX" id="TlQ-gz-rFx"/>
+                            <constraint firstItem="eRO-Rd-rSh" firstAttribute="top" secondItem="765-kw-AYE" secondAttribute="bottom" constant="20" id="cEG-bG-gso"/>
+                            <constraint firstItem="765-kw-AYE" firstAttribute="centerX" secondItem="LDf-id-Fg6" secondAttribute="centerX" id="iqE-Et-bc3"/>
+                            <constraint firstItem="765-kw-AYE" firstAttribute="centerY" secondItem="LDf-id-Fg6" secondAttribute="centerY" id="zXU-4V-lgi"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="iqE-Et-bc3"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="loadingLabel" destination="765-kw-AYE" id="abu-yq-h8L"/>
+                        <segue destination="Rhk-Tt-u83" kind="showDetail" identifier="startGameSegue" id="SOU-vJ-ilf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tBL-aX-SxW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1787.5" y="-912.5"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ipz-pj-UEw"/>
+        <segue reference="3my-fw-M6z"/>
+        <segue reference="Pyb-0V-OGT"/>
     </inferredMetricsTieBreakers>
 </document>

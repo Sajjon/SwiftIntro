@@ -28,23 +28,21 @@ class GameOverVC: UIViewController, Configurable {
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
         guard var configurable = segue?.destinationViewController as? Configurable else { return }
         configurable.config = config
-    }
-}
-
-//MARK: IBAction Methods
-extension GameOverVC {
-
-    @IBAction func restartButtonPressed(sender: UIButton) {
-        performSegueWithIdentifier(restartSeque, sender: self)
-    }
-
-    @IBAction func quitButtonPressed(sender: UIButton) {
-        performSegueWithIdentifier(quitSeque, sender: self)
+        guard let gameVC = segue?.destinationViewController as? GameVC else { return }
+        guard let cards = result.cards else { return }
+        unflipCards(cards)
+        gameVC.memoryCards = cards
     }
 }
 
 //MARK: Private Methods
 private extension GameOverVC {
+
+    private func unflipCards(cards: [CardModel]) {
+        for card in cards {
+            card.flipped = false
+        }
+    }
 
     private func setupViews() {
         setupLocalizedText()

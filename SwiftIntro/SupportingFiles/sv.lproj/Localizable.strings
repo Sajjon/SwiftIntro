@@ -12,9 +12,8 @@
 "Easy" = "Lätt";
 "Normal" = "Normal";
 "Hard" = "Svårt";
-"PairsFoundUnformatted" = "Par funna: %d";
 "GameOver" = "Game over";
 "ClickCountUnformatted" = "Antal klick: %d";
-"Quit" = "Quit";
-"Restart" = "Restart";
-
+"Quit" = "Avsluta";
+"Restart" = "Igen";
+"Loading" = "Laddar...";

@@ -18,9 +18,9 @@ protocol Configurable {
     var config: GameConfiguration! {get set}
 }
 
-private let startGameSegue = "startGameSegue"
 class SettingsVC: UIViewController, Configurable {
-    
+
+    //MARK: Variables
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var levelSegmentedControl: UISegmentedControl!
@@ -28,11 +28,13 @@ class SettingsVC: UIViewController, Configurable {
     
     var config: GameConfiguration!
 
+    //MARK: Initializers
     required init?(coder aDecoder: NSCoder) {
         self.config = GameConfiguration()
         super.init(coder: aDecoder)
     }
-    
+
+    //MARK: VC Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -40,17 +42,18 @@ class SettingsVC: UIViewController, Configurable {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-
-        guard let identifier = segue?.identifier else { return }
-        guard identifier == startGameSegue else { return }
-        guard let vc = segue?.destinationViewController as? GameVC else { return }
-
-        if let username: String = usernameTextField.text where !username.isEmpty{
+        guard let vc = segue?.destinationViewController as? LoadingDataVC else { return }
+        if let username: String = usernameTextField.text where !username.isEmpty {
             config.username = username
         }
 
         vc.config = config
     }
+
+}
+
+//MARK: IBAction Methods
+extension SettingsVC {
 
     @IBAction func changedLevel(sender: UISegmentedControl) {
         let level = Level(segmentedControlIndex: sender.selectedSegmentIndex)

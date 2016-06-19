@@ -11,6 +11,12 @@ import UIKit
 struct GameResult {
     let level: Level
     let clickCount: Int
+    var cards: [CardModel]!
+
+    init(level: Level, clickCount: Int) {
+        self.level = level
+        self.clickCount = clickCount
+    }
 }
 
 protocol GameDelegate: class {
