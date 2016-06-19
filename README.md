@@ -3,7 +3,7 @@
 
 A memory game implementation fetching images from Instagram. This project aims to introduce you to iOS development with Swift disregarding of your current skill level.
 
-The app defaults to fetch the [Instagram images of Taylor Swift](https://www.instagram.com/taylorswift/) (_"hehe he he 😁, yes [Miriam](https://github.com/MiriamTisander), that is funny" /[Alex](https://github.com/sajjon)_), but you can enter your own or another custom Instagram account and fetch images for it instead.
+The app defaults to fetch the [Instagram images of Taylor Swift](https://www.instagram.com/taylorswift/) (_"hehe he he _😁_, yes [Miriam](https://github.com/MiriamTisander), that is funny" /[Alex](https://github.com/sajjon)_), but you can enter your own or another custom Instagram account and fetch images for it instead.
 
 ## Tasks 
 
