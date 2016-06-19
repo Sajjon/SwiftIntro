@@ -30,20 +30,12 @@ class GameOverVC: UIViewController, Configurable {
         configurable.config = config
         guard let gameVC = segue?.destinationViewController as? GameVC else { return }
         guard let cards = result.cards else { return }
-        unflipCards(cards)
-        gameVC.memoryCards = cards
+        gameVC.cards = cards.unflipped()
     }
 }
 
 //MARK: Private Methods
 private extension GameOverVC {
-
-    private func unflipCards(cards: [CardModel]) {
-        for card in cards {
-            card.flipped = false
-        }
-    }
-
     private func setupViews() {
         quitButton.layer.cornerRadius = quitButton.frame.height/2
         restartButton.layer.cornerRadius = restartButton.frame.height/2

@@ -15,11 +15,11 @@ class GameVC: UIViewController, Configurable {
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var labelsView: UIView!
     var config: GameConfiguration!
-    var memoryCards: [CardModel]!
+    var cards: Cards!
     private var result: GameResult!
     
     private lazy var dataSourceAndDelegate: MemoryDataSourceAndDelegate = {
-        let dataSourceAndDelegate = MemoryDataSourceAndDelegate(self.memoryCards, level: self.config.level, delegate: self)
+        let dataSourceAndDelegate = MemoryDataSourceAndDelegate(self.cards, level: self.config.level, delegate: self)
         return dataSourceAndDelegate
     }()
 
@@ -45,7 +45,7 @@ extension GameVC: GameDelegate {
 
     func gameOver(result: GameResult) {
         self.result = result
-        self.result.cards = memoryCards
+        self.result.cards = cards
         collectionView.userInteractionEnabled = false
         delay(1) {
             self.performSegueWithIdentifier(gameOverSeque, sender: self)

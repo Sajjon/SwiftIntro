@@ -37,7 +37,7 @@ class CardCVCell: UICollectionViewCell {
         flipped = false
     }
 
-    func flipCard(cardModel: CardModel) {
+    func flipCard(cardModel: Card) {
         let flipped = cardModel.flipped
         let fromView = flipped ? cardFrontImageView : cardBackImageView
         let toView = flipped ? cardBackImageView : cardFrontImageView
@@ -62,7 +62,7 @@ extension CardCVCell: CellProtocol {
     }
 
     func updateWithModel(model: Model) {
-        guard let card = model as? CardModel else { return }
+        guard let card = model as? Card else { return }
         guard let cachedImage = ImagePrefetcher.sharedInstance.imageFromCache(card.imageUrl) else { return }
         cardFrontImageView.image = cachedImage
         flipped = card.flipped

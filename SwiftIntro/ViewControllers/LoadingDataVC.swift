@@ -16,7 +16,7 @@ class LoadingDataVC: UIViewController, Configurable {
     @IBOutlet weak var loadingLabel: UILabel!
 
     var config: GameConfiguration!
-    private var memoryCards: [CardModel]?
+    private var cards: Cards?
 
     private var imagesLeftToFetchCount: Int = Int.max {
         didSet {
@@ -45,7 +45,7 @@ class LoadingDataVC: UIViewController, Configurable {
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
         guard let vc = segue?.destinationViewController as? GameVC else { return }
         vc.config = config
-        vc.memoryCards = memoryCards
+        vc.cards = cards
     }
 }
 
@@ -66,45 +66,24 @@ private extension LoadingDataVC {
     private func fetchData() {
         showLoader()
         APIClient.sharedInstance.getPhotos(config.username) {
-            (result: Result<MediaModel>) in
+            (result: Result<Cards>) in
             self.hideLoader()
             self.setupWithModel(result.model)
         }
     }
 
-    private func setupWithModel(model: MediaModel?) {
+    private func setupWithModel(model: Cards?) {
         guard let model = model else { return }
-        let cardModels = model.cardModels
-        imagesLeftToFetchCount = cardModels.count
-        prefetchImagesForCard(cardModels)
-        memoryCards = memoryCardsFromModels(cardModels, cardCount: config.level.nbrOfCards)
+        let singles = model.singles
+        prefetchImagesForCards(singles)
+        self.cards = Cards(singles, config: config)
     }
 
-    private func memoryCardsFromModels(cardModels: [CardModel], cardCount: Int) -> [CardModel] {
-        let cardCount = min(cardModels.count, cardCount)
-        var memoryCards = cardModels
-        memoryCards.shuffle()
-        memoryCards = memoryCards.choose(cardCount/2)
-        var duplicated = duplicatedMemoryCards(memoryCards)
-        duplicated.shuffle()
-        return duplicated
-    }
-
-    private func duplicatedMemoryCards(cards: [CardModel]) -> [CardModel] {
-        var duplicated: [CardModel] = []
-        for memoryCard in cards {
-            let duplicate = CardModel(imageUrl: memoryCard.imageUrl)
-            duplicated.append(duplicate)
-            duplicated.append(memoryCard)
-        }
-        return duplicated
-    }
-
-    private func prefetchImagesForCard(cards: [CardModel]) {
+    private func prefetchImagesForCards(cards: [Card]) {
+        imagesLeftToFetchCount = cards.count
         let urls: [URLRequestConvertible] = cards.map { return URL(url: $0.imageUrl) }
         ImagePrefetcher.sharedInstance.prefetchImages(urls) {
             self.imagesLeftToFetchCount -= 1
         }
     }
-
 }

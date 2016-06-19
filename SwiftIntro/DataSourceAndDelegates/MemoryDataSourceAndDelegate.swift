@@ -11,7 +11,7 @@ import UIKit
 struct GameResult {
     let level: Level
     let clickCount: Int
-    var cards: [CardModel]!
+    var cards: Cards!
 
     init(level: Level, clickCount: Int) {
         self.level = level
@@ -27,14 +27,14 @@ protocol GameDelegate: class {
 //MARK: Class init and private variables
 class MemoryDataSourceAndDelegate: NSObject {
 
-    private let models: [CardModel]
+    private let cards: Cards
     private let gameLevel: Level
     private weak var delegate: GameDelegate?
 
     private var clickCount = 0
 
     private var cardCount: Int {
-        return models.count
+        return cards.count
     }
 
     private var flippedCardIndexPath: NSIndexPath?
@@ -54,8 +54,8 @@ class MemoryDataSourceAndDelegate: NSObject {
         }
     }
 
-    init(_ models: [CardModel], level: Level, delegate: GameDelegate) {
-        self.models = models
+    init(_ cards: Cards, level: Level, delegate: GameDelegate) {
+        self.cards = cards
         self.gameLevel = level
         self.delegate = delegate
     }
@@ -64,10 +64,10 @@ class MemoryDataSourceAndDelegate: NSObject {
 //MARK: Game play Methods
 private extension MemoryDataSourceAndDelegate {
     
-    private func modelForIndexPath(indexPath: NSIndexPath) -> CardModel? {
-        guard indexPath.row < models.count else { return nil }
+    private func cardForIndexPath(indexPath: NSIndexPath) -> Card? {
+        guard indexPath.row < cards.count else { return nil }
         let index = indexFromIndexPath(indexPath)
-        let model = models[index]
+        let model = cards[index]
         return model
     }
     
@@ -96,7 +96,7 @@ private extension MemoryDataSourceAndDelegate {
     }
 
     private func flipCardAtIndexPath(indexPath: NSIndexPath, inCollectionView collectionView: UICollectionView) {
-        guard let card = modelForIndexPath(indexPath) else { return }
+        guard let card = cardForIndexPath(indexPath) else { return }
         guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CardCVCell else { return }
         cell.flipCard(card)
     }
@@ -104,17 +104,17 @@ private extension MemoryDataSourceAndDelegate {
     private func checkIfCardAtIndexPath(indexPath: NSIndexPath,
                                         inCollectionView collectionView: UICollectionView,
                                                          matchesAlreadyFlippedCard flippedIndexPath: NSIndexPath) {
-        guard let card = modelForIndexPath(indexPath) else { return }
+        guard let card = cardForIndexPath(indexPath) else { return }
         guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CardCVCell else { return }
-        guard let flippedCard = modelForIndexPath(flippedIndexPath) else { return }
+        guard let flippedCard = cardForIndexPath(flippedIndexPath) else { return }
         guard let flippedCell = collectionView.cellForItemAtIndexPath(flippedIndexPath) as? CardCVCell else { return }
         checkIfCard(card, withCell: cell, matchesFlippedCard: flippedCard, withCell: flippedCell)
     }
 
     //swiftlint:disable opening_brace
-    private func checkIfCard(card: CardModel,
+    private func checkIfCard(card: Card,
                                  withCell cell: CardCVCell,
-                                          matchesFlippedCard flippedCard: CardModel,
+                                          matchesFlippedCard flippedCard: Card,
                                                                     withCell flippedCell: CardCVCell)
     {
         if card == flippedCard {
@@ -154,7 +154,7 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
 
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? CardCVCell else { return }
-        guard let model = modelForIndexPath(indexPath) else { return }
+        guard let model = cardForIndexPath(indexPath) else { return }
         cell.updateWithModel(model)
     }
 }

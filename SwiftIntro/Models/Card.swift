@@ -1,5 +1,5 @@
 //
-//  CardModel.swift
+//  Card.swift
 //  SwiftIntro
 //
 //  Created by Alexander Georgii-Hemming Cyon on 01/06/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class CardModel {
+final class Card {
     let imageUrl: NSURL
 
     var flipped: Bool = false
@@ -19,14 +19,14 @@ final class CardModel {
 }
 
 //MARK: Equatable
-extension CardModel: Equatable {}
-func == (lhs: CardModel, rhs: CardModel) -> Bool {
+extension Card: Equatable {}
+func == (lhs: Card, rhs: Card) -> Bool {
     let same = lhs.imageUrl == rhs.imageUrl
     return same
 }
 
 //MARK: Model
-extension CardModel: Model {
+extension Card: Model {
 
     convenience init?(response: NSHTTPURLResponse, representation: AnyObject) {
         guard let media = representation["images"] as? JSON else { return nil }
@@ -36,11 +36,11 @@ extension CardModel: Model {
         self.init(imageUrl: imageUrl)
     }
 
-    static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [CardModel] {
+    static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [Card] {
         guard let representation = representation as? [JSON] else { return [] }
-        var cardModels: [CardModel] = []
+        var cardModels: [Card] = []
         for cardRepresentation in representation {
-            guard let card = CardModel(response: response, representation: cardRepresentation) else { continue }
+            guard let card = Card(response: response, representation: cardRepresentation) else { continue }
             cardModels.append(card)
         }
 
