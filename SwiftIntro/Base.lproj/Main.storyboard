@@ -199,11 +199,13 @@
                         <outlet property="gameOverLabel" destination="jEj-tz-Epk" id="VBU-hM-HWs"/>
                         <outlet property="quitButton" destination="LmE-2h-LFI" id="kCX-5w-dCE"/>
                         <outlet property="restartButton" destination="10S-PU-iL9" id="kDU-Aa-dyt"/>
+                        <segue destination="Rhk-Tt-u83" kind="showDetail" identifier="restartSegue" id="ipz-pj-UEw"/>
+                        <segue destination="baJ-kx-4T7" kind="showDetail" identifier="quitSegue" id="Bnb-Ut-YNh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="luj-rO-Pkf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-836.5" y="-918.5"/>
+            <point key="canvasLocation" x="-978.5" y="-884.5"/>
         </scene>
         <!--SettingsVC-->
         <scene sceneID="m3W-VU-yuJ">
@@ -332,4 +334,7 @@ memory.</string>
             <point key="canvasLocation" x="-1884" y="-1012"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ipz-pj-UEw"/>
+    </inferredMetricsTieBreakers>
 </document>

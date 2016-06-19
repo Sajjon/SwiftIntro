@@ -8,19 +8,26 @@
 
 import UIKit
 
-class GameOverVC: UIViewController {
+private let restartSeque = "restartSegue"
+private let quitSeque = "quitSegue"
+class GameOverVC: UIViewController, Configurable {
 
     @IBOutlet weak var gameOverLabel: UILabel!
     @IBOutlet weak var clickCountLabel: UILabel!
     @IBOutlet weak var restartButton: UIButton!
     @IBOutlet weak var quitButton: UIButton!
 
-    var settings: GameSettings!
+    var config: GameConfiguration!
     var result: GameResult!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
+        guard var configurable = segue?.destinationViewController as? Configurable else { return }
+        configurable.config = config
     }
 }
 
@@ -28,8 +35,11 @@ class GameOverVC: UIViewController {
 extension GameOverVC {
 
     @IBAction func restartButtonPressed(sender: UIButton) {
+        performSegueWithIdentifier(restartSeque, sender: self)
     }
+
     @IBAction func quitButtonPressed(sender: UIButton) {
+        performSegueWithIdentifier(quitSeque, sender: self)
     }
 }
 

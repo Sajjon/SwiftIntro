@@ -10,12 +10,12 @@ import UIKit
 import Alamofire
 
 private let gameOverSeque = "gameOverSeque"
-class GameVC: UIViewController {
+class GameVC: UIViewController, Configurable {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var labelsView: UIView!
-    var gameSettings: GameSettings = GameSettings()
+    var config: GameConfiguration!
     private var gameResult: GameResult!
     
     private var dataSourceAndDelegate: MemoryDataSourceAndDelegate! {
@@ -34,7 +34,7 @@ class GameVC: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
         guard segue?.identifier == gameOverSeque else { return }
         guard let vc = segue?.destinationViewController as? GameOverVC else { return }
-        vc.settings = gameSettings
+        vc.config = config
         vc.result = gameResult
     }
 
@@ -74,7 +74,7 @@ private extension GameVC {
 
     private func fetchData() {
         showLoader()
-        APIClient.sharedInstance.getPhotos(gameSettings.username) {
+        APIClient.sharedInstance.getPhotos(config.username) {
             (result: Result<MediaModel>) in
             self.hideLoader()
             self.setupWithModel(result.model)
@@ -84,8 +84,8 @@ private extension GameVC {
     private func setupWithModel(model: MediaModel?) {
         guard let model = model else { return }
         let cardModels = model.cardModels
-        let memoryCards = memoryCardsFromModels(cardModels, cardCount: gameSettings.level.nbrOfCards)
-        dataSourceAndDelegate = MemoryDataSourceAndDelegate(memoryCards, level: gameSettings.level, delegate: self)
+        let memoryCards = memoryCardsFromModels(cardModels, cardCount: config.level.nbrOfCards)
+        dataSourceAndDelegate = MemoryDataSourceAndDelegate(memoryCards, level: config.level, delegate: self)
         prefetchImagesForCard(memoryCards)
     }
 
