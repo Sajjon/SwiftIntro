@@ -257,7 +257,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select a game level:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmf-8C-YP6">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How good is your memory?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmf-8C-YP6">
                                 <rect key="frame" x="0.0" y="232" width="320" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="3B0-yG-oru"/>
@@ -266,16 +266,16 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="230" horizontalCompressionResistancePriority="780" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="WkT-ah-UQ7">
-                                <rect key="frame" x="60" y="272.5" width="200" height="31"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="230" horizontalCompressionResistancePriority="780" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="WkT-ah-UQ7">
+                                <rect key="frame" x="60" y="273" width="200" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="edy-RO-Zze"/>
                                     <constraint firstAttribute="height" constant="30" id="f0g-lq-Emn"/>
                                 </constraints>
                                 <segments>
-                                    <segment title="Easy"/>
-                                    <segment title="Normal"/>
-                                    <segment title="Hard"/>
+                                    <segment title="n00b"/>
+                                    <segment title="A-OK!"/>
+                                    <segment title="Kick-Ass"/>
                                 </segments>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
