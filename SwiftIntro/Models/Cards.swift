@@ -52,7 +52,7 @@ extension Cards: Model {
     }
 
     static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [Cards] {
-        return []
+        fatalError("Not needed")
     }
 }
 

@@ -27,8 +27,9 @@ class LoadingDataVC: UIViewController, Configurable {
 
     private var shouldStartGame: Bool = false {
         didSet {
-            guard shouldStartGame else { return }
-            self.startGame()
+            if shouldStartGame {
+                startGame()
+            }
         }
     }
 
