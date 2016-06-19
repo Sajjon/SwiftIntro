@@ -31,13 +31,13 @@ func delay(delay: Double, closure: Closure) {
 
 func localizedString(key: String, args: AnyObject...) -> String {
     let localized = NSLocalizedString(key, comment: "")
-    guard args.count > 0 else { return localized }
+    guard let parameters = args.first as? [AnyObject], parameter = parameters.first else { return localized }
     var formatted: NSString = ""
     if localized.containsString("%d") {
-        guard let number = args[0][0] as? Int else { return localized }
+        guard let number = parameter as? Int else { return localized }
         formatted = NSString(format: localized, number)
     } else if localized.containsString("%@") {
-        guard let string = args[0][0] as? String else { return localized }
+        guard let string = parameter as? String else { return localized }
         formatted = NSString(format: localized, string)
     }
     return formatted as String
