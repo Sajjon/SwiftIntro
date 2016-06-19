@@ -6,14 +6,16 @@
 //  Copyright © 2016 intranet3. All rights reserved.
 //
 
-"StartGame" = "Starta spel";
-"Level" = "Nivå";
-"Username" = "Instagram användarnamn";
-"Easy" = "Lätt";
-"Normal" = "Normal";
-"Hard" = "Svårt";
-"GameOver" = "Game over";
+"StartGame" = "Spela!";
+"Level" = "Hur bra är ditt minne?";
+"Username" = "Vad är ditt Instagram användarnamn?";
+"Easy" = "n00b";
+"Normal" = "Okei";
+"Hard" = "Kick-Ass";
+"PairsFoundUnformatted" = "Par funna %d av %d";
+"GameOver" = "Woho! Du klarade det! ^__^";
 "ClickCountUnformatted" = "Antal klick: %d";
 "Quit" = "Avsluta";
-"Restart" = "Igen";
+"Restart" = "Spela igen!";
 "Loading" = "Laddar...";
+
