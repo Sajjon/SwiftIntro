@@ -62,7 +62,7 @@ ndard iOS pattern - but it smells! Instead you can introduce an Enum for all the
 
 ## Authors 
 
-### [Alexander Georgii-Hemming Cyon](https://github.com/sajjon) [@Redrum_237](https://twitter.com/redrum_237) 
+### [Alexander Cyon](https://github.com/sajjon) [@Redrum_237](https://twitter.com/redrum_237) 
 Alexander has worked with app development since 2010 and enjoys Android but loves iOS 😍.
 
 ### [Miriam Tisander](https://github.com/MiriamTisander)
