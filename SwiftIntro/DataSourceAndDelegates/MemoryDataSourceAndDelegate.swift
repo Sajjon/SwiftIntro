@@ -18,6 +18,7 @@ protocol GameDelegate: class {
     func gameOver(result: GameResult)
 }
 
+//MARK: Class init and private variables
 class MemoryDataSourceAndDelegate: NSObject {
 
     private let models: [CardModel]
@@ -54,6 +55,7 @@ class MemoryDataSourceAndDelegate: NSObject {
     }
 }
 
+//MARK: Game play Methods
 private extension MemoryDataSourceAndDelegate {
     
     private func modelForIndexPath(indexPath: NSIndexPath) -> CardModel? {
@@ -121,8 +123,7 @@ private extension MemoryDataSourceAndDelegate {
     }
 }
 
-//MARK: Data Source
-
+//MARK: Data Source Methods
 extension MemoryDataSourceAndDelegate: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return gameLevel.columnCount
@@ -138,7 +139,7 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDataSource {
     }
 }
 
-//MARK: Delegate
+//MARK: Delegate Methods
 
 extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -152,7 +153,7 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
     }
 }
 
-//MARK: Flow Layout
+//MARK: Flow Layout Methods
 
 extension MemoryDataSourceAndDelegate: UICollectionViewDelegateFlowLayout {
     

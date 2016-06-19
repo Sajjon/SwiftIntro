@@ -32,8 +32,9 @@ class ImagePrefetcher {
     }
 }
 
-extension ImagePrefetcher: ImagePrefetcherProtocol {
 
+//MARK: ImagePrefetcherProtocol Methods
+extension ImagePrefetcher: ImagePrefetcherProtocol {
 
     func imageFromCache(url: NSURL) -> UIImage? {
         guard let cache = imageCache else { return nil }

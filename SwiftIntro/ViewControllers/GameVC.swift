@@ -37,6 +37,7 @@ class GameVC: UIViewController {
     
 }
 
+//MARK: GameDelegate
 extension GameVC: GameDelegate {
     
     func foundMatch(matches: Int) {
@@ -48,6 +49,8 @@ extension GameVC: GameDelegate {
     }
 }
 
+
+//MARK: Setup and Styling
 private extension GameVC {
     private func setupStyling() {
         labelsView.backgroundColor = .blackColor()
