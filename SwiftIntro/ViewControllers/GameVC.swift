@@ -46,7 +46,10 @@ extension GameVC: GameDelegate {
     func gameOver(result: GameResult) {
         self.result = result
         self.result.cards = memoryCards
-        performSegueWithIdentifier(gameOverSeque, sender: self)
+        collectionView.userInteractionEnabled = false
+        delay(1) {
+            self.performSegueWithIdentifier(gameOverSeque, sender: self)
+        }
     }
     
     private func setScoreLabel(matches: Int) {

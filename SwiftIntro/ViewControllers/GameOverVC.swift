@@ -8,10 +8,7 @@
 
 import UIKit
 
-private let restartSeque = "restartSegue"
-private let quitSeque = "quitSegue"
 class GameOverVC: UIViewController, Configurable {
-
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!

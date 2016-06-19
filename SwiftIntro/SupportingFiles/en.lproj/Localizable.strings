@@ -14,7 +14,7 @@
 "Hard" = "Kick-Ass";
 "PairsFoundUnformatted" = "Pairs found %d of %d";
 "Title" = "Well done!";
-"SubTitle" = "You made it ^__^,\nyour click cout was:";
+"SubTitle" = "You made it ^__^,\nyour click count was:";
 "ClickScore" = "%d";
 "TryHarder" = "Lets try to get an\neven better score!";
 "Quit" = "Quit";
