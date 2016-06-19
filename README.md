@@ -62,9 +62,9 @@ ndard iOS pattern - but it smells! Instead you can introduce an Enum for all the
 
 ## Authors 
 
-### Alexander Georgii-Hemming Cyon [GitHub](https://github.com/sajjon)[@Redrum_237](https://twitter.com/redrum_237) 
+### [Alexander Georgii-Hemming Cyon](https://github.com/sajjon) [@Redrum_237](https://twitter.com/redrum_237) 
 Alexander has worked with app development since 2010 and enjoys Android but loves iOS 😍.
 
-### Miriam Tisander [GitHub](https://github.com/MiriamTisander)
+### [Miriam Tisander](https://github.com/MiriamTisander)
 Miriam has worked with iOS development since 2015, she loves Swift but is currently working with Objective-C 😭🔫. 
 
