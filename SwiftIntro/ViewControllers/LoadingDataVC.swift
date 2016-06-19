@@ -64,10 +64,8 @@ private extension LoadingDataVC {
     }
 
     private func fetchData() {
-        showLoader()
         APIClient.sharedInstance.getPhotos(config.username) {
             (result: Result<Cards>) in
-            self.hideLoader()
             self.setupWithModel(result.model)
         }
     }

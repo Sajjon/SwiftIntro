@@ -30,7 +30,6 @@
 		7B8608661D15A1DB00037D36 /* Array_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8608651D15A1DB00037D36 /* Array_Extension.swift */; };
 		7BAD45931CFF6F3A00C7D7EF /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45921CFF6F3900C7D7EF /* Router.swift */; };
 		7BAD45951CFF70FA00C7D7EF /* Request_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */; };
-		7BAD45971CFF765B00C7D7EF /* UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45961CFF765B00C7D7EF /* UIViewController_Extension.swift */; };
 		7BAD45991CFF8D6000C7D7EF /* Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45981CFF8D6000C7D7EF /* Cards.swift */; };
 		7BADD6AB1D16D9DF005EEBE3 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD6AA1D16D9DF005EEBE3 /* Level.swift */; };
 		7BADD6AD1D16DE8C005EEBE3 /* LoadingDataVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD6AC1D16DE8C005EEBE3 /* LoadingDataVC.swift */; };
@@ -66,7 +65,6 @@
 		7B8608651D15A1DB00037D36 /* Array_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array_Extension.swift; sourceTree = "<group>"; };
 		7BAD45921CFF6F3900C7D7EF /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request_Extension.swift; sourceTree = "<group>"; };
-		7BAD45961CFF765B00C7D7EF /* UIViewController_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController_Extension.swift; sourceTree = "<group>"; };
 		7BAD45981CFF8D6000C7D7EF /* Cards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cards.swift; sourceTree = "<group>"; };
 		7BADD6AA1D16D9DF005EEBE3 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		7BADD6AC1D16DE8C005EEBE3 /* LoadingDataVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingDataVC.swift; sourceTree = "<group>"; };
@@ -190,7 +188,6 @@
 			isa = PBXGroup;
 			children = (
 				7B21A5C41CFF6586002E5EE5 /* NSObject_Extension.swift */,
-				7BAD45961CFF765B00C7D7EF /* UIViewController_Extension.swift */,
 				7B2F90AB1D00C88800613325 /* UIView_Extension.swift */,
 				7B8608611D15993400037D36 /* UIButton_Extension.swift */,
 				7B8608631D15999500037D36 /* UILabel_Extension.swift */,
@@ -395,7 +392,6 @@
 				7B21A5B41CFF5CAC002E5EE5 /* APIClient.swift in Sources */,
 				7BAD45931CFF6F3A00C7D7EF /* Router.swift in Sources */,
 				7B21A5C51CFF6586002E5EE5 /* NSObject_Extension.swift in Sources */,
-				7BAD45971CFF765B00C7D7EF /* UIViewController_Extension.swift in Sources */,
 				7B86085C1D1594FE00037D36 /* GameOverVC.swift in Sources */,
 				7B2F90AA1D00B9A400613325 /* ImagePrefetcher.swift in Sources */,
 				7B21A5C71CFF67DA002E5EE5 /* Card.swift in Sources */,
