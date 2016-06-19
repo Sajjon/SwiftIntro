@@ -3,7 +3,7 @@
 
 A memory game implementation fetching images from Instagram. This project aims to introduce you to iOS development with Swift disregarding of your current skill level.
 
-The app defaults to fetch the [Instagram images of Taylor Swift](https://www.instagram.com/taylorswift/), but you can enter your own or another custom Instagram account and fetch images for it instead.
+The app defaults to fetch the [Instagram images of Taylor Swift](https://www.instagram.com/taylorswift/) ("hehe he he 😁, yes [Miriam](https://github.com/MiriamTisander), that is funny"/[Alex](https://github.com/sajjon)), but you can enter your own or another custom Instagram account and fetch images for it instead.
 
 ## Tasks 
 
@@ -62,7 +62,7 @@ ndard iOS pattern - but it smells! Instead you can introduce an Enum for all the
 
 ## Authors 
 
-### Alexander Georgii-Hemming Cyon [@Redrum_237](https://twitter.com/redrum_237) 
+### Alexander Georgii-Hemming Cyon [GitHub](https://github.com/sajjon)[@Redrum_237](https://twitter.com/redrum_237) 
 Alexander has worked with app development since 2010 and enjoys Android but loves iOS 😍.
 
 ### Miriam Tisander [GitHub](https://github.com/MiriamTisander)
