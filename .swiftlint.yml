@@ -19,9 +19,9 @@ type_body_length:
   error: 400
 
 function_parameter_count:
-  warning: 3
-  error: 4
+  warning: 4
+  error: 5
 
 function_body_length:
-  warning: 10
+  warning: 15
   error: 20

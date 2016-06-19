@@ -50,6 +50,7 @@ extension ImagePrefetcher: ImagePrefetcherProtocol {
     }
 }
 
+//swiftlint:disable type_name
 struct URL: URLRequestConvertible {
     let url: NSURL
     //swiftlint:disable variable_name

@@ -70,28 +70,53 @@ private extension MemoryDataSourceAndDelegate {
     }
     
     private func didSelectCardAtIndexPath(indexPath: NSIndexPath, inCollectionView collectionView: UICollectionView) {
-        guard let card = modelForIndexPath(indexPath) else { return }
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CardCVCell else { return }
-
         clickCount += 1
-        cell.flipCard(card)
-
-        if let flippedCardIndexPath = flippedCardIndexPath {
+        flipCardAtIndexPath(indexPath, inCollectionView: collectionView)
+        if let flippedCardIndexPath = flippedCardIndexPath { /* Found previously flipped card */
+            /* We should should always toss away info about "previously flipped card", 
+             disregarding if card just flipped matches previously flipped card or not, since
+             if the match, we want to search for a new pair, if they don't match, se should 
+             search for a new pair.
+             */
             self.flippedCardIndexPath = nil
-            guard let flippedCard = modelForIndexPath(flippedCardIndexPath) else { return }
-            guard let flippedCell = collectionView.cellForItemAtIndexPath(flippedCardIndexPath) as? CardCVCell else { return }
-
-            if card == flippedCard {
-                matches += 1
-            } else {
-                /* No match, flip back cards after delay */
-                delay(1) {
-                    cell.flipCard(card)
-                    flippedCell.flipCard(flippedCard)
-                }
-            }
+            checkIfCardAtIndexPath(indexPath,
+                                   inCollectionView: collectionView,
+                                   matchesAlreadyFlippedCard: flippedCardIndexPath)
         } else {
             flippedCardIndexPath = indexPath
+        }
+    }
+
+    private func flipCardAtIndexPath(indexPath: NSIndexPath, inCollectionView collectionView: UICollectionView) {
+        guard let card = modelForIndexPath(indexPath) else { return }
+        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CardCVCell else { return }
+        cell.flipCard(card)
+    }
+
+    private func checkIfCardAtIndexPath(indexPath: NSIndexPath,
+                                        inCollectionView collectionView: UICollectionView,
+                                                         matchesAlreadyFlippedCard flippedIndexPath: NSIndexPath) {
+        guard let card = modelForIndexPath(indexPath) else { return }
+        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CardCVCell else { return }
+        guard let flippedCard = modelForIndexPath(flippedIndexPath) else { return }
+        guard let flippedCell = collectionView.cellForItemAtIndexPath(flippedIndexPath) as? CardCVCell else { return }
+        checkIfCard(card, withCell: cell, matchesFlippedCard: flippedCard, withCell: flippedCell)
+    }
+
+    //swiftlint:disable opening_brace
+    private func checkIfCard(card: CardModel,
+                                 withCell cell: CardCVCell,
+                                          matchesFlippedCard flippedCard: CardModel,
+                                                                    withCell flippedCell: CardCVCell)
+    {
+        if card == flippedCard {
+            matches += 1
+        } else {
+            /* No match, flip back cards after delay */
+            delay(1) {
+                cell.flipCard(card)
+                flippedCell.flipCard(flippedCard)
+            }
         }
     }
 }
