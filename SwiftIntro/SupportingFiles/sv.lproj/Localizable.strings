@@ -12,8 +12,8 @@
 "Easy" = "n00b";
 "Normal" = "Okei";
 "Hard" = "Kick-Ass";
-"PairsFoundUnformatted" = "Par funna: %d";
-"GameOver" = "Game over! =/";
+"PairsFoundUnformatted" = "Par funna %d av %d";
+"GameOver" = "Woho! Du klarade det! ^__^";
 "ClickCountUnformatted" = "Antal klick: %d";
 "Quit" = "Avsluta";
 "Restart" = "Spela igen!";

@@ -50,12 +50,18 @@ class GameVC: UIViewController, Configurable {
 extension GameVC: GameDelegate {
     
     func foundMatch(matches: Int) {
-        scoreLabel.text = "\(matches)"
+        setScoreLabel(matches)
     }
 
     func gameOver(result: GameResult) {
         self.gameResult = result
         performSegueWithIdentifier(gameOverSeque, sender: self)
+    }
+    
+    private func setScoreLabel(matches: Int) {
+        let unformatted = localizedString("PairsFoundUnformatted")
+        let formatted = NSString(format: unformatted, matches, config.level.nbrOfCards/2)
+        scoreLabel.text = formatted as String
     }
 }
 
@@ -63,6 +69,7 @@ extension GameVC: GameDelegate {
 //MARK: Setup and Styling
 private extension GameVC {
     private func setupStyling() {
+        setScoreLabel(0)
         labelsView.backgroundColor = .blackColor()
         collectionView.backgroundColor = .blackColor()
     }

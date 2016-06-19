@@ -42,21 +42,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cJU-4Y-KWZ" userLabel="Label View">
                                 <rect key="frame" x="10" y="10" width="355" height="60"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5X-rW-4un">
-                                        <rect key="frame" x="72" y="10" width="105" height="41"/>
-                                        <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="32"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 p" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qd8-Jy-kHY">
-                                        <rect key="frame" x="197" y="12" width="50.5" height="36"/>
-                                        <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="28"/>
-                                        <color key="textColor" red="0.46650361608223623" green="0.41025423694578694" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fi6-Al-yPL">
-                                        <rect key="frame" x="304" y="12.5" width="31" height="35"/>
-                                        <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="16"/>
+                                        <rect key="frame" x="318" y="-4.5" width="39" height="39"/>
+                                        <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="16"/>
                                         <state key="normal" title="Quit">
                                             <color key="titleColor" red="0.17929026234606274" green="0.70492666120064795" blue="0.85350560897435901" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -64,23 +52,27 @@
                                             <action selector="quitAction:" destination="Rhk-Tt-u83" eventType="touchUpInside" id="Fmu-MK-Fc1"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Pairs found 1 of 10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5X-rW-4un">
+                                        <rect key="frame" x="41.5" y="15" width="272" height="31"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Light" family="Apple SD Gothic Neo" pointSize="23"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="U5X-rW-4un" firstAttribute="leading" secondItem="Qd8-Jy-kHY" secondAttribute="trailing" constant="20" id="CFL-wU-pPh"/>
-                                    <constraint firstItem="Fi6-Al-yPL" firstAttribute="centerY" secondItem="cJU-4Y-KWZ" secondAttribute="centerY" id="Gfq-ga-q0C"/>
+                                    <constraint firstItem="U5X-rW-4un" firstAttribute="centerX" secondItem="cJU-4Y-KWZ" secondAttribute="centerX" id="EHE-Om-8x0"/>
+                                    <constraint firstItem="Fi6-Al-yPL" firstAttribute="centerY" secondItem="cJU-4Y-KWZ" secondAttribute="centerY" multiplier="0.5" id="Gfq-ga-q0C"/>
                                     <constraint firstAttribute="height" constant="60" id="KfS-yC-FF8"/>
-                                    <constraint firstItem="Qd8-Jy-kHY" firstAttribute="height" secondItem="U5X-rW-4un" secondAttribute="height" id="aaV-9Y-KBH"/>
+                                    <constraint firstItem="U5X-rW-4un" firstAttribute="centerY" secondItem="cJU-4Y-KWZ" secondAttribute="centerY" id="eZl-T1-ALA"/>
                                     <constraint firstAttribute="centerX" secondItem="U5X-rW-4un" secondAttribute="trailing" id="gz1-nB-EWH"/>
-                                    <constraint firstItem="Fi6-Al-yPL" firstAttribute="centerX" secondItem="cJU-4Y-KWZ" secondAttribute="centerX" multiplier="1.8" id="iMT-rb-9cZ"/>
-                                    <constraint firstItem="Qd8-Jy-kHY" firstAttribute="centerY" secondItem="cJU-4Y-KWZ" secondAttribute="centerY" id="pBT-dX-D9F"/>
+                                    <constraint firstItem="Fi6-Al-yPL" firstAttribute="centerX" secondItem="cJU-4Y-KWZ" secondAttribute="centerX" multiplier="1.9" id="iMT-rb-9cZ"/>
                                     <constraint firstItem="U5X-rW-4un" firstAttribute="centerY" secondItem="cJU-4Y-KWZ" secondAttribute="centerY" id="q1o-3a-uhs"/>
-                                    <constraint firstItem="Qd8-Jy-kHY" firstAttribute="leading" secondItem="U5X-rW-4un" secondAttribute="trailing" constant="20" id="vOH-2o-THF"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="CFL-wU-pPh"/>
-                                        <exclude reference="aaV-9Y-KBH"/>
+                                        <exclude reference="gz1-nB-EWH"/>
+                                        <exclude reference="q1o-3a-uhs"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -114,7 +106,7 @@
                     <connections>
                         <outlet property="collectionView" destination="GRS-IT-4p7" id="GJv-5O-v2x"/>
                         <outlet property="labelsView" destination="cJU-4Y-KWZ" id="9P7-k5-XO9"/>
-                        <outlet property="scoreLabel" destination="Qd8-Jy-kHY" id="jjh-qH-1d7"/>
+                        <outlet property="scoreLabel" destination="U5X-rW-4un" id="hdM-6g-WfB"/>
                         <segue destination="GMX-QS-y1A" kind="presentation" identifier="gameOverSeque" id="cp7-XA-rAs"/>
                     </connections>
                 </viewController>

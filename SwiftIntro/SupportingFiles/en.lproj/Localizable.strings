@@ -12,8 +12,8 @@
 "Easy" = "n00b";
 "Normal" = "A-OK!";
 "Hard" = "Kick-Ass";
-"PairsFoundUnformatted" = "Pairs found: %d";
-"GameOver" = "Game over! =(";
+"PairsFoundUnformatted" = "Pairs found %d of %d";
+"GameOver" = "Woho! You made it! ^__^";
 "ClickCountUnformatted" = "Click count: %d";
 "Quit" = "Quit";
 "Restart" = "Restart";
