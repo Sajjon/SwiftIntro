@@ -4,35 +4,24 @@ A memory game implementation fetching images from Instagram. This project aims t
 ## Tasks
 
 ### This looks interesting 
-#### Design and Storyboard 
-1. Change the color of the PLAY button
-2. Change the the backgroundcolor of the cards
-3. Change the distance between view X and Y
-#### Code 
-3. Change the duration of the flip card animation
+ 
+* Change the color of the "Play!" button.
+* Change the the backgroundcolor of the cards ("CardCVCell").
+* Change the duration of the flip card animation.
+* Change the username placeholder.
 
 ### I think I've got a good grip of it
-#### Design and Storyboard 
-1. 
-2. 
-#### Code 
-1. 
-2. 
+
+* Change the "Quit" button title, which currently is a text with the char "X", to use an image instead. 
+* Implement white space handling for the username textfield.
+* Set the background of the memory Card ("CardCVCell") to be show an image instead of just a color.
 
 ### Bring it on
-You will be checking out the git branch called "challenging", and you will have to implement some game logic yourself.
+* When you press the "Restart" button from "GameOverVC" the cards will have the same position as before, this makes it easy to cheat! Your task is to shuffle the cards before restarting the game.  
+* Change the feedback message in "GameOverVC" from "Well done" to a dynamic title that changes according to how well it went. Some examples strings: "Awesome", "Not sooo bad", "That was Horrible" etc. This string should not be directly dependent on only "Level", or only "clickCount", but rather..?
+* Add some Error Handeling, e.g  displaying a message if the Instagram username doesn't exist, or if no images could be loaded.
+* Make it possible to set the number of cards to a custom number. Currently the number of cards are determined base on which difficulty level you chose in the SettingsVC. 
+* Enable Landscape mode of all the views.
+* Fetch the images from another source than Instagram. Maybe you can fetch the images from FourSquare, using its [API](https://developer.foursquare.com/) or [Flickr](https://www.flickr.com/services/api/)
 
-1. Implement the logic for when you found a pair (when two card matches)
-2. Change the feedback message from "Good job" to a dynamic title that changes according to how well it went.
-For example "Well done!", "Not sooo bad", "That was Horrible" etc  (should work for all Lelvels)
-
-
-Make it possible to add a custom size of the memory game board
-Implement white space handling for the username textfield.
-Add some Error Handeling, (message if username dosn't exist, or if no images could be loaded)
-Change the quit button label to insetead use a quit icon. From example: 
-change the username placeholder
-Set the card background to be an image instead of just a color
-
-change the sourse from istagram to use for example FourSquare API instead (https://developer.foursquare.com/)
 
