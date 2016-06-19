@@ -9,12 +9,14 @@
 import UIKit
 import Alamofire
 
+private let gameOverSeque = "gameOverSeque"
 class GameVC: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var labelsView: UIView!
     var gameSettings: GameSettings = GameSettings()
+    private var gameResult: GameResult!
     
     private var dataSourceAndDelegate: MemoryDataSourceAndDelegate! {
         didSet {
@@ -28,7 +30,14 @@ class GameVC: UIViewController {
         setupViews()
         fetchData()
     }
-    
+
+    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
+        guard segue?.identifier == gameOverSeque else { return }
+        guard let vc = segue?.destinationViewController as? GameOverVC else { return }
+        vc.settings = gameSettings
+        vc.result = gameResult
+    }
+
     @IBAction func quitAction(sender: AnyObject) {
        self.dismissViewControllerAnimated(true) {
         
@@ -37,13 +46,15 @@ class GameVC: UIViewController {
     
 }
 
+
 extension GameVC: GameDelegate {
     func foundMatch(matches: Int) {
         scoreLabel.text = "\(matches)"
     }
 
     func gameOver(result: GameResult) {
-        print("Game over: \(result.clickCount)")
+        self.gameResult = result
+        performSegueWithIdentifier(gameOverSeque, sender: self)
     }
 }
 

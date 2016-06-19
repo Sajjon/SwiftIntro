@@ -16,7 +16,7 @@ class GameOverVC: UIViewController {
     @IBOutlet weak var quitButton: UIButton!
 
     var settings: GameSettings!
-    var gameResult: GameResult!
+    var result: GameResult!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +42,7 @@ private extension GameOverVC {
 
     private func setupLocalizedText() {
         gameOverLabel.setLocalizedText("GameOver")
-        clickCountLabel.setLocalizedText("ClickCountUnformatted", args: gameResult.clickCount)
+        clickCountLabel.setLocalizedText("ClickCountUnformatted", args: result.clickCount)
         restartButton.setLocalizedTitle("Restart")
         quitButton.setLocalizedTitle("Quit")
     }

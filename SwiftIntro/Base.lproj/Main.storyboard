@@ -115,6 +115,7 @@
                         <outlet property="collectionView" destination="GRS-IT-4p7" id="GJv-5O-v2x"/>
                         <outlet property="labelsView" destination="cJU-4Y-KWZ" id="9P7-k5-XO9"/>
                         <outlet property="scoreLabel" destination="Qd8-Jy-kHY" id="jjh-qH-1d7"/>
+                        <segue destination="GMX-QS-y1A" kind="presentation" identifier="gameOverSeque" id="cp7-XA-rAs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mcg-8F-uDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -308,7 +309,7 @@ Username:</string>
                                 </constraints>
                                 <state key="normal" title="Start game!"/>
                                 <connections>
-                                    <segue destination="Rhk-Tt-u83" kind="presentation" identifier="startGameSegue" id="FMX-1q-b8c"/>
+                                    <segue destination="Rhk-Tt-u83" kind="show" identifier="startGameSegue" id="FMX-1q-b8c"/>
                                 </connections>
                             </button>
                         </subviews>
