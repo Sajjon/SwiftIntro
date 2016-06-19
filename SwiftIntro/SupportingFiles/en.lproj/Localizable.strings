@@ -7,17 +7,19 @@
 //
 
 "StartGame" = "Play!";
-"Level" = "How good is your memory?";
+"Level" = "How good are you at memory?";
 "UsernamePlaceholder" = "username";
 "Username" = "What's your Instagram username?";
 "Easy" = "n00b";
 "Normal" = "A-OK!";
 "Hard" = "Kick-Ass";
 "PairsFoundUnformatted" = "Pairs found %d of %d";
-"Title" = "Well done!";
-"SubTitle" = "You made it ^__^,\nyour click count was:";
+
+"GameOverTitle" = "Well done!";
+"GameOverSubtitle" = "You made it ^__^,\nyour click count was:";
 "ClickScore" = "%d";
 "TryHarder" = "Lets try to get an\neven better score!";
+
 "Quit" = "Quit";
 "Restart" = "Restart";
 "Loading" = "Loading...";

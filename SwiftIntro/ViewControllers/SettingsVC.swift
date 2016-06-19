@@ -11,7 +11,7 @@ import UIKit
 
 struct GameConfiguration {
     var level: Level = .Normal
-    var username: String = "netlightconsulting"
+    var username: String = "taylorswift"
 }
 
 protocol Configurable {

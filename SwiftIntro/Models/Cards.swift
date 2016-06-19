@@ -19,7 +19,7 @@ struct Cards {
     }
 
     init(_ singles: [Card], config: GameConfiguration) {
-        self.init(singles, cardCount: config.level.nbrOfCards)
+        self.init(singles, cardCount: config.level.cardCount)
     }
 }
 
@@ -46,8 +46,9 @@ extension Cards {
 
 extension Cards: Model {
     init?(response: NSHTTPURLResponse, representation: AnyObject) {
-        //swiftlint:disable force_cast
-        self.singles = Card.collection(response: response, representation: representation.valueForKeyPath("items")!)
+        guard let jsonForCards = representation.valueForKeyPath("items") as? [JSON] else { return nil }
+        let cards = Card.collection(response: response, representation: jsonForCards)
+        self.singles = cards
         memoryCards = []
     }
 

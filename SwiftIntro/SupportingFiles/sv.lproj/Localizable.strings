@@ -7,7 +7,7 @@
 //
 
 "StartGame" = "Spela!";
-"Level" = "Hur bra är ditt minne?";
+"Level" = "Hur bra är du på memory minne?";
 "Username" = "Vad är ditt Instagram användarnamn?";
 "UsernamePlaceholder" = "användarnamn";
 "Easy" = "n00b";
@@ -15,8 +15,8 @@
 "Hard" = "Kick-Ass";
 "PairsFoundUnformatted" = "Par funna %d av %d";
 
-"Title" = "Bra jobbat!";
-"SubTitle" = "Du klarade det ^__^,\nantal klick var:";
+"GameOverTitle" = "Bra jobbat!";
+"GameOverSubtitle" = "Du klarade det ^__^,\nantal klick var:";
 "ClickScore" = "%d";
 "TryHarder" = "Försök få ett ännu bättre resultat!";
 

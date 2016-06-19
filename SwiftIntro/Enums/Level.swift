@@ -11,7 +11,7 @@ import Foundation
 enum Level {
     case Easy, Normal, Hard
 
-    var nbrOfCards: Int {
+    var cardCount: Int {
         return self.rowCount*self.columnCount
     }
 
