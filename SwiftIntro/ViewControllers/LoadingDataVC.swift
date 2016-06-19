@@ -34,7 +34,6 @@ class LoadingDataVC: UIViewController, Configurable {
 
     var dataSourceAndDelegate: MemoryDataSourceAndDelegate!
 
-
     //MARK: VC Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()

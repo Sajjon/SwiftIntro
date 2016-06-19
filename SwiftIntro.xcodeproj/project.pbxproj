@@ -247,13 +247,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7B7542371CFF3F9E009B2629 /* Build configuration list for PBXNativeTarget "SwiftIntro" */;
 			buildPhases = (
-				48E3C3174B2513F4662E8942 /* 📦 Check Pods Manifest.lock */,
+				48E3C3174B2513F4662E8942 /* [CP] Check Pods Manifest.lock */,
 				7B75421F1CFF3F9E009B2629 /* Sources */,
 				7B7542201CFF3F9E009B2629 /* Frameworks */,
 				7B7542211CFF3F9E009B2629 /* Resources */,
 				7B6E4F381CFF40A000B7D991 /* SwiftLint */,
-				D9FF9833FA98573696375F2D /* 📦 Embed Pods Frameworks */,
-				6F1EC0CAB9F56A8DC14746DF /* 📦 Copy Pods Resources */,
+				D9FF9833FA98573696375F2D /* [CP] Embed Pods Frameworks */,
+				6F1EC0CAB9F56A8DC14746DF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -314,14 +314,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		48E3C3174B2513F4662E8942 /* 📦 Check Pods Manifest.lock */ = {
+		48E3C3174B2513F4662E8942 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -329,14 +329,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		6F1EC0CAB9F56A8DC14746DF /* 📦 Copy Pods Resources */ = {
+		6F1EC0CAB9F56A8DC14746DF /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -358,14 +358,14 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
-		D9FF9833FA98573696375F2D /* 📦 Embed Pods Frameworks */ = {
+		D9FF9833FA98573696375F2D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

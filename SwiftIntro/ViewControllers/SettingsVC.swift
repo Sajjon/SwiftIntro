@@ -23,7 +23,6 @@ class SettingsVC: UIViewController, Configurable {
     //MARK: Variables
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var usernameLabel: UILabel!
-    
     @IBOutlet weak var segmentTitleLabel: UILabel!
     @IBOutlet weak var levelSegmentedControl: UISegmentedControl!
     @IBOutlet weak var startGameButton: UIButton!

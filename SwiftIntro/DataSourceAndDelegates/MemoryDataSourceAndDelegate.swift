@@ -186,7 +186,7 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegateFlowLayout {
         return CGSize(width: size, height: size)
     }
     
-    private func calculateMiniumumHeight(flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) ->  Int {
+    private func calculateMiniumumHeight(flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> Int {
         let rownCount = gameLevel.rowCount
         let totalSpaceHeight = flowLayout.sectionInset.top
         + flowLayout.sectionInset.bottom
@@ -194,7 +194,7 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegateFlowLayout {
         return Int((collectionView.bounds.height - totalSpaceHeight) / CGFloat(rownCount))
     }
     
-    private func calculateMiniumumWidth(flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) ->  Int {
+    private func calculateMiniumumWidth(flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> Int {
         let columnCount = gameLevel.columnCount
         let totalSpaceWidth = flowLayout.sectionInset.left
             + flowLayout.sectionInset.right
