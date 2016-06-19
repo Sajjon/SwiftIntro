@@ -1,4 +1,6 @@
 # 📱 My first Memory 🤔💭
+#### _An introduction to iOS development with Swift._
+
 A memory game implementation fetching images from Instagram. This project aims to introduce you to Swift whatever experience level you are currently at!
 
 ## Tasks 
