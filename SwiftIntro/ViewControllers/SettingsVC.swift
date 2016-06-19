@@ -62,6 +62,7 @@ private extension SettingsVC {
 
     private func setupViews() {
         setupLocalizableStrings()
+        startGameButton.layer.cornerRadius = startGameButton.frame.size.height/2
     }
 
     private func populateViews() {
