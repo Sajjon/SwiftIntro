@@ -13,7 +13,9 @@
 "Normal" = "A-OK!";
 "Hard" = "Kick-Ass";
 "PairsFoundUnformatted" = "Pairs found %d of %d";
-"GameOver" = "Woho! You made it! ^__^";
-"ClickCountUnformatted" = "Click count: %d";
+"Title" = "Well done!";
+"SubTitle" = "You made it ^__^,\nyour click cout was:";
+"ClickScore" = "%d";
+"TryHarder" = "Lets try to get an\neven better score!";
 "Quit" = "Quit";
 "Restart" = "Restart";

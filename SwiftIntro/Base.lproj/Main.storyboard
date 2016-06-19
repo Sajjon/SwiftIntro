@@ -43,7 +43,7 @@
                                 <rect key="frame" x="10" y="10" width="355" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fi6-Al-yPL">
-                                        <rect key="frame" x="318" y="-4.5" width="39" height="39"/>
+                                        <rect key="frame" x="300" y="-4.5" width="39" height="39"/>
                                         <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="16"/>
                                         <state key="normal" title="Quit">
                                             <color key="titleColor" red="0.17929026234606274" green="0.70492666120064795" blue="0.85350560897435901" alpha="1" colorSpace="calibratedRGB"/>
@@ -54,7 +54,7 @@
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Pairs found 1 of 10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5X-rW-4un">
                                         <rect key="frame" x="41.5" y="15" width="272" height="31"/>
-                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Light" family="Apple SD Gothic Neo" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="23"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -66,7 +66,7 @@
                                     <constraint firstAttribute="height" constant="60" id="KfS-yC-FF8"/>
                                     <constraint firstItem="U5X-rW-4un" firstAttribute="centerY" secondItem="cJU-4Y-KWZ" secondAttribute="centerY" id="eZl-T1-ALA"/>
                                     <constraint firstAttribute="centerX" secondItem="U5X-rW-4un" secondAttribute="trailing" id="gz1-nB-EWH"/>
-                                    <constraint firstItem="Fi6-Al-yPL" firstAttribute="centerX" secondItem="cJU-4Y-KWZ" secondAttribute="centerX" multiplier="1.9" id="iMT-rb-9cZ"/>
+                                    <constraint firstItem="Fi6-Al-yPL" firstAttribute="centerX" secondItem="cJU-4Y-KWZ" secondAttribute="centerX" multiplier="1.8" id="iMT-rb-9cZ"/>
                                     <constraint firstItem="U5X-rW-4un" firstAttribute="centerY" secondItem="cJU-4Y-KWZ" secondAttribute="centerY" id="q1o-3a-uhs"/>
                                 </constraints>
                                 <variation key="default">
@@ -112,7 +112,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mcg-8F-uDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1388.5" y="-884.5"/>
+            <point key="canvasLocation" x="-1486.5" y="-884.5"/>
         </scene>
         <!--Game OverVC-->
         <scene sceneID="ywi-y6-hqi">
@@ -126,71 +126,126 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB: Game Over" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jEj-tz-Epk" userLabel="Game Over Label">
-                                <rect key="frame" x="16" y="100" width="343" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="SB: Well done!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jEj-tz-Epk" userLabel="How did it go">
+                                <rect key="frame" x="105" y="147.5" width="166.5" height="34.5"/>
+                                <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="26"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB: Click count: 45" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZU-fa-bS7" userLabel="Click Count Label">
-                                <rect key="frame" x="16" y="141" width="343" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UdN-zp-RY3" userLabel="Game is over">
+                                <rect key="frame" x="50.5" y="202" width="273.5" height="60.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="61" id="lVg-FZ-bzn"/>
+                                </constraints>
+                                <string key="text">SB: You made it ^__^,
+your click cout was:</string>
+                                <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="10S-PU-iL9" userLabel="Restart Button">
-                                <rect key="frame" x="65" y="179" width="100" height="50"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB: 45" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZU-fa-bS7" userLabel="Click Count Score">
+                                <rect key="frame" x="0.0" y="272.5" width="375" height="55"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="40"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VB0-KG-M6u" userLabel="Try harder">
+                                <rect key="frame" x="-1" y="342" width="375.5" height="60.5"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="69g-zy-RTh"/>
-                                    <constraint firstAttribute="height" constant="50" id="vbn-K4-OGU"/>
+                                    <constraint firstAttribute="height" constant="61" id="Pw2-Da-2V5"/>
                                 </constraints>
-                                <state key="normal" title="Restart"/>
-                                <connections>
-                                    <action selector="restartButtonPressed:" destination="GMX-QS-y1A" eventType="touchUpInside" id="Die-fg-lsT"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LmE-2h-LFI" userLabel="Quit Button">
-                                <rect key="frame" x="210" y="179" width="100" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="Kw3-ci-LBI"/>
-                                    <constraint firstAttribute="height" constant="50" id="rv2-B9-v2V"/>
-                                </constraints>
-                                <state key="normal" title="Quit"/>
-                                <connections>
-                                    <action selector="quitButtonPressed:" destination="GMX-QS-y1A" eventType="touchUpInside" id="sYr-wu-8lT"/>
-                                </connections>
-                            </button>
+                                <string key="text">SB: Lets try getting an 
+even better score!</string>
+                                <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UcQ-7o-Jk7" userLabel="Layout Guide View For Buttons">
-                                <rect key="frame" x="185" y="202" width="5" height="5"/>
+                                <rect key="frame" x="185" y="481" width="5" height="5"/>
                                 <color key="backgroundColor" red="0.96265388259999995" green="0.0" blue="0.11550617019999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="5" id="Bzw-7G-Tvu"/>
                                     <constraint firstAttribute="height" constant="5" id="Ejy-qR-XKX"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LmE-2h-LFI" userLabel="Quit Button">
+                                <rect key="frame" x="210" y="458" width="100" height="50"/>
+                                <color key="backgroundColor" red="0.54503205129999999" green="0.076284507330000001" blue="0.4148485509" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Kw3-ci-LBI"/>
+                                    <constraint firstAttribute="height" constant="50" id="rv2-B9-v2V"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                <color key="tintColor" red="0.1792902623" green="0.70492666120000003" blue="0.85350560900000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="SB: Quit">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="quitButtonPressed:" destination="GMX-QS-y1A" eventType="touchUpInside" id="sYr-wu-8lT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="10S-PU-iL9" userLabel="Restart Button">
+                                <rect key="frame" x="65" y="458" width="100" height="50"/>
+                                <color key="backgroundColor" red="0.54503205129999999" green="0.076284507330000001" blue="0.4148485509" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="69g-zy-RTh"/>
+                                    <constraint firstAttribute="height" constant="50" id="vbn-K4-OGU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                <color key="tintColor" red="0.1792902623" green="0.70492666120000003" blue="0.85350560900000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="SB: Restart">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="restartButtonPressed:" destination="GMX-QS-y1A" eventType="touchUpInside" id="Die-fg-lsT"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.1792902623" green="0.70492666120000003" blue="0.85350560900000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="jEj-tz-Epk" secondAttribute="trailing" constant="16" id="98z-xQ-LGb"/>
+                            <constraint firstItem="VB0-KG-M6u" firstAttribute="width" secondItem="iHd-AE-oDB" secondAttribute="width" id="8Bx-pn-bHq"/>
+                            <constraint firstItem="AZU-fa-bS7" firstAttribute="centerX" secondItem="iHd-AE-oDB" secondAttribute="centerX" id="8yR-IN-dD1"/>
+                            <constraint firstItem="UcQ-7o-Jk7" firstAttribute="centerY" secondItem="iHd-AE-oDB" secondAttribute="centerY" multiplier="1.45" priority="400" id="9UK-R8-RUY"/>
                             <constraint firstItem="10S-PU-iL9" firstAttribute="centerY" secondItem="UcQ-7o-Jk7" secondAttribute="centerY" id="Aqz-h0-BqR"/>
-                            <constraint firstItem="AZU-fa-bS7" firstAttribute="top" secondItem="jEj-tz-Epk" secondAttribute="bottom" constant="20" id="D8d-bC-Zwl"/>
-                            <constraint firstAttribute="trailing" secondItem="AZU-fa-bS7" secondAttribute="trailing" constant="16" id="Fwx-RH-Vte"/>
+                            <constraint firstItem="VB0-KG-M6u" firstAttribute="centerX" secondItem="iHd-AE-oDB" secondAttribute="centerX" id="CB5-Cg-L8F"/>
+                            <constraint firstItem="jEj-tz-Epk" firstAttribute="centerX" secondItem="iHd-AE-oDB" secondAttribute="centerX" id="E2c-Wz-Vrd"/>
+                            <constraint firstItem="10S-PU-iL9" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VB0-KG-M6u" secondAttribute="bottom" constant="20" id="EdM-F3-7GP"/>
+                            <constraint firstItem="VB0-KG-M6u" firstAttribute="centerY" secondItem="iHd-AE-oDB" secondAttribute="centerY" multiplier="1.3" id="IqK-3f-Jgo"/>
+                            <constraint firstItem="jEj-tz-Epk" firstAttribute="centerY" secondItem="iHd-AE-oDB" secondAttribute="centerY" multiplier="0.4" priority="900" id="JOk-Am-kNF"/>
+                            <constraint firstItem="UdN-zp-RY3" firstAttribute="centerX" secondItem="iHd-AE-oDB" secondAttribute="centerX" id="Jk5-hD-L1L"/>
                             <constraint firstItem="UcQ-7o-Jk7" firstAttribute="centerX" secondItem="AZU-fa-bS7" secondAttribute="centerX" id="Jy4-ao-HSR"/>
-                            <constraint firstItem="jEj-tz-Epk" firstAttribute="leading" secondItem="iHd-AE-oDB" secondAttribute="leading" constant="16" id="Rip-HA-QgB"/>
-                            <constraint firstItem="jEj-tz-Epk" firstAttribute="top" secondItem="9AY-R0-qvb" secondAttribute="bottom" constant="80" id="TQR-VK-YyV"/>
-                            <constraint firstItem="AZU-fa-bS7" firstAttribute="leading" secondItem="iHd-AE-oDB" secondAttribute="leading" constant="16" id="bCS-ry-nUM"/>
+                            <constraint firstItem="AZU-fa-bS7" firstAttribute="width" secondItem="iHd-AE-oDB" secondAttribute="width" id="Phk-Wj-X3n"/>
+                            <constraint firstItem="VB0-KG-M6u" firstAttribute="top" secondItem="AZU-fa-bS7" secondAttribute="bottom" constant="15" id="UNN-K5-8vw"/>
+                            <constraint firstItem="UcQ-7o-Jk7" firstAttribute="centerX" secondItem="iHd-AE-oDB" secondAttribute="centerX" id="a6W-hx-92z"/>
+                            <constraint firstItem="AZU-fa-bS7" firstAttribute="top" relation="greaterThanOrEqual" secondItem="UdN-zp-RY3" secondAttribute="bottom" constant="20" id="f0L-fz-wcC"/>
+                            <constraint firstItem="AZU-fa-bS7" firstAttribute="centerY" secondItem="iHd-AE-oDB" secondAttribute="centerY" multiplier="0.9" priority="800" id="gtM-Rb-LKA"/>
                             <constraint firstItem="LmE-2h-LFI" firstAttribute="leading" secondItem="UcQ-7o-Jk7" secondAttribute="trailing" constant="20" id="m48-F9-B5n"/>
+                            <constraint firstItem="AZU-fa-bS7" firstAttribute="top" secondItem="UdN-zp-RY3" secondAttribute="bottom" constant="10" id="txU-WF-3k4"/>
+                            <constraint firstItem="UdN-zp-RY3" firstAttribute="top" secondItem="jEj-tz-Epk" secondAttribute="bottom" constant="20" id="uDq-wX-zpp"/>
+                            <constraint firstItem="VB0-KG-M6u" firstAttribute="top" secondItem="UdN-zp-RY3" secondAttribute="bottom" constant="10" id="uwu-tu-G3G"/>
                             <constraint firstItem="LmE-2h-LFI" firstAttribute="centerY" secondItem="UcQ-7o-Jk7" secondAttribute="centerY" id="wkg-gv-Avi"/>
-                            <constraint firstItem="UcQ-7o-Jk7" firstAttribute="top" secondItem="AZU-fa-bS7" secondAttribute="bottom" constant="40" id="wrI-bv-sTf"/>
+                            <constraint firstItem="AZU-fa-bS7" firstAttribute="top" secondItem="VB0-KG-M6u" secondAttribute="bottom" id="xme-4T-r9b"/>
                             <constraint firstItem="UcQ-7o-Jk7" firstAttribute="leading" secondItem="10S-PU-iL9" secondAttribute="trailing" constant="20" id="yc2-Jz-kn4"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="JOk-Am-kNF"/>
+                                <exclude reference="f0L-fz-wcC"/>
+                                <exclude reference="xme-4T-r9b"/>
+                                <exclude reference="IqK-3f-Jgo"/>
+                                <exclude reference="uwu-tu-G3G"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="clickCountLabel" destination="AZU-fa-bS7" id="5B1-ep-rpI"/>
-                        <outlet property="gameOverLabel" destination="jEj-tz-Epk" id="VBU-hM-HWs"/>
                         <outlet property="quitButton" destination="LmE-2h-LFI" id="kCX-5w-dCE"/>
                         <outlet property="restartButton" destination="10S-PU-iL9" id="kDU-Aa-dyt"/>
+                        <outlet property="scoreLabel" destination="AZU-fa-bS7" id="J7A-Ao-5cG"/>
+                        <outlet property="subtitleLabel" destination="UdN-zp-RY3" id="FMO-uL-UhS"/>
+                        <outlet property="titleLabel" destination="jEj-tz-Epk" id="wQo-G8-1SF"/>
+                        <outlet property="tryHarderLabel" destination="VB0-KG-M6u" id="mks-5k-uDg"/>
                         <segue destination="Rhk-Tt-u83" kind="showDetail" identifier="restartSegue" id="ipz-pj-UEw"/>
                         <segue destination="baJ-kx-4T7" kind="showDetail" identifier="quitSegue" id="Bnb-Ut-YNh"/>
                     </connections>
@@ -220,8 +275,8 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="eSL-pE-QuF"/>
                                     <constraint firstAttribute="height" constant="50" id="tmf-jF-2wU"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="20"/>
-                                <state key="normal" title="Play!">
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
+                                <state key="normal" title="SB: Play!">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
@@ -234,7 +289,7 @@
                                     <segue destination="Rhk-Tt-u83" kind="show" identifier="startGameSegue" id="FMX-1q-b8c"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is your Instagram username?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="weo-QR-9rA">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB: What is your Instagram username?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="weo-QR-9rA">
                                 <rect key="frame" x="0.0" y="148" width="320" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="XT0-fK-Zne"/>
@@ -251,15 +306,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How good is your memory?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmf-8C-YP6">
-                                <rect key="frame" x="0.0" y="232" width="320" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="3B0-yG-oru"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="230" horizontalCompressionResistancePriority="780" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="WkT-ah-UQ7">
                                 <rect key="frame" x="60" y="273" width="200" height="29"/>
                                 <constraints>
@@ -267,9 +313,9 @@
                                     <constraint firstAttribute="height" constant="30" id="f0g-lq-Emn"/>
                                 </constraints>
                                 <segments>
-                                    <segment title="n00b"/>
-                                    <segment title="A-OK!"/>
-                                    <segment title="Kick-Ass"/>
+                                    <segment title="SB: n00b"/>
+                                    <segment title="SB: A-OK!"/>
+                                    <segment title="SB:  Kick-Ass"/>
                                 </segments>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -281,6 +327,15 @@
                                 <string key="text">my first
 memory.</string>
                                 <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="37"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB: How good is your memory?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmf-8C-YP6">
+                                <rect key="frame" x="0.0" y="232" width="320" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="3B0-yG-oru"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -316,6 +371,7 @@ memory.</string>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="levelSegmentedControl" destination="WkT-ah-UQ7" id="oAg-qA-uc1"/>
+                        <outlet property="segmentTitleLabel" destination="bmf-8C-YP6" id="nPy-fc-xfp"/>
                         <outlet property="startGameButton" destination="lBM-hZ-rVu" id="QPd-K4-Tk1"/>
                         <outlet property="usernameLabel" destination="weo-QR-9rA" id="1UW-F4-YxA"/>
                         <outlet property="usernameTextField" destination="lTc-eh-7Cw" id="Gth-qu-xfB"/>

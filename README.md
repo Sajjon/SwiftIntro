@@ -9,8 +9,8 @@ A memory game implementation fetching images from Instagram. This project aims t
 3. Change the duration of the flip card animation
 
 ### I think I've got a good grip of it
-
-2. Make it possible to add a custom size of the memory game board
+1. 
+2. 
 
 ### Bring it on
 You will be checking out the git branch called "challenging", and you will have to implement some game logic yourself.
@@ -25,9 +25,11 @@ You will be checking out the git branch called "challenging", and you will have 
 
 
 
-
-
-
+Make it possible to add a custom size of the memory game board
 Implement white space handling for the username textfield.
 Add some Error Handeling, (message if username dosn't exist, or if no images could be loaded)
 Change the quit button label to insetead use a quit icon. From example: 
+change the username placeholder
+Set the card background to be an image instead of just a color
+Change the color of the card background
+Set the game over message to change according to click cout   (well done, not so bad, horrible etc)

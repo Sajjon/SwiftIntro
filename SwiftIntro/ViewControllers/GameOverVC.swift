@@ -12,8 +12,11 @@ private let restartSeque = "restartSegue"
 private let quitSeque = "quitSegue"
 class GameOverVC: UIViewController, Configurable {
 
-    @IBOutlet weak var gameOverLabel: UILabel!
-    @IBOutlet weak var clickCountLabel: UILabel!
+
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var tryHarderLabel: UILabel!
     @IBOutlet weak var restartButton: UIButton!
     @IBOutlet weak var quitButton: UIButton!
 
@@ -47,12 +50,16 @@ extension GameOverVC {
 private extension GameOverVC {
 
     private func setupViews() {
+        quitButton.layer.cornerRadius = quitButton.frame.height/2
+        restartButton.layer.cornerRadius = restartButton.frame.height/2
         setupLocalizedText()
     }
 
     private func setupLocalizedText() {
-        gameOverLabel.setLocalizedText("GameOver")
-        clickCountLabel.setLocalizedText("ClickCountUnformatted", args: result.clickCount)
+        titleLabel.setLocalizedText("Title")
+        subtitleLabel.setLocalizedText("SubTitle")
+        scoreLabel.setLocalizedText("ClickScore", args: result.clickCount)
+        tryHarderLabel.setLocalizedText("TryHarder")
         restartButton.setLocalizedTitle("Restart")
         quitButton.setLocalizedTitle("Quit")
     }

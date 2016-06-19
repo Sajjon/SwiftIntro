@@ -13,8 +13,12 @@
 "Normal" = "Okei";
 "Hard" = "Kick-Ass";
 "PairsFoundUnformatted" = "Par funna %d av %d";
-"GameOver" = "Woho! Du klarade det! ^__^";
-"ClickCountUnformatted" = "Antal klick: %d";
+
+"Title" = "Bra jobbat!";
+"SubTitle" = "Du klarade det ^__^,\nantal klick var:";
+"ClickScore" = "%d";
+"TryHarder" = "Försök få ett ännu bättre resultat!";
+
 "Quit" = "Avsluta";
-"Restart" = "Spela igen!";
+"Restart" = "Omstart!";
 

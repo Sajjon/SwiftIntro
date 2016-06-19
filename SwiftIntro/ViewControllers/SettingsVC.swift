@@ -23,6 +23,8 @@ class SettingsVC: UIViewController, Configurable {
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var usernameLabel: UILabel!
+    
+    @IBOutlet weak var segmentTitleLabel: UILabel!
     @IBOutlet weak var levelSegmentedControl: UISegmentedControl!
     @IBOutlet weak var startGameButton: UIButton!
     
@@ -72,6 +74,7 @@ private extension SettingsVC {
 
     private func setupLocalizableStrings() {
         usernameTextField.placeholder = localizedString("Username")
+        segmentTitleLabel.setLocalizedText("Level")
         setupLocalizationForSegmentedControl()
         usernameLabel.setLocalizedText("Username")
         startGameButton.setLocalizedTitle("StartGame")
