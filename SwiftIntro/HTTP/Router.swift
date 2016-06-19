@@ -28,7 +28,7 @@ enum Router: URLRequestConvertible {
         }
     }
 
-    // MARK: URLRequestConvertible
+// MARK: URLRequestConvertible
     //swiftlint:disable variable_name
     var URLRequest: NSMutableURLRequest {
         let URL = NSURL(string: Router.baseURLString)!

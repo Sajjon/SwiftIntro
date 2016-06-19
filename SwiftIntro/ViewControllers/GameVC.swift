@@ -46,8 +46,9 @@ class GameVC: UIViewController {
     
 }
 
-
+//MARK: GameDelegate
 extension GameVC: GameDelegate {
+    
     func foundMatch(matches: Int) {
         scoreLabel.text = "\(matches)"
     }
@@ -58,6 +59,8 @@ extension GameVC: GameDelegate {
     }
 }
 
+
+//MARK: Setup and Styling
 private extension GameVC {
     private func setupStyling() {
         labelsView.backgroundColor = .blackColor()
@@ -66,10 +69,6 @@ private extension GameVC {
 
     private func setupViews() {
         collectionView.registerNib(CardCVCell.nib, forCellWithReuseIdentifier: CardCVCell.cellIdentifier)
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumLineSpacing = 10
-        flowLayout.minimumInteritemSpacing = 10
-        collectionView.collectionViewLayout = flowLayout
         setupStyling()
     }
 
@@ -116,4 +115,5 @@ private extension GameVC {
             self.collectionView.reloadData()
         }
     }
+
 }

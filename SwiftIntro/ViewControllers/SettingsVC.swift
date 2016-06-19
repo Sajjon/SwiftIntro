@@ -12,7 +12,7 @@ import UIKit
 enum Level {
     case Easy, Normal, Hard
 
-  var nbrOfCards: Int{
+  var nbrOfCards: Int {
         return self.rowCount*self.columnCount
     }
 
@@ -30,7 +30,7 @@ enum Level {
         return title
     }
     
-    var columnCount: Int{
+    var columnCount: Int {
         switch self {
         case .Easy:
             return 2
@@ -41,7 +41,7 @@ enum Level {
         }
     }
     
-    var rowCount: Int{
+    var rowCount: Int {
         switch self {
         case .Easy:
             return 3

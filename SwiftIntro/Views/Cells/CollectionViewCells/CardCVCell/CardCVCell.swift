@@ -50,7 +50,7 @@ class CardCVCell: UICollectionViewCell {
     }
 }
 
-
+//MARK: CellProtocol Methods
 extension CardCVCell: CellProtocol {
 
     static var nib: UINib {
