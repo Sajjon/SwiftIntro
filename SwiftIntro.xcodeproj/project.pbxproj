@@ -32,6 +32,7 @@
 		7BAD45951CFF70FA00C7D7EF /* Request_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */; };
 		7BAD45971CFF765B00C7D7EF /* UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45961CFF765B00C7D7EF /* UIViewController_Extension.swift */; };
 		7BAD45991CFF8D6000C7D7EF /* MediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45981CFF8D6000C7D7EF /* MediaModel.swift */; };
+		7BADD6AB1D16D9DF005EEBE3 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD6AA1D16D9DF005EEBE3 /* Level.swift */; };
 		97DEEB47780C576B8BBAC42C /* Pods_SwiftIntro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243E0AB5281AC3E2E446E4FF /* Pods_SwiftIntro.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request_Extension.swift; sourceTree = "<group>"; };
 		7BAD45961CFF765B00C7D7EF /* UIViewController_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController_Extension.swift; sourceTree = "<group>"; };
 		7BAD45981CFF8D6000C7D7EF /* MediaModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaModel.swift; sourceTree = "<group>"; };
+		7BADD6AA1D16D9DF005EEBE3 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		FB6C211E60AF751181C395A1 /* Pods-SwiftIntro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftIntro.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftIntro/Pods-SwiftIntro.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -215,6 +217,7 @@
 		7B7542251CFF3F9E009B2629 /* SwiftIntro */ = {
 			isa = PBXGroup;
 			children = (
+				7BADD6A91D16D9D8005EEBE3 /* Enums */,
 				7B75422F1CFF3F9E009B2629 /* Assets.xcassets */,
 				7B21A5B91CFF6238002E5EE5 /* DataSourceAndDelegates */,
 				7B21A5C31CFF6573002E5EE5 /* Extensions */,
@@ -227,6 +230,14 @@
 				7B21A5AF1CFF5C17002E5EE5 /* Views */,
 			);
 			path = SwiftIntro;
+			sourceTree = "<group>";
+		};
+		7BADD6A91D16D9D8005EEBE3 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				7BADD6AA1D16D9DF005EEBE3 /* Level.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -384,6 +395,7 @@
 				7B86085C1D1594FE00037D36 /* GameOverVC.swift in Sources */,
 				7B2F90AA1D00B9A400613325 /* ImagePrefetcher.swift in Sources */,
 				7B21A5C71CFF67DA002E5EE5 /* CardModel.swift in Sources */,
+				7BADD6AB1D16D9DF005EEBE3 /* Level.swift in Sources */,
 				7B5876491D157F3B00095036 /* Macros.swift in Sources */,
 				7B21A5B81CFF5E7B002E5EE5 /* GameVC.swift in Sources */,
 				7B21A5B61CFF5DAE002E5EE5 /* HTTPClient.swift in Sources */,
