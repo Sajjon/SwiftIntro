@@ -125,7 +125,7 @@ brew install swiftlint
 # Authors 
 
 ## [Alexander Cyon](https://github.com/sajjon) [@Redrum_237](https://twitter.com/redrum_237) 
-Alex started with app development in 2010, his first app project was the development of an Android app for one of Swedens largest electronical retail stores. But it wasn't until 2013 that Alex started with iOS development. He got hooked on iOS development even though the syntax of Objective-C feels really outdated today. In 2014 he did his first Swift project for Avanza Bank and instantaneously fell in love 😍.
+Alex started with app development in 2010, his first app project was the development of an Android app for one of the largest computer stores in Sweden. *But it wasn't until 2013 that Alex started with iOS development*. He got hooked on iOS development even though the syntax of Objective-C feels really outdated today. In 2014 he did his first Swift project for Avanza Bank and instantaneously fell in love 😍.
 
 ## [Miriam Tisander](https://github.com/MiriamTisander)
 Miriam has worked with iOS development since 2015, she loves Swift but is currently working with Objective-C 😭🔫. 
