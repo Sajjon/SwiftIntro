@@ -40,6 +40,8 @@
 		7BAD45951CFF70FA00C7D7EF /* Request_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */; };
 		7BADD6AB1D16D9DF005EEBE3 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD6AA1D16D9DF005EEBE3 /* Level.swift */; };
 		7BADD6AD1D16DE8C005EEBE3 /* LoadingDataVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD6AC1D16DE8C005EEBE3 /* LoadingDataVC.swift */; };
+		7BEEBF0E1D18A2C80014571E /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEBF0D1D18A2C80014571E /* Result.swift */; };
+		7BEEBF101D18A2DF0014571E /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEBF0F1D18A2DF0014571E /* Model.swift */; };
 		97DEEB47780C576B8BBAC42C /* Pods_SwiftIntro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243E0AB5281AC3E2E446E4FF /* Pods_SwiftIntro.framework */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +84,8 @@
 		7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request_Extension.swift; sourceTree = "<group>"; };
 		7BADD6AA1D16D9DF005EEBE3 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		7BADD6AC1D16DE8C005EEBE3 /* LoadingDataVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingDataVC.swift; sourceTree = "<group>"; };
+		7BEEBF0D1D18A2C80014571E /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		7BEEBF0F1D18A2DF0014571E /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		FB6C211E60AF751181C395A1 /* Pods-SwiftIntro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftIntro.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftIntro/Pods-SwiftIntro.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -224,6 +228,7 @@
 			children = (
 				7B4497EC1D189BA100E080C7 /* Card.swift */,
 				7B4497ED1D189BA100E080C7 /* Cards.swift */,
+				7BEEBF0D1D18A2C80014571E /* Result.swift */,
 			);
 			path = FromJSON;
 			sourceTree = "<group>";
@@ -236,6 +241,7 @@
 				7B4497F91D189C3400E080C7 /* CellProtocol.swift */,
 				7B4497FB1D189C4800E080C7 /* HTTPClientProtocol.swift */,
 				7B4497FD1D189C6000E080C7 /* ImagePrefetcherProtocol.swift */,
+				7BEEBF0F1D18A2DF0014571E /* Model.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -440,6 +446,7 @@
 				7B4497F31D189BC000E080C7 /* GameConfiguration.swift in Sources */,
 				7B4497EE1D189BA100E080C7 /* Card.swift in Sources */,
 				7B21A5C21CFF639D002E5EE5 /* CardCVCell.swift in Sources */,
+				7BEEBF101D18A2DF0014571E /* Model.swift in Sources */,
 				7B4497F11D189BA900E080C7 /* GameResult.swift in Sources */,
 				7B21A5B41CFF5CAC002E5EE5 /* APIClient.swift in Sources */,
 				7BAD45931CFF6F3A00C7D7EF /* Router.swift in Sources */,
@@ -449,6 +456,7 @@
 				7BADD6AB1D16D9DF005EEBE3 /* Level.swift in Sources */,
 				7B5876491D157F3B00095036 /* Macros.swift in Sources */,
 				7B4497FC1D189C4800E080C7 /* HTTPClientProtocol.swift in Sources */,
+				7BEEBF0E1D18A2C80014571E /* Result.swift in Sources */,
 				7B21A5B81CFF5E7B002E5EE5 /* GameVC.swift in Sources */,
 				7B21A5B61CFF5DAE002E5EE5 /* HTTPClient.swift in Sources */,
 				7BAD45951CFF70FA00C7D7EF /* Request_Extension.swift in Sources */,

@@ -9,6 +9,8 @@
 import Foundation
 import Alamofire
 
+typealias JSON = [String: AnyObject]
+
 class HTTPClient {
     static let sharedInstance: HTTPClientProtocol = HTTPClient()
 }
@@ -38,18 +40,3 @@ extension HTTPClient: HTTPClientProtocol {
         }
     }
 }
-
-struct Result<T: Model> {
-    var model: T?
-    var models: [T]?
-    var error: NSError?
-
-    init(model: T? = nil, models: [T]? = nil, error: NSError? = nil) {
-        self.model = model
-        self.models = models
-        self.error = error
-    }
-}
-
-typealias JSON = [String: AnyObject]
-protocol Model: ResponseCollectionSerializable, ResponseObjectSerializable {}
