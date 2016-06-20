@@ -9,12 +9,6 @@
 import UIKit
 import AlamofireImage
 
-protocol CellProtocol {
-    static var cellIdentifier: String {get}
-    static var nib: UINib {get}
-    func updateWithModel(model: Model)
-}
-
 class CardCVCell: UICollectionViewCell {
     @IBOutlet weak var cardFrontImageView: UIImageView!
     @IBOutlet weak var cardBackImageView: UIImageView!

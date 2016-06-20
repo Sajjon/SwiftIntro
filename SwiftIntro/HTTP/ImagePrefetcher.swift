@@ -10,11 +10,6 @@ import Foundation
 import Alamofire
 import AlamofireImage
 
-protocol ImagePrefetcherProtocol {
-    func prefetchImages(urls: [URLRequestConvertible], done: Closure)
-    func imageFromCache(url: NSURL) -> UIImage?
-}
-
 class ImagePrefetcher {
 
     static let sharedInstance: ImagePrefetcherProtocol = ImagePrefetcher()

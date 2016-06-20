@@ -9,11 +9,6 @@
 import Foundation
 import Alamofire
 
-protocol HTTPClientProtocol {
-    func request<T: Model>(route: Router, done: (Result<T>) -> Void)
-    func collectionRequest<T: Model>(route: Router, done: (Result<T>) -> Void)
-}
-
 class HTTPClient {
     static let sharedInstance: HTTPClientProtocol = HTTPClient()
 }

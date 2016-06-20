@@ -9,15 +9,6 @@
 import Foundation
 import UIKit
 
-struct GameConfiguration {
-    var level: Level = .Normal
-    var username: String = "taylorswift"
-}
-
-protocol Configurable {
-    var config: GameConfiguration! {get set}
-}
-
 class SettingsVC: UIViewController, Configurable {
 
     //MARK: Variables

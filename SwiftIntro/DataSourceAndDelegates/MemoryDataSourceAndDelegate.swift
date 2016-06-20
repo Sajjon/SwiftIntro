@@ -8,17 +8,6 @@
 
 import UIKit
 
-struct GameResult {
-    let level: Level
-    let clickCount: Int
-    var cards: Cards!
-
-    init(level: Level, clickCount: Int) {
-        self.level = level
-        self.clickCount = clickCount
-    }
-}
-
 protocol GameDelegate: class {
     func foundMatch(matches: Int)
     func gameOver(result: GameResult)
@@ -127,9 +116,34 @@ private extension MemoryDataSourceAndDelegate {
             }
         }
     }
+
+    private func calculateCardSize(flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> CGSize {
+
+        let miniumumHeight = calculateMiniumumHeight(flowLayout, collectionView: collectionView)
+        let miniumumWidth = calculateMiniumumWidth(flowLayout, collectionView: collectionView)
+        let lengthOfSide = min(miniumumWidth, miniumumHeight)
+        let size = CGSize(width: lengthOfSide, height: lengthOfSide)
+        return size
+    }
+
+    private func calculateMiniumumHeight(flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> CGFloat {
+        let rowCount = CGFloat(gameLevel.rowCount)
+        let sectionSpace = flowLayout.sectionInset.top + flowLayout.sectionInset.bottom
+        let totalSpaceHeight = sectionSpace + (flowLayout.minimumLineSpacing * (rowCount - 1))
+        let height = (collectionView.bounds.height - totalSpaceHeight) / rowCount
+        return height
+    }
+
+    private func calculateMiniumumWidth(flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> CGFloat {
+        let columnCount = CGFloat(gameLevel.columnCount)
+        let sectionSpace = flowLayout.sectionInset.left + flowLayout.sectionInset.right
+        let totalSpaceWidth = sectionSpace + (flowLayout.minimumInteritemSpacing * (columnCount - 1))
+        let width = (collectionView.bounds.width - totalSpaceWidth) / columnCount
+        return width
+    }
 }
 
-//MARK: Data Source Methods
+//MARK: UICollectionViewDataSource Methods
 extension MemoryDataSourceAndDelegate: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return gameLevel.columnCount
@@ -145,8 +159,7 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDataSource {
     }
 }
 
-//MARK: Delegate Methods
-
+//MARK: UICollectionViewDelegate Methods
 extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         didSelectCardAtIndexPath(indexPath, inCollectionView: collectionView)
@@ -159,8 +172,7 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
     }
 }
 
-//MARK: Flow Layout Methods
-
+//MARK: UICollectionViewDelegateFlowLayout Methods
 extension MemoryDataSourceAndDelegate: UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView,
@@ -177,30 +189,4 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegateFlowLayout {
         
         return calculateCardSize(flowLayout, collectionView: collectionView)
     }
-    
-    private func calculateCardSize(flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> CGSize {
-
-        let miniumumHeight = calculateMiniumumHeight(flowLayout, collectionView: collectionView)
-        let miniumumWidth = calculateMiniumumWidth(flowLayout, collectionView: collectionView)
-        let lengthOfSide = min(miniumumWidth, miniumumHeight)
-        let size = CGSize(width: lengthOfSide, height: lengthOfSide)
-        return size
-    }
-    
-    private func calculateMiniumumHeight(flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> CGFloat {
-        let rowCount = CGFloat(gameLevel.rowCount)
-        let sectionSpace = flowLayout.sectionInset.top + flowLayout.sectionInset.bottom
-        let totalSpaceHeight = sectionSpace + (flowLayout.minimumLineSpacing * (rowCount - 1))
-        let height = (collectionView.bounds.height - totalSpaceHeight) / rowCount
-        return height
-    }
-    
-    private func calculateMiniumumWidth(flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> CGFloat {
-        let columnCount = CGFloat(gameLevel.columnCount)
-        let sectionSpace = flowLayout.sectionInset.left + flowLayout.sectionInset.right
-        let totalSpaceWidth = sectionSpace + (flowLayout.minimumInteritemSpacing * (columnCount - 1))
-        let width = (collectionView.bounds.width - totalSpaceWidth) / columnCount
-        return width
-    }
-    
 }

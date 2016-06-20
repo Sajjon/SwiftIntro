@@ -8,10 +8,6 @@
 
 import Foundation
 
-protocol APIClientProtocol {
-    func getPhotos<T: Model>(username: String, done: (Result<T>) -> Void)
-}
-
 class APIClient {
 
     static let sharedInstance: APIClientProtocol = APIClient()

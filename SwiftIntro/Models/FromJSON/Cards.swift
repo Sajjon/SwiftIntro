@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 struct Cards {
     var singles: [Card]
     var memoryCards: [Card]

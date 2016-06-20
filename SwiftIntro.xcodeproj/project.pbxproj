@@ -17,9 +17,17 @@
 		7B21A5C01CFF636D002E5EE5 /* CardCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B21A5BF1CFF636D002E5EE5 /* CardCVCell.xib */; };
 		7B21A5C21CFF639D002E5EE5 /* CardCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5C11CFF639D002E5EE5 /* CardCVCell.swift */; };
 		7B21A5C51CFF6586002E5EE5 /* NSObject_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5C41CFF6586002E5EE5 /* NSObject_Extension.swift */; };
-		7B21A5C71CFF67DA002E5EE5 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5C61CFF67DA002E5EE5 /* Card.swift */; };
 		7B2F90AA1D00B9A400613325 /* ImagePrefetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2F90A91D00B9A400613325 /* ImagePrefetcher.swift */; };
 		7B2F90AC1D00C88800613325 /* UIView_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2F90AB1D00C88800613325 /* UIView_Extension.swift */; };
+		7B4497EE1D189BA100E080C7 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497EC1D189BA100E080C7 /* Card.swift */; };
+		7B4497EF1D189BA100E080C7 /* Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497ED1D189BA100E080C7 /* Cards.swift */; };
+		7B4497F11D189BA900E080C7 /* GameResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497F01D189BA900E080C7 /* GameResult.swift */; };
+		7B4497F31D189BC000E080C7 /* GameConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497F21D189BC000E080C7 /* GameConfiguration.swift */; };
+		7B4497F61D189C0000E080C7 /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497F51D189C0000E080C7 /* Configurable.swift */; };
+		7B4497F81D189C2100E080C7 /* APIClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497F71D189C2100E080C7 /* APIClientProtocol.swift */; };
+		7B4497FA1D189C3400E080C7 /* CellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497F91D189C3400E080C7 /* CellProtocol.swift */; };
+		7B4497FC1D189C4800E080C7 /* HTTPClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497FB1D189C4800E080C7 /* HTTPClientProtocol.swift */; };
+		7B4497FE1D189C6000E080C7 /* ImagePrefetcherProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497FD1D189C6000E080C7 /* ImagePrefetcherProtocol.swift */; };
 		7B5876491D157F3B00095036 /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5876481D157F3B00095036 /* Macros.swift */; };
 		7B7542301CFF3F9E009B2629 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B75422F1CFF3F9E009B2629 /* Assets.xcassets */; };
 		7B7542331CFF3F9E009B2629 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B7542311CFF3F9E009B2629 /* LaunchScreen.storyboard */; };
@@ -30,7 +38,6 @@
 		7B8608661D15A1DB00037D36 /* Array_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8608651D15A1DB00037D36 /* Array_Extension.swift */; };
 		7BAD45931CFF6F3A00C7D7EF /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45921CFF6F3900C7D7EF /* Router.swift */; };
 		7BAD45951CFF70FA00C7D7EF /* Request_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */; };
-		7BAD45991CFF8D6000C7D7EF /* Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45981CFF8D6000C7D7EF /* Cards.swift */; };
 		7BADD6AB1D16D9DF005EEBE3 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD6AA1D16D9DF005EEBE3 /* Level.swift */; };
 		7BADD6AD1D16DE8C005EEBE3 /* LoadingDataVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD6AC1D16DE8C005EEBE3 /* LoadingDataVC.swift */; };
 		97DEEB47780C576B8BBAC42C /* Pods_SwiftIntro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243E0AB5281AC3E2E446E4FF /* Pods_SwiftIntro.framework */; };
@@ -50,9 +57,17 @@
 		7B21A5BF1CFF636D002E5EE5 /* CardCVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardCVCell.xib; sourceTree = "<group>"; };
 		7B21A5C11CFF639D002E5EE5 /* CardCVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCVCell.swift; sourceTree = "<group>"; };
 		7B21A5C41CFF6586002E5EE5 /* NSObject_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSObject_Extension.swift; sourceTree = "<group>"; };
-		7B21A5C61CFF67DA002E5EE5 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		7B2F90A91D00B9A400613325 /* ImagePrefetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePrefetcher.swift; sourceTree = "<group>"; };
 		7B2F90AB1D00C88800613325 /* UIView_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView_Extension.swift; sourceTree = "<group>"; };
+		7B4497EC1D189BA100E080C7 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		7B4497ED1D189BA100E080C7 /* Cards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cards.swift; sourceTree = "<group>"; };
+		7B4497F01D189BA900E080C7 /* GameResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameResult.swift; sourceTree = "<group>"; };
+		7B4497F21D189BC000E080C7 /* GameConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameConfiguration.swift; sourceTree = "<group>"; };
+		7B4497F51D189C0000E080C7 /* Configurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configurable.swift; sourceTree = "<group>"; };
+		7B4497F71D189C2100E080C7 /* APIClientProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClientProtocol.swift; sourceTree = "<group>"; };
+		7B4497F91D189C3400E080C7 /* CellProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellProtocol.swift; sourceTree = "<group>"; };
+		7B4497FB1D189C4800E080C7 /* HTTPClientProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientProtocol.swift; sourceTree = "<group>"; };
+		7B4497FD1D189C6000E080C7 /* ImagePrefetcherProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePrefetcherProtocol.swift; sourceTree = "<group>"; };
 		7B5876481D157F3B00095036 /* Macros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Macros.swift; sourceTree = "<group>"; };
 		7B7542231CFF3F9E009B2629 /* SwiftIntro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftIntro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B75422F1CFF3F9E009B2629 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -65,7 +80,6 @@
 		7B8608651D15A1DB00037D36 /* Array_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array_Extension.swift; sourceTree = "<group>"; };
 		7BAD45921CFF6F3900C7D7EF /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request_Extension.swift; sourceTree = "<group>"; };
-		7BAD45981CFF8D6000C7D7EF /* Cards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cards.swift; sourceTree = "<group>"; };
 		7BADD6AA1D16D9DF005EEBE3 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		7BADD6AC1D16DE8C005EEBE3 /* LoadingDataVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingDataVC.swift; sourceTree = "<group>"; };
 		FB6C211E60AF751181C395A1 /* Pods-SwiftIntro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftIntro.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftIntro/Pods-SwiftIntro.release.xcconfig"; sourceTree = "<group>"; };
@@ -103,8 +117,8 @@
 		7B21A5AA1CFF5C17002E5EE5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				7B21A5C61CFF67DA002E5EE5 /* Card.swift */,
-				7BAD45981CFF8D6000C7D7EF /* Cards.swift */,
+				7B4497EA1D189BA100E080C7 /* DTO */,
+				7B4497EB1D189BA100E080C7 /* FromJSON */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -196,6 +210,36 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		7B4497EA1D189BA100E080C7 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				7B4497F01D189BA900E080C7 /* GameResult.swift */,
+				7B4497F21D189BC000E080C7 /* GameConfiguration.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		7B4497EB1D189BA100E080C7 /* FromJSON */ = {
+			isa = PBXGroup;
+			children = (
+				7B4497EC1D189BA100E080C7 /* Card.swift */,
+				7B4497ED1D189BA100E080C7 /* Cards.swift */,
+			);
+			path = FromJSON;
+			sourceTree = "<group>";
+		};
+		7B4497F41D189BEF00E080C7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				7B4497F51D189C0000E080C7 /* Configurable.swift */,
+				7B4497F71D189C2100E080C7 /* APIClientProtocol.swift */,
+				7B4497F91D189C3400E080C7 /* CellProtocol.swift */,
+				7B4497FB1D189C4800E080C7 /* HTTPClientProtocol.swift */,
+				7B4497FD1D189C6000E080C7 /* ImagePrefetcherProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		7B75421A1CFF3F9E009B2629 = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +269,7 @@
 				7B7542311CFF3F9E009B2629 /* LaunchScreen.storyboard */,
 				450EAFD71D15933300BAFDD3 /* Main.storyboard */,
 				7B21A5AA1CFF5C17002E5EE5 /* Models */,
+				7B4497F41D189BEF00E080C7 /* Protocols */,
 				7B21A5AB1CFF5C17002E5EE5 /* SupportingFiles */,
 				7B21A5AE1CFF5C17002E5EE5 /* ViewControllers */,
 				7B21A5AF1CFF5C17002E5EE5 /* Views */,
@@ -381,22 +426,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				45773A371D00C088002E6F56 /* SettingsVC.swift in Sources */,
+				7B4497FA1D189C3400E080C7 /* CellProtocol.swift in Sources */,
 				7B8608621D15993400037D36 /* UIButton_Extension.swift in Sources */,
+				7B4497F81D189C2100E080C7 /* APIClientProtocol.swift in Sources */,
 				7B21A5B01CFF5C17002E5EE5 /* AppDelegate.swift in Sources */,
+				7B4497EF1D189BA100E080C7 /* Cards.swift in Sources */,
 				7B8608641D15999500037D36 /* UILabel_Extension.swift in Sources */,
 				7B21A5BB1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift in Sources */,
+				7B4497F61D189C0000E080C7 /* Configurable.swift in Sources */,
+				7B4497FE1D189C6000E080C7 /* ImagePrefetcherProtocol.swift in Sources */,
 				7B2F90AC1D00C88800613325 /* UIView_Extension.swift in Sources */,
-				7BAD45991CFF8D6000C7D7EF /* Cards.swift in Sources */,
 				7BADD6AD1D16DE8C005EEBE3 /* LoadingDataVC.swift in Sources */,
+				7B4497F31D189BC000E080C7 /* GameConfiguration.swift in Sources */,
+				7B4497EE1D189BA100E080C7 /* Card.swift in Sources */,
 				7B21A5C21CFF639D002E5EE5 /* CardCVCell.swift in Sources */,
+				7B4497F11D189BA900E080C7 /* GameResult.swift in Sources */,
 				7B21A5B41CFF5CAC002E5EE5 /* APIClient.swift in Sources */,
 				7BAD45931CFF6F3A00C7D7EF /* Router.swift in Sources */,
 				7B21A5C51CFF6586002E5EE5 /* NSObject_Extension.swift in Sources */,
 				7B86085C1D1594FE00037D36 /* GameOverVC.swift in Sources */,
 				7B2F90AA1D00B9A400613325 /* ImagePrefetcher.swift in Sources */,
-				7B21A5C71CFF67DA002E5EE5 /* Card.swift in Sources */,
 				7BADD6AB1D16D9DF005EEBE3 /* Level.swift in Sources */,
 				7B5876491D157F3B00095036 /* Macros.swift in Sources */,
+				7B4497FC1D189C4800E080C7 /* HTTPClientProtocol.swift in Sources */,
 				7B21A5B81CFF5E7B002E5EE5 /* GameVC.swift in Sources */,
 				7B21A5B61CFF5DAE002E5EE5 /* HTTPClient.swift in Sources */,
 				7BAD45951CFF70FA00C7D7EF /* Request_Extension.swift in Sources */,
