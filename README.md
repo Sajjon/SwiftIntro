@@ -66,17 +66,17 @@ brew install swiftlint
  
 1. Change the color ❤️💛💚💙💜 of the _Play!_ button.
 
-2. Change the the backgroundcolor of the cards.
+2. Change the the backgroundcolor of the cards.<br/>
 (tip: check out _CardCVCell.xib_ or _CardCVCell.swift_)
 
 3. Change the duration of the flip card animation.
 
-4. Change the username placeholder.
+4. Change the username placeholder.<br/>
 (tip: check out the method _setupLocalizableStrings()_ in _SettingsVC_, you also need to check out the file called Localizable.strings for each language)
 
 5. Add support for your third favourite language 🇫🇷🇸🇾🇯🇵, you need to test this as well (by pressing ⌘+⬆+H in the simulator you go to its home screen, where you can find the Settings app where you have to change the system language to the one you just added.)
 
-6. Change the flip card animation from using a horizontal flip to a vertical. 
+6. Change the flip card animation from using a horizontal flip to a vertical. <br/>
 (tip: check out the _flipCard()_ method in the _CardCVCell_ class. [Here is the documentation for animations](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/#//apple_ref/occ/clm/UIView/animateWithDuration:delay:options:animations:completion:))
 
 
@@ -86,15 +86,15 @@ brew install swiftlint
 
 2. Implement white space handling for the username textfield.
 
-3. Set the background of the memory Card to be show an image 🏔 instead of just a color.
+3. Set the background of the memory Card to be show an image 🏔 instead of just a color.<br/>
 (tip: check out _CardCVCell.xib_ or _CardCVCell.swift_)
 
 4. Refactor the name of a variable/class/function you don't understand to a more understandable description. 
 
-5. Switch the position of the _Restart_ button with the _Quit_ button.
+5. Switch the position of the _Restart_ button with the _Quit_ button.<br/>
 (tip: don't delete the buttons... 😜 then you have to recreate the _Segues_ ...)
 
-6. Save the best score (lowest _clickCount_ for each level) a user has scored and present this score in the _GameOverVC_. 
+6. Save the best score (lowest _clickCount_ for each level) a user has scored and present this score in the _GameOverVC_. <br/>
 (Tip: Checkout [NSUserDefaults](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSUserDefaults_Class/) for saving.)
 
 7. It is currently possible for a user to flip a third card while the flip animation of the two previous cards has not yet finished. Address this issue.
