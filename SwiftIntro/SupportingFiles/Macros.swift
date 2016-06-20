@@ -29,6 +29,13 @@ func delay(delay: Double, closure: Closure) {
     )
 }
 
+
+func makeError(error: Error) -> NSError {
+    let userInfo = [NSLocalizedFailureReasonErrorKey: error.errorMessage]
+    let error = NSError(domain: "SwiftIntro", code: Error.JSONSerializationError.rawValue, userInfo: userInfo)
+    return error
+}
+
 func localizedString(key: String, args: AnyObject...) -> String {
     let localized = NSLocalizedString(key, comment: "")
     guard let parameters = args.first as? [AnyObject], parameter = parameters.first else { return localized }

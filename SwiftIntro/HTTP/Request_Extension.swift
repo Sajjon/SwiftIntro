@@ -27,14 +27,10 @@ extension Request {
 
             switch result {
             case .Success(let value):
-                if let
-                    response = response,
-                    responseObject = T(response: response, representation: value)
-                {
+                if let response = response, responseObject = T(response: response, representation: value) {
                     return .Success(responseObject)
                 } else {
-                    let failureReason = "JSON could not be serialized into response object: \(value)"
-                    let error = Error.errorWithCode(.JSONSerializationFailed, failureReason: failureReason)
+                    let error = makeError(.JSONSerializationError)
                     return .Failure(error)
                 }
             case .Failure(let error):
@@ -57,8 +53,7 @@ extension Request {
                 if let response = response {
                     return .Success(T.collection(response: response, representation: value))
                 } else {
-                    let failureReason = "Response collection could not be serialized due to nil response"
-                    let error = Error.errorWithCode(.JSONSerializationFailed, failureReason: failureReason)
+                    let error = makeError(.JSONSerializationError)
                     return .Failure(error)
                 }
             case .Failure(let error):
