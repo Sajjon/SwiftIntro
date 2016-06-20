@@ -32,7 +32,7 @@ For every _screen_ in your app you create your own subclass of ```UIViewControll
 
   2. The Xib file approach is an older technique which only allows for one UIViewController per Xib file. In Xib files you don't need to put UIViewControllers, you can instead put UIViews. The advantage of this is that they can be used by different UIViewControllers or UIViews in your project. So they are reusable through out the project. A good example of when to use Xib files is when you want to create a list (```UITableView```) or grid (```UICollectionView```) of views. This project uses a ```UICollectionView``` for displaying memory cards in a grid. The cards are ```UICollectionViewCells``` (subclass of ```UIViews```...). So each _item_ in a list or grid of view is called a _cell_. It is recommended to create each unique cell class in a separate Xib file.
 
-2. Creating views in code (or _programmatically_ as you often say...). All ```UIButton```s, ```UILabel```s, ```UITableview```s, ```UITextView```s, ```UITextField``` etc you drag and drop in Interface Builder can also be created and added to your view using pure Swift code. The syntax for this is typically:
+2. Creating views in code (or _programmatically_ as you often say...). All ```UIButtons```, ```UILabels```, ```UITableviews```, ```UITextViews```, ```UITextField``` etc you drag and drop in Interface Builder can also be created and added to your view using pure Swift code. The syntax for this is typically:
 ```swift
 	private func myMethodCreatingLabel() {
 		let resetPasswordLabel = UILabel()
@@ -47,11 +47,18 @@ For every _screen_ in your app you create your own subclass of ```UIViewControll
 	}
 ```
 #### Model
-A model is a ```struct``` or ```class``` that holds data. In this project we fetch data, sent over HTTP GET on the JSON format from Instagram. The images from Instagram are stored in a ```struct``` called _Cards.swift_. Structs and classes may seem very similar, and in terms of syntax they are. But the behave very differently in terms of memory and reference, after you have worked with this project you can have a look at this [WWDC video](https://developer.apple.com/videos/play/wwdc2015/414/) explaining the difference.
+A model is a s```truct``` or ```class``` that holds data. In this project we fetch data, sent over HTTP GET on the JSON format from Instagram. The images from Instagram are stored in a s```truct``` called _Cards.swift_. Structs and classes may seem very similar, and in terms of syntax they are. But the behave very differently in terms of memory and reference, after you have worked with this project you can have a look at this [WWDC video](https://developer.apple.com/videos/play/wwdc2015/414/) explaining the difference.
 
-iOS apps actually have a quite confusing MVC pattern, because the ```UIViewController``` is the controller, but it also has its own ```UIView```, so in a way the ```UIViewController``` is also the view 😬😅. The MVC patterin in iOS has often been critized ([here](http://clean-swift.com/clean-swift-ios-architecture/), [here](https://www.objc.io/issues/13-architecture/mvvm/) and [here](https://realm.io/news/andy-matuschak-refactor-mega-controller/)) and called _*Massive*-View-Controller_, because the ```UIViewController``` classes you create tend grow to many hundreds lines of code. This project aims to not have any _*Massive*_ ```UIViewController```. The project has four ```UIViewController```s (_GameVC_, _SettingsVC_, _GameOverVC_ and _LoadingDataVC_) and the biggest is not even 100 lines of code. Try to aim for that less than 100 lines of code! Unfortunatly it's rare to work in a project where *any* ```UIViewController``` is less than 100 lines of code. So if you make it a habbit then you will be a skilled iOS developer from start 🦄. A great way of achieving small UIViewControllers is to split a single screen into multiple ```UIViewController```s, or to use ```extension```s, [here is a great article](http://khanlou.com/2016/02/many-controllers/) on how ```extension```s of ```UIViewController``` can make your ```UIViewController```s smaller. 
+### How to write good code
+iOS apps actually have a quite confusing MVC pattern, because the ```UIViewController``` is the controller, but it also has its own ```UIView```, so in a way the ```UIViewController``` is also the view 😬😅. The MVC patterin in iOS has often been critized ([here](http://clean-swift.com/clean-swift-ios-architecture/), [here](https://www.objc.io/issues/13-architecture/mvvm/) and [here](https://realm.io/news/andy-matuschak-refactor-mega-controller/)) and called _*Massive*-View-Controller_, because the ```UIViewController``` classes you create tend grow to many hundreds lines of code. This project aims to not have any _*Massive*_ ```UIViewController```. The project has four ```UIViewControllers``` (_GameVC_, _SettingsVC_, _GameOverVC_ and _LoadingDataVC_) and the biggest is not even 100 lines of code. Try to aim for that less than 100 lines of code! Unfortunatly it's rare to work in a project where *any* ```UIViewController``` is less than 100 lines of code. So if you make it a habbit then you will be a skilled iOS developer from start 🦄. A great way of achieving small UIViewControllers is to split a single screen into multiple ```UIViewControllers```, or to use ```extensions```, [here is a great article](http://khanlou.com/2016/02/many-controllers/) on how ```extensions``` of ```UIViewController``` can make your ```UIViewControllers``` smaller. 
 
-Another general guideline is to try to keep under less than 200 lines of code for *all* files (classes, structs or enums). When you notice that a class grows, maybe you can try to split it into two or three classes instead.  
+Another general guideline is to try to keep under less than 200 lines of code for *all* files (classes, structs or enums). When you notice that a class grows, maybe you can try to split it into two or three classes instead. In fact no file in this project is more than 200 lines of code. Almost all files are under 100 lines.
+
+#### SwiftLint
+A good way to enforce writing good code is to install a tool called [SwiftLint](https://github.com/realm/SwiftLint) which we have used durint the development of this project. If you have [Homebrew](http://brew.sh/) installed you can install it using this terminal command:
+```bash
+brew install swiftlint
+```
 
 ## Tasks 
 
@@ -85,7 +92,7 @@ Another general guideline is to try to keep under less than 200 lines of code fo
 4. Refactor the name of a variable/class/function you don't understand to a more understandable description. 
 
 5. Switch the position of the _Restart_ button with the _Quit_ button.
-(tip: don't delete the buttons... 😜 then you have to recreate the _Segue_s...)
+(tip: don't delete the buttons... 😜 then you have to recreate the _Segues_ ...)
 
 6. Save the best score (lowest _clickCount_ for each level) a user has scored and present this score in the _GameOverVC_. 
 (Tip: Checkout [NSUserDefaults](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSUserDefaults_Class/) for saving.)
