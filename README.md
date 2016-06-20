@@ -52,7 +52,7 @@ A model is a s```truct``` or ```class``` that holds data. In this project we fet
 ### How to write good code
 iOS apps actually have a quite confusing MVC pattern, because the ```UIViewController``` is the controller, but it also has its own ```UIView```, so in a way the ```UIViewController``` is also the view 😬😅. The MVC patterin in iOS has often been critized ([here](http://clean-swift.com/clean-swift-ios-architecture/), [here](https://www.objc.io/issues/13-architecture/mvvm/) and [here](https://realm.io/news/andy-matuschak-refactor-mega-controller/)) and called _*Massive*-View-Controller_, because the ```UIViewController``` classes you create tend grow to many hundreds lines of code. This project aims to not have any _*Massive*_ ```UIViewController```. The project has four ```UIViewControllers``` (_GameVC_, _SettingsVC_, _GameOverVC_ and _LoadingDataVC_) and the biggest is not even 100 lines of code. Try to aim for that less than 100 lines of code! Unfortunatly it's rare to work in a project where *any* ```UIViewController``` is less than 100 lines of code. So if you make it a habbit then you will be a skilled iOS developer from start 🦄. A great way of achieving small UIViewControllers is to split a single screen into multiple ```UIViewControllers```, or to use ```extensions```, [here is a great article](http://khanlou.com/2016/02/many-controllers/) on how ```extensions``` of ```UIViewController``` can make your ```UIViewControllers``` smaller. 
 
-Another general guideline is to try to keep under less than 200 lines of code for *all* files (classes, structs or enums). When you notice that a class grows, maybe you can try to split it into two or three classes instead. In fact no file in this project is more than 200 lines of code. Almost all files are under 100 lines.
+Another general guideline is to try to keep under less than 200 lines of code for *all* files (classes, structs or enums). When you notice that a class grows, maybe you can try to split it into two or three classes instead. In fact all files in this project is less than 100 lines of code, with one exception - _MemoryDataSourceAndDelegate_ - which still is less than 200 lines.
 
 #### SwiftLint
 A good way to enforce writing good code is to install a tool called [SwiftLint](https://github.com/realm/SwiftLint) which we have used durint the development of this project. If you have [Homebrew](http://brew.sh/) installed you can install it using this terminal command:
@@ -89,7 +89,7 @@ brew install swiftlint
 3. Set the background of the memory Card to be show an image 🏔 instead of just a color.<br/>
 (tip: check out _CardCVCell.xib_ or _CardCVCell.swift_)
 
-4. Refactor the name of a variable/class/function you don't understand to a more understandable description. 
+4. In the section [How to write good code](#how-to-write-good-code) we discussed the goal of writing small files, and the class _MemoryDataSourceAndDelegate_ with its almost 200 lines of code was mentioned. Can you split this class into several smaller classes that makes sense, so that no class is more than 100 lines?
 
 5. Switch the position of the _Restart_ button with the _Quit_ button.<br/>
 (tip: don't delete the buttons... 😜 then you have to recreate the _Segues_ ...)
