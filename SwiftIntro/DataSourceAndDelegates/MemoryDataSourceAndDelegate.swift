@@ -131,7 +131,7 @@ private extension MemoryDataSourceAndDelegate {
         let rowCount = CGFloat(gameLevel.rowCount)
         let sectionSpace = flowLayout.sectionInset.top + flowLayout.sectionInset.bottom
         let totalSpaceHeight = sectionSpace + (flowLayout.minimumLineSpacing * (rowCount - 1))
-        let height = (collectionView.bounds.height - totalSpaceHeight) / rowCount
+        let height = trunc((collectionView.bounds.height - totalSpaceHeight) / rowCount)
         return height
     }
 
@@ -139,7 +139,7 @@ private extension MemoryDataSourceAndDelegate {
         let columnCount = CGFloat(gameLevel.columnCount)
         let sectionSpace = flowLayout.sectionInset.left + flowLayout.sectionInset.right
         let totalSpaceWidth = sectionSpace + (flowLayout.minimumInteritemSpacing * (columnCount - 1))
-        let width = (collectionView.bounds.width - totalSpaceWidth) / columnCount
+        let width = trunc((collectionView.bounds.width - totalSpaceWidth) / columnCount)
         return width
     }
 }
