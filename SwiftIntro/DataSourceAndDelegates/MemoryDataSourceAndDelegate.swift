@@ -76,6 +76,7 @@ private extension MemoryDataSourceAndDelegate {
              search for a new pair.
              */
             self.flippedCardIndexPath = nil
+            guard flippedCardIndexPath != indexPath else { return }
             checkIfCardAtIndexPath(indexPath,
                                    inCollectionView: collectionView,
                                    matchesAlreadyFlippedCard: flippedCardIndexPath)
