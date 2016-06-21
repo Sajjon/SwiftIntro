@@ -29,10 +29,11 @@ func == (lhs: Card, rhs: Card) -> Bool {
 extension Card: Model {
 
     convenience init?(response: NSHTTPURLResponse, representation: AnyObject) {
-        guard let media = representation["images"] as? JSON else { return nil }
-        guard let image = media["standard_resolution"] as? JSON else { return nil }
-        guard let imageUrlString = image["url"] as? String else { return nil }
-        guard let imageUrl = NSURL(string: imageUrlString) else { return nil }
+        guard let
+            media = representation["images"] as? JSON,
+            image = media["standard_resolution"] as? JSON,
+            imageUrlString = image["url"] as? String,
+            imageUrl = NSURL(string: imageUrlString) else { return nil }
         self.init(imageUrl: imageUrl)
     }
 
