@@ -84,49 +84,50 @@ brew install swiftlint
 
 1. Change the _Quit_ button title, which currently is a text with the char _X_, to use an image 🏔 instead. 
 
-2. Implement white space handling for the username textfield.
-
-3. Set the background of the memory Card to be show an image 🏔 instead of just a color.<br/>
+2. Set the background of the memory Card to be show an image 🏔 instead of just a color.<br/>
 (tip: check out _CardCVCell.xib_ or _CardCVCell.swift_)
 
-4. In the section [How to write good code](#how-to-write-good-code) we discussed the goal of writing small files, and the class _MemoryDataSourceAndDelegate_ with its almost 200 lines of code was mentioned. Can you split this class into several smaller classes that makes sense, so that no class is more than 100 lines?
+3. In the section [How to write good code](#how-to-write-good-code) we discussed the goal of writing small files, and the class _MemoryDataSourceAndDelegate_ with its almost 200 lines of code was mentioned. Can you split this class into several smaller classes that makes sense, so that no class is more than 100 lines?
 
-5. Switch the position of the _Restart_ button with the _Quit_ button.<br/>
+4. Switch the position of the _Restart_ button with the _Quit_ button.<br/>
 (tip: don't delete the buttons... 😜 then you have to recreate the _Segues_ ...)
 
-6. Save the best score (lowest _clickCount_ for each level) a user has scored and present this score in the _GameOverVC_. <br/>
+5. Save the best score (lowest _clickCount_ for each level) a user has scored and present this score in the _GameOverVC_. <br/>
 (Tip: Checkout [NSUserDefaults](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSUserDefaults_Class/) for saving.)
 
-7. It is currently possible for a user to flip a third card while the flip animation of the two previous cards has not yet finished. Address this issue.
+6. It is currently possible for a user to flip a third card while the flip animation of the two previous cards has not yet finished. Address this issue.
 
-8. Create a timer ⏲ [NSTimer](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSTimer_Class/) that counts the time for a game session. Display this time in the _GameOverVC_ after the game has finished.
+7. Create a timer ⏲ [NSTimer](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSTimer_Class/) that counts the time for a game session. Display this time in the _GameOverVC_ after the game has finished.
 
 ## 🦄 Bring it on
 1. Display a timer ⏲ [NSTimer](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSTimer_Class/) (could be the one you created in task 8 in [I think I've got a good grip of it](#i-think-ive-got-a-good-grip-of-it) ) that is counting upwards in the _GameVC_ showing elapsed time ⏰ since game start.
 
 2. When you press the _Restart_ button from _GameOverVC_ the cards will have the same position as before, this makes it easy to cheat! Your task is to shuffle the cards before restarting the game.  
 
-3. Change the feedback message in _GameOverVC_ from _Well done_ to a dynamic title that changes according to how well it went. Some examples strings: _Awesome_, _Not sooo bad_, _That was Horrible_ etc. This string should not be directly dependent on only _Level_, or only _clickCount_, but rather..?
+3. Implement white space handling for the username textfield.
 
-4. Currently the project uses hard coded keys for localized strings (the key itself is a string), which is the standard iOS pattern - but it smells! Instead you can introduce an Enum for all the localized strings. So that you will be able to write something like this: 
+4. Change the feedback message in _GameOverVC_ from _Well done_ to a dynamic title that changes according to how well it went. Some examples strings: _Awesome_, _Not sooo bad_, _That was Horrible_ etc. This string should not be directly dependent on only _Level_, or only _clickCount_, but rather..?
+
+5. Currently the project uses hard coded keys for localized strings (the key itself is a string), which is the standard iOS pattern - but it smells! Instead you can introduce an Enum for all the localized strings. So that you will be able to write something like this: 
 ```swift
 	restartButton.setLocalizedTitle(LocalizedStrings.Restart)
 ```
 (Tip: Either you do this by yourself, or you can use [SwiftGen](https://github.com/AliSoftware/SwiftGen) for this, if you know how to install it...)
 
-5. Add some Error ☠ handling, e.g  displaying a message if the Instagram username doesn't exist, or if no images could be loaded.
+6. Add some Error ☠ handling, e.g  displaying a message if the Instagram username doesn't exist, or if no images could be loaded.
 
-6. Make it possible to set the number of cards to a custom number. Currently the number of cards are determined base on which difficulty level you chose in the SettingsVC. 
+7. Make it possible to set the number of cards to a custom number. Currently the number of cards are determined base on which difficulty level you chose in the SettingsVC. 
 
-7. Enable Landscape mode for all the views.
+8. Enable Landscape mode for all the views.
 
-8. Fetch the images from another source than Instagram. Maybe you can fetch the images from FourSquare, using its [API](https://developer.foursquare.com/), [Flickr](https://www.flickr.com/services/api/) or [Twitter](https://dev.twitter.com/rest/public). Please note all the above mentioned alternative image sources require an API token/secret. So you have to create those in order to use the APIs. Then you have to change the JSON parsing of the _Cards_ model. You also need to modify the _Photos_ 📷 route in the _Router_ class to go against the correct URL.
+9. Fetch the images from another source than Instagram. Maybe you can fetch the images from FourSquare, using its [API](https://developer.foursquare.com/), [Flickr](https://www.flickr.com/services/api/) or [Twitter](https://dev.twitter.com/rest/public). Please note all the above mentioned alternative image sources require an API token/secret. So you have to create those in order to use the APIs. Then you have to change the JSON parsing of the _Cards_ model. You also need to modify the _Photos_ 📷 route in the _Router_ class to go against the correct URL.
 
 # Authors 
 
 ## [Alexander Cyon](https://github.com/sajjon) [@Redrum_237](https://twitter.com/redrum_237) [LinkedIn](https://se.linkedin.com/in/alexcyon)
 Alex started with app development in 2010, his first app project was the development of an Android app for one of the largest computer stores in Sweden. *But it wasn't until 2013 that Alex started with iOS development*. He got hooked on iOS development even though the syntax of Objective-C feels really outdated today. In 2014 he did his first Swift project for Avanza Bank and instantaneously fell in love 😍. Since then Alex have been developing BookBeat's iOS app in Swift and also been working a bit on BookBeat's Android app.
 
-## [Miriam Tisander](https://github.com/MiriamTisander)
+## [Miriam Tisander](https://github.com/MiriamTisander) [LinkedIn](https://www.linkedin.com/in/miriamtisander)
 Miriam has worked with iOS development since 2015, she loves Swift but is currently working with Objective-C 😭🔫. 
+She's also a huge [Comic book](https://www.youtube.com/user/schitzocookie) fan, so if you want any reading tips, you know who to contact ;)!
 
