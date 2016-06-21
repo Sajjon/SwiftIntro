@@ -11,7 +11,7 @@ There is no need for any _installation_ per se, you only need to download this p
 git clone <PASTE_GITHUB_URL_HERE> 
 ```
 
-After you have download the project, open the file called _SwiftIntro.xcworkspace_ (*not* _SwiftIntro.xcodeproj_).
+### After you have download the project, open the file called _SwiftIntro.xcworkspace_ (*not* _SwiftIntro.xcodeproj_).
 
 # iOS development
 All the _screens_ you see are called ```UIViewController``` which consists of smaller view elements called ```UIView```. Buttons (```UIButton```), text labels (```UILabel```), textfield for text input (```UITextField```) are all subclasses of the superclass ```UIView```. All instances of ```UIViewController``` have a view (```UIView```), which is the root view, the _canvas_ in which you can add buttons, labels and lists (```UITableView```).
