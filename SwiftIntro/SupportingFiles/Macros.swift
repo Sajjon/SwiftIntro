@@ -32,7 +32,7 @@ func delay(delay: Double, closure: Closure) {
 
 func makeError(error: Error) -> NSError {
     let userInfo = [NSLocalizedFailureReasonErrorKey: error.errorMessage]
-    let error = NSError(domain: "SwiftIntro", code: Error.JSONSerializationError.rawValue, userInfo: userInfo)
+    let error = NSError(domain: "SwiftIntro", code: error.rawValue, userInfo: userInfo)
     return error
 }
 
