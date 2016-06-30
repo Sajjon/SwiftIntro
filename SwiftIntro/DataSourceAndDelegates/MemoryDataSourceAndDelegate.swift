@@ -109,6 +109,8 @@ private extension MemoryDataSourceAndDelegate {
     {
         if card == flippedCard {
             matches += 1
+            card.matched = true
+            flippedCard.matched = true
         } else {
             /* No match, flip back cards after delay */
             delay(1) {
@@ -116,6 +118,12 @@ private extension MemoryDataSourceAndDelegate {
                 flippedCell.flipCard(flippedCard)
             }
         }
+    }
+
+    private func cardAtIndexPathAlreadyMatched(indexPath: NSIndexPath) -> Bool {
+        guard let card = cardForIndexPath(indexPath) else { return false }
+        let alreadyMatched = card.matched
+        return alreadyMatched
     }
 
     private func calculateCardSize(flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> CGSize {
@@ -163,6 +171,7 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDataSource {
 //MARK: UICollectionViewDelegate Methods
 extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        guard cardAtIndexPathAlreadyMatched(indexPath) == false else { return }
         didSelectCardAtIndexPath(indexPath, inCollectionView: collectionView)
     }
 

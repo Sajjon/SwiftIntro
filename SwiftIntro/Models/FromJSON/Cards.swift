@@ -33,6 +33,12 @@ extension Cards {
         }
     }
 
+    func unmatch() {
+        for card in memoryCards {
+            card.matched = false
+        }
+    }
+
     func unflipped() -> Cards {
         unflip()
         return self

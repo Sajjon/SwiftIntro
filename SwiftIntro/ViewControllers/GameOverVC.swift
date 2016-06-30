@@ -31,6 +31,7 @@ class GameOverVC: UIViewController, Configurable {
         guard let gameVC = segue?.destinationViewController as? GameVC else { return }
         guard let cards = result.cards else { return }
         gameVC.cards = cards.unflipped()
+        gameVC.cards.unmatch()
     }
 }
 

@@ -12,6 +12,7 @@ final class Card {
     let imageUrl: NSURL
 
     var flipped: Bool = false
+    var matched: Bool = false
 
     init(imageUrl: NSURL) {
         self.imageUrl = imageUrl
