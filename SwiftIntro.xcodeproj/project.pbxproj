@@ -40,6 +40,7 @@
 		7BAD45951CFF70FA00C7D7EF /* Request_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */; };
 		7BADD6AB1D16D9DF005EEBE3 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD6AA1D16D9DF005EEBE3 /* Level.swift */; };
 		7BADD6AD1D16DE8C005EEBE3 /* LoadingDataVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD6AC1D16DE8C005EEBE3 /* LoadingDataVC.swift */; };
+		7BC0EA681D377F7E00A67551 /* DependencyInjectionConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC0EA671D377F7E00A67551 /* DependencyInjectionConfigurator.swift */; };
 		7BEEBF0E1D18A2C80014571E /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEBF0D1D18A2C80014571E /* Result.swift */; };
 		7BEEBF101D18A2DF0014571E /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEBF0F1D18A2DF0014571E /* Model.swift */; };
 		7BEEBF141D18A6790014571E /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEBF131D18A6790014571E /* Error.swift */; };
@@ -85,6 +86,7 @@
 		7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request_Extension.swift; sourceTree = "<group>"; };
 		7BADD6AA1D16D9DF005EEBE3 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		7BADD6AC1D16DE8C005EEBE3 /* LoadingDataVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingDataVC.swift; sourceTree = "<group>"; };
+		7BC0EA671D377F7E00A67551 /* DependencyInjectionConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyInjectionConfigurator.swift; sourceTree = "<group>"; };
 		7BEEBF0D1D18A2C80014571E /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		7BEEBF0F1D18A2DF0014571E /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		7BEEBF131D18A6790014571E /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 		7B21A5AB1CFF5C17002E5EE5 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				7BC0EA671D377F7E00A67551 /* DependencyInjectionConfigurator.swift */,
 				7B86085D1D1597FB00037D36 /* Localizable.strings */,
 				7B5876481D157F3B00095036 /* Macros.swift */,
 				7B21A5AC1CFF5C17002E5EE5 /* AppDelegate.swift */,
@@ -455,6 +458,7 @@
 				7B21A5B41CFF5CAC002E5EE5 /* APIClient.swift in Sources */,
 				7BAD45931CFF6F3A00C7D7EF /* Router.swift in Sources */,
 				7B21A5C51CFF6586002E5EE5 /* NSObject_Extension.swift in Sources */,
+				7BC0EA681D377F7E00A67551 /* DependencyInjectionConfigurator.swift in Sources */,
 				7B86085C1D1594FE00037D36 /* GameOverVC.swift in Sources */,
 				7B2F90AA1D00B9A400613325 /* ImagePrefetcher.swift in Sources */,
 				7BADD6AB1D16D9DF005EEBE3 /* Level.swift in Sources */,

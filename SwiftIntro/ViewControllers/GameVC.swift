@@ -10,19 +10,32 @@ import UIKit
 
 private let gameOverSeque = "gameOverSeque"
 class GameVC: UIViewController, Configurable {
-    
+
+    //MARK: Variables
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var labelsView: UIView!
     var config: GameConfiguration!
     var cards: Cards!
     private var result: GameResult!
+    var imagePrefetcher: ImagePrefetcherProtocol!
     
     private lazy var dataSourceAndDelegate: MemoryDataSourceAndDelegate = {
-        let dataSourceAndDelegate = MemoryDataSourceAndDelegate(self.cards, level: self.config.level, delegate: self)
+        let dataSourceAndDelegate = MemoryDataSourceAndDelegate(
+            self.cards,
+            level: self.config.level,
+            delegate: self,
+            imagePrefetcher: self.imagePrefetcher
+            )
         return dataSourceAndDelegate
     }()
 
+    //MARK: Instantiation
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    //MARK: VC Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()

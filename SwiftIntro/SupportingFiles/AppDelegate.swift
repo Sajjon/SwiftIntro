@@ -7,16 +7,17 @@
 //
 
 import UIKit
+import Swinject
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder {
 
     var window: UIWindow?
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-        return true
-    }
-
+    let container: Container = SwinjectStoryboard.defaultContainer
 }
 
+extension AppDelegate: UIApplicationDelegate {
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        return true
+    }
+}

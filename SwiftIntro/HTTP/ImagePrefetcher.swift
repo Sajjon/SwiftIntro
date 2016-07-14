@@ -12,7 +12,6 @@ import AlamofireImage
 
 class ImagePrefetcher {
 
-    static let sharedInstance: ImagePrefetcherProtocol = ImagePrefetcher()
     private let imageDownloader: ImageDownloader
 
     init() {

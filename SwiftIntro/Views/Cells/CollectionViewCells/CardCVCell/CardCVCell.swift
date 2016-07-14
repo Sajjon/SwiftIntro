@@ -55,10 +55,9 @@ extension CardCVCell: CellProtocol {
         return className
     }
 
-    func updateWithModel(model: Model) {
+    func updateWithModel(model: Model, image: UIImage?) {
         guard let card = model as? Card else { return }
-        guard let cachedImage = ImagePrefetcher.sharedInstance.imageFromCache(card.imageUrl) else { return }
-        cardFrontImageView.image = cachedImage
+        cardFrontImageView.image = image
         flipped = card.flipped
     }
 }

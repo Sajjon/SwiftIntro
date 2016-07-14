@@ -33,7 +33,12 @@ class LoadingDataVC: UIViewController, Configurable {
         }
     }
 
-    var dataSourceAndDelegate: MemoryDataSourceAndDelegate!
+    var apiClient: APIClientProtocol!
+    var imagePrefetcher: ImagePrefetcherProtocol!
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
 
     //MARK: VC Lifecycle Methods
     override func viewDidLoad() {
@@ -64,7 +69,7 @@ private extension LoadingDataVC {
     }
 
     private func fetchData() {
-        APIClient.sharedInstance.getPhotos(config.username) {
+        apiClient.getPhotos(config.username) {
             (result: Result<Cards>) in
             self.setupWithModel(result.model)
         }
@@ -80,7 +85,7 @@ private extension LoadingDataVC {
     private func prefetchImagesForCards(cards: [Card]) {
         imagesLeftToFetchCount = cards.count
         let urls: [URLRequestConvertible] = cards.map { return URL(url: $0.imageUrl) }
-        ImagePrefetcher.sharedInstance.prefetchImages(urls) {
+        imagePrefetcher.prefetchImages(urls) {
             self.imagesLeftToFetchCount -= 1
         }
     }

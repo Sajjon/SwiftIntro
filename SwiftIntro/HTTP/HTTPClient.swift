@@ -11,9 +11,7 @@ import Alamofire
 
 typealias JSON = [String: AnyObject]
 
-class HTTPClient {
-    static let sharedInstance: HTTPClientProtocol = HTTPClient()
-}
+class HTTPClient {}
 
 extension HTTPClient: HTTPClientProtocol {
     func request<T: Model>(route: Router, done: (Result<T>) -> Void) {

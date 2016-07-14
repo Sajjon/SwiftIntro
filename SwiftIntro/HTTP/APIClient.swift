@@ -10,9 +10,13 @@ import Foundation
 
 class APIClient {
 
-    static let sharedInstance: APIClientProtocol = APIClient()
+    private let httpClient: HTTPClientProtocol
 
-    private let httpClient: HTTPClientProtocol = HTTPClient.sharedInstance
+    init(
+        httpClient: HTTPClientProtocol
+    ) {
+        self.httpClient = httpClient
+    }
 }
 
 extension APIClient: APIClientProtocol {

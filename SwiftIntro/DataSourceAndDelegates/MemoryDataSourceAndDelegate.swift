@@ -19,6 +19,7 @@ class MemoryDataSourceAndDelegate: NSObject {
     private let cards: Cards
     private let gameLevel: Level
     private weak var delegate: GameDelegate?
+    private let imagePrefetcher: ImagePrefetcherProtocol
 
     private var clickCount = 0
 
@@ -43,10 +44,15 @@ class MemoryDataSourceAndDelegate: NSObject {
         }
     }
 
-    init(_ cards: Cards, level: Level, delegate: GameDelegate) {
+    init(_ cards: Cards,
+           level: Level,
+           delegate: GameDelegate,
+           imagePrefetcher: ImagePrefetcherProtocol
+        ) {
         self.cards = cards
         self.gameLevel = level
         self.delegate = delegate
+        self.imagePrefetcher = imagePrefetcher
     }
 }
 
@@ -178,7 +184,8 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? CardCVCell else { return }
         guard let model = cardForIndexPath(indexPath) else { return }
-        cell.updateWithModel(model)
+        let cachedImage = imagePrefetcher.imageFromCache(model.imageUrl)
+        cell.updateWithModel(model, image: cachedImage)
     }
 }
 
