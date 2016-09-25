@@ -10,7 +10,7 @@ import Foundation
 
 class APIClient {
 
-    private let httpClient: HTTPClientProtocol
+    fileprivate let httpClient: HTTPClientProtocol
 
     init(
         httpClient: HTTPClientProtocol
@@ -21,7 +21,7 @@ class APIClient {
 
 extension APIClient: APIClientProtocol {
 
-    func getPhotos<T: Model>(username: String, done: (Result<T>) -> Void) {
-        httpClient.request(.Photos(username), done: done)
+    func getPhotos(_ username: String, done: @escaping Done<Cards>) {
+        httpClient.request(.photos(username), done: done)
     }
 }

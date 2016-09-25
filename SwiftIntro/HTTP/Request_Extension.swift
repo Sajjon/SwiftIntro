@@ -9,58 +9,87 @@
 import Foundation
 import Alamofire
 
-public protocol ResponseObjectSerializable {
-    init?(response: NSHTTPURLResponse, representation: AnyObject)
+protocol ResponseObjectSerializable {
+    init?(response: HTTPURLResponse, representation: Any)
 }
 
-public protocol ResponseCollectionSerializable {
-    static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [Self]
+protocol ResponseCollectionSerializable {
+    static func collection(from response: HTTPURLResponse, withRepresentation representation: Any) -> [Self]
 }
 
-extension Request {
-    public func responseObject<T: ResponseObjectSerializable>(completionHandler: Response<T, NSError> -> Void) -> Self {
-        let responseSerializer = ResponseSerializer<T, NSError> { request, response, data, error in
-            guard error == nil else { return .Failure(error!) }
+extension ResponseCollectionSerializable where Self: ResponseObjectSerializable {
+    static func collection(from response: HTTPURLResponse, withRepresentation representation: Any) -> [Self] {
+        var collection: [Self] = []
 
-            let JSONResponseSerializer = Request.JSONResponseSerializer(options: .AllowFragments)
-            let result = JSONResponseSerializer.serializeResponse(request, response, data, error)
-
-            switch result {
-            case .Success(let value):
-                if let response = response, responseObject = T(response: response, representation: value) {
-                    return .Success(responseObject)
-                } else {
-                    let error = makeError(.JSONSerializationError)
-                    return .Failure(error)
+        if let representation = representation as? [[String: Any]] {
+            for itemRepresentation in representation {
+                if let item = Self(response: response, representation: itemRepresentation) {
+                    collection.append(item)
                 }
-            case .Failure(let error):
-                return .Failure(error)
             }
         }
 
-        return response(responseSerializer: responseSerializer, completionHandler: completionHandler)
+        return collection
+    }
+}
+
+
+extension DataRequest {
+
+    @discardableResult
+    func responseObject<T: ResponseObjectSerializable>(
+        queue: DispatchQueue? = nil,
+        completionHandler: @escaping (DataResponse<T>) -> Void)
+        -> Self
+    {
+        let responseSerializer = DataResponseSerializer<T> { request, response, data, error in
+            if let error = error {
+                return .failure(MyError(.network, error: error))
+            }
+
+            let jsonResponseSerializer = DataRequest.jsonResponseSerializer(options: .allowFragments)
+            let result = jsonResponseSerializer.serializeResponse(request, response, data, nil)
+
+            guard case let .success(jsonObject) = result else {
+                return .failure(MyError(.jsonParsing, error: result.error!))
+            }
+
+            guard let response = response, let responseObject = T(response: response, representation: jsonObject) else {
+                return .failure(MyError(.modelMapping, description: "JSON could not be serialized: \(jsonObject)"))
+            }
+
+            return .success(responseObject)
+        }
+
+        return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
     }
 
-    public func responseCollection<T: ResponseCollectionSerializable>(completionHandler: Response<[T], NSError> -> Void) -> Self {
-        let responseSerializer = ResponseSerializer<[T], NSError> { request, response, data, error in
-            guard error == nil else { return .Failure(error!) }
+    @discardableResult
+    func responseCollection<T: ResponseCollectionSerializable>(
+        queue: DispatchQueue? = nil,
+        completionHandler: @escaping (DataResponse<[T]>) -> Void) -> Self
+    {
+        let responseSerializer = DataResponseSerializer<[T]> { request, response, data, error in
 
-            let JSONSerializer = Request.JSONResponseSerializer(options: .AllowFragments)
-            let result = JSONSerializer.serializeResponse(request, response, data, error)
-
-            switch result {
-            case .Success(let value):
-                if let response = response {
-                    return .Success(T.collection(response: response, representation: value))
-                } else {
-                    let error = makeError(.JSONSerializationError)
-                    return .Failure(error)
-                }
-            case .Failure(let error):
-                return .Failure(error)
+            if let error = error {
+                return .failure(MyError(.network, error: error))
             }
-        }
 
+            let jsonSerializer = DataRequest.jsonResponseSerializer(options: .allowFragments)
+            let result = jsonSerializer.serializeResponse(request, response, data, nil)
+
+            guard case let .success(jsonObject) = result else {
+                return .failure(MyError(.jsonParsing, error: result.error!))
+            }
+
+            guard let response = response else {
+                let reason = "Response collection could not be serialized due to nil response."
+                return .failure(MyError(.modelMapping, description: reason))
+            }
+
+            return .success(T.collection(from: response, withRepresentation: jsonObject))
+        }
+        
         return response(responseSerializer: responseSerializer, completionHandler: completionHandler)
     }
 }

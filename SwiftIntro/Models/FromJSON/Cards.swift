@@ -50,19 +50,15 @@ extension Cards {
 }
 
 extension Cards: Model {
-    init?(response: NSHTTPURLResponse, representation: AnyObject) {
-        guard let jsonForCards = representation.valueForKeyPath("items") as? [JSON] else { return nil }
-        let cards = Card.collection(response: response, representation: jsonForCards)
+    init?(response: HTTPURLResponse, json: JSON) {
+        guard let jsonForCards = json["items"] as? [JSON] else { return nil }
+        let cards = Card.collection(from: response, withRepresentation: jsonForCards)
         self.singles = cards
         memoryCards = []
     }
-
-    static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [Cards] {
-        fatalError("Not needed")
-    }
 }
 
-private func memoryCardsFromSingles(singles: [Card], cardCount: Int) -> [Card] {
+private func memoryCardsFromSingles(_ singles: [Card], cardCount: Int) -> [Card] {
     let cardCount = min(singles.count, cardCount)
     var cards = singles
     cards.shuffle()
@@ -72,7 +68,7 @@ private func memoryCardsFromSingles(singles: [Card], cardCount: Int) -> [Card] {
     return duplicated
 }
 
-private func duplicatedMemoryCards(cards: [Card]) -> [Card] {
+private func duplicatedMemoryCards(_ cards: [Card]) -> [Card] {
     var duplicated: [Card] = []
     for memoryCard in cards {
         let duplicate = Card(imageUrl: memoryCard.imageUrl)

@@ -9,7 +9,7 @@
 import Foundation
 
 enum Level {
-    case Easy, Normal, Hard
+    case easy, normal, hard
 
     var cardCount: Int {
         return self.rowCount*self.columnCount
@@ -18,11 +18,11 @@ enum Level {
     var title: String {
         let localizedKey: String
         switch self {
-        case .Easy:
+        case .easy:
             localizedKey = "Easy"
-        case .Normal:
+        case .normal:
             localizedKey = "Normal"
-        case .Hard:
+        case .hard:
             localizedKey = "Hard"
         }
         let title = localizedString(localizedKey)
@@ -32,11 +32,11 @@ enum Level {
     init(segmentedControlIndex: Int) {
         switch segmentedControlIndex {
         case 0:
-            self = .Easy
+            self = .easy
         case 1:
-            self = .Normal
+            self = .normal
         case 2:
-            self = .Hard
+            self = .hard
         default:
             fatalError("Should not be possible")
         }
@@ -45,11 +45,11 @@ enum Level {
     var segmentedControlIndex: Int {
         let index: Int
         switch self {
-        case .Easy:
+        case .easy:
             index = 0
-        case .Normal:
+        case .normal:
             index = 1
-        case .Hard:
+        case .hard:
             index = 2
         }
         return index
@@ -57,22 +57,22 @@ enum Level {
 
     var columnCount: Int {
         switch self {
-        case .Easy:
+        case .easy:
             return 2
-        case .Normal:
+        case .normal:
             return 3
-        case .Hard:
+        case .hard:
             return 4
         }
     }
 
     var rowCount: Int {
         switch self {
-        case .Easy:
+        case .easy:
             return 3
-        case .Normal:
+        case .normal:
             return 4
-        case .Hard:
+        case .hard:
             return 5
         }
     }

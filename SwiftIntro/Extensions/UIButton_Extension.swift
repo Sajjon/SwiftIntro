@@ -10,13 +10,13 @@ import UIKit
 
 extension UIButton {
 
-    func setLocalizedTitle(localizationKey: String, args: AnyObject...) {
+    func setLocalizedTitle(_ localizationKey: String, args: AnyObject...) {
         let title = localizedString(localizationKey)
         setTitle(title)
     }
 
-    func setTitle(title: String) {
-        setTitle(title, forState: .Normal)
-        setTitle(title, forState: .Highlighted)
+    func setTitle(_ title: String) {
+        setTitle(title, for: UIControlState())
+        setTitle(title, for: .highlighted)
     }
 }

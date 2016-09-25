@@ -9,32 +9,36 @@
 import Foundation
 import Alamofire
 
-typealias JSON = [String: AnyObject]
+typealias JSON = [String: Any]
 
 class HTTPClient {}
 
 extension HTTPClient: HTTPClientProtocol {
-    func request<T: Model>(route: Router, done: (Result<T>) -> Void) {
+    func request<T: Model>(_ route: Router, done: @escaping Done<T>) {
         Alamofire.request(route)
-        .validate()
+            .validate()
             .responseObject {
-                (response: Response<T, NSError>) in
-                let model: T? = response.result.value
-                let error: NSError? = response.result.error
-                let result = Result(model: model, error: error)
-                done(result)
+                (response: DataResponse<T>) in
+                if let model = response.result.value {
+                    done(Result.success([model]))
+                } else {
+                    let myError: MyError = (response.result.error as? MyError) ?? MyError(.unknown)
+                    done(Result.failure(myError))
+                }
         }
     }
 
-    func collectionRequest<T: Model>(route: Router, done: (Result<T>) -> Void) {
+    func collectionRequest<T: Model>(_ route: Router, done: @escaping Done<T>) {
         Alamofire.request(route)
             .validate()
             .responseCollection {
-                (response: Response<[T], NSError>) in
-                let models: [T]? = response.result.value
-                let error: NSError? = response.result.error
-                let result = Result(models: models, error: error)
-                done(result)
+                (response: DataResponse<[T]>) in
+                if let model = response.result.value {
+                    done(Result.success(model))
+                } else {
+                    let myError: MyError = (response.result.error as? MyError) ?? MyError(.unknown)
+                    done(Result.failure(myError))
+                }
         }
     }
 }

@@ -33,9 +33,9 @@ class SettingsVC: UIViewController, Configurable {
         populateViews()
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-        guard let vc = segue?.destinationViewController as? LoadingDataVC else { return }
-        if let username: String = usernameTextField.text where !username.isEmpty {
+    override func prepare(for segue: UIStoryboardSegue?, sender: Any?) {
+        guard let vc = segue?.destination as? LoadingDataVC else { return }
+        if let username: String = usernameTextField.text , !username.isEmpty {
             config.username = username
         }
 
@@ -47,7 +47,7 @@ class SettingsVC: UIViewController, Configurable {
 //MARK: IBAction Methods
 extension SettingsVC {
 
-    @IBAction func changedLevel(sender: UISegmentedControl) {
+    @IBAction func changedLevel(_ sender: UISegmentedControl) {
         let level = Level(segmentedControlIndex: sender.selectedSegmentIndex)
         config.level = level
     }
@@ -55,17 +55,17 @@ extension SettingsVC {
 
 private extension SettingsVC {
 
-    private func setupViews() {
+    func setupViews() {
         setupLocalizableStrings()
         startGameButton.layer.cornerRadius = startGameButton.frame.size.height/2
     }
 
-    private func populateViews() {
+    func populateViews() {
         usernameTextField.text = config.username
         levelSegmentedControl.selectedSegmentIndex = config.level.segmentedControlIndex
     }
 
-    private func setupLocalizableStrings() {
+    func setupLocalizableStrings() {
         usernameTextField.placeholder = localizedString("UsernamePlaceholder")
         segmentTitleLabel.setLocalizedText("Level")
         setupLocalizationForSegmentedControl()
@@ -73,11 +73,11 @@ private extension SettingsVC {
         startGameButton.setLocalizedTitle("StartGame")
     }
 
-    private func setupLocalizationForSegmentedControl() {
+    func setupLocalizationForSegmentedControl() {
         for i in 0...2 {
             let level = Level(segmentedControlIndex: i)
             let title = level.title
-            levelSegmentedControl.setTitle(title, forSegmentAtIndex: i)
+            levelSegmentedControl.setTitle(title, forSegmentAt: i)
         }
     }
 }

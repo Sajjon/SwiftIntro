@@ -9,6 +9,6 @@
 import Foundation
 
 protocol HTTPClientProtocol {
-    func request<T: Model>(route: Router, done: (Result<T>) -> Void)
-    func collectionRequest<T: Model>(route: Router, done: (Result<T>) -> Void)
+    func request<T: Model>(_ route: Router, done: @escaping Done<T>)
+    func collectionRequest<T: Model>(_ route: Router, done: @escaping Done<T>)
 }

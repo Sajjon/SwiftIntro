@@ -9,13 +9,13 @@
 import UIKit
 
 extension UIView {
-    var visible: Bool {
+    var isVisible: Bool {
         set {
-            self.hidden = !newValue
+            self.isHidden = !newValue
         }
 
         get {
-            return !self.hidden
+            return !self.isHidden
         }
     }
 }

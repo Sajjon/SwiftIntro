@@ -9,12 +9,12 @@
 import Foundation
 
 final class Card {
-    let imageUrl: NSURL
+    let imageUrl: URL
 
     var flipped: Bool = false
     var matched: Bool = false
 
-    init(imageUrl: NSURL) {
+    init(imageUrl: URL) {
         self.imageUrl = imageUrl
     }
 }
@@ -29,23 +29,12 @@ func == (lhs: Card, rhs: Card) -> Bool {
 //MARK: Model
 extension Card: Model {
 
-    convenience init?(response: NSHTTPURLResponse, representation: AnyObject) {
+    convenience init?(response: HTTPURLResponse, json: JSON) {
         guard let
-            media = representation["images"] as? JSON,
-            image = media["standard_resolution"] as? JSON,
-            imageUrlString = image["url"] as? String,
-            imageUrl = NSURL(string: imageUrlString) else { return nil }
+            media = json["images"] as? JSON,
+            let image = media["standard_resolution"] as? JSON,
+            let imageUrlString = image["url"] as? String,
+            let imageUrl = URL(string: imageUrlString) else { return nil }
         self.init(imageUrl: imageUrl)
-    }
-
-    static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [Card] {
-        guard let representation = representation as? [JSON] else { return [] }
-        var cardModels: [Card] = []
-        for cardRepresentation in representation {
-            guard let card = Card(response: response, representation: cardRepresentation) else { continue }
-            cardModels.append(card)
-        }
-
-        return cardModels
     }
 }

@@ -16,25 +16,10 @@ class LoadingDataVC: UIViewController, Configurable {
     @IBOutlet weak var loadingLabel: UILabel!
 
     var config: GameConfiguration!
-    private var cards: Cards?
-
-    private var imagesLeftToFetchCount: Int = Int.max {
-        didSet {
-            guard imagesLeftToFetchCount == 0 else { return }
-            shouldStartGame = true
-        }
-    }
-
-    private var shouldStartGame: Bool = false {
-        didSet {
-            if shouldStartGame {
-                startGame()
-            }
-        }
-    }
+    fileprivate var cards: Cards?
 
     var apiClient: APIClientProtocol!
-    var imagePrefetcher: ImagePrefetcherProtocol!
+    var imageCache: ImageCacheProtocol!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -47,8 +32,8 @@ class LoadingDataVC: UIViewController, Configurable {
         fetchData()
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-        guard let vc = segue?.destinationViewController as? GameVC else { return }
+    override func prepare(for segue: UIStoryboardSegue?, sender: Any?) {
+        guard let vc = segue?.destination as? GameVC else { return }
         vc.config = config
         vc.cards = cards
     }
@@ -56,37 +41,41 @@ class LoadingDataVC: UIViewController, Configurable {
 
 private extension LoadingDataVC {
 
-    private func startGame() {
-        performSegueWithIdentifier(startGameSegue, sender: self)
+    func startGame() {
+        performSegue(withIdentifier: startGameSegue, sender: self)
     }
 
-    private func setupViews() {
+    func setupViews() {
         setupLocalizedText()
     }
 
-    private func setupLocalizedText() {
+    func setupLocalizedText() {
         loadingLabel.setLocalizedText("Loading")
     }
 
-    private func fetchData() {
+    func fetchData() {
         apiClient.getPhotos(config.username) {
-            (result: Result<Cards>) in
-            self.setupWithModel(result.model)
+            result in
+            switch result {
+            case .failure(let error):
+                print("Failed to get photos, error: \(error.description)")
+            case .success(let model):
+                self.setupWithModel(model.first)
+            }
         }
     }
 
-    private func setupWithModel(model: Cards?) {
+    func setupWithModel(_ model: Cards?) {
         guard let model = model else { return }
         let singles = model.singles
         prefetchImagesForCards(singles)
         self.cards = Cards(singles, config: config)
     }
 
-    private func prefetchImagesForCards(cards: [Card]) {
-        imagesLeftToFetchCount = cards.count
-        let urls: [URLRequestConvertible] = cards.map { return URL(url: $0.imageUrl) }
-        imagePrefetcher.prefetchImages(urls) {
-            self.imagesLeftToFetchCount -= 1
+    func prefetchImagesForCards(_ cards: [Card]) {
+        let urls: [URL] = cards.map { return $0.imageUrl }
+        imageCache.prefetchImages(urls) {
+            self.startGame()
         }
     }
 }

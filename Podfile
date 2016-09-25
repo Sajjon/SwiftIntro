@@ -3,8 +3,9 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'SwiftIntro' do
-    pod 'Alamofire', '~> 3.4'
-    pod 'AlamofireImage', '~> 2.0'
-    pod 'Swinject'
+    pod 'Alamofire', '~> 4.0.1'
+    pod 'Kingfisher', '~> 3.1'
+	pod 'Swinject', '2.0.0-beta.2'
+	pod 'SwinjectStoryboard', '1.0.0-beta.2'
 end
 

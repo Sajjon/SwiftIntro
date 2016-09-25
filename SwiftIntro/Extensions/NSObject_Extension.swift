@@ -10,6 +10,6 @@ import Foundation
 
 extension NSObject {
     class var className: String {
-        return NSStringFromClass(self).componentsSeparatedByString(".").last!
+        return NSStringFromClass(self).components(separatedBy: ".").last!
     }
 }

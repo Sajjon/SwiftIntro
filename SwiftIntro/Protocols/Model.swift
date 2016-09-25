@@ -8,4 +8,13 @@
 
 import Foundation
 
-protocol Model: ResponseCollectionSerializable, ResponseObjectSerializable {}
+protocol Model: ResponseCollectionSerializable, ResponseObjectSerializable {
+    init?(response: HTTPURLResponse, json: JSON)
+}
+
+extension Model {
+    init?(response: HTTPURLResponse, representation: Any) {
+        guard let json = representation as? JSON else { return nil }
+        self.init(response: response, json: json)
+    }
+}

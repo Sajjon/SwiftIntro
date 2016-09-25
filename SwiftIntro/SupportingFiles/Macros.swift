@@ -11,47 +11,39 @@ import UIKit
 
 typealias Closure = () -> Void
 
-func onMain(closure: Closure) {
-    dispatch_async(dispatch_get_main_queue()) {
+func onMain(_ closure: @escaping Closure) {
+    DispatchQueue.main.async {
         () -> Void in
         closure()
     }
 }
 
-func delay(delay: Double, closure: Closure) {
-    dispatch_after(
-        dispatch_time(
-            DISPATCH_TIME_NOW,
-            Int64(delay * Double(NSEC_PER_SEC))
-        ),
-        dispatch_get_main_queue(),
-        closure
+func delay(_ delay: Double, closure: @escaping Closure) {
+    DispatchQueue.main.asyncAfter(
+        deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC),
+        execute: closure
     )
 }
 
 
-func makeError(error: Error) -> NSError {
-    let userInfo = [NSLocalizedFailureReasonErrorKey: error.errorMessage]
-    let error = NSError(domain: "SwiftIntro", code: error.rawValue, userInfo: userInfo)
-    return error
-}
 
-func localizedString(key: String, args: AnyObject...) -> String {
+
+func localizedString(_ key: String, args: Any...) -> String {
     let localized = NSLocalizedString(key, comment: "")
-    guard let parameters = args.first as? [AnyObject], parameter = parameters.first else { return localized }
+    guard let parameters = args.first as? [Any], let parameter = parameters.first else { return localized }
     var formatted: NSString = ""
-    if localized.containsString("%d") {
+    if localized.contains("%d") {
         guard let number = parameter as? Int else { return localized }
-        formatted = NSString(format: localized, number)
-    } else if localized.containsString("%@") {
+        formatted = NSString(format: localized as NSString, number)
+    } else if localized.contains("%@") {
         guard let string = parameter as? String else { return localized }
-        formatted = NSString(format: localized, string)
+        formatted = NSString(format: localized as NSString, string)
     }
     return formatted as String
 }
 
-private func showNetworkLoadingInStatusBar(show show: Bool) {
-    UIApplication.sharedApplication().networkActivityIndicatorVisible = show
+private func showNetworkLoadingInStatusBar(show: Bool) {
+    UIApplication.shared.isNetworkActivityIndicatorVisible = show
 }
 
 func showNetworkLoadingInStatusBar() {

@@ -17,15 +17,15 @@ class GameVC: UIViewController, Configurable {
     @IBOutlet weak var labelsView: UIView!
     var config: GameConfiguration!
     var cards: Cards!
-    private var result: GameResult!
-    var imagePrefetcher: ImagePrefetcherProtocol!
+    fileprivate var result: GameResult!
+    var imageCache: ImageCacheProtocol!
     
-    private lazy var dataSourceAndDelegate: MemoryDataSourceAndDelegate = {
+    fileprivate lazy var dataSourceAndDelegate: MemoryDataSourceAndDelegate = {
         let dataSourceAndDelegate = MemoryDataSourceAndDelegate(
             self.cards,
             level: self.config.level,
             delegate: self,
-            imagePrefetcher: self.imagePrefetcher
+            imageCache: self.imageCache
             )
         return dataSourceAndDelegate
     }()
@@ -41,10 +41,10 @@ class GameVC: UIViewController, Configurable {
         setupViews()
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-        guard var configurable = segue?.destinationViewController as? Configurable else { return }
+    override func prepare(for segue: UIStoryboardSegue?, sender: Any?) {
+        guard var configurable = segue?.destination as? Configurable else { return }
         configurable.config = config
-        guard let vc = segue?.destinationViewController as? GameOverVC else { return }
+        guard let vc = segue?.destination as? GameOverVC else { return }
         vc.result = result
     }
 }
@@ -52,21 +52,21 @@ class GameVC: UIViewController, Configurable {
 //MARK: GameDelegate
 extension GameVC: GameDelegate {
     
-    func foundMatch(matches: Int) {
+    func foundMatch(_ matches: Int) {
         setScoreLabel(matches)
     }
 
-    func gameOver(result: GameResult) {
+    func gameOver(_ result: GameResult) {
         self.result = result
         self.result.cards = cards
-        collectionView.userInteractionEnabled = false
+        collectionView.isUserInteractionEnabled = false
         delay(1) {
-            self.performSegueWithIdentifier(gameOverSeque, sender: self)
+            self.performSegue(withIdentifier: gameOverSeque, sender: self)
         }
     }
     
-    private func setScoreLabel(matches: Int) {
-        let unformatted = localizedString("PairsFoundUnformatted")
+    fileprivate func setScoreLabel(_ matches: Int) {
+        let unformatted = localizedString("PairsFoundUnformatted") as NSString
         let formatted = NSString(format: unformatted, matches, config.level.cardCount/2)
         scoreLabel.text = formatted as String
     }
@@ -74,16 +74,16 @@ extension GameVC: GameDelegate {
 
 //MARK: Private Methods
 private extension GameVC {
-    private func setupStyling() {
+    func setupStyling() {
         setScoreLabel(0)
-        labelsView.backgroundColor = .blackColor()
-        collectionView.backgroundColor = .blackColor()
+        labelsView.backgroundColor = UIColor.black
+        collectionView.backgroundColor = UIColor.black
     }
 
-    private func setupViews() {
+    func setupViews() {
         collectionView.dataSource = dataSourceAndDelegate
         collectionView.delegate = dataSourceAndDelegate
-        collectionView.registerNib(CardCVCell.nib, forCellWithReuseIdentifier: CardCVCell.cellIdentifier)
+        collectionView.register(CardCVCell.nib, forCellWithReuseIdentifier: CardCVCell.cellIdentifier)
         setupStyling()
     }
 }

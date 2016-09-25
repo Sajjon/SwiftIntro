@@ -7,22 +7,22 @@
 //
 
 import UIKit
-import AlamofireImage
+import Kingfisher
 
 class CardCVCell: UICollectionViewCell {
     @IBOutlet weak var cardFrontImageView: UIImageView!
     @IBOutlet weak var cardBackImageView: UIImageView!
 
-    private var flipped: Bool = false {
+    fileprivate var flipped: Bool = false {
         didSet {
-            cardFrontImageView.visible = flipped
-            cardBackImageView.hidden = flipped
+            cardFrontImageView.isVisible = flipped
+            cardBackImageView.isHidden = flipped
         }
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        cardBackImageView.backgroundColor = UIColor.brownColor()
+        cardBackImageView.backgroundColor = UIColor.brown
     }
 
     override func prepareForReuse() {
@@ -31,13 +31,13 @@ class CardCVCell: UICollectionViewCell {
         flipped = false
     }
 
-    func flipCard(cardModel: Card) {
+    func flipCard(_ cardModel: Card) {
         let flipped = cardModel.flipped
         let fromView = flipped ? cardFrontImageView : cardBackImageView
         let toView = flipped ? cardBackImageView : cardFrontImageView
-        let flipDirection: UIViewAnimationOptions = flipped ? .TransitionFlipFromRight : .TransitionFlipFromLeft
-        let options: UIViewAnimationOptions = [flipDirection, .ShowHideTransitionViews]
-        UIView.transitionFromView(fromView, toView: toView, duration: 0.6, options: options) {
+        let flipDirection: UIViewAnimationOptions = flipped ? .transitionFlipFromRight : .transitionFlipFromLeft
+        let options: UIViewAnimationOptions = [flipDirection, .showHideTransitionViews]
+        UIView.transition(from: fromView!, to: toView!, duration: 0.6, options: options) {
             finished in
             cardModel.flipped = !flipped
         }
@@ -55,7 +55,7 @@ extension CardCVCell: CellProtocol {
         return className
     }
 
-    func updateWithModel(model: Model, image: UIImage?) {
+    func updateWithModel<T: Model>(_ model: T, image: UIImage?) {
         guard let card = model as? Card else { return }
         cardFrontImageView.image = image
         flipped = card.flipped

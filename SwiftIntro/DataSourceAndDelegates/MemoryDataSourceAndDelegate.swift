@@ -9,34 +9,34 @@
 import UIKit
 
 protocol GameDelegate: class {
-    func foundMatch(matches: Int)
-    func gameOver(result: GameResult)
+    func foundMatch(_ matches: Int)
+    func gameOver(_ result: GameResult)
 }
 
 //MARK: Class init and private variables
 class MemoryDataSourceAndDelegate: NSObject {
 
-    private let cards: Cards
-    private let gameLevel: Level
-    private weak var delegate: GameDelegate?
-    private let imagePrefetcher: ImagePrefetcherProtocol
+    fileprivate let cards: Cards
+    fileprivate let gameLevel: Level
+    fileprivate weak var delegate: GameDelegate?
+    fileprivate let imageCache: ImageCacheProtocol
 
-    private var clickCount = 0
+    fileprivate var clickCount = 0
 
-    private var cardCount: Int {
+    fileprivate var cardCount: Int {
         return cards.count
     }
 
-    private var flippedCardIndexPath: NSIndexPath?
+    fileprivate var flippedCardIndexPath: IndexPath?
 
-    private var matches: Int = 0 {
+    fileprivate var matches: Int = 0 {
         didSet {
             delegate?.foundMatch(matches)
             gameOver = matches == cardCount/2
         }
     }
 
-    private var gameOver: Bool = false {
+    fileprivate var gameOver: Bool = false {
         didSet {
             guard gameOver else { return }
             let result = GameResult(level: gameLevel, clickCount: clickCount)
@@ -47,32 +47,32 @@ class MemoryDataSourceAndDelegate: NSObject {
     init(_ cards: Cards,
            level: Level,
            delegate: GameDelegate,
-           imagePrefetcher: ImagePrefetcherProtocol
+           imageCache: ImageCacheProtocol
         ) {
         self.cards = cards
         self.gameLevel = level
         self.delegate = delegate
-        self.imagePrefetcher = imagePrefetcher
+        self.imageCache = imageCache
     }
 }
 
 //MARK: Game play Methods
 private extension MemoryDataSourceAndDelegate {
     
-    private func cardForIndexPath(indexPath: NSIndexPath) -> Card? {
+    func cardForIndexPath(_ indexPath: IndexPath) -> Card? {
         guard indexPath.row < cards.count else { return nil }
         let index = indexFromIndexPath(indexPath)
         let model = cards[index]
         return model
     }
     
-    private func indexFromIndexPath(indexPath: NSIndexPath) -> Int {
+    func indexFromIndexPath(_ indexPath: IndexPath) -> Int {
         let numberOfItemsInSection = gameLevel.columnCount
-        let index = indexPath.row + (numberOfItemsInSection * indexPath.section)
+        let index = indexPath.row + (numberOfItemsInSection * (indexPath as NSIndexPath).section)
         return index
     }
     
-    private func didSelectCardAtIndexPath(indexPath: NSIndexPath, inCollectionView collectionView: UICollectionView) {
+    func didSelectCardAtIndexPath(_ indexPath: IndexPath, inCollectionView collectionView: UICollectionView) {
         clickCount += 1
         flipCardAtIndexPath(indexPath, inCollectionView: collectionView)
         if let flippedCardIndexPath = flippedCardIndexPath { /* Found previously flipped card */
@@ -91,24 +91,24 @@ private extension MemoryDataSourceAndDelegate {
         }
     }
 
-    private func flipCardAtIndexPath(indexPath: NSIndexPath, inCollectionView collectionView: UICollectionView) {
+    func flipCardAtIndexPath(_ indexPath: IndexPath, inCollectionView collectionView: UICollectionView) {
         guard let card = cardForIndexPath(indexPath) else { return }
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CardCVCell else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CardCVCell else { return }
         cell.flipCard(card)
     }
 
-    private func checkIfCardAtIndexPath(indexPath: NSIndexPath,
+    func checkIfCardAtIndexPath(_ indexPath: IndexPath,
                                         inCollectionView collectionView: UICollectionView,
-                                                         matchesAlreadyFlippedCard flippedIndexPath: NSIndexPath) {
+                                                         matchesAlreadyFlippedCard flippedIndexPath: IndexPath) {
         guard let card = cardForIndexPath(indexPath) else { return }
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CardCVCell else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CardCVCell else { return }
         guard let flippedCard = cardForIndexPath(flippedIndexPath) else { return }
-        guard let flippedCell = collectionView.cellForItemAtIndexPath(flippedIndexPath) as? CardCVCell else { return }
+        guard let flippedCell = collectionView.cellForItem(at: flippedIndexPath) as? CardCVCell else { return }
         checkIfCard(card, withCell: cell, matchesFlippedCard: flippedCard, withCell: flippedCell)
     }
 
     //swiftlint:disable opening_brace
-    private func checkIfCard(card: Card,
+    func checkIfCard(_ card: Card,
                                  withCell cell: CardCVCell,
                                           matchesFlippedCard flippedCard: Card,
                                                                     withCell flippedCell: CardCVCell)
@@ -126,13 +126,13 @@ private extension MemoryDataSourceAndDelegate {
         }
     }
 
-    private func cardAtIndexPathAlreadyMatched(indexPath: NSIndexPath) -> Bool {
+    func cardAtIndexPathAlreadyMatched(_ indexPath: IndexPath) -> Bool {
         guard let card = cardForIndexPath(indexPath) else { return false }
         let alreadyMatched = card.matched
         return alreadyMatched
     }
 
-    private func calculateCardSize(flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> CGSize {
+    func calculateCardSize(_ flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> CGSize {
 
         let miniumumHeight = calculateMiniumumHeight(flowLayout, collectionView: collectionView)
         let miniumumWidth = calculateMiniumumWidth(flowLayout, collectionView: collectionView)
@@ -141,7 +141,7 @@ private extension MemoryDataSourceAndDelegate {
         return size
     }
 
-    private func calculateMiniumumHeight(flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> CGFloat {
+    func calculateMiniumumHeight(_ flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> CGFloat {
         let rowCount = CGFloat(gameLevel.rowCount)
         let sectionSpace = flowLayout.sectionInset.top + flowLayout.sectionInset.bottom
         let totalSpaceHeight = sectionSpace + (flowLayout.minimumLineSpacing * (rowCount - 1))
@@ -149,7 +149,7 @@ private extension MemoryDataSourceAndDelegate {
         return height
     }
 
-    private func calculateMiniumumWidth(flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> CGFloat {
+    func calculateMiniumumWidth(_ flowLayout: UICollectionViewFlowLayout, collectionView: UICollectionView) -> CGFloat {
         let columnCount = CGFloat(gameLevel.columnCount)
         let sectionSpace = flowLayout.sectionInset.left + flowLayout.sectionInset.right
         let totalSpaceWidth = sectionSpace + (flowLayout.minimumInteritemSpacing * (columnCount - 1))
@@ -160,31 +160,31 @@ private extension MemoryDataSourceAndDelegate {
 
 //MARK: UICollectionViewDataSource Methods
 extension MemoryDataSourceAndDelegate: UICollectionViewDataSource {
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return gameLevel.columnCount
     }
 
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return gameLevel.rowCount
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CardCVCell.cellIdentifier, forIndexPath: indexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardCVCell.cellIdentifier, for: indexPath)
         return cell
     }
 }
 
 //MARK: UICollectionViewDelegate Methods
 extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard cardAtIndexPathAlreadyMatched(indexPath) == false else { return }
         didSelectCardAtIndexPath(indexPath, inCollectionView: collectionView)
     }
 
-    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? CardCVCell else { return }
         guard let model = cardForIndexPath(indexPath) else { return }
-        let cachedImage = imagePrefetcher.imageFromCache(model.imageUrl)
+        let cachedImage = imageCache.imageFromCache(model.imageUrl)
         cell.updateWithModel(model, image: cachedImage)
     }
 }
@@ -192,16 +192,16 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
 //MARK: UICollectionViewDelegateFlowLayout Methods
 extension MemoryDataSourceAndDelegate: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(collectionView: UICollectionView,
+    func collectionView(_ collectionView: UICollectionView,
                           layout collectionViewLayout: UICollectionViewLayout,
-                                 insetForSectionAtIndex section: Int) -> UIEdgeInsets{
-        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return UIEdgeInsetsZero }
+                                 insetForSectionAt section: Int) -> UIEdgeInsets{
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return UIEdgeInsets.zero }
 
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: flowLayout.minimumLineSpacing, right: 0)
         return insets
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return CGSize.zero }
         
         return calculateCardSize(flowLayout, collectionView: collectionView)

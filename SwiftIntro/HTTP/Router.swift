@@ -12,36 +12,32 @@ import Alamofire
 enum Router: URLRequestConvertible {
     static let baseURLString = "https://www.instagram.com/"
 
-    case Photos(String)
+    case photos(String)
 
-    var method: Alamofire.Method {
+    var method: Alamofire.HTTPMethod {
         switch self {
-        case .Photos:
-            return .GET
+        case .photos:
+            return .get
         }
     }
 
     var path: String {
         switch self {
-        case .Photos(let username):
+        case .photos(let username):
             return "\(username)/media/"
         }
     }
 
-// MARK: URLRequestConvertible
-    //swiftlint:disable variable_name
-    var URLRequest: NSMutableURLRequest {
-        let URL = NSURL(string: Router.baseURLString)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-        mutableURLRequest.HTTPMethod = method.rawValue
+    var parameters: Parameters? {
+        return nil
+    }
 
-//        if let token = Router.OAuthToken {
-//            mutableURLRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-//        }
-
-        switch self {
-        case .Photos:
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: nil).0
-        }
+    // MARK: URLRequestConvertible
+    func asURLRequest() throws -> URLRequest {
+        let url = try Router.baseURLString.asURL()
+        var urlRequest = URLRequest(url: url.appendingPathComponent(path))
+        urlRequest.httpMethod = method.rawValue
+        urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        return urlRequest
     }
 }

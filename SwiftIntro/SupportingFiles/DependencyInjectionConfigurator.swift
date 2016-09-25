@@ -10,31 +10,32 @@ import Foundation
 
 import UIKit
 import Swinject
+import SwinjectStoryboard
 
 extension SwinjectStoryboard {
     class func setup() {
 
         defaultContainer.register(HTTPClientProtocol.self) { _ in
             HTTPClient()
-        }.inObjectScope(.Container)
+        }.inObjectScope(.container)
 
         defaultContainer.register(APIClientProtocol.self) { r in
             APIClient(
                 httpClient: r.resolve(HTTPClientProtocol.self)!
             )
-        }.inObjectScope(.Container)
+        }.inObjectScope(.container)
 
-        defaultContainer.register(ImagePrefetcherProtocol.self) { _ in
-            ImagePrefetcher()
-        }.inObjectScope(.Container)
+        defaultContainer.register(ImageCacheProtocol.self) { _ in
+            Cache()
+        }.inObjectScope(.container)
 
         defaultContainer.registerForStoryboard(GameVC.self) { r, c in
-            c.imagePrefetcher = r.resolve(ImagePrefetcherProtocol.self)
+            c.imageCache = r.resolve(ImageCacheProtocol.self)
         }
 
         defaultContainer.registerForStoryboard(LoadingDataVC.self) { r, c in
             c.apiClient = r.resolve(APIClientProtocol.self)
-            c.imagePrefetcher = r.resolve(ImagePrefetcherProtocol.self)
+            c.imageCache = r.resolve(ImageCacheProtocol.self)
         }
     }
 }

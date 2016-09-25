@@ -9,6 +9,6 @@
 import Foundation
 
 struct GameConfiguration {
-    var level: Level = .Normal
+    var level: Level = .normal
     var username: String = "taylorswift"
 }

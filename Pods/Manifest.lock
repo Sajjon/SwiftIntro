@@ -1,19 +1,22 @@
 PODS:
-  - Alamofire (3.4.0)
-  - AlamofireImage (2.4.0):
-    - Alamofire (~> 3.3)
-  - Swinject (1.1.2)
+  - Alamofire (4.0.1)
+  - Kingfisher (3.1.0)
+  - Swinject (2.0.0-beta.2)
+  - SwinjectStoryboard (1.0.0-beta.2):
+    - Swinject (= 2.0.0-beta.2)
 
 DEPENDENCIES:
-  - Alamofire (~> 3.4)
-  - AlamofireImage (~> 2.0)
-  - Swinject
+  - Alamofire (~> 4.0.1)
+  - Kingfisher (~> 3.1)
+  - Swinject (= 2.0.0-beta.2)
+  - SwinjectStoryboard (= 1.0.0-beta.2)
 
 SPEC CHECKSUMS:
-  Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
-  AlamofireImage: 87408b652e0f5ae5fe364035f15aea8b9b24c77e
-  Swinject: 3debc5ac926dcd1be00947265a9db7a5f31b272a
+  Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
+  Kingfisher: 7779f22e977393e9533a89a9685beb8f679d3767
+  Swinject: 69a893192efa9f2cc44be79ef423d04d571b6af9
+  SwinjectStoryboard: b52b45821a50386ef604c3cd098f8029a50a268d
 
-PODFILE CHECKSUM: 01f35367cb753ecee72bf33da7229fc1003b7d76
+PODFILE CHECKSUM: 3da92bd414499a535be1aed32817653defad1d07
 
 COCOAPODS: 1.0.1

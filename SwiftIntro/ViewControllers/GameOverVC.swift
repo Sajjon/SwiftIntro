@@ -25,10 +25,10 @@ class GameOverVC: UIViewController, Configurable {
         setupViews()
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-        guard var configurable = segue?.destinationViewController as? Configurable else { return }
+    override func prepare(for segue: UIStoryboardSegue?, sender: Any?) {
+        guard var configurable = segue?.destination as? Configurable else { return }
         configurable.config = config
-        guard let gameVC = segue?.destinationViewController as? GameVC else { return }
+        guard let gameVC = segue?.destination as? GameVC else { return }
         guard let cards = result.cards else { return }
         gameVC.cards = cards.unflipped()
         gameVC.cards.unmatch()
@@ -37,13 +37,13 @@ class GameOverVC: UIViewController, Configurable {
 
 //MARK: Private Methods
 private extension GameOverVC {
-    private func setupViews() {
+    func setupViews() {
         quitButton.layer.cornerRadius = quitButton.frame.height/2
         restartButton.layer.cornerRadius = restartButton.frame.height/2
         setupLocalizedText()
     }
 
-    private func setupLocalizedText() {
+    func setupLocalizedText() {
         titleLabel.setLocalizedText("GameOverTitle")
         subtitleLabel.setLocalizedText("GameOverSubtitle")
         scoreLabel.setLocalizedText("ClickScore", args: result.clickCount)

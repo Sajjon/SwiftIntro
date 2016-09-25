@@ -8,6 +8,7 @@
 
 import Foundation
 
+typealias Done<T: Model> = (Result<T>) -> Void
 protocol APIClientProtocol {
-    func getPhotos<T: Model>(username: String, done: (Result<T>) -> Void)
+    func getPhotos(_ username: String, done: @escaping Done<Cards>)
 }

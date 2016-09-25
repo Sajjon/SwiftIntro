@@ -7,49 +7,43 @@
 //
 
 import Foundation
-import Alamofire
-import AlamofireImage
+import Kingfisher
 
-class ImagePrefetcher {
+import Foundation
+import Kingfisher
 
-    private let imageDownloader: ImageDownloader
+protocol ImageCacheProtocol {
+    func prefetchImages(_ urls: [URL], done: Closure?)
+    func prefetchImage(_ url: URL, done: Closure?)
+    func imageFromCache(_ url: URL?) -> UIImage?
+}
 
-    init() {
-        self.imageDownloader = ImageDownloader(
-            configuration: ImageDownloader.defaultURLSessionConfiguration(),
-            downloadPrioritization: .FIFO
-        )
-    }
+class Cache: NSObject {
 
-    var imageCache: ImageRequestCache? {
-        return imageDownloader.imageCache
+
+    fileprivate var cache: ImageCache {
+        return ImageCache.default
     }
 }
 
+extension Cache: ImageCacheProtocol {
 
-//MARK: ImagePrefetcherProtocol Methods
-extension ImagePrefetcher: ImagePrefetcherProtocol {
-
-    func imageFromCache(url: NSURL) -> UIImage? {
-        guard let cache = imageCache else { return nil }
-        let imageFromCache = cache.imageForRequest(NSURLRequest(URL: url), withAdditionalIdentifier: nil)
+    func imageFromCache(_ url: URL?) -> UIImage? {
+        guard let url = url else { return nil }
+        let imageFromCache = cache.retrieveImageInMemoryCache(forKey: url.absoluteString)
         return imageFromCache
     }
 
-    func prefetchImages(urls: [URLRequestConvertible], done: Closure) {
-
-        imageDownloader.downloadImages(URLRequests: urls) {
-            response in
-            done()
+    func prefetchImages(_ urls: [URL], done: Closure? = nil) {
+        let prefetcher = ImagePrefetcher(urls: urls, options: nil, progressBlock: nil) {
+            (skipped, failed, completed) in
+            print("Prefetching of image done, skipped \(skipped.count), failed: \(failed.count), completed: \(completed.count)")
+            done?()
         }
+        prefetcher.start()
     }
-}
 
-//swiftlint:disable type_name
-struct URL: URLRequestConvertible {
-    let url: NSURL
-    //swiftlint:disable variable_name
-    var URLRequest: NSMutableURLRequest {
-        return NSMutableURLRequest(URL: url)
+    func prefetchImage(_ url: URL, done: Closure? = nil) {
+        prefetchImages([url], done: done)
     }
 }

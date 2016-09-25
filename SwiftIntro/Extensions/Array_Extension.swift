@@ -14,7 +14,7 @@ extension Array {
         for index in indices.dropLast() {
             guard
                 case let swapIndex = Int(arc4random_uniform(UInt32(count - index))) + index
-                where swapIndex != index else { continue }
+                , swapIndex != index else { continue }
             swap(&elements[index], &elements[swapIndex])
         }
         return elements
@@ -26,7 +26,7 @@ extension Array {
     var chooseOne: Element {
         return self[Int(arc4random_uniform(UInt32(count)))]
     }
-    func choose(count: Int) -> [Element] {
+    func choose(_ count: Int) -> [Element] {
         return Array(shuffled.prefix(count))
     }
 }
