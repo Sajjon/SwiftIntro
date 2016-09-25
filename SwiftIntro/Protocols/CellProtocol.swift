@@ -11,5 +11,5 @@ import UIKit
 protocol CellProtocol {
     static var cellIdentifier: String {get}
     static var nib: UINib {get}
-    func updateWithModel<T: Model>(_ model: T, image: UIImage?)
+    func configure<T: Model>(with model: T, image: UIImage?)
 }

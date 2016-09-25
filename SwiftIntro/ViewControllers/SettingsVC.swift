@@ -35,7 +35,7 @@ class SettingsVC: UIViewController, Configurable {
 
     override func prepare(for segue: UIStoryboardSegue?, sender: Any?) {
         guard let vc = segue?.destination as? LoadingDataVC else { return }
-        if let username: String = usernameTextField.text , !username.isEmpty {
+        if let username: String = usernameTextField.text, !username.isEmpty {
             config.username = username
         }
 

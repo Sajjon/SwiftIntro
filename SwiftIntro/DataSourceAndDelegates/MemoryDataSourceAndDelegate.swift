@@ -185,7 +185,7 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
         guard let cell = cell as? CardCVCell else { return }
         guard let model = cardForIndexPath(indexPath) else { return }
         let cachedImage = imageCache.imageFromCache(model.imageUrl)
-        cell.updateWithModel(model, image: cachedImage)
+        cell.configure(with: model, image: cachedImage)
     }
 }
 

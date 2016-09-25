@@ -13,8 +13,9 @@ extension Array {
         var elements = self
         for index in indices.dropLast() {
             guard
-                case let swapIndex = Int(arc4random_uniform(UInt32(count - index))) + index
-                , swapIndex != index else { continue }
+                case let swapIndex = Int(arc4random_uniform(UInt32(count - index))) + index,
+                swapIndex != index
+                else { continue }
             swap(&elements[index], &elements[swapIndex])
         }
         return elements

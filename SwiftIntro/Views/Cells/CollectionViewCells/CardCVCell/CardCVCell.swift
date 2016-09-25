@@ -55,8 +55,14 @@ extension CardCVCell: CellProtocol {
         return className
     }
 
-    func updateWithModel<T: Model>(_ model: T, image: UIImage?) {
+    func configure<T: Model>(with model: T, image: UIImage?) {
         guard let card = model as? Card else { return }
+        configure(with: card, image: image)
+    }
+}
+
+private extension CardCVCell {
+    func configure(with card: Card, image: UIImage?) {
         cardFrontImageView.image = image
         flipped = card.flipped
     }
