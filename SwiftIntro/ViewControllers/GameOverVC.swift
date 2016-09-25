@@ -44,11 +44,11 @@ private extension GameOverVC {
     }
 
     func setupLocalizedText() {
-        titleLabel.setLocalizedText("GameOverTitle")
-        subtitleLabel.setLocalizedText("GameOverSubtitle")
-        scoreLabel.setLocalizedText("ClickScore", args: result.clickCount)
-        tryHarderLabel.setLocalizedText("TryHarder")
-        restartButton.setLocalizedTitle("Restart")
-        quitButton.setLocalizedTitle("Quit")
+        titleLabel.setLocalizedText(.gameOverTitle)
+        subtitleLabel.setLocalizedText(.gameOverSubtitle)
+        scoreLabel.setLocalizedText(.clickScore(result.clickCount))
+        tryHarderLabel.setLocalizedText(.tryHarder)
+        restartButton.setLocalizedTitle(.restart)
+        quitButton.setLocalizedTitle(.quit)
     }
 }

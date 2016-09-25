@@ -30,7 +30,7 @@ extension Cache: ImageCacheProtocol {
 
     func imageFromCache(_ url: URL?) -> UIImage? {
         guard let url = url else { return nil }
-        let imageFromCache = cache.retrieveImageInMemoryCache(forKey: url.absoluteString)
+        let imageFromCache = cache.retrieveImageInDiskCache(forKey: url.absoluteString)
         return imageFromCache
     }
 

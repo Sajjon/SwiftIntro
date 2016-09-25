@@ -66,9 +66,8 @@ extension GameVC: GameDelegate {
     }
     
     fileprivate func setScoreLabel(_ matches: Int) {
-        let unformatted = localizedString("PairsFoundUnformatted") as NSString
-        let formatted = NSString(format: unformatted, matches, config.level.cardCount/2)
-        scoreLabel.text = formatted as String
+        let scoreText = L10n.pairsFoundUnformatted(matches, config.level.cardCount/2).string
+        scoreLabel.text = scoreText
     }
 }
 

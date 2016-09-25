@@ -35,6 +35,7 @@
 		7B8608621D15993400037D36 /* UIButton_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8608611D15993400037D36 /* UIButton_Extension.swift */; };
 		7B8608641D15999500037D36 /* UILabel_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8608631D15999500037D36 /* UILabel_Extension.swift */; };
 		7B8608661D15A1DB00037D36 /* Array_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8608651D15A1DB00037D36 /* Array_Extension.swift */; };
+		7BA112A11D97F75A003B5D69 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA1129F1D97F75A003B5D69 /* Strings.swift */; };
 		7BAD45931CFF6F3A00C7D7EF /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45921CFF6F3900C7D7EF /* Router.swift */; };
 		7BAD45951CFF70FA00C7D7EF /* Request_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */; };
 		7BADD6AB1D16D9DF005EEBE3 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD6AA1D16D9DF005EEBE3 /* Level.swift */; };
@@ -80,6 +81,7 @@
 		7B8608611D15993400037D36 /* UIButton_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButton_Extension.swift; sourceTree = "<group>"; };
 		7B8608631D15999500037D36 /* UILabel_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabel_Extension.swift; sourceTree = "<group>"; };
 		7B8608651D15A1DB00037D36 /* Array_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array_Extension.swift; sourceTree = "<group>"; };
+		7BA1129F1D97F75A003B5D69 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		7BAD45921CFF6F3900C7D7EF /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		7BAD45941CFF70FA00C7D7EF /* Request_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request_Extension.swift; sourceTree = "<group>"; };
 		7BADD6AA1D16D9DF005EEBE3 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
@@ -285,9 +287,18 @@
 			path = SwiftIntro;
 			sourceTree = "<group>";
 		};
+		7BA1129D1D97F75A003B5D69 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				7BA1129F1D97F75A003B5D69 /* Strings.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
 		7BADD6A91D16D9D8005EEBE3 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				7BA1129D1D97F75A003B5D69 /* Generated */,
 				7BADD6AA1D16D9DF005EEBE3 /* Level.swift */,
 				7BEEBF131D18A6790014571E /* Error.swift */,
 			);
@@ -303,6 +314,7 @@
 			buildPhases = (
 				48E3C3174B2513F4662E8942 /* [CP] Check Pods Manifest.lock */,
 				7B75421F1CFF3F9E009B2629 /* Sources */,
+				7BA112A21D97F795003B5D69 /* SwiftGen Strings */,
 				7B7542201CFF3F9E009B2629 /* Frameworks */,
 				7B7542211CFF3F9E009B2629 /* Resources */,
 				7B6E4F381CFF40A000B7D991 /* SwiftLint */,
@@ -413,6 +425,20 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
+		7BA112A21D97F795003B5D69 /* SwiftGen Strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "SwiftGen Strings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Pods/SwiftGen/bin/swiftgen strings -t swift3 --output SwiftIntro/Enums/Generated/Strings.swift SwiftIntro/SupportingFiles/en.lproj/Localizable.strings";
+		};
 		D9FF9833FA98573696375F2D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -436,6 +462,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45773A371D00C088002E6F56 /* SettingsVC.swift in Sources */,
+				7BA112A11D97F75A003B5D69 /* Strings.swift in Sources */,
 				7B4497FA1D189C3400E080C7 /* CellProtocol.swift in Sources */,
 				7B8608621D15993400037D36 /* UIButton_Extension.swift in Sources */,
 				7B4497F81D189C2100E080C7 /* APIClientProtocol.swift in Sources */,

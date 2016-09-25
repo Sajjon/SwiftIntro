@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (4.0.1)
   - Kingfisher (3.1.0)
+  - SwiftGen (3.0.0)
   - Swinject (2.0.0-beta.2)
   - SwinjectStoryboard (1.0.0-beta.2):
     - Swinject (= 2.0.0-beta.2)
@@ -8,15 +9,17 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.0.1)
   - Kingfisher (~> 3.1)
+  - SwiftGen (~> 3.0)
   - Swinject (= 2.0.0-beta.2)
   - SwinjectStoryboard (= 1.0.0-beta.2)
 
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
   Kingfisher: 7779f22e977393e9533a89a9685beb8f679d3767
+  SwiftGen: f679cd0ed4173a5da3b01efd0da23542bf82f6ab
   Swinject: 69a893192efa9f2cc44be79ef423d04d571b6af9
   SwinjectStoryboard: b52b45821a50386ef604c3cd098f8029a50a268d
 
-PODFILE CHECKSUM: 3da92bd414499a535be1aed32817653defad1d07
+PODFILE CHECKSUM: 79be467363f6960f36ff5bb9b1e1fc1100c3ae26
 
 COCOAPODS: 1.0.1

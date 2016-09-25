@@ -7,5 +7,6 @@ target 'SwiftIntro' do
     pod 'Kingfisher', '~> 3.1'
 	pod 'Swinject', '2.0.0-beta.2'
 	pod 'SwinjectStoryboard', '1.0.0-beta.2'
+	pod 'SwiftGen', '~> 3.0'
 end
 

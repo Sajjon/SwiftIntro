@@ -10,9 +10,8 @@ import UIKit
 
 extension UILabel {
 
-    func setLocalizedText(_ localizedStringKey: String, args: Any...) {
-        let localizedText = localizedString(localizedStringKey, args: args)
+    func setLocalizedText(_ key: L10n) {
+        let localizedText = tr(key: key)
         text = localizedText
     }
-    
 }

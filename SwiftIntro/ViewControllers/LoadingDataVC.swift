@@ -50,7 +50,7 @@ private extension LoadingDataVC {
     }
 
     func setupLocalizedText() {
-        loadingLabel.setLocalizedText("Loading")
+        loadingLabel.setLocalizedText(.loading)
     }
 
     func fetchData() {
@@ -68,13 +68,14 @@ private extension LoadingDataVC {
     func setupWithModel(_ model: Cards?) {
         guard let model = model else { return }
         let singles = model.singles
-        prefetchImagesForCards(singles)
         self.cards = Cards(singles, config: config)
+        prefetchImagesForCards(singles)
     }
 
     func prefetchImagesForCards(_ cards: [Card]) {
         let urls: [URL] = cards.map { return $0.imageUrl }
         imageCache.prefetchImages(urls) {
+            print("images fetched")
             self.startGame()
         }
     }

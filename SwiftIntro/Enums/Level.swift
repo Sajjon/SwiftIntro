@@ -16,16 +16,16 @@ enum Level {
     }
 
     var title: String {
-        let localizedKey: String
+        let localizedKey: L10n
         switch self {
         case .easy:
-            localizedKey = "Easy"
+            localizedKey = .easy
         case .normal:
-            localizedKey = "Normal"
+            localizedKey = .normal
         case .hard:
-            localizedKey = "Hard"
+            localizedKey = .hard
         }
-        let title = localizedString(localizedKey)
+        let title = tr(key: localizedKey)
         return title
     }
 

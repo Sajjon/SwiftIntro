@@ -66,11 +66,11 @@ private extension SettingsVC {
     }
 
     func setupLocalizableStrings() {
-        usernameTextField.placeholder = localizedString("UsernamePlaceholder")
-        segmentTitleLabel.setLocalizedText("Level")
+        usernameTextField.placeholder = tr(key: .usernamePlaceholder)
+        segmentTitleLabel.setLocalizedText(.level)
         setupLocalizationForSegmentedControl()
-        usernameLabel.setLocalizedText("Username")
-        startGameButton.setLocalizedTitle("StartGame")
+        usernameLabel.setLocalizedText(.username)
+        startGameButton.setLocalizedTitle(.startGame)
     }
 
     func setupLocalizationForSegmentedControl() {

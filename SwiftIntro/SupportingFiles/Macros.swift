@@ -25,23 +25,6 @@ func delay(_ delay: Double, closure: @escaping Closure) {
     )
 }
 
-
-
-
-func localizedString(_ key: String, args: Any...) -> String {
-    let localized = NSLocalizedString(key, comment: "")
-    guard let parameters = args.first as? [Any], let parameter = parameters.first else { return localized }
-    var formatted: NSString = ""
-    if localized.contains("%d") {
-        guard let number = parameter as? Int else { return localized }
-        formatted = NSString(format: localized as NSString, number)
-    } else if localized.contains("%@") {
-        guard let string = parameter as? String else { return localized }
-        formatted = NSString(format: localized as NSString, string)
-    }
-    return formatted as String
-}
-
 private func showNetworkLoadingInStatusBar(show: Bool) {
     UIApplication.shared.isNetworkActivityIndicatorVisible = show
 }

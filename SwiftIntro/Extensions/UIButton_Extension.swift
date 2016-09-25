@@ -10,8 +10,8 @@ import UIKit
 
 extension UIButton {
 
-    func setLocalizedTitle(_ localizationKey: String, args: AnyObject...) {
-        let title = localizedString(localizationKey)
+    func setLocalizedTitle(_ key: L10n) {
+        let title = tr(key: key)
         setTitle(title)
     }
 
