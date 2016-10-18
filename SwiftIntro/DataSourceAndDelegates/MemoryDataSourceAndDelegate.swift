@@ -59,22 +59,22 @@ class MemoryDataSourceAndDelegate: NSObject {
 //MARK: Game play Methods
 private extension MemoryDataSourceAndDelegate {
     
-    func cardForIndexPath(_ indexPath: IndexPath) -> Card? {
+    func cardAt(_ indexPath: IndexPath) -> Card? {
         guard indexPath.row < cards.count else { return nil }
-        let index = indexFromIndexPath(indexPath)
+        let index = indexWith(indexPath)
         let model = cards[index]
         return model
     }
     
-    func indexFromIndexPath(_ indexPath: IndexPath) -> Int {
+    func indexWith(_ indexPath: IndexPath) -> Int {
         let numberOfItemsInSection = gameLevel.columnCount
-        let index = indexPath.row + (numberOfItemsInSection * (indexPath as NSIndexPath).section)
+        let index = indexPath.row + (numberOfItemsInSection * indexPath.section)
         return index
     }
     
-    func didSelectCardAtIndexPath(_ indexPath: IndexPath, inCollectionView collectionView: UICollectionView) {
+    func didSelectCard(at indexPath: IndexPath, in collectionView: UICollectionView) {
         clickCount += 1
-        flipCardAtIndexPath(indexPath, inCollectionView: collectionView)
+        flipCard(at: indexPath, in: collectionView)
         if let flippedCardIndexPath = flippedCardIndexPath { /* Found previously flipped card */
             /* We should should always toss away info about "previously flipped card", 
              disregarding if card just flipped matches previously flipped card or not, since
@@ -83,27 +83,25 @@ private extension MemoryDataSourceAndDelegate {
              */
             self.flippedCardIndexPath = nil
             guard flippedCardIndexPath != indexPath else { return }
-            checkIfCardAtIndexPath(indexPath,
-                                   inCollectionView: collectionView,
-                                   matchesAlreadyFlippedCard: flippedCardIndexPath)
+            checkIfCard(at: indexPath, in: collectionView, matches: flippedCardIndexPath)
         } else {
             flippedCardIndexPath = indexPath
         }
     }
 
-    func flipCardAtIndexPath(_ indexPath: IndexPath, inCollectionView collectionView: UICollectionView) {
-        guard let card = cardForIndexPath(indexPath) else { return }
+    func flipCard(at indexPath: IndexPath, in collectionView: UICollectionView) {
+        guard let card = cardAt(indexPath) else { return }
         guard let cell = collectionView.cellForItem(at: indexPath) as? CardCVCell else { return }
         cell.flipCard(card)
     }
 
-    func checkIfCardAtIndexPath(_ indexPath: IndexPath,
-                                        inCollectionView collectionView: UICollectionView,
-                                                         matchesAlreadyFlippedCard flippedIndexPath: IndexPath) {
-        guard let card = cardForIndexPath(indexPath) else { return }
+    func checkIfCard(at indexPath: IndexPath,
+                                        in collectionView: UICollectionView,
+                                                         matches flippedCardIndexPath: IndexPath) {
+        guard let card = cardAt(indexPath) else { return }
         guard let cell = collectionView.cellForItem(at: indexPath) as? CardCVCell else { return }
-        guard let flippedCard = cardForIndexPath(flippedIndexPath) else { return }
-        guard let flippedCell = collectionView.cellForItem(at: flippedIndexPath) as? CardCVCell else { return }
+        guard let flippedCard = cardAt(flippedCardIndexPath) else { return }
+        guard let flippedCell = collectionView.cellForItem(at: flippedCardIndexPath) as? CardCVCell else { return }
         checkIfCard(card, withCell: cell, matchesFlippedCard: flippedCard, withCell: flippedCell)
     }
 
@@ -127,7 +125,7 @@ private extension MemoryDataSourceAndDelegate {
     }
 
     func cardAtIndexPathAlreadyMatched(_ indexPath: IndexPath) -> Bool {
-        guard let card = cardForIndexPath(indexPath) else { return false }
+        guard let card = cardAt(indexPath) else { return false }
         let alreadyMatched = card.matched
         return alreadyMatched
     }
@@ -178,12 +176,12 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDataSource {
 extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard cardAtIndexPathAlreadyMatched(indexPath) == false else { return }
-        didSelectCardAtIndexPath(indexPath, inCollectionView: collectionView)
+        didSelectCard(at: indexPath, in: collectionView)
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? CardCVCell else { return }
-        guard let model = cardForIndexPath(indexPath) else { return }
+        guard let model = cardAt(indexPath) else { return }
         let cachedImage = imageCache.imageFromCache(model.imageUrl)
         cell.configure(with: model, image: cachedImage)
     }
