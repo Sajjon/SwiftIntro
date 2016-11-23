@@ -115,8 +115,8 @@ private extension MemoryDataSourceAndDelegate {
     {
         if card == flippedCard {
             matches += 1
-            card.matched = true
-            flippedCard.matched = true
+            card.isMatched = true
+            flippedCard.isMatched = true
         } else {
             /* No match, flip back cards after delay */
             delay(1) {
@@ -128,7 +128,7 @@ private extension MemoryDataSourceAndDelegate {
 
     func cardAtIndexPathAlreadyMatched(_ indexPath: IndexPath) -> Bool {
         guard let card = cardForIndexPath(indexPath) else { return false }
-        let alreadyMatched = card.matched
+        let alreadyMatched = card.isMatched
         return alreadyMatched
     }
 

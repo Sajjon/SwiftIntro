@@ -29,13 +29,13 @@ extension Cards {
 
     func unflip() {
         for card in memoryCards {
-            card.flipped = false
+            card.isFlipped = false
         }
     }
 
     func unmatch() {
         for card in memoryCards {
-            card.matched = false
+            card.isMatched = false
         }
     }
 

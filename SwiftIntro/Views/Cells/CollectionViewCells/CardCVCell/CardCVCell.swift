@@ -13,10 +13,10 @@ class CardCVCell: UICollectionViewCell {
     @IBOutlet weak var cardFrontImageView: UIImageView!
     @IBOutlet weak var cardBackImageView: UIImageView!
 
-    fileprivate var flipped: Bool = false {
+    fileprivate var isFlipped: Bool = false {
         didSet {
-            cardFrontImageView.isVisible = flipped
-            cardBackImageView.isHidden = flipped
+            cardFrontImageView.isVisible = isFlipped
+            cardBackImageView.isHidden = isFlipped
         }
     }
 
@@ -28,18 +28,18 @@ class CardCVCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         cardFrontImageView.image = nil
-        flipped = false
+        isFlipped = false
     }
 
     func flipCard(_ cardModel: Card) {
-        let flipped = cardModel.flipped
-        let fromView = flipped ? cardFrontImageView : cardBackImageView
-        let toView = flipped ? cardBackImageView : cardFrontImageView
-        let flipDirection: UIViewAnimationOptions = flipped ? .transitionFlipFromRight : .transitionFlipFromLeft
+        let isFlipped = cardModel.isFlipped
+        let sourceView = isFlipped ? cardFrontImageView : cardBackImageView
+        let targetView = isFlipped ? cardBackImageView : cardFrontImageView
+        let flipDirection: UIViewAnimationOptions = isFlipped ? .transitionFlipFromRight : .transitionFlipFromLeft
         let options: UIViewAnimationOptions = [flipDirection, .showHideTransitionViews]
-        UIView.transition(from: fromView!, to: toView!, duration: 0.6, options: options) {
+        UIView.transition(from: sourceView!, to: targetView!, duration: 0.6, options: options) {
             finished in
-            cardModel.flipped = !flipped
+            cardModel.isFlipped = !isFlipped
         }
     }
 }
@@ -64,6 +64,6 @@ extension CardCVCell: CellProtocol {
 private extension CardCVCell {
     func configure(with card: Card, image: UIImage?) {
         cardFrontImageView.image = image
-        flipped = card.flipped
+        isFlipped = card.isFlipped
     }
 }

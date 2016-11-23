@@ -11,8 +11,8 @@ import Foundation
 final class Card {
     let imageUrl: URL
 
-    var flipped: Bool = false
-    var matched: Bool = false
+    var isFlipped: Bool = false
+    var isMatched: Bool = false
 
     init(imageUrl: URL) {
         self.imageUrl = imageUrl
