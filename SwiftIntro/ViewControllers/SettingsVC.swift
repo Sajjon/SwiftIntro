@@ -12,6 +12,7 @@ import UIKit
 class SettingsVC: UIViewController, Configurable {
 
     //MARK: Variables
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var segmentTitleLabel: UILabel!
@@ -57,7 +58,7 @@ private extension SettingsVC {
 
     func setupViews() {
         setupLocalizableStrings()
-        startGameButton.layer.cornerRadius = startGameButton.frame.size.height/2
+        //startGameButton.layer.cornerRadius = startGameButton.frame.size.height/2
     }
 
     func populateViews() {
@@ -66,6 +67,7 @@ private extension SettingsVC {
     }
 
     func setupLocalizableStrings() {
+        titleLabel.setLocalizedText(.title)
         usernameTextField.placeholder = tr(key: .usernamePlaceholder)
         segmentTitleLabel.setLocalizedText(.level)
         setupLocalizationForSegmentedControl()

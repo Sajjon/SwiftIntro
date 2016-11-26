@@ -5,6 +5,8 @@ import Foundation
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 enum L10n {
+  /// my first memory
+  case title
   /// Play!
   case startGame
   /// How good are you at memory?
@@ -43,6 +45,8 @@ extension L10n: CustomStringConvertible {
 
   var string: String {
     switch self {
+      case .title:
+        return L10n.tr(key: "Title")
       case .startGame:
         return L10n.tr(key: "StartGame")
       case .level:

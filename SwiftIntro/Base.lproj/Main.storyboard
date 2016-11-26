@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11761" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="baJ-kx-4T7">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="baJ-kx-4T7">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -25,7 +22,6 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GRS-IT-4p7">
-                                <rect key="frame" x="10" y="80" width="355" height="577"/>
                                 <color key="backgroundColor" red="0.60000002384185791" green="0.40000000596046448" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="GRS-IT-4p7" secondAttribute="height" multiplier="1:1" id="GoG-hz-mzG"/>
@@ -44,16 +40,14 @@
                                 </variation>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cJU-4Y-KWZ" userLabel="Label View">
-                                <rect key="frame" x="10" y="10" width="355" height="60"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="SB: Pairs found 1 of 10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5X-rW-4un">
-                                        <rect key="frame" x="41.5" y="15" width="272" height="31"/>
+                                        <frame key="frameInset" minX="41.5" minY="15" width="272" height="31"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="23"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fi6-Al-yPL">
-                                        <rect key="frame" x="322.5" y="-8" width="30" height="46"/>
                                         <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="30"/>
                                         <state key="normal" title="x">
                                             <color key="titleColor" red="0.17929026234606274" green="0.70492666120064795" blue="0.85350560897435901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -115,7 +109,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mcg-8F-uDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1302.5" y="-892.5"/>
+            <point key="canvasLocation" x="-569" y="-1415"/>
         </scene>
         <!--Game OverVC-->
         <scene sceneID="ywi-y6-hqi">
@@ -130,13 +124,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="SB: Well done!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jEj-tz-Epk" userLabel="How did it go">
-                                <rect key="frame" x="105" y="147.5" width="166.5" height="34.5"/>
+                                <frame key="frameInset" minX="105" minY="147.5" width="166.5" height="34.5"/>
                                 <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="26"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UdN-zp-RY3" userLabel="Game is over">
-                                <rect key="frame" x="50.5" y="202" width="273.5" height="60.5"/>
+                                <frame key="frameInset" minX="50.5" minY="202" width="273.5" height="60.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="61" id="lVg-FZ-bzn"/>
                                 </constraints>
@@ -147,13 +141,11 @@ your click cout was:</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB: 45" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZU-fa-bS7" userLabel="Click Count Score">
-                                <rect key="frame" x="0.0" y="272.5" width="375" height="55"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="40"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VB0-KG-M6u" userLabel="Try harder">
-                                <rect key="frame" x="-1" y="342" width="375.5" height="60.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="61" id="Pw2-Da-2V5"/>
                                 </constraints>
@@ -164,7 +156,6 @@ even better score!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UcQ-7o-Jk7" userLabel="Layout Guide View For Buttons">
-                                <rect key="frame" x="185" y="481" width="5" height="5"/>
                                 <color key="backgroundColor" red="0.96265388259999995" green="0.0" blue="0.11550617019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="5" id="Bzw-7G-Tvu"/>
@@ -172,7 +163,6 @@ even better score!</string>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LmE-2h-LFI" userLabel="Quit Button">
-                                <rect key="frame" x="210" y="458" width="100" height="50"/>
                                 <color key="backgroundColor" red="0.54503205129999999" green="0.076284507330000001" blue="0.4148485509" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Kw3-ci-LBI"/>
@@ -188,7 +178,6 @@ even better score!</string>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="10S-PU-iL9" userLabel="Restart Button">
-                                <rect key="frame" x="65" y="458" width="100" height="50"/>
                                 <color key="backgroundColor" red="0.54503205129999999" green="0.076284507330000001" blue="0.4148485509" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="69g-zy-RTh"/>
@@ -254,7 +243,7 @@ even better score!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="luj-rO-Pkf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1303" y="-1905"/>
+            <point key="canvasLocation" x="-2276" y="-1949"/>
         </scene>
         <!--SettingsVC-->
         <scene sceneID="m3W-VU-yuJ">
@@ -268,8 +257,7 @@ even better score!</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBM-hZ-rVu">
-                                <rect key="frame" x="100" y="335" width="120" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBM-hZ-rVu">
                                 <color key="backgroundColor" red="0.54503205128205123" green="0.076284507326139103" blue="0.41484855094439638" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="3FZ-6e-S5t"/>
@@ -288,11 +276,10 @@ even better score!</string>
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="F3G-8R-nDL" kind="showDetail" id="HKY-iM-Vze"/>
+                                    <segue destination="F3G-8R-nDL" kind="showDetail" id="UAe-m0-RRB"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="SB: What is your Instagram username?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="weo-QR-9rA">
-                                <rect key="frame" x="0.0" y="148" width="320" height="40"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB: What is your Instagram username?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="weo-QR-9rA">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="XT0-fK-Zne"/>
                                 </constraints>
@@ -300,8 +287,7 @@ even better score!</string>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lTc-eh-7Cw">
-                                <rect key="frame" x="64" y="188" width="192" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lTc-eh-7Cw">
                                 <color key="tintColor" red="0.1792902623" green="0.70492666120000003" blue="0.85350560900000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="XUc-lj-NLz"/>
@@ -309,8 +295,7 @@ even better score!</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="230" horizontalCompressionResistancePriority="780" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="WkT-ah-UQ7">
-                                <rect key="frame" x="60" y="273" width="200" height="29"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="230" horizontalCompressionResistancePriority="780" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="WkT-ah-UQ7">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="edy-RO-Zze"/>
                                     <constraint firstAttribute="height" constant="30" id="f0g-lq-Emn"/>
@@ -325,16 +310,14 @@ even better score!</string>
                                     <action selector="changedLevel:" destination="baJ-kx-4T7" eventType="valueChanged" id="vke-0J-VhJ"/>
                                 </connections>
                             </segmentedControl>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ApS-uO-Wi8">
-                                <rect key="frame" x="0.0" y="23.5" width="320" height="97.5"/>
-                                <string key="text">my first
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ApS-uO-Wi8">
+                                <string key="text">SB: my first
 memory.</string>
                                 <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="37"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="SB: How good is your memory?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmf-8C-YP6">
-                                <rect key="frame" x="0.0" y="232" width="320" height="40"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB: How good is your memory?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmf-8C-YP6">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="3B0-yG-oru"/>
                                 </constraints>
@@ -375,13 +358,14 @@ memory.</string>
                         <outlet property="levelSegmentedControl" destination="WkT-ah-UQ7" id="oAg-qA-uc1"/>
                         <outlet property="segmentTitleLabel" destination="bmf-8C-YP6" id="nPy-fc-xfp"/>
                         <outlet property="startGameButton" destination="lBM-hZ-rVu" id="QPd-K4-Tk1"/>
+                        <outlet property="titleLabel" destination="ApS-uO-Wi8" id="sEp-GH-GXJ"/>
                         <outlet property="usernameLabel" destination="weo-QR-9rA" id="1UW-F4-YxA"/>
                         <outlet property="usernameTextField" destination="lTc-eh-7Cw" id="Gth-qu-xfB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PpQ-Av-naL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2242" y="-1046"/>
+            <point key="canvasLocation" x="-3103.1999999999998" y="-1397.4512743628186"/>
         </scene>
         <!--Loading DataVC-->
         <scene sceneID="PsU-2b-ZtN">
@@ -396,14 +380,11 @@ memory.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB: Loading...." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6wf-Ed-Vhp" userLabel="Loading Label">
-                                <rect key="frame" x="16" y="309" width="343" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="JqS-hj-oMB">
-                                <rect key="frame" x="169" y="377.5" width="37" height="37"/>
-                            </activityIndicatorView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="JqS-hj-oMB"/>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -427,11 +408,11 @@ memory.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CAR-0l-EpO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1805.5" y="-642.5"/>
+            <point key="canvasLocation" x="-1762" y="-1015"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ipz-pj-UEw"/>
-        <segue reference="cVp-ZS-IAw"/>
+        <segue reference="rFB-Oy-WG2"/>
+        <segue reference="9pj-Zu-XUd"/>
     </inferredMetricsTieBreakers>
 </document>
