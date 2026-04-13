@@ -2,12 +2,11 @@
 //  CardCVCell.swift
 //  SwiftIntro
 //
-//  Created by Alexander Georgii-Hemming Cyon on 01/06/16.
-//  Copyright © 2016 SwiftIntro. All rights reserved.
+//  Created by Alexander Cyon on 01/06/16.
+//  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 
 import UIKit
-import Kingfisher
 
 class CardCVCell: UICollectionViewCell {
     @IBOutlet weak var cardFrontImageView: UIImageView!
@@ -35,8 +34,8 @@ class CardCVCell: UICollectionViewCell {
         let isFlipped = cardModel.isFlipped
         let sourceView = isFlipped ? cardFrontImageView : cardBackImageView
         let targetView = isFlipped ? cardBackImageView : cardFrontImageView
-        let flipDirection: UIViewAnimationOptions = isFlipped ? .transitionFlipFromRight : .transitionFlipFromLeft
-        let options: UIViewAnimationOptions = [flipDirection, .showHideTransitionViews]
+        let flipDirection: UIView.AnimationOptions = isFlipped ? .transitionFlipFromRight : .transitionFlipFromLeft
+        let options: UIView.AnimationOptions = [flipDirection, .showHideTransitionViews]
         UIView.transition(from: sourceView!, to: targetView!, duration: 0.6, options: options) {
             finished in
             cardModel.isFlipped = !isFlipped

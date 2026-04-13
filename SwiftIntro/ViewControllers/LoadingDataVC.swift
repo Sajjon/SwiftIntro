@@ -2,12 +2,11 @@
 //  LoadingDataVC.swift
 //  SwiftIntro
 //
-//  Created by Alexander Georgii-Hemming Cyon on 19/06/16.
-//  Copyright © 2016 SwiftIntro. All rights reserved.
+//  Created by Alexander Cyon on 19/06/16.
+//  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 
 import UIKit
-import Alamofire
 
 private let startGameSegue = "startGameSegue"
 class LoadingDataVC: UIViewController, Configurable {
@@ -54,11 +53,11 @@ private extension LoadingDataVC {
     }
 
     func fetchData() {
-        apiClient.getPhotos(config.username) {
+        apiClient.getPhotos(config.searchQuery) {
             result in
             switch result {
             case .failure(let error):
-                print("Failed to get photos, error: \(error.description)")
+                print("Failed to get photos, error: \(error)")
             case .success(let model):
                 self.setupWithModel(model.first)
             }

@@ -2,8 +2,8 @@
 //  Cards.swift
 //  SwiftIntro
 //
-//  Created by Alexander Georgii-Hemming Cyon on 01/06/16.
-//  Copyright © 2016 SwiftIntro. All rights reserved.
+//  Created by Alexander Cyon on 01/06/16.
+//  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 
 import Foundation
@@ -51,7 +51,9 @@ extension Cards {
 
 extension Cards: Model {
     init?(response: HTTPURLResponse, json: JSON) {
-        guard let jsonForCards = json["items"] as? [JSON] else { return nil }
+        guard let query = json["query"] as? JSON,
+              let pages = query["pages"] as? [String: JSON] else { return nil }
+        let jsonForCards = Array(pages.values)
         let cards = Card.collection(from: response, withRepresentation: jsonForCards)
         self.singles = cards
         memoryCards = []

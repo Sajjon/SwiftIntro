@@ -2,8 +2,8 @@
 //  APIClient.swift
 //  SwiftIntro
 //
-//  Created by Alexander Georgii-Hemming Cyon on 01/06/16.
-//  Copyright © 2016 SwiftIntro. All rights reserved.
+//  Created by Alexander Cyon on 01/06/16.
+//  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 
 import Foundation
@@ -21,7 +21,7 @@ class APIClient {
 
 extension APIClient: APIClientProtocol {
 
-    func getPhotos(_ username: String, done: @escaping Done<Cards>) {
-        httpClient.request(.photos(username), done: done)
+    func getPhotos(_ searchQuery: String, done: @escaping Done<Cards>) {
+        httpClient.request(.searchImages(searchQuery), done: done)
     }
 }

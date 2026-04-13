@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  SwiftIntro
 //
-//  Created by Alexander Georgii-Hemming Cyon on 01/06/16.
-//  Copyright © 2016 SwiftIntro. All rights reserved.
+//  Created by Alexander Cyon on 01/06/16.
+//  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 
 import UIKit
@@ -18,7 +18,7 @@ class AppDelegate: UIResponder {
 }
 
 extension AppDelegate: UIApplicationDelegate {
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         return true
     }
 }

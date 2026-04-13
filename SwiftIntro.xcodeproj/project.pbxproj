@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -44,12 +44,13 @@
 		7BEEBF0E1D18A2C80014571E /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEBF0D1D18A2C80014571E /* Result.swift */; };
 		7BEEBF101D18A2DF0014571E /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEBF0F1D18A2DF0014571E /* Model.swift */; };
 		7BEEBF141D18A6790014571E /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEBF131D18A6790014571E /* Error.swift */; };
-		97DEEB47780C576B8BBAC42C /* Pods_SwiftIntro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243E0AB5281AC3E2E446E4FF /* Pods_SwiftIntro.framework */; };
+		AAFE0003AAFE0003AAFE0003 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = AAFE0002AAFE0002AAFE0002 /* Alamofire */; };
+		BBFE0003BBFE0003BBFE0003 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = BBFE0002BBFE0002BBFE0002 /* Kingfisher */; };
+		CCFE0003CCFE0003CCFE0003 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = CCFE0002CCFE0002CCFE0002 /* Swinject */; };
+		DDFE0003DDFE0003DDFE0003 /* SwinjectStoryboard in Frameworks */ = {isa = PBXBuildFile; productRef = DDFE0002DDFE0002DDFE0002 /* SwinjectStoryboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		243E0AB5281AC3E2E446E4FF /* Pods_SwiftIntro.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftIntro.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		30F41637FDEA6AD844B4D016 /* Pods-SwiftIntro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftIntro.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftIntro/Pods-SwiftIntro.debug.xcconfig"; sourceTree = "<group>"; };
 		450EAFD81D15933300BAFDD3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		45773A361D00C088002E6F56 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		7B21A5AC1CFF5C17002E5EE5 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -90,7 +91,6 @@
 		7BEEBF0D1D18A2C80014571E /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		7BEEBF0F1D18A2DF0014571E /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		7BEEBF131D18A6790014571E /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
-		FB6C211E60AF751181C395A1 /* Pods-SwiftIntro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftIntro.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftIntro/Pods-SwiftIntro.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,30 +98,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97DEEB47780C576B8BBAC42C /* Pods_SwiftIntro.framework in Frameworks */,
+				AAFE0003AAFE0003AAFE0003 /* Alamofire in Frameworks */,
+				BBFE0003BBFE0003BBFE0003 /* Kingfisher in Frameworks */,
+				CCFE0003CCFE0003CCFE0003 /* Swinject in Frameworks */,
+				DDFE0003DDFE0003DDFE0003 /* SwinjectStoryboard in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		06272239F9B7BEB579F0ACF7 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				30F41637FDEA6AD844B4D016 /* Pods-SwiftIntro.debug.xcconfig */,
-				FB6C211E60AF751181C395A1 /* Pods-SwiftIntro.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		37F92D951497B76C0D43697E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				243E0AB5281AC3E2E446E4FF /* Pods_SwiftIntro.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		7B21A5AA1CFF5C17002E5EE5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,8 +239,6 @@
 		7B75421A1CFF3F9E009B2629 = {
 			isa = PBXGroup;
 			children = (
-				37F92D951497B76C0D43697E /* Frameworks */,
-				06272239F9B7BEB579F0ACF7 /* Pods */,
 				7B7542241CFF3F9E009B2629 /* Products */,
 				7B7542251CFF3F9E009B2629 /* SwiftIntro */,
 			);
@@ -312,20 +296,23 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7B7542371CFF3F9E009B2629 /* Build configuration list for PBXNativeTarget "SwiftIntro" */;
 			buildPhases = (
-				48E3C3174B2513F4662E8942 /* [CP] Check Pods Manifest.lock */,
 				7B75421F1CFF3F9E009B2629 /* Sources */,
 				7BA112A21D97F795003B5D69 /* SwiftGen Strings */,
 				7B7542201CFF3F9E009B2629 /* Frameworks */,
 				7B7542211CFF3F9E009B2629 /* Resources */,
 				7B6E4F381CFF40A000B7D991 /* SwiftLint */,
-				D9FF9833FA98573696375F2D /* [CP] Embed Pods Frameworks */,
-				6F1EC0CAB9F56A8DC14746DF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = SwiftIntro;
+			packageProductDependencies = (
+				AAFE0002AAFE0002AAFE0002 /* Alamofire */,
+				BBFE0002BBFE0002BBFE0002 /* Kingfisher */,
+				CCFE0002CCFE0002CCFE0002 /* Swinject */,
+				DDFE0002DDFE0002DDFE0002 /* SwinjectStoryboard */,
+			);
 			productName = SwiftIntro;
 			productReference = 7B7542231CFF3F9E009B2629 /* SwiftIntro.app */;
 			productType = "com.apple.product-type.application";
@@ -336,8 +323,9 @@
 		7B75421B1CFF3F9E009B2629 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 2610;
 				ORGANIZATIONNAME = SwiftIntro;
 				TargetAttributes = {
 					7B7542221CFF3F9E009B2629 = {
@@ -348,7 +336,7 @@
 			};
 			buildConfigurationList = 7B75421E1CFF3F9E009B2629 /* Build configuration list for PBXProject "SwiftIntro" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -356,6 +344,12 @@
 				sv,
 			);
 			mainGroup = 7B75421A1CFF3F9E009B2629;
+			packageReferences = (
+				AAFE0001AAFE0001AAFE0001 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				BBFE0001BBFE0001BBFE0001 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				CCFE0001CCFE0001CCFE0001 /* XCRemoteSwiftPackageReference "Swinject" */,
+				DDFE0001DDFE0001DDFE0001 /* XCRemoteSwiftPackageReference "SwinjectStoryboard" */,
+			);
 			productRefGroup = 7B7542241CFF3F9E009B2629 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -381,36 +375,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		48E3C3174B2513F4662E8942 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		6F1EC0CAB9F56A8DC14746DF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftIntro/Pods-SwiftIntro-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		7B6E4F381CFF40A000B7D991 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -437,22 +401,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Pods/SwiftGen/bin/swiftgen strings -t swift3 --output SwiftIntro/Enums/Generated/Strings.swift SwiftIntro/SupportingFiles/en.lproj/Localizable.strings";
-		};
-		D9FF9833FA98573696375F2D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftIntro/Pods-SwiftIntro-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "if which swiftgen >/dev/null; then\n    swiftgen strings -t swift5 --output SwiftIntro/Enums/Generated/Strings.swift SwiftIntro/SupportingFiles/en.lproj/Localizable.strings\nelse\n    echo \"warning: SwiftGen not installed. Install via Homebrew: brew install swiftgen\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -537,14 +486,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -553,6 +511,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -567,10 +526,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -585,14 +545,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -601,6 +570,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -609,41 +579,47 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		7B7542381CFF3F9E009B2629 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 30F41637FDEA6AD844B4D016 /* Pods-SwiftIntro.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = SwiftIntro/SupportingFiles/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftintro.SwiftIntro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		7B7542391CFF3F9E009B2629 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FB6C211E60AF751181C395A1 /* Pods-SwiftIntro.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = SwiftIntro/SupportingFiles/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftintro.SwiftIntro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -669,6 +645,64 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AAFE0001AAFE0001AAFE0001 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		BBFE0001BBFE0001BBFE0001 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+		CCFE0001CCFE0001CCFE0001 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.0;
+			};
+		};
+		DDFE0001DDFE0001DDFE0001 /* XCRemoteSwiftPackageReference "SwinjectStoryboard" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/SwinjectStoryboard.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AAFE0002AAFE0002AAFE0002 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAFE0001AAFE0001AAFE0001 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		BBFE0002BBFE0002BBFE0002 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BBFE0001BBFE0001BBFE0001 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		CCFE0002CCFE0002CCFE0002 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CCFE0001CCFE0001CCFE0001 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+		DDFE0002DDFE0002DDFE0002 /* SwinjectStoryboard */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DDFE0001DDFE0001DDFE0001 /* XCRemoteSwiftPackageReference "SwinjectStoryboard" */;
+			productName = SwinjectStoryboard;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7B75421B1CFF3F9E009B2629 /* Project object */;
 }

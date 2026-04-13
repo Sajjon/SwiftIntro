@@ -2,13 +2,13 @@
 //  MemoryDataSourceAndDelegate.swift
 //  SwiftIntro
 //
-//  Created by Alexander Georgii-Hemming Cyon on 01/06/16.
-//  Copyright © 2016 SwiftIntro. All rights reserved.
+//  Created by Alexander Cyon on 01/06/16.
+//  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 
 import UIKit
 
-protocol GameDelegate: class {
+protocol GameDelegate: AnyObject {
     func foundMatch(_ matches: Int)
     func gameOver(_ result: GameResult)
 }

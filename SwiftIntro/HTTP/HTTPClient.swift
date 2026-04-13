@@ -2,8 +2,8 @@
 //  HTTPClient.swift
 //  SwiftIntro
 //
-//  Created by Alexander Georgii-Hemming Cyon on 01/06/16.
-//  Copyright © 2016 SwiftIntro. All rights reserved.
+//  Created by Alexander Cyon on 01/06/16.
+//  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 
 import Foundation
@@ -15,28 +15,26 @@ class HTTPClient {}
 
 extension HTTPClient: HTTPClientProtocol {
     func request<T: Model>(_ route: Router, done: @escaping Done<T>) {
-        Alamofire.request(route)
+        AF.request(route)
             .validate()
-            .responseObject {
-                (response: DataResponse<T>) in
-                if let model = response.result.value {
+            .responseObject { (result: Swift.Result<T, MyError>) in
+                switch result {
+                case .success(let model):
                     done(Result.success([model]))
-                } else {
-                    let myError: MyError = (response.result.error as? MyError) ?? MyError(.unknown)
+                case .failure(let myError):
                     done(Result.failure(myError))
                 }
         }
     }
 
     func collectionRequest<T: Model>(_ route: Router, done: @escaping Done<T>) {
-        Alamofire.request(route)
+        AF.request(route)
             .validate()
-            .responseCollection {
-                (response: DataResponse<[T]>) in
-                if let model = response.result.value {
-                    done(Result.success(model))
-                } else {
-                    let myError: MyError = (response.result.error as? MyError) ?? MyError(.unknown)
+            .responseCollection { (result: Swift.Result<[T], MyError>) in
+                switch result {
+                case .success(let models):
+                    done(Result.success(models))
+                case .failure(let myError):
                     done(Result.failure(myError))
                 }
         }

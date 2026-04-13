@@ -2,40 +2,45 @@
 //  Router.swift
 //  SwiftIntro
 //
-//  Created by Alexander Georgii-Hemming Cyon on 01/06/16.
-//  Copyright © 2016 SwiftIntro. All rights reserved.
+//  Created by Alexander Cyon on 01/06/16.
+//  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 
 import Foundation
 import Alamofire
 
 enum Router: URLRequestConvertible {
-    static let baseURLString = "https://www.instagram.com/"
+    static let baseURLString = "https://commons.wikimedia.org/w/api.php"
 
-    case photos(String)
+    case searchImages(String)
 
-    var method: Alamofire.HTTPMethod {
+    var method: HTTPMethod {
         switch self {
-        case .photos:
+        case .searchImages:
             return .get
         }
     }
 
-    var path: String {
-        switch self {
-        case .photos(let username):
-            return "\(username)/media/"
-        }
-    }
-
     var parameters: Parameters? {
-        return nil
+        switch self {
+        case .searchImages(let query):
+            return [
+                "action": "query",
+                "generator": "search",
+                "gsrsearch": query,
+                "gsrnamespace": "6",
+                "prop": "imageinfo",
+                "iiprop": "url",
+                "format": "json",
+                "gsrlimit": "50"
+            ]
+        }
     }
 
     // MARK: URLRequestConvertible
     func asURLRequest() throws -> URLRequest {
         let url = try Router.baseURLString.asURL()
-        var urlRequest = URLRequest(url: url.appendingPathComponent(path))
+        var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
         urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         return urlRequest

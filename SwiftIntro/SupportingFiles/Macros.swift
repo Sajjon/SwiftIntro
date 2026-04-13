@@ -2,8 +2,8 @@
 //  Macros.swift
 //  SwiftIntro
 //
-//  Created by Alexander Georgii-Hemming Cyon on 09/01/16.
-//  Copyright © 2016 intranet3. All rights reserved.
+//  Created by Alexander Cyon on 09/01/16.
+//  Copyright © 2016-2026 intranet3. All rights reserved.
 //
 
 import Foundation
@@ -25,14 +25,19 @@ func delay(_ delay: Double, closure: @escaping Closure) {
     )
 }
 
+@available(iOS, deprecated: 13.0, message: "Status bar network activity indicator is deprecated. Consider showing a custom in-app loading UI.")
 private func showNetworkLoadingInStatusBar(show: Bool) {
-    UIApplication.shared.isNetworkActivityIndicatorVisible = show
+    // Deprecated no-op: The system status bar network activity indicator was removed in iOS 13.
+    // Keep this function as a stub to avoid breaking existing call sites.
+    // If needed, implement your own in-app network activity UI and call it from here.
 }
 
+@available(iOS, deprecated: 13.0, message: "Use a custom in-app loading indicator instead of the status bar network activity indicator.")
 func showNetworkLoadingInStatusBar() {
     showNetworkLoadingInStatusBar(show: true)
 }
 
+@available(iOS, deprecated: 13.0, message: "Use a custom in-app loading indicator instead of the status bar network activity indicator.")
 func hideNetworkLoadingInStatusBar() {
     showNetworkLoadingInStatusBar(show: false)
 }

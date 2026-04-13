@@ -2,14 +2,14 @@
 //  Localizable.strings
 //  SwiftIntro
 //
-//  Created by Alexander Georgii-Hemming Cyon on 10/01/16.
-//  Copyright © 2016 intranet3. All rights reserved.
+//  Created by Alexander Cyon on 10/01/16.
+//  Copyright © 2016-2026 intranet3. All rights reserved.
 //
 "Title" = "my first memory";
 "StartGame" = "Play!";
 "Level" = "How good are you at memory?";
-"UsernamePlaceholder" = "username";
-"Username" = "What's your Instagram username?";
+"UsernamePlaceholder" = "e.g. cats, mountains, space";
+"Username" = "Search for images:";
 "Easy" = "n00b";
 "Normal" = "A-OK!";
 "Hard" = "Kick-Ass";

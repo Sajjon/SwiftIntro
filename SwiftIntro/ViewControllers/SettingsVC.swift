@@ -3,7 +3,7 @@
 //  SwiftIntro
 //
 //  Created by Miriam Tisander on 02/06/16.
-//  Copyright © 2016 SwiftIntro. All rights reserved.
+//  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 
 import Foundation
@@ -36,8 +36,8 @@ class SettingsVC: UIViewController, Configurable {
 
     override func prepare(for segue: UIStoryboardSegue?, sender: Any?) {
         guard let vc = segue?.destination as? LoadingDataVC else { return }
-        if let username: String = usernameTextField.text, !username.isEmpty {
-            config.username = username
+        if let searchQuery: String = usernameTextField.text, !searchQuery.isEmpty {
+            config.searchQuery = searchQuery
         }
 
         vc.config = config
@@ -62,7 +62,7 @@ private extension SettingsVC {
     }
 
     func populateViews() {
-        usernameTextField.text = config.username
+        usernameTextField.text = config.searchQuery
         levelSegmentedControl.selectedSegmentIndex = config.level.segmentedControlIndex
     }
 

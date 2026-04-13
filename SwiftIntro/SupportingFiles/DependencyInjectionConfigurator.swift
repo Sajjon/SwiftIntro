@@ -2,8 +2,8 @@
 //  DependencyInjectionConfigurator.swift
 //  Intranet3
 //
-//  Created by Alexander Georgii-Hemming Cyon on 29/05/16.
-//  Copyright © 2016 intranet3. All rights reserved.
+//  Created by Alexander Cyon on 29/05/16.
+//  Copyright © 2016-2026 intranet3. All rights reserved.
 //
 
 import Foundation
@@ -29,13 +29,14 @@ extension SwinjectStoryboard {
             Cache()
         }.inObjectScope(.container)
 
-        defaultContainer.registerForStoryboard(GameVC.self) { r, c in
+        defaultContainer.storyboardInitCompleted(GameVC.self) { r, c in
             c.imageCache = r.resolve(ImageCacheProtocol.self)
         }
 
-        defaultContainer.registerForStoryboard(LoadingDataVC.self) { r, c in
+        defaultContainer.storyboardInitCompleted(LoadingDataVC.self) { r, c in
             c.apiClient = r.resolve(APIClientProtocol.self)
             c.imageCache = r.resolve(ImageCacheProtocol.self)
         }
     }
 }
+
