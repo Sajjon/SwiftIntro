@@ -1,5 +1,5 @@
 //
-//  GameResult.swift
+//  GameOutcome.swift
 //  SwiftIntro
 //
 //  Created by Alexander Cyon on 20/06/16.
@@ -16,14 +16,4 @@ struct GameOutcome {
     let clickCount: Int
     /// The deck used during the session, available so the player can restart with the same images.
     var cards: CardDuplicates
-
-    init(
-        level: Level,
-        clickCount: Int,
-        cards: CardDuplicates
-    ) {
-        self.level = level
-        self.clickCount = clickCount
-        self.cards = cards
-    }
 }

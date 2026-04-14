@@ -35,7 +35,6 @@ protocol LoadingDataNavigatorProtocol: AnyObject {
 /// to `APIClient`, `CardDuplicates`, and the `ImageCacheProtocol`. Navigation is delegated
 /// to `navigator` so this VC has no dependency on `UINavigationController`.
 final class LoadingDataVC: UIViewController {
-
     @Injected(\.apiClient) private var apiClient
     @Injected(\.imageCache) private var imageCache
 
@@ -51,7 +50,10 @@ final class LoadingDataVC: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) { fatalError() }
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError()
+    }
 
     override func loadView() {
         view = LoadingView()
@@ -66,13 +68,12 @@ final class LoadingDataVC: UIViewController {
 // MARK: - Private
 
 private extension LoadingDataVC {
-
     func fetchData() {
         apiClient.getPhotos(config.searchQuery) { result in
             switch result {
-            case .failure(let error):
+            case let .failure(error):
                 log.error("Failed to get photos: \(error)")
-            case .success(let cardSingles):
+            case let .success(cardSingles):
                 self.setupWithModel(cardSingles: cardSingles)
             }
         }
@@ -80,7 +81,7 @@ private extension LoadingDataVC {
 
     /// Builds the duplicated deck from the fetched singles, then kicks off image pre-fetching.
     func setupWithModel(cardSingles singles: CardSingles) {
-        self.cards = CardDuplicates(singles: singles, config: config)
+        cards = CardDuplicates(singles: singles, config: config)
         prefetchImagesForCards(urls: singles.cards.map(\.imageUrl))
     }
 
@@ -97,7 +98,7 @@ private extension LoadingDataVC {
 
     /// Delegates to `navigator` so `LoadingDataVC` stays navigation-agnostic.
     func startGame() {
-        guard let cards = cards else { return }
+        guard let cards else { return }
         onMain {
             self.navigator?.navigateToGame(config: self.config, cards: cards)
         }

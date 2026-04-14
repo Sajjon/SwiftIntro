@@ -21,8 +21,8 @@ struct CardModel: Equatable {
 
     init(imageUrl: URL) {
         self.imageUrl = imageUrl
-        self.isFlipped = false
-        self.isMatched = false
+        isFlipped = false
+        isMatched = false
     }
 }
 
@@ -46,13 +46,15 @@ struct GameModel {
     var pendingCardIndex: Int?
 
     /// Total number of pairs on the board. Game ends when `matches == totalPairs`.
-    var totalPairs: Int { cards.count / 2 }
+    var totalPairs: Int {
+        cards.count / 2
+    }
 
     init(cards: [CardModel], level: Level) {
         self.cards = cards
         self.level = level
-        self.clickCount = 0
-        self.matches = 0
-        self.pendingCardIndex = nil
+        clickCount = 0
+        matches = 0
+        pendingCardIndex = nil
     }
 }

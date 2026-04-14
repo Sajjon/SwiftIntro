@@ -18,27 +18,34 @@ import UIKit
 /// render `GameModel` and dispatch `GameEvent`s, but owns no loop infrastructure.
 /// The `MobiusController` and `GameEffectHandler` live inside `GameLoop`.
 final class GameVC: UIViewController {
-	// MARK: Properties
-	@Injected(\.imageCache) private var imageCache
+    // MARK: Properties
 
-	private let loop: GameLoop
-	private let gameView = GameView()
+    @Injected(\.imageCache) private var imageCache
 
-	private lazy var dataSourceAndDelegate: MemoryDataSourceAndDelegate = {
-		MemoryDataSourceAndDelegate(rows: self.loop.level.rowCount, columns: self.loop.level.columnCount)
-	}()
+    private let loop: GameLoop
+    private let gameView = GameView()
 
-	// MARK: Inits
-	init(config: GameConfiguration, cards: CardDuplicates) {
-		let cardModels = cards.memoryCards.map { CardModel(imageUrl: $0.imageUrl) }
-		self.loop = GameLoop(initialModel: GameModel(cards: cardModels, level: config.level))
-		super.init(nibName: nil, bundle: nil)
-	}
+    private lazy var dataSourceAndDelegate: MemoryDataSourceAndDelegate = .init(
+        rows: self.loop.level.rowCount,
+        columns: self.loop.level.columnCount
+    )
 
-	required init?(coder: NSCoder) { fatalError() }
+    // MARK: Inits
+
+    init(config: GameConfiguration, cards: CardDuplicates) {
+        let cardModels = cards.memoryCards.map { CardModel(imageUrl: $0.imageUrl) }
+        loop = GameLoop(initialModel: GameModel(cards: cardModels, level: config.level))
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError()
+    }
 }
 
 // MARK: Override
+
 extension GameVC {
     /// Installs `GameView` as the root view instead of the default plain `UIView`.
     override func loadView() {
@@ -95,8 +102,7 @@ extension GameVC: Connectable {
 // MARK: - Private
 
 extension GameVC {
-
-	private func setupLoop() {
+    private func setupLoop() {
         loop.start(
             view: self,
             collectionView: gameView.collectionView,
@@ -106,13 +112,14 @@ extension GameVC {
         )
     }
 
-	private func setupCollectionView() {
+    private func setupCollectionView() {
         gameView.collectionView.dataSource = dataSourceAndDelegate
         gameView.collectionView.delegate = dataSourceAndDelegate
-        gameView.collectionView.register(
-            CardCVCell.self,
-            forCellWithReuseIdentifier: CardCVCell.cellIdentifier
-        )
+        gameView.collectionView.register(CardCVCell.self, forCellWithReuseIdentifier: CardCVCell.cellIdentifier)
+        wireDataSourceClosures()
+    }
+
+    private func wireDataSourceClosures() {
         dataSourceAndDelegate.canSelectCard = { [weak self] index in
             self?.loop.canSelectCard(at: index) ?? false
         }

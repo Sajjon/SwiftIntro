@@ -16,7 +16,6 @@ import UIKit
 /// `NSObject` is required because `UICollectionViewDataSource` and
 /// `UICollectionViewDelegate` are `@objc` protocols.
 final class MemoryDataSourceAndDelegate: NSObject {
-
     /// Number of rows on the board (= number of collection view sections).
     private let numberOfRows: Int
     /// Number of columns on the board (= number of items per section).
@@ -30,15 +29,14 @@ final class MemoryDataSourceAndDelegate: NSObject {
     var configureCell: ((CardCVCell, Int) -> Void)?
 
     init(rows: Int, columns: Int) {
-        self.numberOfRows = rows
-        self.numberOfColumns = columns
+        numberOfRows = rows
+        numberOfColumns = columns
     }
 }
 
 // MARK: - Private Helpers
 
 private extension MemoryDataSourceAndDelegate {
-
     /// Converts an `IndexPath` (section = row, item = column) to a row-major flat index.
     func flatIndex(for indexPath: IndexPath) -> Int {
         indexPath.item + numberOfColumns * indexPath.section
@@ -88,18 +86,20 @@ private extension MemoryDataSourceAndDelegate {
 // MARK: - UICollectionViewDataSource
 
 extension MemoryDataSourceAndDelegate: UICollectionViewDataSource {
-
     /// One section per row keeps the index-path ↔ flat-index math simple:
     /// `flatIndex = section * columns + item`.
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in _: UICollectionView) -> Int {
         numberOfRows
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         numberOfColumns
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         // Dequeue only — actual configuration happens in `willDisplay` so that
         // cells are re-configured each time they enter the visible area.
         collectionView.dequeueReusableCell(withReuseIdentifier: CardCVCell.cellIdentifier, for: indexPath)
@@ -109,15 +109,14 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 
 extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let index = flatIndex(for: indexPath)
         // Gate on canSelectCard so matched cards cannot be tapped a second time.
         guard canSelectCard?(index) == true else { return }
         onCardTapped?(index)
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         // `willDisplay` is preferred over `cellForItemAt` for configuration because
         // it fires every time a cell becomes visible, ensuring Kingfisher image loading
         // is triggered even after cells are recycled via the reuse pool.
@@ -129,14 +128,21 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension MemoryDataSourceAndDelegate: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(
+        _: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt _: Int
+    ) -> UIEdgeInsets {
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
         // Add a bottom inset equal to the line spacing so that row gaps are uniform.
         return UIEdgeInsets(top: 0, left: 0, bottom: flowLayout.minimumLineSpacing, right: 0)
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt _: IndexPath
+    ) -> CGSize {
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
         return calculateCardSize(flowLayout, collectionView: collectionView)
     }

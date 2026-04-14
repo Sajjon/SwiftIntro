@@ -14,7 +14,6 @@ import Kingfisher
 /// meaning the same object is returned for every `@Injected` property wrapper that
 /// references the key path. Registrations are resolved lazily on first access.
 extension Container {
-
     /// The low-level HTTP transport used by `APIClient` to make raw network requests.
     var httpClient: Factory<HTTPClientProtocol> {
         self { HTTPClient() }.singleton

@@ -23,7 +23,21 @@ jobs:
       - name: Check for typos
         uses: crate-ci/typos@v1
 
-  # ── 2. SwiftLint ────────────────────────────────────────────────────────────
+  # ── 2. SwiftFormat ──────────────────────────────────────────────────────────
+  swiftformat:
+    name: SwiftFormat
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install SwiftFormat
+        run: brew install swiftformat
+
+      - name: Check formatting
+        # --lint exits non-zero if any file would be reformatted, without writing changes.
+        run: swiftformat --lint SwiftIntro
+
+  # ── 3. SwiftLint ────────────────────────────────────────────────────────────
   swiftlint:
     name: SwiftLint
     runs-on: macos-15
@@ -38,7 +52,7 @@ jobs:
         # that appear inline in the PR diff view.
         run: swiftlint lint --strict --reporter github-actions-logging
 
-  # ── 3. Test + coverage ──────────────────────────────────────────────────────
+  # ── 4. Test + coverage ──────────────────────────────────────────────────────
   coverage:
     name: Test & Coverage
     runs-on: macos-15

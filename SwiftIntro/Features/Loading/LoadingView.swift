@@ -12,7 +12,6 @@ import UIKit
 /// Shown while `LoadingDataVC` fetches images from the API and warms the memory cache.
 /// Contains no logic — it simply animates until it is removed from the view hierarchy.
 final class LoadingView: UIView {
-
     private let loadingLabel = UILabel()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
 
@@ -22,29 +21,38 @@ final class LoadingView: UIView {
         setupLayout()
     }
 
-    required init?(coder: NSCoder) { fatalError() }
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError()
+    }
 }
 
 // MARK: - Private
 
 private extension LoadingView {
-
     func setupLayout() {
+        configureSubviews()
+        let stack = makeStack()
+        addSubview(stack)
+        NSLayoutConstraint.activate([
+            stack.centerXAnchor.constraint(equalTo: centerXAnchor),
+            stack.centerYAnchor.constraint(equalTo: centerYAnchor),
+        ])
+    }
+
+    func configureSubviews() {
         loadingLabel.setLocalizedText(L10n.loading)
         loadingLabel.textAlignment = .center
         // Start animating immediately — the indicator is visible as soon as the view appears.
         activityIndicator.startAnimating()
+    }
 
+    func makeStack() -> UIStackView {
         let stack = UIStackView(arrangedSubviews: [loadingLabel, activityIndicator])
         stack.axis = .vertical
         stack.spacing = 16
         stack.alignment = .center
         stack.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(stack)
-
-        NSLayoutConstraint.activate([
-            stack.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stack.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
+        return stack
     }
 }

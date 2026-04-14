@@ -13,7 +13,6 @@ import UIKit
 /// Thin by design: installs `SettingsView` as the root view and reacts to
 /// its `onStartGame` callback to push the loading screen.
 final class SettingsVC: UIViewController {
-
     private let settingsView = SettingsView()
 
     override func loadView() {
@@ -40,7 +39,6 @@ final class SettingsVC: UIViewController {
 // MARK: - LoadingDataNavigatorProtocol
 
 extension SettingsVC: LoadingDataNavigatorProtocol {
-
     /// Replaces `LoadingDataVC` in the navigation stack with `GameVC` so the player
     /// cannot navigate back to the loading screen with the back gesture.
     func navigateToGame(config: GameConfiguration, cards: CardDuplicates) {

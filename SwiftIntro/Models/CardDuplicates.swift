@@ -1,5 +1,5 @@
 //
-//  Cards.swift
+//  CardDuplicates.swift
 //  SwiftIntro
 //
 //  Created by Alexander Cyon on 01/06/16.
@@ -13,7 +13,6 @@ import Foundation
 /// Created by taking `CardSingles`, choosing enough unique cards to fill the board,
 /// duplicating each one, and shuffling the result.
 struct CardDuplicates {
-
     /// The shuffled, duplicated array of cards. Count is always even.
     var memoryCards: [Card]
 
@@ -33,9 +32,10 @@ struct CardDuplicates {
 }
 
 extension CardDuplicates {
-
     /// Total number of cards in the deck (always even).
-    var count: Int { memoryCards.count }
+    var count: Int {
+        memoryCards.count
+    }
 
     /// Accesses a card by its flat (row-major) index in the deck.
     subscript(index: Int) -> Card {

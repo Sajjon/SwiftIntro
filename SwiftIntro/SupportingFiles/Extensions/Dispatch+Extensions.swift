@@ -1,5 +1,5 @@
 //
-//  Macros.swift
+//  Dispatch+Extensions.swift
 //  SwiftIntro
 //
 //  Created by Alexander Cyon on 09/01/16.

@@ -9,7 +9,6 @@
 import UIKit
 
 extension UIButton {
-
     /// Sets the button's title from a localized string for both `.normal` and `.highlighted` states.
     func setLocalizedTitle(_ text: String) {
         setTitle(text)

@@ -15,7 +15,6 @@ import UIKit
 /// loop infrastructure. Create one `GameLoop` per game session and discard it when
 /// the session ends.
 final class GameLoop {
-
     private let effectHandler: GameEffectHandler
     private let controller: MobiusController<GameModel, GameEvent, GameEffect>
 
@@ -28,10 +27,10 @@ final class GameLoop {
     /// `effectHandler` is pre-seeded with `initialModel` so cell configuration works
     /// on the very first `willDisplay` call, before the loop's first async model delivery.
     init(initialModel: GameModel) {
-        self.level = initialModel.level
+        level = initialModel.level
         let effectHandler = GameEffectHandler(level: initialModel.level, initialModel: initialModel)
         self.effectHandler = effectHandler
-        self.controller = Mobius
+        controller = Mobius
             .loop(update: GameLogic.update, effectHandler: effectHandler)
             .makeController(from: initialModel)
     }

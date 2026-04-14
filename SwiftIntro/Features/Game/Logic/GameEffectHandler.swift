@@ -19,7 +19,6 @@ import UIKit
 /// "can this card be selected?" and "how should this cell look?" without
 /// coupling the data source to the Mobius loop directly.
 final class GameEffectHandler {
-
     /// The collection view managed by the game screen.
     /// Held weakly to avoid a retain cycle with the view controller.
     weak var collectionView: UICollectionView?
@@ -47,7 +46,7 @@ final class GameEffectHandler {
     ///     before the Mobius loop delivers its first asynchronous model update.
     init(level: Level, initialModel: GameModel) {
         self.level = level
-        self.currentModel = initialModel
+        currentModel = initialModel
     }
 
     /// Stores the latest model so closure-based queries from the data source reflect
@@ -101,38 +100,45 @@ extension GameEffectHandler: Connectable {
 // MARK: - Effect handling
 
 private extension GameEffectHandler {
-
     /// Routes an incoming effect to the appropriate handler.
     func handle(_ effect: GameEffect, dispatch: @escaping (GameEvent) -> Void) {
         switch effect {
-
-        case .flipCard(let index, let faceUp):
-            // Cell lookups and animations must run on the main thread.
-            onMain { [weak self] in
-                guard
-                    let self,
-                    let cell = self.collectionView?.cellForItem(
-                        at: self.indexPath(for: index)
-                    ) as? CardCVCell
-                else { return }
-                cell.animateFlip(faceUp: faceUp)
-            }
-
-        case .scheduleFlipBack(let index1, let index2):
-            // Wrap the dispatch call in a cancellable DispatchWorkItem so that
-            // stop() can cancel the timer before it fires (e.g. if the user quits mid-game).
-            let workItem = DispatchWorkItem {
-                dispatch(.flipBackCards(index1: index1, index2: index2))
-            }
-            flipBackWorkItem = workItem
-            onMain(delay: 1.0, workItem: workItem)
-
-        case .navigateToGameOver(let outcome):
-            // Short delay lets the final flip animation complete before navigating away.
-            onMain(delay: 1.0) { [weak self] in
-                self?.onNavigateToGameOver?(outcome)
-            }
+        case let .flipCard(index, faceUp):
+            handleFlipCard(index: index, faceUp: faceUp)
+        case let .scheduleFlipBack(index1, index2):
+            handleScheduleFlipBack(index1: index1, index2: index2, dispatch: dispatch)
+        case let .navigateToGameOver(outcome):
+            handleNavigateToGameOver(outcome: outcome)
         }
+    }
+
+    func handleFlipCard(index: Int, faceUp: Bool) {
+        // Cell lookups and animations must run on the main thread.
+        onMain { [weak self] in
+            guard
+                let self,
+                let cell = collectionView?.cellForItem(at: indexPath(for: index)) as? CardCVCell
+            else { return }
+            cell.animateFlip(faceUp: faceUp)
+        }
+    }
+
+    func handleScheduleFlipBack(
+        index1: Int,
+        index2: Int,
+        dispatch: @escaping (GameEvent) -> Void
+    ) {
+        // Wrap in a cancellable DispatchWorkItem so stop() can cancel the timer.
+        let workItem = DispatchWorkItem {
+            dispatch(.flipBackCards(index1: index1, index2: index2))
+        }
+        flipBackWorkItem = workItem
+        onMain(delay: 1.0, workItem: workItem)
+    }
+
+    func handleNavigateToGameOver(outcome: GameOutcome) {
+        // Short delay lets the final flip animation complete before navigating away.
+        onMain(delay: 1.0) { [weak self] in self?.onNavigateToGameOver?(outcome) }
     }
 
     /// Converts a row-major flat index into a `UICollectionView` `IndexPath`.

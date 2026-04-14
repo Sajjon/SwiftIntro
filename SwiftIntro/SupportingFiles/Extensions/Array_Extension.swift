@@ -9,7 +9,6 @@
 import Foundation
 
 extension Array {
-
     /// A new array with the same elements in a random order (Fisher-Yates shuffle).
     var shuffled: Array {
         var elements = self
@@ -19,7 +18,7 @@ extension Array {
             // Pick a random index in the range [index, count) and swap it with `index`.
             // `arc4random_uniform` avoids modulo bias that `% count` would introduce.
             guard
-                case let swapIndex = Int(arc4random_uniform(UInt32(count - index))) + index,
+                case let swapIndex = Int.random(in: index ..< count),
                 swapIndex != index
             else { continue }
             elements.swapAt(index, swapIndex)
@@ -34,13 +33,13 @@ extension Array {
 
     /// A single randomly chosen element. Crashes if the array is empty.
     var chooseOne: Element {
-        return self[Int(arc4random_uniform(UInt32(count)))]
+        self[Int.random(in: 0 ..< count)]
     }
 
     /// Returns `count` randomly chosen elements, without replacement.
     ///
     /// If `count` exceeds the array length, the entire array is returned shuffled.
     func choose(_ count: Int) -> [Element] {
-        return Array(shuffled.prefix(count))
+        Array(shuffled.prefix(count))
     }
 }

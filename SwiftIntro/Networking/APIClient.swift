@@ -14,20 +14,18 @@ import Foundation
 /// Decoupled from the concrete `APIClient` so call sites (e.g. `LoadingDataVC`)
 /// can be tested with a stub that returns canned `CardSingles` without hitting the network.
 protocol APIClientProtocol {
-
-	/// Searches Wikimedia Commons for images matching `searchQuery` and returns
-	/// the results as a set of unique `Card` values.
-	///
-	/// - Parameters:
-	///   - searchQuery: The search term (e.g. "cats") forwarded to the Wikimedia API.
-	///   - done: Called on an arbitrary background queue with `.success(CardSingles)`
-	///     on success, or `.failure(Error)` if the network request or JSON decoding fails.
-	func getPhotos(
-		_ searchQuery: String,
-		done: @escaping (Swift.Result<CardSingles, Swift.Error>) -> Void
-	)
+    /// Searches Wikimedia Commons for images matching `searchQuery` and returns
+    /// the results as a set of unique `Card` values.
+    ///
+    /// - Parameters:
+    ///   - searchQuery: The search term (e.g. "cats") forwarded to the Wikimedia API.
+    ///   - done: Called on an arbitrary background queue with `.success(CardSingles)`
+    ///     on success, or `.failure(Error)` if the network request or JSON decoding fails.
+    func getPhotos(
+        _ searchQuery: String,
+        done: @escaping (Swift.Result<CardSingles, Swift.Error>) -> Void
+    )
 }
-
 
 /// Concrete implementation of `APIClientProtocol` backed by Wikimedia Commons.
 ///
@@ -35,7 +33,6 @@ protocol APIClientProtocol {
 /// it with `Codable` into `CardSingles`. The Wikimedia response types are private
 /// to this file — callers only ever see `CardSingles`.
 final class APIClient: APIClientProtocol {
-
     /// Injected HTTP transport layer. Using the protocol allows test doubles to be
     /// substituted without touching URLSession or any real networking.
     @Injected(\.httpClient) private var httpClient
@@ -45,46 +42,55 @@ final class APIClient: APIClientProtocol {
         done: @escaping (Swift.Result<CardSingles, Swift.Error>) -> Void
     ) {
         let url = Router.searchImages(searchQuery).url
-        httpClient.get(url: url) { result in
-            switch result {
-            case .failure(let error):
+        httpClient.get(url: url) { result in APIClient.decodeAndDeliver(result, done: done) }
+    }
+}
+
+// MARK: - Private helpers
+
+private extension APIClient {
+    static func decodeAndDeliver(
+        _ result: Result<Data, Error>,
+        done: @escaping (Result<CardSingles, Error>) -> Void
+    ) {
+        switch result {
+        case let .failure(error):
+            done(.failure(error))
+        case let .success(data):
+            do {
+                try done(.success(APIClient.parse(data)))
+            } catch {
                 done(.failure(error))
-            case .success(let data):
-                do {
-                    let cards = try APIClient.parse(data)
-                    done(.success(cards))
-                } catch {
-                    done(.failure(error))
-                }
             }
         }
     }
 }
 
+// MARK: - Wikimedia response types (file-private, Decodable only)
+
+/// Mirrors the Wikimedia API response structure used only for decoding.
+/// Kept private so the rest of the app never depends on this shape.
+private struct WikimediaResponse: Decodable {
+    let query: WikimediaQuery
+}
+
+private struct WikimediaQuery: Decodable {
+    /// A dictionary keyed by page ID. Values are the actual page metadata.
+    let pages: [String: WikimediaPage]
+}
+
+private struct WikimediaPage: Decodable {
+    /// One entry per image revision; only the most recent (`first`) is used.
+    let imageinfo: [WikimediaImageInfo]?
+}
+
+private struct WikimediaImageInfo: Decodable {
+    let url: String
+}
+
 // MARK: - JSON Parsing
 
 private extension APIClient {
-
-    /// Mirrors the Wikimedia API response structure used only for decoding.
-    /// Kept private so the rest of the app never depends on this shape.
-    struct WikimediaResponse: Decodable {
-        let query: Query
-
-        struct Query: Decodable {
-            /// A dictionary keyed by page ID. Values are the actual page metadata.
-            let pages: [String: Page]
-        }
-
-        struct Page: Decodable {
-            /// One entry per image revision; only the most recent (`first`) is used.
-            let imageinfo: [ImageInfo]?
-
-            struct ImageInfo: Decodable {
-                let url: String
-            }
-        }
-    }
-
     /// Decodes raw JSON and filters out non-image URLs, returning a `CardSingles` collection.
     static func parse(_ data: Data) throws -> CardSingles {
         let response = try JSONDecoder().decode(WikimediaResponse.self, from: data)
@@ -105,8 +111,6 @@ private extension APIClient {
     /// only JPEG and PNG URLs that `Kingfisher` can display as `UIImage`.
     static func isImageURL(_ urlString: String) -> Bool {
         let lower = urlString.lowercased()
-        return ["jpg", "jpeg", "png"]
-            .map { lower.hasSuffix($0) }
-            .reduce(false) { $0 || $1 }
+        return ["jpg", "jpeg", "png"].contains { lower.hasSuffix($0) }
     }
 }

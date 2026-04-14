@@ -12,7 +12,6 @@ import UIKit
 /// The score label is exposed publicly so `GameView.render(_:)` can update it
 /// directly from the Mobius model without routing through a callback.
 final class GameHeaderView: UIView {
-
     /// Displays the number of pairs found out of the total, e.g. "2 / 6".
     let scoreLabel: UILabel = {
         let label = UILabel()
@@ -32,9 +31,12 @@ final class GameHeaderView: UIView {
             // `greaterThanOrEqual` / `lessThanOrEqual` keeps the label from overflowing
             // on small screens while still allowing it to expand to fit longer strings.
             scoreLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 8),
-            scoreLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -8)
+            scoreLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -8),
         ])
     }
 
-    required init?(coder: NSCoder) { fatalError() }
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError()
+    }
 }

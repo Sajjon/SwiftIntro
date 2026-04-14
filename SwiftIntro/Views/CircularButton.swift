@@ -12,7 +12,6 @@ import UIKit
 /// The circular shape is maintained by updating `layer.cornerRadius` whenever `bounds` changes,
 /// so the button stays round regardless of how Auto Layout sizes it.
 final class CircularButton: UIButton {
-
     /// Re-applies `cornerRadius` whenever the button's bounds change (e.g. on first layout pass).
     override var bounds: CGRect {
         didSet { layer.cornerRadius = bounds.height / 2 }
@@ -30,5 +29,8 @@ final class CircularButton: UIButton {
         clipsToBounds = true
     }
 
-    required init?(coder: NSCoder) { fatalError() }
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError()
+    }
 }

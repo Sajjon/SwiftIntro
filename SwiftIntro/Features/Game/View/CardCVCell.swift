@@ -13,7 +13,6 @@ import UIKit
 /// Displays either the card back (brown placeholder) or the card front (the fetched image),
 /// and supports an animated flip transition between the two states.
 final class CardCVCell: UICollectionViewCell {
-
     /// Displays the card's image when face-up. Hidden by default.
     let cardFrontImageView: UIImageView = {
         let iv = UIImageView()
@@ -44,13 +43,15 @@ final class CardCVCell: UICollectionViewCell {
         setupViews()
     }
 
-    required init?(coder: NSCoder) { fatalError() }
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError()
+    }
 }
 
 // MARK: Override
 
 extension CardCVCell {
-
     /// Resets the cell to face-down with no image before it is recycled by the reuse pool.
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -62,7 +63,6 @@ extension CardCVCell {
 // MARK: Internal
 
 extension CardCVCell {
-
     /// Configures the cell to match the given card model state.
     ///
     /// Called from `willDisplay` via the `configureCell` closure. Uses Kingfisher
@@ -95,24 +95,26 @@ extension CardCVCell {
 // MARK: Private
 
 extension CardCVCell {
-
     private func setupViews() {
         contentView.addSubview(cardFrontImageView)
         contentView.addSubview(cardBackImageView)
+        activateImageViewConstraints()
+        // `didSet` does not fire during `init`, so set the initial visibility explicitly.
+        cardFrontImageView.isHidden = true
+        cardBackImageView.isHidden = false
+    }
+
+    private func activateImageViewConstraints() {
         NSLayoutConstraint.activate([
             cardFrontImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             cardFrontImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             cardFrontImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             cardFrontImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-
             cardBackImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             cardBackImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             cardBackImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            cardBackImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            cardBackImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
-        // `didSet` does not fire during `init`, so set the initial visibility explicitly.
-        cardFrontImageView.isHidden = true
-        cardBackImageView.isHidden = false
     }
 }
 
@@ -120,5 +122,7 @@ extension CardCVCell {
 
 extension CardCVCell: CellProtocol {
     /// Reuse identifier derived from the class name, matching the `register` call in `GameVC`.
-    static var cellIdentifier: String { className }
+    static var cellIdentifier: String {
+        className
+    }
 }

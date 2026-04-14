@@ -48,10 +48,9 @@ protocol ImageCacheProtocol {
 
 /// Concrete image cache backed by Kingfisher's `ImageCache` and `KingfisherManager`.
 final class Cache {
-
     /// Kingfisher's shared cache, which manages both memory and disk storage.
-    fileprivate var cache: ImageCache {
-        return ImageCache.default
+    private var cache: ImageCache {
+        ImageCache.default
     }
 
     /// Injected retriever — defaults to `KingfisherManager.shared` in production,
@@ -60,9 +59,8 @@ final class Cache {
 }
 
 extension Cache: ImageCacheProtocol {
-
     func imageFromCache(_ url: URL?) -> UIImage? {
-        guard let url = url else { return nil }
+        guard let url else { return nil }
         // `retrieveImageInMemoryCache` is synchronous and returns immediately —
         // safe to call from any thread.
         return cache.retrieveImageInMemoryCache(forKey: url.absoluteString)

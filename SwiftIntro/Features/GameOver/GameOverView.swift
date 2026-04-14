@@ -12,7 +12,6 @@ import UIKit
 /// `onRestart` and `onQuit` closures are wired by `GameOverVC` to keep navigation
 /// logic out of the view.
 final class GameOverView: UIView {
-
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
     private let scoreLabel = UILabel()
@@ -32,7 +31,10 @@ final class GameOverView: UIView {
         setupLocalizedText()
     }
 
-    required init?(coder: NSCoder) { fatalError() }
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError()
+    }
 
     /// Updates model-driven UI — called once by `GameOverVC` after the outcome is known.
     func render(_ outcome: GameOutcome) {
@@ -43,46 +45,60 @@ final class GameOverView: UIView {
 // MARK: - Private
 
 private extension GameOverView {
-
     func setupLayout() {
-        [titleLabel, subtitleLabel, scoreLabel, tryHarderLabel].forEach {
-            $0.textAlignment = .center
-            $0.numberOfLines = 0
-        }
+        configureLabels()
+        configureButtons()
+        let stack = makeMainStack(buttonStack: makeButtonStack())
+        addSubview(stack)
+        NSLayoutConstraint.activate([
+            stack.centerYAnchor.constraint(equalTo: centerYAnchor),
+            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
+            stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
+        ])
+    }
 
+    func configureLabels() {
+        for item in [titleLabel, subtitleLabel, scoreLabel, tryHarderLabel] {
+            item.textAlignment = .center
+            item.numberOfLines = 0
+        }
+    }
+
+    func configureButtons() {
         restartButton.addTarget(self, action: #selector(restartTapped), for: .touchUpInside)
         quitButton.addTarget(self, action: #selector(quitTapped), for: .touchUpInside)
+        constrainButtonSizes(to: 80)
+    }
 
+    func constrainButtonSizes(to size: CGFloat) {
         // Fix the button dimensions so they remain circular regardless of title length.
-        let buttonSize: CGFloat = 80
         restartButton.translatesAutoresizingMaskIntoConstraints = false
         quitButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            restartButton.heightAnchor.constraint(equalToConstant: buttonSize),
-            restartButton.widthAnchor.constraint(equalToConstant: buttonSize),
-            quitButton.heightAnchor.constraint(equalToConstant: buttonSize),
-            quitButton.widthAnchor.constraint(equalToConstant: buttonSize)
+            restartButton.heightAnchor.constraint(equalToConstant: size),
+            restartButton.widthAnchor.constraint(equalToConstant: size),
+            quitButton.heightAnchor.constraint(equalToConstant: size),
+            quitButton.widthAnchor.constraint(equalToConstant: size),
         ])
+    }
 
-        let buttonStack = UIStackView(arrangedSubviews: [restartButton, quitButton])
-        buttonStack.axis = .horizontal
-        buttonStack.spacing = 24
-        buttonStack.distribution = .equalSpacing
+    func makeButtonStack() -> UIStackView {
+        let stack = UIStackView(arrangedSubviews: [restartButton, quitButton])
+        stack.axis = .horizontal
+        stack.spacing = 24
+        stack.distribution = .equalSpacing
+        return stack
+    }
 
+    func makeMainStack(buttonStack: UIStackView) -> UIStackView {
         let stack = UIStackView(arrangedSubviews: [
-            titleLabel, subtitleLabel, scoreLabel, tryHarderLabel, buttonStack
+            titleLabel, subtitleLabel, scoreLabel, tryHarderLabel, buttonStack,
         ])
         stack.axis = .vertical
         stack.spacing = 16
         stack.alignment = .center
         stack.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(stack)
-
-        NSLayoutConstraint.activate([
-            stack.centerYAnchor.constraint(equalTo: centerYAnchor),
-            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
-            stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40)
-        ])
+        return stack
     }
 
     func setupLocalizedText() {
@@ -91,6 +107,11 @@ private extension GameOverView {
         tryHarderLabel.setLocalizedText(L10n.tryHarder)
     }
 
-    @objc func restartTapped() { onRestart?() }
-    @objc func quitTapped() { onQuit?() }
+    @objc func restartTapped() {
+        onRestart?()
+    }
+
+    @objc func quitTapped() {
+        onQuit?()
+    }
 }

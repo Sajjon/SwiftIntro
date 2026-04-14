@@ -13,7 +13,6 @@ import UIKit
 /// when the player taps the start button, passing the fully-built config out to
 /// `SettingsVC` for navigation.
 final class SettingsView: UIView {
-
     private let titleLabel = UILabel()
     private let usernameLabel = UILabel()
     private let usernameTextField = UITextField()
@@ -34,46 +33,46 @@ final class SettingsView: UIView {
         setupLayout()
         setupLocalizedStrings()
         populateViews()
-        levelSegmentedControl.addTarget(
-            self,
-            action: #selector(changedLevel(_:)),
-            for: .valueChanged
-        )
-        startGameButton.addTarget(
-            self,
-            action: #selector(startGameTapped),
-            for: .touchUpInside
-        )
+        wireTargets()
     }
 
-    required init?(coder: NSCoder) { fatalError() }
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError()
+    }
 }
 
 // MARK: - Private
 
 private extension SettingsView {
-
     func setupLayout() {
+        configureControls()
+        let stack = makeStack()
+        addSubview(stack)
+        NSLayoutConstraint.activate([
+            stack.centerYAnchor.constraint(equalTo: centerYAnchor),
+            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
+            stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
+        ])
+    }
+
+    func configureControls() {
         titleLabel.font = .boldSystemFont(ofSize: 24)
         titleLabel.textAlignment = .center
         usernameTextField.borderStyle = .roundedRect
         usernameTextField.autocorrectionType = .no
         usernameTextField.autocapitalizationType = .none
+    }
 
+    func makeStack() -> UIStackView {
         let stack = UIStackView(arrangedSubviews: [
             titleLabel, usernameLabel, usernameTextField,
-            segmentTitleLabel, levelSegmentedControl, startGameButton
+            segmentTitleLabel, levelSegmentedControl, startGameButton,
         ])
         stack.axis = .vertical
         stack.spacing = 16
         stack.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(stack)
-
-        NSLayoutConstraint.activate([
-            stack.centerYAnchor.constraint(equalTo: centerYAnchor),
-            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
-            stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40)
-        ])
+        return stack
     }
 
     /// Fills all labels and control titles with localised strings, including each
@@ -84,12 +83,18 @@ private extension SettingsView {
         usernameLabel.setLocalizedText(L10n.username)
         segmentTitleLabel.setLocalizedText(L10n.level)
         startGameButton.setLocalizedTitle(L10n.startGame)
-        for i in 0...2 {
-            levelSegmentedControl.setTitle(
-                Level(segmentedControlIndex: i).title,
-                forSegmentAt: i
-            )
+        setupLevelSegmentTitles()
+    }
+
+    func setupLevelSegmentTitles() {
+        for i in 0 ... 2 {
+            levelSegmentedControl.setTitle(Level(segmentedControlIndex: i).title, forSegmentAt: i)
         }
+    }
+
+    func wireTargets() {
+        levelSegmentedControl.addTarget(self, action: #selector(changedLevel(_:)), for: .valueChanged)
+        startGameButton.addTarget(self, action: #selector(startGameTapped), for: .touchUpInside)
     }
 
     /// Seeds the controls with the default `GameConfiguration` values on first display.

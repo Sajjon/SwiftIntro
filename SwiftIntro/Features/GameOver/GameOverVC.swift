@@ -13,7 +13,6 @@ import UIKit
 /// Thin by design: renders the outcome into `GameOverView` and wires the restart/quit
 /// callbacks to navigation actions. All layout and UI state live in `GameOverView`.
 final class GameOverVC: UIViewController {
-
     private let config: GameConfiguration
     private let outcome: GameOutcome
     private let gameOverView = GameOverView()
@@ -24,7 +23,10 @@ final class GameOverVC: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) { fatalError() }
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError()
+    }
 
     override func loadView() {
         view = gameOverView
@@ -48,7 +50,6 @@ final class GameOverVC: UIViewController {
 // MARK: - Private
 
 private extension GameOverVC {
-
     /// Reconstructs the navigation stack so the player re-enters a fresh game with the
     /// same images (shuffled) — without a loading screen, since images are already cached.
     ///
