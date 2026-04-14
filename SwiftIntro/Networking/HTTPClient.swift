@@ -54,14 +54,18 @@ extension HTTPClient {
         // `dataTask` runs asynchronously on a background URLSession delegate queue.
         // `.resume()` must be called explicitly — tasks start suspended by default.
         urlSession.dataTask(with: url) { data, _, error in
-            if let error {
-                done(.failure(error))
-            } else if let data {
-                done(.success(data))
-            } else {
-                // No error and no data — treat as an unexpected empty response.
-                done(.failure(URLError(.badServerResponse)))
-            }
+            done(Self.parseResponse(data: data, error: error))
         }.resume()
+    }
+
+    /// Converts the raw `URLSession` callback triple into a typed `Result`.
+    ///
+    /// Returns `.failure(error)` if a network error occurred, `.success(data)` on a
+    /// valid response body, or `.failure(URLError(.badServerResponse))` when neither
+    /// is present (e.g. a 204 No Content with an empty body).
+    private static func parseResponse(data: Data?, error: Error?) -> Result<Data, Swift.Error> {
+        if let error { return .failure(error) }
+        guard let data else { return .failure(URLError(.badServerResponse)) }
+        return .success(data)
     }
 }

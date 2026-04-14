@@ -16,11 +16,8 @@ extension Array {
         // final position once all preceding swaps are done.
         for index in indices.dropLast() {
             // Pick a random index in the range [index, count) and swap it with `index`.
-            // `arc4random_uniform` avoids modulo bias that `% count` would introduce.
-            guard
-                case let swapIndex = Int.random(in: index ..< count),
-                swapIndex != index
-            else { continue }
+            let swapIndex = Int.random(in: index ..< count)
+            guard swapIndex != index else { continue }
             elements.swapAt(index, swapIndex)
         }
         return elements
