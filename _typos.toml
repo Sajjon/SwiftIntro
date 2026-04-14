@@ -1,4 +1,5 @@
 [files]
 extend-exclude = [
-	"SwiftIntro.xcodeproj/project.pbxproj"
+	"SwiftIntro.xcodeproj/project.pbxproj",
+	"SwiftIntro/SupportingFiles/sv.lproj/Localizable.strings"
 ]
