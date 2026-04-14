@@ -7,7 +7,7 @@ A memory game implementation fetching images from Wikimedia. This project aims t
 > **AI assistant instructions:** [CLAUDE.md](CLAUDE.md)
 
 # Installation
-## OBS! This project has been migrated to Swift 6.01 so you need Xcode 26.1 to open it
+## OBS! This project has been migrated to Swift 6.1 so you need Xcode 26.1 to open it
 There is no need for any _installation_ per se, you only need to download this project. You download the project by pressing the big green _Clone or download_ button you see in the top right side of this page. You can either download the project as a zip, or you can use _git_ to download the project by opening the terminal and entering:
 ```
 git clone <PASTE_GITHUB_URL_HERE> 

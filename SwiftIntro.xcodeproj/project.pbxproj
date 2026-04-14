@@ -43,6 +43,7 @@
 		BB200001BB200001BB200001 /* GameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB100001BB100001BB100001 /* GameHeaderView.swift */; };
 		BBFE0003BBFE0003BBFE0003 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = BBFE0002BBFE0002BBFE0002 /* Kingfisher */; };
 		EEFE0003EEFE0003EEFE0003 /* MobiusCore in Frameworks */ = {isa = PBXBuildFile; productRef = EEFE0002EEFE0002EEFE0002 /* MobiusCore */; };
+		EEFE0007EEFE0007EEFE0007 /* MobiusCore in Frameworks */ = {isa = PBXBuildFile; productRef = EEFE0006EEFE0006EEFE0006 /* MobiusCore */; };
 		FF010002FF010002FF010002 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF010001FF010001FF010001 /* GameModel.swift */; };
 		FF020002FF020002FF020002 /* GameEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF020001FF020001FF020001 /* GameEvent.swift */; };
 		FF030002FF030002FF030002 /* GameEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF030001FF030001FF030001 /* GameEffect.swift */; };
@@ -52,14 +53,13 @@
 		FF070002FF070002FF070002 /* Logger+SwiftIntro.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF070001FF070001FF070001 /* Logger+SwiftIntro.swift */; };
 		FF080002FF080002FF080002 /* Container+SwiftIntro.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF080001FF080001FF080001 /* Container+SwiftIntro.swift */; };
 		FFFE0003FFFE0003FFFE0003 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = FFFE0002FFFE0002FFFE0002 /* Factory */; };
+		SSST0003SSST0003SSST0003 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = SSST0002SSST0002SSST0002 /* SnapshotTesting */; };
 		TA000002TA000002TA000002 /* GameLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TA000001TA000001TA000001 /* GameLogicTests.swift */; };
 		TB000002TB000002TB000002 /* LevelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TB000001TB000001TB000001 /* LevelTests.swift */; };
 		TC000002TC000002TC000002 /* RouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TC000001TC000001TC000001 /* RouterTests.swift */; };
 		TD000002TD000002TD000002 /* GameModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TD000001TD000001TD000001 /* GameModelTests.swift */; };
 		TE000002TE000002TE000002 /* CardDuplicatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TE000001TE000001TE000001 /* CardDuplicatesTests.swift */; };
 		TF000002TF000002TF000002 /* ArrayExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TF000001TF000001TF000001 /* ArrayExtensionTests.swift */; };
-		EEFE0007EEFE0007EEFE0007 /* MobiusCore in Frameworks */ = {isa = PBXBuildFile; productRef = EEFE0006EEFE0006EEFE0006 /* MobiusCore */; };
-		SSST0003SSST0003SSST0003 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = SSST0002SSST0002SSST0002 /* SnapshotTesting */; };
 		TG000002TG000002TG000002 /* DispatchExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TG000001TG000001TG000001 /* DispatchExtensionTests.swift */; };
 		TH000002TH000002TH000002 /* NSObjectExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TH000001TH000001TH000001 /* NSObjectExtensionTests.swift */; };
 		TI000002TI000002TI000002 /* UIViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TI000001TI000001TI000001 /* UIViewExtensionTests.swift */; };
@@ -80,8 +80,23 @@
 		TS070002TS070002TS070002 /* CardCVCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS070001TS070001TS070001 /* CardCVCellSnapshotTests.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		TEST0010TEST0010TEST0010 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7B75421B1CFF3F9E009B2629 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7B7542221CFF3F9E009B2629;
+			remoteInfo = SwiftIntro;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		45773A361D00C088002E6F56 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		48ABFE172F8ED04C00AC357E /* _typos.toml */ = {isa = PBXFileReference; lastKnownFileType = text; path = _typos.toml; sourceTree = "<group>"; };
+		48ABFE182F8ED04C00AC357E /* CLAUDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CLAUDE.md; sourceTree = "<group>"; };
+		48ABFE192F8ED04C00AC357E /* DESIGN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DESIGN.md; sourceTree = "<group>"; };
+		48ABFE1A2F8ED04C00AC357E /* Justfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Justfile; sourceTree = "<group>"; };
+		48ABFE1B2F8ED04C00AC357E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		48D053AD2F8E355A006B3DEF /* CardSingles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSingles.swift; sourceTree = "<group>"; };
 		48D053B52F8E5500006B3DEF /* GameLoop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLoop.swift; sourceTree = "<group>"; };
 		7B21A5AC1CFF5C17002E5EE5 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -126,12 +141,12 @@
 		FF060001FF060001FF060001 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		FF070001FF070001FF070001 /* Logger+SwiftIntro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Logger+SwiftIntro.swift"; sourceTree = "<group>"; };
 		FF080001FF080001FF080001 /* Container+SwiftIntro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Container+SwiftIntro.swift"; sourceTree = "<group>"; };
-		TEST0002TEST0002TEST0002 /* SwiftIntroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftIntroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		TA000001TA000001TA000001 /* GameLogicTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLogicTests.swift; sourceTree = "<group>"; };
 		TB000001TB000001TB000001 /* LevelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelTests.swift; sourceTree = "<group>"; };
 		TC000001TC000001TC000001 /* RouterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTests.swift; sourceTree = "<group>"; };
 		TD000001TD000001TD000001 /* GameModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameModelTests.swift; sourceTree = "<group>"; };
 		TE000001TE000001TE000001 /* CardDuplicatesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDuplicatesTests.swift; sourceTree = "<group>"; };
+		TEST0002TEST0002TEST0002 /* SwiftIntroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftIntroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		TF000001TF000001TF000001 /* ArrayExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensionTests.swift; sourceTree = "<group>"; };
 		TG000001TG000001TG000001 /* DispatchExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchExtensionTests.swift; sourceTree = "<group>"; };
 		TH000001TH000001TH000001 /* NSObjectExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSObjectExtensionTests.swift; sourceTree = "<group>"; };
@@ -257,6 +272,11 @@
 		7B75421A1CFF3F9E009B2629 = {
 			isa = PBXGroup;
 			children = (
+				48ABFE172F8ED04C00AC357E /* _typos.toml */,
+				48ABFE182F8ED04C00AC357E /* CLAUDE.md */,
+				48ABFE192F8ED04C00AC357E /* DESIGN.md */,
+				48ABFE1A2F8ED04C00AC357E /* Justfile */,
+				48ABFE1B2F8ED04C00AC357E /* README.md */,
 				7B7542241CFF3F9E009B2629 /* Products */,
 				7B7542251CFF3F9E009B2629 /* SwiftIntro */,
 				TEST0005TEST0005TEST0005 /* SwiftIntroTests */,
@@ -270,37 +290,6 @@
 				TEST0002TEST0002TEST0002 /* SwiftIntroTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		TEST0005TEST0005TEST0005 /* SwiftIntroTests */ = {
-			isa = PBXGroup;
-			children = (
-				TA000001TA000001TA000001 /* GameLogicTests.swift */,
-				TB000001TB000001TB000001 /* LevelTests.swift */,
-				TC000001TC000001TC000001 /* RouterTests.swift */,
-				TD000001TD000001TD000001 /* GameModelTests.swift */,
-				TE000001TE000001TE000001 /* CardDuplicatesTests.swift */,
-				TF000001TF000001TF000001 /* ArrayExtensionTests.swift */,
-				TG000001TG000001TG000001 /* DispatchExtensionTests.swift */,
-				TH000001TH000001TH000001 /* NSObjectExtensionTests.swift */,
-				TI000001TI000001TI000001 /* UIViewExtensionTests.swift */,
-				TJ000001TJ000001TJ000001 /* StringsTests.swift */,
-				TK000001TK000001TK000001 /* HTTPClientTests.swift */,
-				TL000001TL000001TL000001 /* GameEffectHandlerTests.swift */,
-				TM000001TM000001TM000001 /* GameLoopTests.swift */,
-				TN000001TN000001TN000001 /* APIClientTests.swift */,
-				TO000001TO000001TO000001 /* MemoryDataSourceAndDelegateTests.swift */,
-				TP000001TP000001TP000001 /* CacheTests.swift */,
-				TQ000001TQ000001TQ000001 /* LoadingDataVCTests.swift */,
-				TS010001TS010001TS010001 /* CircularButtonSnapshotTests.swift */,
-				TS020001TS020001TS020001 /* GameHeaderViewSnapshotTests.swift */,
-				TS030001TS030001TS030001 /* LoadingViewSnapshotTests.swift */,
-				TS040001TS040001TS040001 /* GameOverViewSnapshotTests.swift */,
-				TS050001TS050001TS050001 /* SettingsViewSnapshotTests.swift */,
-				TS060001TS060001TS060001 /* GameViewSnapshotTests.swift */,
-				TS070001TS070001TS070001 /* CardCVCellSnapshotTests.swift */,
-			);
-			path = SwiftIntroTests;
 			sourceTree = "<group>";
 		};
 		7B7542251CFF3F9E009B2629 /* SwiftIntro */ = {
@@ -387,6 +376,37 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		TEST0005TEST0005TEST0005 /* SwiftIntroTests */ = {
+			isa = PBXGroup;
+			children = (
+				TA000001TA000001TA000001 /* GameLogicTests.swift */,
+				TB000001TB000001TB000001 /* LevelTests.swift */,
+				TC000001TC000001TC000001 /* RouterTests.swift */,
+				TD000001TD000001TD000001 /* GameModelTests.swift */,
+				TE000001TE000001TE000001 /* CardDuplicatesTests.swift */,
+				TF000001TF000001TF000001 /* ArrayExtensionTests.swift */,
+				TG000001TG000001TG000001 /* DispatchExtensionTests.swift */,
+				TH000001TH000001TH000001 /* NSObjectExtensionTests.swift */,
+				TI000001TI000001TI000001 /* UIViewExtensionTests.swift */,
+				TJ000001TJ000001TJ000001 /* StringsTests.swift */,
+				TK000001TK000001TK000001 /* HTTPClientTests.swift */,
+				TL000001TL000001TL000001 /* GameEffectHandlerTests.swift */,
+				TM000001TM000001TM000001 /* GameLoopTests.swift */,
+				TN000001TN000001TN000001 /* APIClientTests.swift */,
+				TO000001TO000001TO000001 /* MemoryDataSourceAndDelegateTests.swift */,
+				TP000001TP000001TP000001 /* CacheTests.swift */,
+				TQ000001TQ000001TQ000001 /* LoadingDataVCTests.swift */,
+				TS010001TS010001TS010001 /* CircularButtonSnapshotTests.swift */,
+				TS020001TS020001TS020001 /* GameHeaderViewSnapshotTests.swift */,
+				TS030001TS030001TS030001 /* LoadingViewSnapshotTests.swift */,
+				TS040001TS040001TS040001 /* GameOverViewSnapshotTests.swift */,
+				TS050001TS050001TS050001 /* SettingsViewSnapshotTests.swift */,
+				TS060001TS060001TS060001 /* GameViewSnapshotTests.swift */,
+				TS070001TS070001TS070001 /* CardCVCellSnapshotTests.swift */,
+			);
+			path = SwiftIntroTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -436,24 +456,6 @@
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
-
-/* Begin PBXContainerItemProxy section */
-		TEST0010TEST0010TEST0010 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7B75421B1CFF3F9E009B2629 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7B7542221CFF3F9E009B2629;
-			remoteInfo = SwiftIntro;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXTargetDependency section */
-		TEST0009TEST0009TEST0009 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7B7542221CFF3F9E009B2629 /* SwiftIntro */;
-			targetProxy = TEST0010TEST0010TEST0010 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXProject section */
 		7B75421B1CFF3F9E009B2629 /* Project object */ = {
@@ -513,6 +515,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		7B6E4F381CFF40A000B7D991 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
 		7BA112A11D97F795003B5D69 /* SwiftGen Strings */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -528,21 +545,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftgen >/dev/null; then\n    swiftgen strings --templateName flat-swift5 --output \"$SRCROOT/SwiftIntro/Models/Generated/Strings.swift\" \"$SRCROOT/SwiftIntro/SupportingFiles/en.lproj/Localizable.strings\"\nelse\n    echo \"warning: SwiftGen not installed, run: brew install swiftgen\"\nfi";
-		};
-		7B6E4F381CFF40A000B7D991 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -626,6 +628,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		TEST0009TEST0009TEST0009 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7B7542221CFF3F9E009B2629 /* SwiftIntro */;
+			targetProxy = TEST0010TEST0010TEST0010 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		7B86085D1D1597FB00037D36 /* Localizable.strings */ = {
@@ -901,15 +911,15 @@
 			package = EEFE0001EEFE0001EEFE0001 /* XCRemoteSwiftPackageReference "Mobius" */;
 			productName = MobiusCore;
 		};
-		FFFE0002FFFE0002FFFE0002 /* Factory */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FFFE0001FFFE0001FFFE0001 /* XCRemoteSwiftPackageReference "Factory" */;
-			productName = Factory;
-		};
 		EEFE0006EEFE0006EEFE0006 /* MobiusCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = EEFE0001EEFE0001EEFE0001 /* XCRemoteSwiftPackageReference "Mobius" */;
 			productName = MobiusCore;
+		};
+		FFFE0002FFFE0002FFFE0002 /* Factory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FFFE0001FFFE0001FFFE0001 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = Factory;
 		};
 		SSST0002SSST0002SSST0002 /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
