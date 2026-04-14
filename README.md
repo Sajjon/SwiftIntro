@@ -1,12 +1,13 @@
 # 📱 My first Memory 🤔💭
 #### _An introduction to iOS development with Swift._
 
-A memory game implementation fetching images from Instagram. This project aims to introduce you to iOS development with Swift disregarding of your current skill level.
+A memory game implementation fetching images from Wikimedia. This project aims to introduce you to iOS development with Swift disregarding of your current skill level.
 
-The app defaults to fetch the [Instagram images of Taylor Swift](https://www.instagram.com/taylorswift/) ([Alex](https://github.com/sajjon): _"Hehe he he..._ 😁, _yes_ [Miriam](https://github.com/MiriamTisander), _that is funny"_), but you can enter your own or another custom Instagram account and fetch images for it instead.
+> **Architecture & design decisions:** [DESIGN.md](DESIGN.md)
+> **AI assistant instructions:** [CLAUDE.md](CLAUDE.md)
 
 # Installation
-## OBS! This project has been migrated to Swift 3.0, so you need Xcode 8 to open it
+## OBS! This project has been migrated to Swift 6.01 so you need Xcode 26.1 to open it
 There is no need for any _installation_ per se, you only need to download this project. You download the project by pressing the big green _Clone or download_ button you see in the top right side of this page. You can either download the project as a zip, or you can use _git_ to download the project by opening the terminal and entering:
 ```
 git clone <PASTE_GITHUB_URL_HERE> 
@@ -25,15 +26,7 @@ _The Model_, _the View_ and _the Controller_ are three different areas of respon
 The idea is that the _Controller_ acts as a coordinator, fetching data from either internet or a local database, stored in _Models_ and passing those models into _Views_ that can display the data.
 
 ### ViewControllers (View and Controller)
-For every _screen_ in your app you create your own subclass of ```UIViewController```. To that you add all the views you want your screen to consist of. You can do this in two ways, either you do it using _InterfaceBuilder_ or in code.
-
-1. In _InterfaceBuilder_ (*IB* in short), which is a great drag and drop tool which aims to be a [WYSIWYG](https://en.wikipedia.org/wiki/WYSIWYG) (_What You See Is What You Get_). Allthough in Xcode 7.x.x IB is not capable of rendering all the views and different styling of those (rounded corners, blur effect etc..). Xcode 8 will be more capable os this. There are two different ways to use IB you can either use _Storyboards_ ([UIStoryBoard](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIStoryboard_Class/)) or you can use _.xib_ files (also called _nib_ files).
-
-  1. In a storyboard you can create several UIViewControllers, maybe you create a _SignInViewController_, _SignUpViewController_ and a _ResetPasswordViewController_. In the Storyboard you can create flows between these ViewControllers, e.g. you can create a _Reset Password_ UIButton in the _SignInViewController_ and then you can define that when the user presses that button, the _ResetPasswordViewController_ is shown to the user. These _flows_ between UIViewControllers are called _Segue_ (pronounced "segway"). 
-
-  2. The Xib file approach is an older technique which only allows for one UIViewController per Xib file. In Xib files you don't need to put UIViewControllers, you can instead put UIViews. The advantage of this is that they can be used by different UIViewControllers or UIViews in your project. So they are reusable through out the project. A good example of when to use Xib files is when you want to create a list (```UITableView```) or grid (```UICollectionView```) of views. This project uses a ```UICollectionView``` for displaying memory cards in a grid. The cards are ```UICollectionViewCells``` (subclass of ```UIViews```...). So each _item_ in a list or grid of view is called a _cell_. It is recommended to create each unique cell class in a separate Xib file.
-
-2. Creating views in code (or _programmatically_ as you often say...). All ```UIButtons```, ```UILabels```, ```UITableviews```, ```UITextViews```, ```UITextField``` etc you drag and drop in Interface Builder can also be created and added to your view using pure Swift code. The syntax for this is typically:
+For every _screen_ in your app you create your own subclass of ```UIViewController```. To that you add all the views you want your screen to consist of. You can do this in two ways, either you do it using _InterfaceBuilder_ or in code. This project does it in code. The syntax for this is typically:
 ```swift
 	private func myMethodCreatingLabel() {
 		let resetPasswordLabel = UILabel()
@@ -48,7 +41,7 @@ For every _screen_ in your app you create your own subclass of ```UIViewControll
 	}
 ```
 ### Model
-A model is a ```struct``` or ```class``` that holds data. In this project we fetch data, sent over HTTP GET on the JSON format from Instagram. The images from Instagram are stored in a ```struct``` called _Cards.swift_. Structs and classes may seem very similar, and in terms of syntax they are. But the behave very differently in terms of memory and reference, after you have worked with this project you can have a look at this [WWDC video](https://developer.apple.com/videos/play/wwdc2015/414/) explaining the difference.
+A model is a ```struct``` or ```class``` that holds data. In this project we fetch data, sent over HTTP GET on the JSON format from Wikimedia. The images from Wikimedia are stored in a ```struct``` called _Cards.swift_. Structs and classes may seem very similar, and in terms of syntax they are. But the behave very differently in terms of memory and reference, after you have worked with this project you can have a look at this [WWDC video](https://developer.apple.com/videos/play/wwdc2015/414/) explaining the difference.
 
 ## How to write good code
 iOS apps actually have a quite confusing MVC pattern, because the ```UIViewController``` is the controller, but it also has its own ```UIView```, so in a way the ```UIViewController``` is also the view 😬😅. The MVC patterin in iOS has often been critized ([here](http://clean-swift.com/clean-swift-ios-architecture/), [here](https://www.objc.io/issues/13-architecture/mvvm/) and [here](https://realm.io/news/andy-matuschak-refactor-mega-controller/)) and called _*Massive*-View-Controller_, because the ```UIViewController``` classes you create tend grow to many hundreds lines of code. This project aims to not have any _*Massive*_ ```UIViewController```. The project has four ```UIViewControllers``` (_GameVC_, _SettingsVC_, _GameOverVC_ and _LoadingDataVC_) and the biggest is not even 100 lines of code. Try to aim for that less than 100 lines of code! Unfortunatly it's rare to work in a project where *any* ```UIViewController``` is less than 100 lines of code. So if you make it a habbit then you will be a skilled iOS developer from start 🦄. A great way of achieving small UIViewControllers is to split a single screen into multiple ```UIViewControllers```, or to use ```extensions```, [here is a great article](http://khanlou.com/2016/02/many-controllers/) on how ```extensions``` of ```UIViewController``` can make your ```UIViewControllers``` smaller. 
@@ -61,14 +54,14 @@ A good way to enforce writing good code is to install a tool called [SwiftLint](
 brew install swiftlint
 ```
 
-# Tasks 
+# Tasks
 
-## 🐌 This looks interesting 
+## 🐌 This looks interesting
  
 1. Change the color ❤️💛💚💙💜 of the _Play!_ button.
 
 2. Change the the backgroundcolor of the cards.<br/>
-(tip: check out _CardCVCell.xib_ or _CardCVCell.swift_)
+(tip: check out _CardCVCell.swift_)
 
 3. Change the duration of the flip card animation.
 
@@ -86,7 +79,7 @@ brew install swiftlint
 1. Change the _Quit_ button title, which currently is a text with the char _X_, to use an image 🏔 instead. 
 
 2. Set the background of the memory Card to be show an image 🏔 instead of just a color.<br/>
-(tip: check out _CardCVCell.xib_ or _CardCVCell.swift_)
+(tip: check out _CardCVCell.swift_)
 
 3. In the section [How to write good code](#how-to-write-good-code) we discussed the goal of writing small files, and the class _MemoryDataSourceAndDelegate_ with its almost 200 lines of code was mentioned. Can you split this class into several smaller classes that makes sense, so that no class is more than 100 lines?
 
@@ -122,13 +115,3 @@ brew install swiftlint
 8. Enable Landscape mode for all the views.
 
 9. Fetch the images from another source than Instagram. Maybe you can fetch the images from FourSquare, using its [API](https://developer.foursquare.com/), [Flickr](https://www.flickr.com/services/api/) or [Twitter](https://dev.twitter.com/rest/public). Please note all the above mentioned alternative image sources require an API token/secret. So you have to create those in order to use the APIs. Then you have to change the JSON parsing of the _Cards_ model. You also need to modify the _Photos_ 📷 route in the _Router_ class to go against the correct URL.
-
-# Authors 
-
-## [Alexander Cyon](https://github.com/sajjon) [@Redrum_237](https://twitter.com/redrum_237) [LinkedIn](https://se.linkedin.com/in/alexcyon)
-Alex started with app development in 2010, his first app project was the development of an Android app for one of the largest computer stores in Sweden. *But it wasn't until 2013 that Alex started with iOS development*. He got hooked on iOS development even though the syntax of Objective-C feels really outdated today. In 2014 he did his first Swift project for Avanza Bank and instantaneously fell in love 😍. Since then Alex have been developing BookBeat's iOS app in Swift and also been working a bit on BookBeat's Android app.
-
-## [Miriam Tisander](https://github.com/MiriamTisander) [LinkedIn](https://www.linkedin.com/in/miriamtisander)
-Miriam has worked with iOS development since 2015, she loves Swift but is currently working with Objective-C 😭🔫. 
-She's also a huge [Comic book](https://www.youtube.com/user/schitzocookie) fan, so if you want any reading tips, you know who to contact ;)!
-

@@ -6,6 +6,8 @@
 build/
 DerivedData
 
+.claude/settings.local.json
+
 ## Various settings
 *.pbxuser
 !default.pbxuser

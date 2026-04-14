@@ -1,0 +1,23 @@
+# Codecov configuration — https://docs.codecov.com/docs/codecov-yaml
+#
+# Policy: report project-wide coverage only.
+# Patch coverage (per-PR diff) is disabled because the test suite covers
+# core logic exhaustively and per-diff reporting adds noise without value.
+
+coverage:
+  status:
+    project:
+      default:
+        # Require coverage to stay at or above the current level
+        # (auto) minus a 1 % grace margin.
+        target: auto
+        threshold: 1%
+        informational: false   # Fail the status check if coverage drops
+    patch:
+      default:
+        enabled: false         # Do not report patch coverage
+
+comment:
+  layout: "reach,diff,flags,files"
+  behavior: default
+  require_changes: true        # Only comment when coverage actually changes

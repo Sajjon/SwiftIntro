@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# ── Jobs ──────────────────────────────────────────────────────────────────────
+
+jobs:
+
+  # ── 1. Spell-check ──────────────────────────────────────────────────────────
+  typos:
+    name: Typos
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for typos
+        uses: crate-ci/typos@v1
+
+  # ── 2. SwiftLint ────────────────────────────────────────────────────────────
+  swiftlint:
+    name: SwiftLint
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install SwiftLint
+        run: brew install swiftlint
+
+      - name: Lint
+        # github-actions-logging emits ::error / ::warning annotations
+        # that appear inline in the PR diff view.
+        run: swiftlint lint --strict --reporter github-actions-logging
+
+  # ── 3. Test + coverage ──────────────────────────────────────────────────────
+  coverage:
+    name: Test & Coverage
+    runs-on: macos-15
+    env:
+      # Xcode 26.1 ships with the macOS 26 / iOS 26 SDK.
+      # Adjust the path when a newer runner image is available.
+      DEVELOPER_DIR: /Applications/Xcode_16.3.app/Contents/Developer
+      RESULT_BUNDLE: .build/TestResults.xcresult
+      COV_XML: .build/coverage.xml
+      SCHEME: SwiftIntro
+      PROJECT: SwiftIntro.xcodeproj
+      # Simulator device available on the macos-15 runner image.
+      DESTINATION: platform=iOS Simulator,name=iPhone 16,OS=latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Resolve the SPM dependency graph once and cache the result so that
+      # subsequent runs skip the network fetch entirely.
+      - name: Cache SPM packages
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData
+          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: spm-${{ runner.os }}-
+
+      - name: Install xcresultparser
+        run: brew install xcresultparser
+
+      - name: Build & test with coverage
+        run: |
+          set -o pipefail
+          mkdir -p .build
+          xcodebuild test \
+            -project "$PROJECT" \
+            -scheme "$SCHEME" \
+            -destination "$DESTINATION" \
+            -only-testing:SwiftIntroTests \
+            -enableCodeCoverage YES \
+            -resultBundlePath "$RESULT_BUNDLE" \
+            | xcpretty
+
+      - name: Convert coverage to Cobertura XML
+        run: xcresultparser --output-format cobertura "$RESULT_BUNDLE" "$COV_XML"
+
+      - name: Print coverage summary
+        run: xcrun xccov view --report "$RESULT_BUNDLE"
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ${{ env.COV_XML }}
+          # CODECOV_TOKEN must be added to the repo's Actions secrets.
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
