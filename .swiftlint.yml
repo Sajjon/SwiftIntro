@@ -31,11 +31,18 @@ type_body_length:
 # Mobius update functions are pure switch statements that are intentionally
 # long; pure functions and layout helpers likewise.
 function_body_length:
-  warning: 10
-  error: 20
+  warning: 10 # same as error — effectively no-warning zone
+  error: 10
 
 function_parameter_count:
   warning: 4
+  error: 5
+
+# Complexity / cognitive-load metric.
+# cyclomatic_complexity counts every branch point (if, guard, for, case, &&, ||).
+# Threshold of 5 forces extraction of helpers before logic gets hard to reason about.
+cyclomatic_complexity:
+  warning: 5  # same as error — effectively no-warning zone
   error: 5
 
 # Allow common iOS/UIKit abbreviations (iv = imageView, cv = collectionView)
