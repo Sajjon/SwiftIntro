@@ -73,6 +73,7 @@ final class LoadingDataVC: UIViewController {
 // MARK: - Private
 
 private extension LoadingDataVC {
+    /// Requests photos from the API using the configured search query, then calls `setupWithModel`.
     func fetchData() {
         apiClient.getPhotos(config.searchQuery) { result in
             switch result {

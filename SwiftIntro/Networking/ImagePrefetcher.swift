@@ -23,6 +23,8 @@ protocol ImageRetrieverProtocol {
 // MARK: KingfisherManager + ImageRetrieverProtocol
 
 extension KingfisherManager: ImageRetrieverProtocol {
+    /// Wraps `KingfisherManager.retrieveImage(with:completionHandler:)`, discarding the result
+    /// and calling `done` once the fetch (memory → disk → network) completes.
     func retrieveImage(with url: URL, done: @escaping () -> Void) {
         retrieveImage(with: url) { _ in done() }
     }
@@ -61,6 +63,7 @@ final class Cache {
 }
 
 extension Cache: ImageCacheProtocol {
+    /// Performs a synchronous memory-cache lookup via `ImageCache.retrieveImageInMemoryCache`.
     func imageFromCache(_ url: URL?) -> UIImage? {
         guard let url else { return nil }
         // `retrieveImageInMemoryCache` is synchronous and returns immediately —
@@ -68,6 +71,8 @@ extension Cache: ImageCacheProtocol {
         return cache.retrieveImageInMemoryCache(forKey: url.absoluteString)
     }
 
+    /// Uses a `DispatchGroup` to fan out concurrent retrieval requests and calls `done` on the
+    /// main queue once every URL has been resolved through memory, disk, or network.
     func prefetchImages(_ urls: [URL], done: Closure? = nil) {
         // `KingfisherManager.retrieveImage` walks memory → disk → network, guaranteeing
         // each image lands in the **memory** cache before `done()` is called.
@@ -85,6 +90,7 @@ extension Cache: ImageCacheProtocol {
         group.notify(queue: .main) { done?() }
     }
 
+    /// Convenience wrapper that pre-fetches a single URL by delegating to `prefetchImages`.
     func prefetchImage(_ url: URL, done: Closure? = nil) {
         prefetchImages([url], done: done)
     }

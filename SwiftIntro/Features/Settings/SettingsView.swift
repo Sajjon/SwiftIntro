@@ -56,6 +56,7 @@ final class SettingsView: UIView {
 // MARK: - Private
 
 private extension SettingsView {
+    /// Configures controls, builds the vertical stack, and centres it horizontally with insets.
     func setupLayout() {
         configureControls()
         let stack = makeStack()
@@ -67,6 +68,7 @@ private extension SettingsView {
         ])
     }
 
+    /// Applies font, alignment, and keyboard settings to the title label and text field.
     func configureControls() {
         titleLabel.font = .boldSystemFont(ofSize: 24)
         titleLabel.textAlignment = .center
@@ -75,6 +77,7 @@ private extension SettingsView {
         usernameTextField.autocapitalizationType = .none
     }
 
+    /// Returns the vertical stack that arranges all controls from top to bottom.
     func makeStack() -> UIStackView {
         let stack = UIStackView(arrangedSubviews: [
             titleLabel, usernameLabel, usernameTextField,
@@ -97,12 +100,14 @@ private extension SettingsView {
         setupLevelSegmentTitles()
     }
 
+    /// Iterates all `Level` cases and applies their localised titles to the segmented control.
     func setupLevelSegmentTitles() {
         for i in 0 ... 2 {
             levelSegmentedControl.setTitle(Level(segmentedControlIndex: i).title, forSegmentAt: i)
         }
     }
 
+    /// Attaches `@objc` action handlers to the segmented control and start button.
     func wireTargets() {
         levelSegmentedControl.addTarget(self, action: #selector(changedLevel(_:)), for: .valueChanged)
         startGameButton.addTarget(self, action: #selector(startGameTapped), for: .touchUpInside)

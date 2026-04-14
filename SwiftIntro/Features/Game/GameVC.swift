@@ -109,6 +109,7 @@ extension GameVC: Connectable {
 // MARK: - Private
 
 extension GameVC {
+    /// Wires the effect handler's UIKit dependencies and starts the Mobius loop.
     private func setupLoop() {
         loop.start(
             view: self,
@@ -119,6 +120,7 @@ extension GameVC {
         )
     }
 
+    /// Assigns the data source and delegate, registers the cell class, and wires closures.
     private func setupCollectionView() {
         gameView.collectionView.dataSource = dataSourceAndDelegate
         gameView.collectionView.delegate = dataSourceAndDelegate
@@ -126,6 +128,7 @@ extension GameVC {
         wireDataSourceClosures()
     }
 
+    /// Connects the data source's query closures to the loop so it stays decoupled from `GameVC`.
     private func wireDataSourceClosures() {
         dataSourceAndDelegate.canSelectCard = { [weak self] index in
             self?.loop.canSelectCard(at: index) ?? false
@@ -135,6 +138,7 @@ extension GameVC {
         }
     }
 
+    /// Pushes `GameOverVC` onto the navigation stack with the completed game's outcome.
     private func navigateToGameOver(outcome: GameOutcome) {
         let config = GameConfiguration(level: loop.level)
         navigationController?.pushViewController(

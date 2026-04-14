@@ -33,6 +33,7 @@ final class LoadingView: UIView {
 // MARK: - Private
 
 private extension LoadingView {
+    /// Configures subviews, builds the stack, and centres it in the view.
     func setupLayout() {
         configureSubviews()
         let stack = makeStack()
@@ -43,6 +44,7 @@ private extension LoadingView {
         ])
     }
 
+    /// Sets the loading label text and starts the activity indicator animation.
     func configureSubviews() {
         loadingLabel.setLocalizedText(L10n.loading)
         loadingLabel.textAlignment = .center
@@ -50,6 +52,7 @@ private extension LoadingView {
         activityIndicator.startAnimating()
     }
 
+    /// Returns a centred vertical stack containing the label above the activity indicator.
     func makeStack() -> UIStackView {
         let stack = UIStackView(arrangedSubviews: [loadingLabel, activityIndicator])
         stack.axis = .vertical

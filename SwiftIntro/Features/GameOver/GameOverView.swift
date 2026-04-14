@@ -57,6 +57,7 @@ final class GameOverView: UIView {
 // MARK: - Private
 
 private extension GameOverView {
+    /// Configures labels and buttons, builds the stack hierarchy, and activates centering constraints.
     func setupLayout() {
         configureLabels()
         configureButtons()
@@ -69,6 +70,7 @@ private extension GameOverView {
         ])
     }
 
+    /// Sets shared text alignment and multi-line wrapping on all score and status labels.
     func configureLabels() {
         for item in [titleLabel, subtitleLabel, scoreLabel, tryHarderLabel] {
             item.textAlignment = .center
@@ -76,12 +78,14 @@ private extension GameOverView {
         }
     }
 
+    /// Wires tap targets for the restart and quit buttons and fixes their circular dimensions.
     func configureButtons() {
         restartButton.addTarget(self, action: #selector(restartTapped), for: .touchUpInside)
         quitButton.addTarget(self, action: #selector(quitTapped), for: .touchUpInside)
         constrainButtonSizes(to: 80)
     }
 
+    /// Fixes both buttons to an explicit `size × size` square so they stay perfectly circular.
     func constrainButtonSizes(to size: CGFloat) {
         // Fix the button dimensions so they remain circular regardless of title length.
         restartButton.translatesAutoresizingMaskIntoConstraints = false
@@ -94,6 +98,7 @@ private extension GameOverView {
         ])
     }
 
+    /// Returns a horizontal stack containing the restart and quit buttons.
     func makeButtonStack() -> UIStackView {
         let stack = UIStackView(arrangedSubviews: [restartButton, quitButton])
         stack.axis = .horizontal
@@ -102,6 +107,7 @@ private extension GameOverView {
         return stack
     }
 
+    /// Returns the root vertical stack that centres all labels above the button row.
     func makeMainStack(buttonStack: UIStackView) -> UIStackView {
         let stack = UIStackView(arrangedSubviews: [
             titleLabel, subtitleLabel, scoreLabel, tryHarderLabel, buttonStack,
@@ -113,16 +119,19 @@ private extension GameOverView {
         return stack
     }
 
+    /// Applies localised strings to the title, subtitle, and encouragement labels.
     func setupLocalizedText() {
         titleLabel.setLocalizedText(L10n.gameOverTitle)
         subtitleLabel.setLocalizedText(L10n.gameOverSubtitle)
         tryHarderLabel.setLocalizedText(L10n.tryHarder)
     }
 
+    /// Forwards the restart tap to `onRestart`.
     @objc func restartTapped() {
         onRestart?()
     }
 
+    /// Forwards the quit tap to `onQuit`.
     @objc func quitTapped() {
         onQuit?()
     }

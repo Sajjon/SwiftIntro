@@ -47,6 +47,7 @@ final class GameView: UIView {
 // MARK: - Private
 
 private extension GameView {
+    /// Adds the header and collection view as subviews and activates their constraints.
     func setupLayout() {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(headerView)
@@ -54,6 +55,7 @@ private extension GameView {
         activateLayoutConstraints()
     }
 
+    /// Pins the header below the safe area and the collection view to fill the remaining space.
     func activateLayoutConstraints() {
         NSLayoutConstraint.activate([
             // Header sits directly below the safe-area top (avoids the status bar / notch).

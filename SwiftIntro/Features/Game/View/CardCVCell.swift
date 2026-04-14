@@ -95,6 +95,7 @@ extension CardCVCell {
 // MARK: Private
 
 extension CardCVCell {
+    /// Adds both image views to the content view, pins their constraints, and sets initial visibility.
     private func setupViews() {
         contentView.addSubview(cardFrontImageView)
         contentView.addSubview(cardBackImageView)
@@ -104,6 +105,7 @@ extension CardCVCell {
         cardBackImageView.isHidden = false
     }
 
+    /// Stretches both image views to fill the content view edge-to-edge.
     private func activateImageViewConstraints() {
         NSLayoutConstraint.activate([
             cardFrontImageView.topAnchor.constraint(equalTo: contentView.topAnchor),

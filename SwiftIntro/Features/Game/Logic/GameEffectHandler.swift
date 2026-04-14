@@ -112,6 +112,7 @@ private extension GameEffectHandler {
         }
     }
 
+    /// Animates the card at `index` to the given face direction on the main thread.
     func handleFlipCard(index: Int, faceUp: Bool) {
         // Cell lookups and animations must run on the main thread.
         onMain { [weak self] in
@@ -123,6 +124,7 @@ private extension GameEffectHandler {
         }
     }
 
+    /// Schedules a `.flipBackCards` event after a 1-second delay using a cancellable `DispatchWorkItem`.
     func handleScheduleFlipBack(
         index1: Int,
         index2: Int,
@@ -136,6 +138,7 @@ private extension GameEffectHandler {
         onMain(delay: 1.0, workItem: workItem)
     }
 
+    /// Fires `onNavigateToGameOver` after a short delay so the final flip animation finishes first.
     func handleNavigateToGameOver(outcome: GameOutcome) {
         // Short delay lets the final flip animation complete before navigating away.
         onMain(delay: 1.0) { [weak self] in self?.onNavigateToGameOver?(outcome) }
