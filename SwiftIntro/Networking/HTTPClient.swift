@@ -21,7 +21,7 @@ protocol HTTPClientProtocol {
     ///   - url: The endpoint to fetch.
     ///   - done: Called with `.success(Data)` on a 2xx response with a body,
     ///     or `.failure(Error)` on a network error or missing response body.
-    func get(url: URL, done: @escaping (Swift.Result<Data, Swift.Error>) -> Void)
+    func get(url: URL, done: @escaping (Result<Data, Swift.Error>) -> Void)
 }
 
 /// Concrete HTTP client backed by `URLSession`.
@@ -49,7 +49,7 @@ extension HTTPClient {
     ///     or `.failure(Error)` on a network error or missing response body.
     func get(
         url: URL,
-        done: @escaping (Swift.Result<Data, Swift.Error>) -> Void
+        done: @escaping (Result<Data, Swift.Error>) -> Void
     ) {
         // `dataTask` runs asynchronously on a background URLSession delegate queue.
         // `.resume()` must be called explicitly — tasks start suspended by default.

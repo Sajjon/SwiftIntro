@@ -14,8 +14,10 @@ import Foundation
 struct CardModel: Equatable {
     /// The remote URL of the image shown on the card's face.
     let imageUrl: URL
+
     /// Whether this card is currently face-up (visible to the player).
     var isFlipped: Bool
+
     /// Whether this card has been successfully matched and is locked face-up.
     var isMatched: Bool
 
@@ -33,12 +35,16 @@ struct CardModel: Equatable {
 struct GameModel {
     /// All cards on the board in row-major order (row 0 first, then row 1, etc.).
     var cards: [CardModel]
+
     /// The difficulty level, used to derive grid dimensions and total pair count.
     let level: Level
+
     /// Running total of all card taps (including misses). Shown on the game-over screen.
     var clickCount: Int
+
     /// Number of pairs the player has matched so far.
     var matches: Int
+
     /// The flat index of the first card flipped in the current turn, if any.
     ///
     /// `nil` means no card is waiting for a second tap.

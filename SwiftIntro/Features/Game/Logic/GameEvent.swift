@@ -12,6 +12,7 @@
 enum GameEvent {
     /// The player tapped a card at the given flat (row-major) index.
     case cardTapped(index: Int)
+
     /// The 1-second delay elapsed and two non-matching cards should flip back face-down.
     ///
     /// This event is dispatched by `GameEffectHandler` after `scheduleFlipBack` fires.

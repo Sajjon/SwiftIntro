@@ -13,8 +13,13 @@ import UIKit
 /// Thin by design: renders the outcome into `GameOverView` and wires the restart/quit
 /// callbacks to navigation actions. All layout and UI state live in `GameOverView`.
 final class GameOverVC: UIViewController {
+    /// The configuration from the completed game, used to restart with the same level and search query.
     private let config: GameConfiguration
+
+    /// The result of the completed game — click count, level, and the card deck.
     private let outcome: GameOutcome
+
+    /// The root view; installed via `loadView()`.
     private let gameOverView = GameOverView()
 
     init(config: GameConfiguration, outcome: GameOutcome) {

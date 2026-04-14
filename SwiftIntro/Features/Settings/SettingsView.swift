@@ -13,11 +13,22 @@ import UIKit
 /// when the player taps the start button, passing the fully-built config out to
 /// `SettingsVC` for navigation.
 final class SettingsView: UIView {
+    /// Displays the app title at the top of the settings screen.
     private let titleLabel = UILabel()
+
+    /// Label above the search query text field.
     private let usernameLabel = UILabel()
+
+    /// Text field where the player enters the Wikimedia Commons search query.
     private let usernameTextField = UITextField()
+
+    /// Label above the difficulty segmented control.
     private let segmentTitleLabel = UILabel()
+
+    /// Lets the player choose Easy, Normal, or Hard; titles are populated in `setupLocalizedStrings()`.
     private let levelSegmentedControl = UISegmentedControl(items: ["", "", ""])
+
+    /// Tapped to begin data loading and start the game.
     private let startGameButton = UIButton(type: .system)
 
     /// The configuration built from the current control values.

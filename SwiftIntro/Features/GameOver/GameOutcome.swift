@@ -12,8 +12,10 @@ import Foundation
 struct GameOutcome {
     /// The difficulty level that was played.
     let level: Level
+
     /// Total number of card taps the player made during the session.
     let clickCount: Int
+
     /// The deck used during the session, available so the player can restart with the same images.
     var cards: CardDuplicates
 }

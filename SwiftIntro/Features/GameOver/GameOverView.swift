@@ -12,15 +12,27 @@ import UIKit
 /// `onRestart` and `onQuit` closures are wired by `GameOverVC` to keep navigation
 /// logic out of the view.
 final class GameOverView: UIView {
+    /// Displays the game-over title (e.g. "Game Over!").
     private let titleLabel = UILabel()
+
+    /// Displays a congratulatory subtitle.
     private let subtitleLabel = UILabel()
+
+    /// Shows the player's click count for this session.
     private let scoreLabel = UILabel()
+
+    /// Encourages the player to beat their score next time.
     private let tryHarderLabel = UILabel()
+
+    /// Triggers a new game with the same images shuffled.
     private let restartButton = CircularButton(title: L10n.restart)
+
+    /// Returns the player to the settings screen.
     private let quitButton = CircularButton(title: L10n.quit)
 
     /// Called when the player taps "Restart". Wired by `GameOverVC`.
     var onRestart: (() -> Void)?
+
     /// Called when the player taps "Quit". Wired by `GameOverVC`.
     var onQuit: (() -> Void)?
 

@@ -37,8 +37,10 @@ extension KingfisherManager: ImageRetrieverProtocol {
 protocol ImageCacheProtocol {
     /// Ensures all `urls` are present in the **memory** cache, then calls `done`.
     func prefetchImages(_ urls: [URL], done: Closure?)
+
     /// Ensures a single `url` is present in the memory cache, then calls `done`.
     func prefetchImage(_ url: URL, done: Closure?)
+
     /// Returns the cached `UIImage` for `url` if it is already in the memory cache,
     /// or `nil` if the image has not been loaded yet.
     func imageFromCache(_ url: URL?) -> UIImage?

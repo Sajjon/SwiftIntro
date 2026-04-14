@@ -20,11 +20,18 @@ import UIKit
 final class GameVC: UIViewController {
     // MARK: Properties
 
+    /// Injected image cache — used to check whether card images are ready before
+    /// allowing cell configuration to proceed.
     @Injected(\.imageCache) private var imageCache
 
+    /// Owns the Mobius loop for this game session. Update and query operations are
+    /// forwarded through here so `GameVC` stays loop-infrastructure-free.
     private let loop: GameLoop
+
+    /// The root view; installed via `loadView()`.
     private let gameView = GameView()
 
+    /// The UIKit data source and delegate, created lazily so `loop.level` is available.
     private lazy var dataSourceAndDelegate: MemoryDataSourceAndDelegate = .init(
         rows: self.loop.level.rowCount,
         columns: self.loop.level.columnCount

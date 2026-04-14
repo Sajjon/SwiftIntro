@@ -35,10 +35,15 @@ protocol LoadingDataNavigatorProtocol: AnyObject {
 /// to `APIClient`, `CardDuplicates`, and the `ImageCacheProtocol`. Navigation is delegated
 /// to `navigator` so this VC has no dependency on `UINavigationController`.
 final class LoadingDataVC: UIViewController {
+    /// Injected API client used to fetch card images from Wikimedia Commons.
     @Injected(\.apiClient) private var apiClient
+
+    /// Injected image cache used to pre-warm Kingfisher's memory cache before the game starts.
     @Injected(\.imageCache) private var imageCache
 
+    /// The configuration chosen by the player on the settings screen.
     private let config: GameConfiguration
+
     /// Stored temporarily while images are being pre-fetched; cleared after navigation.
     private var cards: CardDuplicates?
 

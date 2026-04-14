@@ -12,6 +12,7 @@ import Foundation
 struct GameConfiguration {
     /// The board difficulty that determines grid dimensions and total card count.
     var level: Level = .normal
+
     /// The Wikimedia Commons search term used to fetch card images.
     var searchQuery: String = "cats"
 }

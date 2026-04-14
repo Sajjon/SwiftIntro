@@ -15,7 +15,10 @@ import UIKit
 /// loop infrastructure. Create one `GameLoop` per game session and discard it when
 /// the session ends.
 final class GameLoop {
+    /// Handles all side effects: flip animations, the flip-back timer, and game-over navigation.
     private let effectHandler: GameEffectHandler
+
+    /// The Mobius loop controller — drives the `update → effect → event` cycle.
     private let controller: MobiusController<GameModel, GameEvent, GameEffect>
 
     /// The difficulty level for this session — exposed so `GameVC` can size the grid

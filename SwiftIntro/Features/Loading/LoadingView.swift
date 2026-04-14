@@ -12,7 +12,10 @@ import UIKit
 /// Shown while `LoadingDataVC` fetches images from the API and warms the memory cache.
 /// Contains no logic — it simply animates until it is removed from the view hierarchy.
 final class LoadingView: UIView {
+    /// Displays the localised "Loading…" string.
     private let loadingLabel = UILabel()
+
+    /// Spins while data is being fetched and images are cached.
     private let activityIndicator = UIActivityIndicatorView(style: .large)
 
     override init(frame: CGRect) {
