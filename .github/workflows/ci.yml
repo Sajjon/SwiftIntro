@@ -4,6 +4,7 @@ on:
   push:
     branches: [master]
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -63,14 +64,14 @@ jobs:
   # ── 4. Test + coverage ──────────────────────────────────────────────────────
   coverage:
     name: Test & Coverage
-    runs-on: macos-15
+    runs-on: macos-26
     env:
       RESULT_BUNDLE: .build/TestResults.xcresult
       COV_XML: .build/coverage.xml
       SCHEME: SwiftIntro
       PROJECT: SwiftIntro.xcodeproj
-      SIM_DEVICE: iPhone 16
-      SIM_OS: "18.6"
+      SIM_DEVICE: iPhone 17
+      SIM_OS: "26.1"
 
     steps:
       - uses: actions/checkout@v4
@@ -86,6 +87,9 @@ jobs:
 
       - name: Install xcresultparser
         run: brew install xcresultparser
+
+      - name: Select Xcode 26.1.1
+        run: sudo xcode-select -s /Applications/Xcode_26.1.1.app/Contents/Developer
 
       # Print the active Xcode and list available simulators so failures are
       # easy to diagnose without SSH-ing into the runner.
@@ -130,7 +134,7 @@ jobs:
           xcodebuild test \
             -project "$PROJECT" \
             -scheme "$SCHEME" \
-            -destination "platform=iOS Simulator,name=$SIM_DEVICE,OS=$SIM_OS" \
+            -destination "platform=iOS Simulator,name=$SIM_DEVICE,OS=$SIM_OS,arch=arm64" \
             -only-testing:SwiftIntroTests \
             -enableCodeCoverage YES \
             -resultBundlePath "$RESULT_BUNDLE" \

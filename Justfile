@@ -11,12 +11,12 @@ scheme     := "SwiftIntro"
 result_dir := ".build"
 result     := result_dir + "/TestResults.xcresult"
 cov_json   := result_dir + "/coverage.json"
-sim_device := env_var_or_default("SIM_DEVICE", "iPhone 16")
-sim_os     := env_var_or_default("SIM_OS", "18.6")
+sim_device := env_var_or_default("SIM_DEVICE", "iPhone 17")
+sim_os     := env_var_or_default("SIM_OS", "26.1")
 
 # Keep in sync with .github/workflows/ci.yml to ensure local and CI use
-# the same simulator destination.
-sim := "platform=iOS Simulator,name=" + sim_device + ",OS=" + sim_os
+# the same Apple Silicon simulator destination.
+sim := "platform=iOS Simulator,name=" + sim_device + ",OS=" + sim_os + ",arch=arm64"
 
 # ── Default ───────────────────────────────────────────────────────────────────
 
