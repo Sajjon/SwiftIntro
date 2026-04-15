@@ -41,11 +41,19 @@ jobs:
   swiftlint:
     name: SwiftLint
     runs-on: macos-15
+    env:
+      # Keep in sync with the version installed locally via Homebrew.
+      SWIFTLINT_VERSION: "0.63.2"
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install SwiftLint
-        run: brew install swiftlint
+      - name: Install SwiftLint ${{ env.SWIFTLINT_VERSION }}
+        run: |
+          curl -fsSL \
+            "https://github.com/realm/SwiftLint/releases/download/${SWIFTLINT_VERSION}/swiftlint_macos.pkg" \
+            -o /tmp/swiftlint.pkg
+          sudo installer -pkg /tmp/swiftlint.pkg -target /
+          swiftlint version
 
       - name: Lint
         # github-actions-logging emits ::error / ::warning annotations
