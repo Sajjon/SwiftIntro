@@ -70,7 +70,7 @@ jobs:
       SCHEME: SwiftIntro
       PROJECT: SwiftIntro.xcodeproj
       # Omit OS so xcodebuild picks whichever runtime is installed on the runner.
-      DESTINATION: platform=iOS Simulator,name=iPhone 16
+      DESTINATION: platform=iOS Simulator,name=iPhone 17
 
     steps:
       - uses: actions/checkout@v4
