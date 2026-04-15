@@ -31,16 +31,16 @@ protocol LoadingDataNavigatorProtocol: AnyObject {
 /// Orchestrates the data-loading phase between the settings screen and the game screen.
 ///
 /// Responsibilities (in order):
-/// 1. Fetch card images from the Wikimedia API via `APIClient`.
+/// 1. Fetch card images from the Wikimedia API via `WikimediaClient`.
 /// 2. Pre-warm the Kingfisher memory cache so images display instantly on the first card flip.
 /// 3. Call `navigator.navigateToGame` once loading is complete.
 ///
 /// The VC is thin — all business decisions (which cards to use, how many) are delegated
-/// to `APIClient`, `CardDuplicates`, and the `ImageCacheProtocol`. Navigation is delegated
+/// to `WikimediaClient`, `CardDuplicates`, and the `ImageCacheProtocol`. Navigation is delegated
 /// to `navigator` so this VC has no dependency on `UINavigationController`.
 final class LoadingDataVC: UIViewController {
     /// Injected API client used to fetch card images from Wikimedia Commons.
-    @Injected(\.apiClient) private var apiClient
+    @Injected(\.wikimediaClient) private var apiClient
 
     /// Injected image cache used to pre-warm Kingfisher's memory cache before the game starts.
     @Injected(\.imageCache) private var imageCache

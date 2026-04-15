@@ -31,10 +31,10 @@ final class GameOverView: UIView {
     private let quitButton = CircularButton(title: L10n.quit)
 
     /// Called when the player taps "Restart". Wired by `GameOverVC`.
-    var onRestart: (() -> Void)?
+    var onRestart: (@MainActor () -> Void)?
 
     /// Called when the player taps "Quit". Wired by `GameOverVC`.
-    var onQuit: (() -> Void)?
+    var onQuit: (@MainActor () -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)

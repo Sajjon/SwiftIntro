@@ -25,13 +25,13 @@ UIKit memory card game using Mobius unidirectional data flow, Factory DI, and Ki
 
 ### Dependency injection
 - Use `@Injected(\.keyPath)` property wrappers — never pass dependencies through constructors unless they vary per instance (e.g. `config`, `cards`).
-- Consumers reference protocols (`APIClientProtocol`, `HTTPClientProtocol`, `ImageCacheProtocol`), never concrete types.
+- Consumers reference protocols (`WikimediaClientProtocol`, `HTTPClientProtocol`, `ImageCacheProtocol`), never concrete types.
 - Register new services as `.singleton` in `Container+SwiftIntro.swift`.
 
 ### Networking
 - No `async/await` — use closure callbacks (`done: @escaping (Result<T, Error>) -> Void`).
 - Completion closures are called on an arbitrary background queue; always dispatch UI updates via `DispatchQueue.main.async { }`.
-- Wikimedia-specific decoding types stay `private` inside `APIClient.swift`.
+- Wikimedia-specific decoding types stay `private` inside `WikimediaClient.swift`.
 
 ### Naming
 - `CardSingles` — unique cards from the API, no duplicates.
@@ -71,4 +71,4 @@ Every new file must be added to `SwiftIntro.xcodeproj/project.pbxproj`.
 - `GameEffectHandler.currentModel` is pre-seeded with `initialModel` at init time. Do not change this to `nil` — the Mobius loop delivers the first model asynchronously and cells would appear blank otherwise.
 - `MobiusController.stop()` and `disconnectView()` must both be called in `viewDidDisappear` to cancel pending `DispatchWorkItem` timers and avoid delivering events to a detached loop.
 - `DispatchWorkItem` for the flip-back timer is stored in `flipBackWorkItem` so it can be cancelled when the loop stops.
-- The `WikimediaResponse` Decodable types are `private` to `APIClient.swift` — do not make them internal or public.
+- The `WikimediaResponse` Decodable types are `private` to `WikimediaClient.swift` — do not make them internal or public.

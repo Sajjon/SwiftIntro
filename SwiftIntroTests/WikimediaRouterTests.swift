@@ -1,5 +1,5 @@
 //
-//  RouterTests.swift
+//  WikimediaRouterTests.swift
 //  SwiftIntroTests
 //
 //  Copyright © 2016-2026 SwiftIntro. All rights reserved.
@@ -10,11 +10,10 @@
 //  - Assert:  verify a single observable outcome (1 line)
 //
 
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
-final class RouterTests: XCTestCase {
-
+final class WikimediaRouterTests: XCTestCase {
     // MARK: - Helpers
 
     /// Extracts query items from a `URL` as a `[name: value]` dictionary.
@@ -31,7 +30,7 @@ final class RouterTests: XCTestCase {
 
     func test_searchImages_url_schemeIsHttps() {
         // Arrange
-        let route = Router.searchImages("cats")
+        let route = WikimediaRouter.searchImages("cats")
 
         // Act
         let scheme = route.url.scheme
@@ -42,7 +41,7 @@ final class RouterTests: XCTestCase {
 
     func test_searchImages_url_hostIsWikimediaCommons() {
         // Arrange
-        let route = Router.searchImages("cats")
+        let route = WikimediaRouter.searchImages("cats")
 
         // Act
         let host = route.url.host
@@ -53,7 +52,7 @@ final class RouterTests: XCTestCase {
 
     func test_searchImages_url_pathIsApiPhp() {
         // Arrange
-        let route = Router.searchImages("cats")
+        let route = WikimediaRouter.searchImages("cats")
 
         // Act
         let path = route.url.path
@@ -66,7 +65,7 @@ final class RouterTests: XCTestCase {
 
     func test_searchImages_url_actionIsQuery() {
         // Arrange
-        let url = Router.searchImages("dogs").url
+        let url = WikimediaRouter.searchImages("dogs").url
 
         // Act
         let action = queryItems(for: url)["action"]
@@ -77,7 +76,7 @@ final class RouterTests: XCTestCase {
 
     func test_searchImages_url_generatorIsSearch() {
         // Arrange
-        let url = Router.searchImages("dogs").url
+        let url = WikimediaRouter.searchImages("dogs").url
 
         // Act
         let generator = queryItems(for: url)["generator"]
@@ -88,7 +87,7 @@ final class RouterTests: XCTestCase {
 
     func test_searchImages_url_gsrsearchMatchesQuery() {
         // Arrange
-        let url = Router.searchImages("swift programming").url
+        let url = WikimediaRouter.searchImages("swift programming").url
 
         // Act
         let gsrsearch = queryItems(for: url)["gsrsearch"]
@@ -99,7 +98,7 @@ final class RouterTests: XCTestCase {
 
     func test_searchImages_url_gsrnamespaceIsFileNamespace() {
         // Arrange — namespace 6 = "File:", restricts results to media files
-        let url = Router.searchImages("dogs").url
+        let url = WikimediaRouter.searchImages("dogs").url
 
         // Act
         let namespace = queryItems(for: url)["gsrnamespace"]
@@ -110,7 +109,7 @@ final class RouterTests: XCTestCase {
 
     func test_searchImages_url_propIsImageinfo() {
         // Arrange
-        let url = Router.searchImages("dogs").url
+        let url = WikimediaRouter.searchImages("dogs").url
 
         // Act
         let prop = queryItems(for: url)["prop"]
@@ -121,7 +120,7 @@ final class RouterTests: XCTestCase {
 
     func test_searchImages_url_iipropIsUrl() {
         // Arrange
-        let url = Router.searchImages("dogs").url
+        let url = WikimediaRouter.searchImages("dogs").url
 
         // Act
         let iiprop = queryItems(for: url)["iiprop"]
@@ -132,7 +131,7 @@ final class RouterTests: XCTestCase {
 
     func test_searchImages_url_formatIsJson() {
         // Arrange
-        let url = Router.searchImages("dogs").url
+        let url = WikimediaRouter.searchImages("dogs").url
 
         // Act
         let format = queryItems(for: url)["format"]
@@ -143,7 +142,7 @@ final class RouterTests: XCTestCase {
 
     func test_searchImages_url_gsrlimitIs50() {
         // Arrange
-        let url = Router.searchImages("dogs").url
+        let url = WikimediaRouter.searchImages("dogs").url
 
         // Act
         let limit = queryItems(for: url)["gsrlimit"]
@@ -156,7 +155,7 @@ final class RouterTests: XCTestCase {
 
     func test_searchImages_url_percentEncodesSpaces() {
         // Arrange
-        let url = Router.searchImages("space cats").url
+        let url = WikimediaRouter.searchImages("space cats").url
 
         // Act
         let absoluteString = url.absoluteString
@@ -168,7 +167,7 @@ final class RouterTests: XCTestCase {
 
     func test_searchImages_url_doesNotCrashOnSpecialCharacters() {
         // Arrange
-        let route = Router.searchImages("café & art")
+        let route = WikimediaRouter.searchImages("café & art")
 
         // Act + Assert — must not crash
         XCTAssertNotNil(route.url)

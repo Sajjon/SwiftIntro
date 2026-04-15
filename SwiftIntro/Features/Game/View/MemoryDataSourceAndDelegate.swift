@@ -24,13 +24,13 @@ final class MemoryDataSourceAndDelegate: NSObject {
     private let numberOfColumns: Int
 
     /// Called when the player taps a valid, selectable card. Receives the flat index.
-    var onCardTapped: ((Int) -> Void)?
+    var onCardTapped: (@MainActor (Int) -> Void)?
 
     /// Returns `true` if the card at the given flat index may be selected right now.
-    var canSelectCard: ((Int) -> Bool)?
+    var canSelectCard: (@MainActor (Int) -> Bool)?
 
     /// Configures the given cell to match the current visual state of the card at `index`.
-    var configureCell: ((CardCVCell, Int) -> Void)?
+    var configureCell: (@MainActor (CardCVCell, Int) -> Void)?
 
     init(
         rows: Int,

@@ -1,5 +1,5 @@
 //
-//  APIClient.swift
+//  WikimediaClient.swift
 //  SwiftIntro
 //
 //  Created by Alexander Cyon on 01/06/16.
@@ -11,9 +11,9 @@ import Foundation
 
 /// Abstraction over the Wikimedia Commons image search API.
 ///
-/// Decoupled from the concrete `APIClient` so call sites (e.g. `LoadingDataVC`)
+/// Decoupled from the concrete `WikimediaClient` so call sites (e.g. `LoadingDataVC`)
 /// can be tested with a stub that returns canned `CardSingles` without hitting the network.
-protocol APIClientProtocol {
+protocol WikimediaClientProtocol {
     /// Searches Wikimedia Commons for images matching `searchQuery` and returns
     /// the results as a set of unique `Card` values.
     ///
@@ -27,12 +27,12 @@ protocol APIClientProtocol {
     )
 }
 
-/// Concrete implementation of `APIClientProtocol` backed by Wikimedia Commons.
+/// Concrete implementation of `WikimediaClientProtocol` backed by Wikimedia Commons.
 ///
 /// Uses `HTTPClientProtocol` (injected via Factory) to fetch raw JSON, then decodes
 /// it with `Codable` into `CardSingles`. The Wikimedia response types are private
 /// to this file — callers only ever see `CardSingles`.
-final class APIClient: APIClientProtocol {
+final class WikimediaClient: WikimediaClientProtocol {
     /// Injected HTTP transport layer. Using the protocol allows test doubles to be
     /// substituted without touching URLSession or any real networking.
     @Injected(\.httpClient) private var httpClient
@@ -41,14 +41,14 @@ final class APIClient: APIClientProtocol {
         _ searchQuery: String,
         done: @escaping @Sendable (Result<CardSingles, Swift.Error>) -> Void
     ) {
-        let url = Router.searchImages(searchQuery).url
-        httpClient.get(url: url) { result in APIClient.decodeAndDeliver(result, done: done) }
+        let url = WikimediaRouter.searchImages(searchQuery).url
+        httpClient.get(url: url) { result in WikimediaClient.decodeAndDeliver(result, done: done) }
     }
 }
 
 // MARK: - Private helpers
 
-private extension APIClient {
+private extension WikimediaClient {
     static func decodeAndDeliver(
         _ result: Result<Data, Error>,
         done: @escaping (Result<CardSingles, Error>) -> Void
@@ -58,7 +58,7 @@ private extension APIClient {
             done(.failure(error))
         case let .success(data):
             do {
-                try done(.success(APIClient.parse(data)))
+                try done(.success(WikimediaClient.parse(data)))
             } catch {
                 done(.failure(error))
             }
@@ -90,7 +90,7 @@ private struct WikimediaImageInfo: Decodable {
 
 // MARK: - JSON Parsing
 
-private extension APIClient {
+private extension WikimediaClient {
     /// Decodes raw JSON and filters out non-image URLs, returning a `CardSingles` collection.
     static func parse(_ data: Data) throws -> CardSingles {
         let response = try JSONDecoder().decode(WikimediaResponse.self, from: data)

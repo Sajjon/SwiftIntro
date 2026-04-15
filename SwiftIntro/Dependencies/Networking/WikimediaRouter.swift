@@ -1,5 +1,5 @@
 //
-//  Router.swift
+//  WikimediaRouter.swift
 //  SwiftIntro
 //
 //  Created by Alexander Cyon on 01/06/16.
@@ -8,19 +8,19 @@
 
 import Foundation
 
-// MARK: Router
+// MARK: WikimediaRouter
 
 /// Builds fully-qualified `URL`s for each API endpoint.
 ///
 /// Adding a new endpoint means adding a new case and its corresponding `queryItems`.
-enum Router {
+enum WikimediaRouter {
     /// Search Wikimedia Commons for files matching the given query string.
     case searchImages(String)
 }
 
 // MARK: Computed Properties
 
-extension Router {
+extension WikimediaRouter {
     /// The fully-constructed `URL` for this route, ready to pass to `HTTPClientProtocol.get`.
     var url: URL {
         // `URLComponents` handles percent-encoding of the query string automatically,

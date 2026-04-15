@@ -17,7 +17,7 @@ import XCTest
 
 // MARK: - Stubs
 
-private final class StubAPIClient: APIClientProtocol, @unchecked Sendable {
+private final class StubWikimediaClient: WikimediaClientProtocol, @unchecked Sendable {
     var result: Result<CardSingles, Error> = .failure(URLError(.unknown))
     var getPhotosQuery: ((String) -> Void)?
 
@@ -80,21 +80,21 @@ private func makeCards(count: Int) -> CardSingles {
 
 @MainActor
 final class LoadingDataVCTests: XCTestCase {
-    private nonisolated(unsafe) var apiStub: StubAPIClient!
+    private nonisolated(unsafe) var apiStub: StubWikimediaClient!
     private nonisolated(unsafe) var cacheStub: StubImageCache!
 
     override func setUp() {
         super.setUp()
-        apiStub = StubAPIClient()
+        apiStub = StubWikimediaClient()
         cacheStub = StubImageCache()
         let apiStub = apiStub!
         let cacheStub = cacheStub!
-        Container.shared.apiClient.register { apiStub }
+        Container.shared.wikimediaClient.register { apiStub }
         Container.shared.imageCache.register { cacheStub }
     }
 
     override func tearDown() {
-        Container.shared.apiClient.reset()
+        Container.shared.wikimediaClient.reset()
         Container.shared.imageCache.reset()
         apiStub = nil
         cacheStub = nil

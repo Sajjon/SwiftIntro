@@ -22,8 +22,9 @@ import UIKit
 /// - Safety: All mutable state (`currentModel`, `flipBackWorkItem`, `collectionView`,
 ///   `onNavigateToGameOver`) is accessed exclusively on the main thread:
 ///   `update(with:)`, `canSelectCard`, and `configureCell` are all `@MainActor`-isolated;
-///   `handleFlipCard` and `handleNavigateToGameOver` dispatch to `DispatchQueue.main`
-///   before touching UI or stored state. `@unchecked Sendable` is required because
+///   `handleFlipCard` dispatches to `DispatchQueue.main` and `handleNavigateToGameOver`
+///   uses `MainActor.assumeIsolated` before touching UI or stored state.
+///   `@unchecked Sendable` is required because
 ///   MobiusCore predates Swift 6 and does not declare `Sendable` on `Connectable`/`Connection`.
 final class GameEffectHandler: @unchecked Sendable {
     /// The collection view managed by the game screen.
@@ -33,8 +34,8 @@ final class GameEffectHandler: @unchecked Sendable {
     /// The difficulty level — used to convert flat card indices into `IndexPath` values.
     private let level: Level
 
-    /// Called on the main thread when the game is won, to trigger navigation.
-    var onNavigateToGameOver: ((GameOutcome) -> Void)?
+    /// Called on the main actor when the game is won, to trigger navigation.
+    var onNavigateToGameOver: (@MainActor (GameOutcome) -> Void)?
 
     /// Injected clock — controls how delayed dispatches are scheduled.
     /// `MainQueueClock` in production; `ImmediateClock` in tests.
@@ -169,7 +170,9 @@ private extension GameEffectHandler {
     /// Fires `onNavigateToGameOver` after a short delay so the final flip animation finishes first.
     func handleNavigateToGameOver(outcome: GameOutcome) {
         // Short delay lets the final flip animation complete before navigating away.
-        clock.schedule(after: 1.0) { [weak self] in self?.onNavigateToGameOver?(outcome) }
+        clock.schedule(after: 1.0) {
+            MainActor.assumeIsolated { [weak self] in self?.onNavigateToGameOver?(outcome) }
+        }
     }
 
     /// Converts a row-major flat index into a `UICollectionView` `IndexPath`.

@@ -14,14 +14,14 @@ import Kingfisher
 /// meaning the same object is returned for every `@Injected` property wrapper that
 /// references the key path. Registrations are resolved lazily on first access.
 extension Container {
-    /// The low-level HTTP transport used by `APIClient` to make raw network requests.
+    /// The low-level HTTP transport used by `WikimediaClient` to make raw network requests.
     var httpClient: Factory<HTTPClientProtocol> {
         self { HTTPClient() }.singleton
     }
 
     /// The high-level API client that fetches and decodes Wikimedia image search results.
-    var apiClient: Factory<APIClientProtocol> {
-        self { APIClient() }.singleton
+    var wikimediaClient: Factory<WikimediaClientProtocol> {
+        self { WikimediaClient() }.singleton
     }
 
     /// Kingfisher-backed image cache used to pre-load card images before a game starts.

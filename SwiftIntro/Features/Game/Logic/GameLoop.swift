@@ -46,11 +46,11 @@ final class GameLoop {
     /// - Parameters:
     ///   - view: The `Connectable` view that renders `GameModel` and dispatches `GameEvent`s.
     ///   - collectionView: The card grid — used by the effect handler to find cells for flip animations.
-    ///   - onNavigateToGameOver: Called on the main thread when the player wins.
+    ///   - onNavigateToGameOver: Called on the main actor when the player wins.
     func start<View: Connectable>(
         view: View,
         collectionView: UICollectionView,
-        onNavigateToGameOver: @escaping (GameOutcome) -> Void
+        onNavigateToGameOver: @escaping @MainActor (GameOutcome) -> Void
     ) where View.Input == GameModel, View.Output == GameEvent {
         effectHandler.collectionView = collectionView
         effectHandler.onNavigateToGameOver = onNavigateToGameOver

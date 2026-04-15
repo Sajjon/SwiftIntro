@@ -1,11 +1,11 @@
 //
-//  APIClientTests.swift
+//  WikimediaClientTests.swift
 //  SwiftIntroTests
 //
 //  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 //  All tests follow the Arrange-Act-Assert (AAA) pattern:
-//  - Arrange: register a mock HTTPClient, build the APIClient (1–5 lines)
+//  - Arrange: register a mock HTTPClient, build the WikimediaClient (1–5 lines)
 //  - Act:     call getPhotos(_:done:) (1 line)
 //  - Assert:  verify a single outcome delivered to the done closure (1 line)
 //
@@ -55,21 +55,21 @@ private let invalidJSON = Data("not json".utf8)
 // MARK: - Tests
 
 @MainActor
-final class APIClientTests: XCTestCase {
+final class WikimediaClientTests: XCTestCase {
     private let mock = MockHTTPClient()
-    private nonisolated(unsafe) var apiClient: APIClient!
+    private nonisolated(unsafe) var wikimediaClient: WikimediaClient!
 
     override func setUp() {
         super.setUp()
         // Override the Factory-injected httpClient with the mock for this test.
         let mock = mock
         Container.shared.httpClient.register { mock }
-        apiClient = APIClient()
+        wikimediaClient = WikimediaClient()
     }
 
     override func tearDown() {
         Container.shared.httpClient.reset()
-        apiClient = nil
+        wikimediaClient = nil
         super.tearDown()
     }
 
@@ -82,7 +82,7 @@ final class APIClientTests: XCTestCase {
         nonisolated(unsafe) var receivedSingles: CardSingles?
 
         // Act
-        apiClient.getPhotos("cats") { result in
+        wikimediaClient.getPhotos("cats") { result in
             if case let .success(singles) = result { receivedSingles = singles }
             exp.fulfill()
         }
@@ -99,7 +99,7 @@ final class APIClientTests: XCTestCase {
         nonisolated(unsafe) var count = 0
 
         // Act
-        apiClient.getPhotos("cats") { result in
+        wikimediaClient.getPhotos("cats") { result in
             if case let .success(singles) = result { count = singles.cards.count }
             exp.fulfill()
         }
@@ -118,7 +118,7 @@ final class APIClientTests: XCTestCase {
         nonisolated(unsafe) var receivedError: Error?
 
         // Act
-        apiClient.getPhotos("cats") { result in
+        wikimediaClient.getPhotos("cats") { result in
             if case let .failure(error) = result { receivedError = error }
             exp.fulfill()
         }
@@ -137,7 +137,7 @@ final class APIClientTests: XCTestCase {
         nonisolated(unsafe) var receivedError: Error?
 
         // Act
-        apiClient.getPhotos("cats") { result in
+        wikimediaClient.getPhotos("cats") { result in
             if case let .failure(error) = result { receivedError = error }
             exp.fulfill()
         }

@@ -12,7 +12,7 @@
 		48D053AE2F8E355C006B3DEF /* CardSingles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D053AD2F8E355A006B3DEF /* CardSingles.swift */; };
 		48D053B62F8E5500006B3DEF /* GameLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D053B52F8E5500006B3DEF /* GameLoop.swift */; };
 		7B21A5B01CFF5C17002E5EE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5AC1CFF5C17002E5EE5 /* AppDelegate.swift */; };
-		7B21A5B41CFF5CAC002E5EE5 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5B31CFF5CAC002E5EE5 /* APIClient.swift */; };
+		7B21A5B41CFF5CAC002E5EE5 /* WikimediaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5B31CFF5CAC002E5EE5 /* WikimediaClient.swift */; };
 		7B21A5B61CFF5DAE002E5EE5 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5B51CFF5DAE002E5EE5 /* HTTPClient.swift */; };
 		7B21A5B81CFF5E7B002E5EE5 /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5B71CFF5E7B002E5EE5 /* GameVC.swift */; };
 		7B21A5BB1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5BA1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift */; };
@@ -32,7 +32,7 @@
 		7B8608621D15993400037D36 /* UIButton_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8608611D15993400037D36 /* UIButton_Extension.swift */; };
 		7B8608661D15A1DB00037D36 /* Array_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8608651D15A1DB00037D36 /* Array_Extension.swift */; };
 		7BA112A11D97F75A003B5D69 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA1129F1D97F75A003B5D69 /* Strings.swift */; };
-		7BAD45931CFF6F3A00C7D7EF /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45921CFF6F3900C7D7EF /* Router.swift */; };
+		7BAD45931CFF6F3A00C7D7EF /* WikimediaRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45921CFF6F3900C7D7EF /* WikimediaRouter.swift */; };
 		7BADD6AB1D16D9DF005EEBE3 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD6AA1D16D9DF005EEBE3 /* Level.swift */; };
 		7BADD6AD1D16DE8C005EEBE3 /* LoadingDataVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD6AC1D16DE8C005EEBE3 /* LoadingDataVC.swift */; };
 		AA010002AA010002AA010002 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA010001AA010001AA010001 /* SettingsView.swift */; };
@@ -56,7 +56,7 @@
 		SSST0003SSST0003SSST0003 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = SSST0002SSST0002SSST0002 /* SnapshotTesting */; };
 		TA000002TA000002TA000002 /* GameLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TA000001TA000001TA000001 /* GameLogicTests.swift */; };
 		TB000002TB000002TB000002 /* LevelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TB000001TB000001TB000001 /* LevelTests.swift */; };
-		TC000002TC000002TC000002 /* RouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TC000001TC000001TC000001 /* RouterTests.swift */; };
+		TC000002TC000002TC000002 /* WikimediaRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TC000001TC000001TC000001 /* WikimediaRouterTests.swift */; };
 		TD000002TD000002TD000002 /* GameModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TD000001TD000001TD000001 /* GameModelTests.swift */; };
 		TE000002TE000002TE000002 /* CardDuplicatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TE000001TE000001TE000001 /* CardDuplicatesTests.swift */; };
 		TF000002TF000002TF000002 /* ArrayExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TF000001TF000001TF000001 /* ArrayExtensionTests.swift */; };
@@ -67,7 +67,7 @@
 		TK000002TK000002TK000002 /* HTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TK000001TK000001TK000001 /* HTTPClientTests.swift */; };
 		TL000002TL000002TL000002 /* GameEffectHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TL000001TL000001TL000001 /* GameEffectHandlerTests.swift */; };
 		TM000002TM000002TM000002 /* GameLoopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TM000001TM000001TM000001 /* GameLoopTests.swift */; };
-		TN000002TN000002TN000002 /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TN000001TN000001TN000001 /* APIClientTests.swift */; };
+		TN000002TN000002TN000002 /* WikimediaClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TN000001TN000001TN000001 /* WikimediaClientTests.swift */; };
 		TO000002TO000002TO000002 /* MemoryDataSourceAndDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TO000001TO000001TO000001 /* MemoryDataSourceAndDelegateTests.swift */; };
 		TP000002TP000002TP000002 /* ImageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TP000001TP000001TP000001 /* ImageCacheTests.swift */; };
 		TQ000002TQ000002TQ000002 /* LoadingDataVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TQ000001TQ000001TQ000001 /* LoadingDataVCTests.swift */; };
@@ -107,7 +107,7 @@
 		48D053B52F8E5500006B3DEF /* GameLoop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLoop.swift; sourceTree = "<group>"; };
 		7B21A5AC1CFF5C17002E5EE5 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7B21A5AD1CFF5C17002E5EE5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7B21A5B31CFF5CAC002E5EE5 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		7B21A5B31CFF5CAC002E5EE5 /* WikimediaClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikimediaClient.swift; sourceTree = "<group>"; };
 		7B21A5B51CFF5DAE002E5EE5 /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		7B21A5B71CFF5E7B002E5EE5 /* GameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
 		7B21A5BA1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryDataSourceAndDelegate.swift; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 		7B8608611D15993400037D36 /* UIButton_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButton_Extension.swift; sourceTree = "<group>"; };
 		7B8608651D15A1DB00037D36 /* Array_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array_Extension.swift; sourceTree = "<group>"; };
 		7BA1129F1D97F75A003B5D69 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
-		7BAD45921CFF6F3900C7D7EF /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		7BAD45921CFF6F3900C7D7EF /* WikimediaRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikimediaRouter.swift; sourceTree = "<group>"; };
 		7BADD6AA1D16D9DF005EEBE3 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		7BADD6AC1D16DE8C005EEBE3 /* LoadingDataVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingDataVC.swift; sourceTree = "<group>"; };
 		AA010001AA010001AA010001 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 		FF080001FF080001FF080001 /* Container+SwiftIntro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Container+SwiftIntro.swift"; sourceTree = "<group>"; };
 		TA000001TA000001TA000001 /* GameLogicTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLogicTests.swift; sourceTree = "<group>"; };
 		TB000001TB000001TB000001 /* LevelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelTests.swift; sourceTree = "<group>"; };
-		TC000001TC000001TC000001 /* RouterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTests.swift; sourceTree = "<group>"; };
+		TC000001TC000001TC000001 /* WikimediaRouterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikimediaRouterTests.swift; sourceTree = "<group>"; };
 		TD000001TD000001TD000001 /* GameModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameModelTests.swift; sourceTree = "<group>"; };
 		TE000001TE000001TE000001 /* CardDuplicatesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDuplicatesTests.swift; sourceTree = "<group>"; };
 		TEST0002TEST0002TEST0002 /* SwiftIntroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftIntroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,7 +160,7 @@
 		TK000001TK000001TK000001 /* HTTPClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientTests.swift; sourceTree = "<group>"; };
 		TL000001TL000001TL000001 /* GameEffectHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEffectHandlerTests.swift; sourceTree = "<group>"; };
 		TM000001TM000001TM000001 /* GameLoopTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLoopTests.swift; sourceTree = "<group>"; };
-		TN000001TN000001TN000001 /* APIClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
+		TN000001TN000001TN000001 /* WikimediaClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikimediaClientTests.swift; sourceTree = "<group>"; };
 		TO000001TO000001TO000001 /* MemoryDataSourceAndDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryDataSourceAndDelegateTests.swift; sourceTree = "<group>"; };
 		TP000001TP000001TP000001 /* ImageCacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheTests.swift; sourceTree = "<group>"; };
 		TQ000001TQ000001TQ000001 /* LoadingDataVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingDataVCTests.swift; sourceTree = "<group>"; };
@@ -374,10 +374,10 @@
 		A5000001A5000001A5000001 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				7B21A5B31CFF5CAC002E5EE5 /* APIClient.swift */,
+				7B21A5B31CFF5CAC002E5EE5 /* WikimediaClient.swift */,
 				7B21A5B51CFF5DAE002E5EE5 /* HTTPClient.swift */,
 				7B2F90A91D00B9A400613325 /* ImageFetcher.swift */,
-				7BAD45921CFF6F3900C7D7EF /* Router.swift */,
+				7BAD45921CFF6F3900C7D7EF /* WikimediaRouter.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -399,7 +399,7 @@
 			children = (
 				TA000001TA000001TA000001 /* GameLogicTests.swift */,
 				TB000001TB000001TB000001 /* LevelTests.swift */,
-				TC000001TC000001TC000001 /* RouterTests.swift */,
+				TC000001TC000001TC000001 /* WikimediaRouterTests.swift */,
 				TD000001TD000001TD000001 /* GameModelTests.swift */,
 				TE000001TE000001TE000001 /* CardDuplicatesTests.swift */,
 				TF000001TF000001TF000001 /* ArrayExtensionTests.swift */,
@@ -410,7 +410,7 @@
 				TK000001TK000001TK000001 /* HTTPClientTests.swift */,
 				TL000001TL000001TL000001 /* GameEffectHandlerTests.swift */,
 				TM000001TM000001TM000001 /* GameLoopTests.swift */,
-				TN000001TN000001TN000001 /* APIClientTests.swift */,
+				TN000001TN000001TN000001 /* WikimediaClientTests.swift */,
 				TO000001TO000001TO000001 /* MemoryDataSourceAndDelegateTests.swift */,
 				TP000001TP000001TP000001 /* ImageCacheTests.swift */,
 				TQ000001TQ000001TQ000001 /* LoadingDataVCTests.swift */,
@@ -598,8 +598,8 @@
 				AA200001AA200001AA200001 /* CircularButton.swift in Sources */,
 				BB200001BB200001BB200001 /* GameHeaderView.swift in Sources */,
 				7B4497F11D189BA900E080C7 /* GameOutcome.swift in Sources */,
-				7B21A5B41CFF5CAC002E5EE5 /* APIClient.swift in Sources */,
-				7BAD45931CFF6F3A00C7D7EF /* Router.swift in Sources */,
+				7B21A5B41CFF5CAC002E5EE5 /* WikimediaClient.swift in Sources */,
+				7BAD45931CFF6F3A00C7D7EF /* WikimediaRouter.swift in Sources */,
 				7B21A5C51CFF6586002E5EE5 /* NSObject_Extension.swift in Sources */,
 				FF080002FF080002FF080002 /* Container+SwiftIntro.swift in Sources */,
 				7B86085C1D1594FE00037D36 /* GameOverVC.swift in Sources */,
@@ -625,7 +625,7 @@
 			files = (
 				TA000002TA000002TA000002 /* GameLogicTests.swift in Sources */,
 				TB000002TB000002TB000002 /* LevelTests.swift in Sources */,
-				TC000002TC000002TC000002 /* RouterTests.swift in Sources */,
+				TC000002TC000002TC000002 /* WikimediaRouterTests.swift in Sources */,
 				TD000002TD000002TD000002 /* GameModelTests.swift in Sources */,
 				TE000002TE000002TE000002 /* CardDuplicatesTests.swift in Sources */,
 				TF000002TF000002TF000002 /* ArrayExtensionTests.swift in Sources */,
@@ -636,7 +636,7 @@
 				TK000002TK000002TK000002 /* HTTPClientTests.swift in Sources */,
 				TL000002TL000002TL000002 /* GameEffectHandlerTests.swift in Sources */,
 				TM000002TM000002TM000002 /* GameLoopTests.swift in Sources */,
-				TN000002TN000002TN000002 /* APIClientTests.swift in Sources */,
+				TN000002TN000002TN000002 /* WikimediaClientTests.swift in Sources */,
 				TO000002TO000002TO000002 /* MemoryDataSourceAndDelegateTests.swift in Sources */,
 				TP000002TP000002TP000002 /* ImageCacheTests.swift in Sources */,
 				TQ000002TQ000002TQ000002 /* LoadingDataVCTests.swift in Sources */,
