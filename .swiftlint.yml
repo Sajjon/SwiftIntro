@@ -10,6 +10,7 @@ trailing_comma:
 
 included:
   - SwiftIntro
+  - SwiftIntroTests
 
 excluded:
   - Carthage

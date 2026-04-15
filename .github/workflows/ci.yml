@@ -57,15 +57,12 @@ jobs:
     name: Test & Coverage
     runs-on: macos-15
     env:
-      # Xcode 26.1 ships with the macOS 26 / iOS 26 SDK.
-      # Adjust the path when a newer runner image is available.
-      DEVELOPER_DIR: /Applications/Xcode_16.3.app/Contents/Developer
       RESULT_BUNDLE: .build/TestResults.xcresult
       COV_XML: .build/coverage.xml
       SCHEME: SwiftIntro
       PROJECT: SwiftIntro.xcodeproj
-      # Simulator device available on the macos-15 runner image.
-      DESTINATION: platform=iOS Simulator,name=iPhone 16,OS=latest
+      # Omit OS so xcodebuild picks whichever runtime is installed on the runner.
+      DESTINATION: platform=iOS Simulator,name=iPhone 16
 
     steps:
       - uses: actions/checkout@v4

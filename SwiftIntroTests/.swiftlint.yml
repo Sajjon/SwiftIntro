@@ -1,0 +1,8 @@
+# Per-target overrides for the test suite.
+# Inherits all rules from the root .swiftlint.yml; only overrides listed below.
+
+# Test functions are intentionally longer than production functions:
+# each test has a full Arrange / Act / Assert section.
+function_body_length:
+  warning: 20
+  error: 20
