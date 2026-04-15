@@ -97,11 +97,13 @@ jobs:
 
       - name: Validate simulator destination
         run: |
-          if ! xcrun simctl list devices available "iOS $SIM_OS" | grep -F "$SIM_DEVICE" > /dev/null; then
+          AVAILABLE_IOS_DEVICES=$(xcrun simctl list devices available "iOS $SIM_OS")
+          echo "$AVAILABLE_IOS_DEVICES"
+          if ! echo "$AVAILABLE_IOS_DEVICES" | grep -F "$SIM_DEVICE" > /dev/null; then
             echo "Expected simulator not available: $SIM_DEVICE (iOS $SIM_OS)" >&2
             exit 1
           fi
-          xcrun simctl list devices available "iOS $SIM_OS" | grep -F "$SIM_DEVICE"
+          echo "$AVAILABLE_IOS_DEVICES" | grep -F "$SIM_DEVICE"
 
       - name: Build & test with coverage
         run: |
