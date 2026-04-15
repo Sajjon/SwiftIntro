@@ -25,6 +25,13 @@ final class GameLoop {
     /// without storing `GameConfiguration` or `CardDuplicates` separately.
     let level: Level
 
+    /// Guards against calling `MobiusController.stop()` more than once.
+    ///
+    /// `viewDidDisappear` can fire multiple times (e.g. a modal is presented on top
+    /// of `GameVC` and then dismissed). Mobius asserts on a second `stop()`, so we
+    /// short-circuit here instead.
+    private var isStopped = false
+
     /// Builds the complete Mobius loop from the given initial model.
     ///
     /// `effectHandler` is pre-seeded with `initialModel` so cell configuration works
@@ -60,8 +67,11 @@ final class GameLoop {
 
     /// Stops the loop and disconnects the view, cancelling any pending timers.
     ///
+    /// Idempotent — safe to call more than once; subsequent calls are no-ops.
     /// Call this from `viewDidDisappear`.
     func stop() {
+        guard !isStopped else { return }
+        isStopped = true
         controller.stop()
         controller.disconnectView()
     }
