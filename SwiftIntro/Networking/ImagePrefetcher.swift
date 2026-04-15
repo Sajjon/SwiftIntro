@@ -17,7 +17,10 @@ import UIKit
 /// so that tests can inject a stub that completes synchronously without hitting the network.
 protocol ImageRetrieverProtocol {
     /// Fetches the image at `url` (memory → disk → network) and calls `done` when complete.
-    func retrieveImage(with url: URL, done: @escaping () -> Void)
+    func retrieveImage(
+        with url: URL,
+        done: @escaping () -> Void
+    )
 }
 
 // MARK: KingfisherManager + ImageRetrieverProtocol
@@ -25,7 +28,10 @@ protocol ImageRetrieverProtocol {
 extension KingfisherManager: ImageRetrieverProtocol {
     /// Wraps `KingfisherManager.retrieveImage(with:completionHandler:)`, discarding the result
     /// and calling `done` once the fetch (memory → disk → network) completes.
-    func retrieveImage(with url: URL, done: @escaping () -> Void) {
+    func retrieveImage(
+        with url: URL,
+        done: @escaping () -> Void
+    ) {
         retrieveImage(with: url) { _ in done() }
     }
 }
@@ -38,10 +44,16 @@ extension KingfisherManager: ImageRetrieverProtocol {
 /// reports instant completion without touching the network or disk.
 protocol ImageCacheProtocol {
     /// Ensures all `urls` are present in the **memory** cache, then calls `done`.
-    func prefetchImages(_ urls: [URL], done: Closure?)
+    func prefetchImages(
+        _ urls: [URL],
+        done: Closure?
+    )
 
     /// Ensures a single `url` is present in the memory cache, then calls `done`.
-    func prefetchImage(_ url: URL, done: Closure?)
+    func prefetchImage(
+        _ url: URL,
+        done: Closure?
+    )
 
     /// Returns the cached `UIImage` for `url` if it is already in the memory cache,
     /// or `nil` if the image has not been loaded yet.
@@ -73,7 +85,10 @@ extension Cache: ImageCacheProtocol {
 
     /// Uses a `DispatchGroup` to fan out concurrent retrieval requests and calls `done` on the
     /// main queue once every URL has been resolved through memory, disk, or network.
-    func prefetchImages(_ urls: [URL], done: Closure? = nil) {
+    func prefetchImages(
+        _ urls: [URL],
+        done: Closure? = nil
+    ) {
         // `KingfisherManager.retrieveImage` walks memory → disk → network, guaranteeing
         // each image lands in the **memory** cache before `done()` is called.
         //
@@ -91,7 +106,10 @@ extension Cache: ImageCacheProtocol {
     }
 
     /// Convenience wrapper that pre-fetches a single URL by delegating to `prefetchImages`.
-    func prefetchImage(_ url: URL, done: Closure? = nil) {
+    func prefetchImage(
+        _ url: URL,
+        done: Closure? = nil
+    ) {
         prefetchImages([url], done: done)
     }
 }

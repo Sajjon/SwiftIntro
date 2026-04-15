@@ -90,7 +90,10 @@ final class GameLoop {
     }
 
     /// Configures `cell` to match the current visual state of the card at `index`.
-    func configureCell(_ cell: CardCVCell, at index: Int) {
+    func configureCell(
+        _ cell: CardCVCell,
+        at index: Int
+    ) {
         effectHandler.configureCell(cell, at: index)
     }
 }

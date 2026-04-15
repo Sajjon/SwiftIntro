@@ -31,7 +31,10 @@ final class MemoryDataSourceAndDelegate: NSObject {
     /// Configures the given cell to match the current visual state of the card at `index`.
     var configureCell: ((CardCVCell, Int) -> Void)?
 
-    init(rows: Int, columns: Int) {
+    init(
+        rows: Int,
+        columns: Int
+    ) {
         numberOfRows = rows
         numberOfColumns = columns
     }
@@ -95,7 +98,10 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDataSource {
         numberOfRows
     }
 
-    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
+    func collectionView(
+        _: UICollectionView,
+        numberOfItemsInSection _: Int
+    ) -> Int {
         numberOfColumns
     }
 
@@ -112,14 +118,21 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 
 extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
-    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(
+        _: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
         let index = flatIndex(for: indexPath)
         // Gate on canSelectCard so matched cards cannot be tapped a second time.
         guard canSelectCard?(index) == true else { return }
         onCardTapped?(index)
     }
 
-    func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(
+        _: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
         // `willDisplay` is preferred over `cellForItemAt` for configuration because
         // it fires every time a cell becomes visible, ensuring Kingfisher image loading
         // is triggered even after cells are recycled via the reuse pool.

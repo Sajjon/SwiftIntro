@@ -27,11 +27,17 @@ final class GameEffectHandlerTests: XCTestCase {
         return card
     }
 
-    private func makeModel(cards: [CardModel] = [], level: Level = .easy) -> GameModel {
+    private func makeModel(
+        cards: [CardModel] = [],
+        level: Level = .easy
+    ) -> GameModel {
         GameModel(cards: cards, level: level)
     }
 
-    private func makeHandler(model: GameModel? = nil, level: Level = .easy) -> GameEffectHandler {
+    private func makeHandler(
+        model: GameModel? = nil,
+        level: Level = .easy
+    ) -> GameEffectHandler {
         let initialModel = model ?? makeModel(level: level)
         return GameEffectHandler(level: level, initialModel: initialModel)
     }

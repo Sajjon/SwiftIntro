@@ -10,11 +10,10 @@
 //  - Assert:  verify a single expected value (1 line)
 //
 
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
 final class GameModelTests: XCTestCase {
-
     private let url = URL(string: "https://example.com/img.jpg")!
 
     // MARK: - CardModel init
@@ -115,7 +114,7 @@ final class GameModelTests: XCTestCase {
 
     func test_totalPairs_forEasyLevelDeck() {
         // Arrange — easy = 6 cards = 3 pairs
-        let cards = (0..<6).map { _ in CardModel(imageUrl: url) }
+        let cards = (0 ..< 6).map { _ in CardModel(imageUrl: url) }
         let model = GameModel(cards: cards, level: .easy)
 
         // Act
@@ -127,7 +126,7 @@ final class GameModelTests: XCTestCase {
 
     func test_totalPairs_forNormalLevelDeck() {
         // Arrange — normal = 12 cards = 6 pairs
-        let cards = (0..<12).map { _ in CardModel(imageUrl: url) }
+        let cards = (0 ..< 12).map { _ in CardModel(imageUrl: url) }
         let model = GameModel(cards: cards, level: .normal)
 
         // Act
@@ -139,7 +138,7 @@ final class GameModelTests: XCTestCase {
 
     func test_totalPairs_forHardLevelDeck() {
         // Arrange — hard = 20 cards = 10 pairs
-        let cards = (0..<20).map { _ in CardModel(imageUrl: url) }
+        let cards = (0 ..< 20).map { _ in CardModel(imageUrl: url) }
         let model = GameModel(cards: cards, level: .hard)
 
         // Act
@@ -151,8 +150,11 @@ final class GameModelTests: XCTestCase {
 
     // MARK: - Helpers
 
-    private func makeModel(pairs: Int, level: Level = .easy) -> GameModel {
-        let cards = (0..<pairs * 2).map { _ in CardModel(imageUrl: url) }
+    private func makeModel(
+        pairs: Int,
+        level: Level = .easy
+    ) -> GameModel {
+        let cards = (0 ..< pairs * 2).map { _ in CardModel(imageUrl: url) }
         return GameModel(cards: cards, level: level)
     }
 }

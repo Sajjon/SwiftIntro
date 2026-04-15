@@ -29,7 +29,10 @@ final class GameOverVCTests: XCTestCase {
         CardDuplicates(memoryCards: (0 ..< count).map { makeCard(index: $0) })
     }
 
-    private func makeOutcome(level: Level = .easy, clickCount: Int = 5) -> GameOutcome {
+    private func makeOutcome(
+        level: Level = .easy,
+        clickCount: Int = 5
+    ) -> GameOutcome {
         GameOutcome(
             level: level,
             clickCount: clickCount,

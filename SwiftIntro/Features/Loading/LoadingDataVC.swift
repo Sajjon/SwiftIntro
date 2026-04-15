@@ -19,7 +19,10 @@ protocol LoadingDataNavigatorProtocol: AnyObject {
     /// Called on the main thread after images are in the memory cache and the game
     /// is ready to start. The conformer is responsible for replacing `LoadingDataVC`
     /// in the navigation stack with `GameVC`.
-    func navigateToGame(config: GameConfiguration, cards: CardDuplicates)
+    func navigateToGame(
+        config: GameConfiguration,
+        cards: CardDuplicates
+    )
 }
 
 // MARK: - LoadingDataVC

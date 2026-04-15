@@ -38,7 +38,10 @@ enum GameLogic {
 
 private extension GameLogic {
     /// Validates the tap, then delegates to `applyFlip`.
-    static func handleCardTapped(index: Int, model: GameModel) -> Next<GameModel, GameEffect> {
+    static func handleCardTapped(
+        index: Int,
+        model: GameModel
+    ) -> Next<GameModel, GameEffect> {
         log.debug("Card tapped at index \(index)")
         guard index < model.cards.count else { return .noChange }
         guard !model.cards[index].isFlipped, !model.cards[index].isMatched else { return .noChange }
@@ -46,7 +49,10 @@ private extension GameLogic {
     }
 
     /// Increments click count, flips the card, then routes to pair evaluation or stores it as pending.
-    static func applyFlip(index: Int, model: GameModel) -> Next<GameModel, GameEffect> {
+    static func applyFlip(
+        index: Int,
+        model: GameModel
+    ) -> Next<GameModel, GameEffect> {
         var newModel = model
         newModel.clickCount += 1
         newModel.cards[index].isFlipped = true
@@ -59,7 +65,11 @@ private extension GameLogic {
     }
 
     /// Compares the two face-up cards and returns either a match or a flip-back effect.
-    static func evaluatePair(index: Int, pendingIndex: Int, newModel: GameModel) -> Next<GameModel, GameEffect> {
+    static func evaluatePair(
+        index: Int,
+        pendingIndex: Int,
+        newModel: GameModel
+    ) -> Next<GameModel, GameEffect> {
         if newModel.cards[index].imageUrl == newModel.cards[pendingIndex].imageUrl {
             return handleMatch(index: index, pendingIndex: pendingIndex, newModel: newModel)
         }
@@ -70,7 +80,11 @@ private extension GameLogic {
     }
 
     /// Marks both cards matched; triggers game-over if all pairs are found.
-    static func handleMatch(index: Int, pendingIndex: Int, newModel: GameModel) -> Next<GameModel, GameEffect> {
+    static func handleMatch(
+        index: Int,
+        pendingIndex: Int,
+        newModel: GameModel
+    ) -> Next<GameModel, GameEffect> {
         var newModel = newModel
         newModel.cards[index].isMatched = true
         newModel.cards[pendingIndex].isMatched = true
@@ -82,7 +96,10 @@ private extension GameLogic {
     }
 
     /// Builds the game-over `Next` value, reconstructing the deck for a potential restart.
-    static func gameOverNext(index: Int, newModel: GameModel) -> Next<GameModel, GameEffect> {
+    static func gameOverNext(
+        index: Int,
+        newModel: GameModel
+    ) -> Next<GameModel, GameEffect> {
         // Reconstruct the deck from image URLs so the game-over screen can restart
         // with the same images in a freshly shuffled order.
         let cards = newModel.cards.map(\.imageUrl).map(Card.init)
@@ -95,7 +112,11 @@ private extension GameLogic {
     }
 
     /// Flips both cards face-down after the delayed timer fires.
-    static func handleFlipBack(index1: Int, index2: Int, model: GameModel) -> Next<GameModel, GameEffect> {
+    static func handleFlipBack(
+        index1: Int,
+        index2: Int,
+        model: GameModel
+    ) -> Next<GameModel, GameEffect> {
         var newModel = model
         newModel.cards[index1].isFlipped = false
         newModel.cards[index2].isFlipped = false

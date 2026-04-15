@@ -11,8 +11,8 @@
 //
 
 import Factory
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
 // MARK: - Stub
 
@@ -22,7 +22,10 @@ private final class StubRetriever: ImageRetrieverProtocol {
     /// All URLs that have been requested, in order.
     private(set) var retrievedURLs: [URL] = []
 
-    func retrieveImage(with url: URL, done: @escaping () -> Void) {
+    func retrieveImage(
+        with url: URL,
+        done: @escaping () -> Void
+    ) {
         retrievedURLs.append(url)
         if !delayedURLs.contains(url) {
             done()
@@ -34,13 +37,12 @@ private final class StubRetriever: ImageRetrieverProtocol {
 // MARK: - Tests
 
 final class CacheTests: XCTestCase {
-
     private var stub: StubRetriever!
 
     override func setUp() {
         super.setUp()
         stub = StubRetriever()
-        Container.shared.imageRetriever.register { [unowned self] in self.stub }
+        Container.shared.imageRetriever.register { [unowned self] in stub }
     }
 
     override func tearDown() {
@@ -75,11 +77,11 @@ final class CacheTests: XCTestCase {
 
     // MARK: - prefetchImages
 
-    func test_prefetchImages_callsDoneAfterAllURLsRetrieved() {
+    func test_prefetchImages_callsDoneAfterAllURLsRetrieved() throws {
         // Arrange
-        let urls = [
-            URL(string: "https://a.test/1.jpg")!,
-            URL(string: "https://a.test/2.jpg")!,
+        let urls = try [
+            XCTUnwrap(URL(string: "https://a.test/1.jpg")),
+            XCTUnwrap(URL(string: "https://a.test/2.jpg")),
         ]
         let cache = Cache()
         let exp = expectation(description: "done called")
@@ -104,12 +106,12 @@ final class CacheTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func test_prefetchImages_retrievesEachURL() {
+    func test_prefetchImages_retrievesEachURL() throws {
         // Arrange
-        let urls = [
-            URL(string: "https://a.test/a.jpg")!,
-            URL(string: "https://a.test/b.jpg")!,
-            URL(string: "https://a.test/c.jpg")!,
+        let urls = try [
+            XCTUnwrap(URL(string: "https://a.test/a.jpg")),
+            XCTUnwrap(URL(string: "https://a.test/b.jpg")),
+            XCTUnwrap(URL(string: "https://a.test/c.jpg")),
         ]
         let cache = Cache()
         let exp = expectation(description: "done called")
@@ -122,10 +124,10 @@ final class CacheTests: XCTestCase {
         XCTAssertEqual(Set(stub.retrievedURLs), Set(urls))
     }
 
-    func test_prefetchImages_doesNotCallDoneUntilAllComplete() {
+    func test_prefetchImages_doesNotCallDoneUntilAllComplete() throws {
         // Arrange — stall the second URL
-        let url1 = URL(string: "https://a.test/1.jpg")!
-        let url2 = URL(string: "https://a.test/2.jpg")!
+        let url1 = try XCTUnwrap(URL(string: "https://a.test/1.jpg"))
+        let url2 = try XCTUnwrap(URL(string: "https://a.test/2.jpg"))
         stub.delayedURLs = [url2]
         let cache = Cache()
         var doneCalled = false
@@ -140,12 +142,12 @@ final class CacheTests: XCTestCase {
         XCTAssertFalse(doneCalled)
     }
 
-    func test_prefetchImages_nilDoneDoesNotCrash() {
+    func test_prefetchImages_nilDoneDoesNotCrash() throws {
         // Arrange
         let cache = Cache()
 
         // Act + Assert
-        XCTAssertNoThrow(cache.prefetchImages([URL(string: "https://a.test/1.jpg")!], done: nil))
+        XCTAssertNoThrow(try cache.prefetchImages([XCTUnwrap(URL(string: "https://a.test/1.jpg"))], done: nil))
         // Allow the group.notify to fire before tearDown resets the stub
         let waiter = expectation(description: "drain")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { waiter.fulfill() }
@@ -154,9 +156,9 @@ final class CacheTests: XCTestCase {
 
     // MARK: - prefetchImage (single URL)
 
-    func test_prefetchImage_callsDoneAfterRetrieval() {
+    func test_prefetchImage_callsDoneAfterRetrieval() throws {
         // Arrange
-        let url = URL(string: "https://a.test/single.jpg")!
+        let url = try XCTUnwrap(URL(string: "https://a.test/single.jpg"))
         let cache = Cache()
         let exp = expectation(description: "done called")
 

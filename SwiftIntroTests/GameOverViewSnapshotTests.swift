@@ -6,15 +6,17 @@
 //
 
 import SnapshotTesting
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
 final class GameOverViewSnapshotTests: XCTestCase {
-
     private let size = CGSize(width: 393, height: 852)
 
-    private func makeOutcome(level: Level = .easy, clickCount: Int = 10) -> GameOutcome {
-        let cards = (0..<level.cardCount).map { i in
+    private func makeOutcome(
+        level: Level = .easy,
+        clickCount: Int = 10
+    ) -> GameOutcome {
+        let cards = (0 ..< level.cardCount).map { i in
             Card(imageUrl: URL(string: "https://a.test/\(i).jpg")!)
         }
         let deck = CardDuplicates(memoryCards: cards)

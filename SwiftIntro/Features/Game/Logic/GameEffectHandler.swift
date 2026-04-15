@@ -44,7 +44,10 @@ final class GameEffectHandler {
     ///   - level: The board level, required to map flat indices to `IndexPath`s.
     ///   - initialModel: The starting model, used to configure cells on first display
     ///     before the Mobius loop delivers its first asynchronous model update.
-    init(level: Level, initialModel: GameModel) {
+    init(
+        level: Level,
+        initialModel: GameModel
+    ) {
         self.level = level
         currentModel = initialModel
     }
@@ -67,7 +70,10 @@ final class GameEffectHandler {
     ///
     /// Called from `willDisplay` in the data source, which fires whenever a cell
     /// enters the visible area of the collection view.
-    func configureCell(_ cell: CardCVCell, at index: Int) {
+    func configureCell(
+        _ cell: CardCVCell,
+        at index: Int
+    ) {
         guard let model = currentModel else { return }
         cell.configure(with: model.cards[index])
     }
@@ -101,7 +107,10 @@ extension GameEffectHandler: Connectable {
 
 private extension GameEffectHandler {
     /// Routes an incoming effect to the appropriate handler.
-    func handle(_ effect: GameEffect, dispatch: @escaping (GameEvent) -> Void) {
+    func handle(
+        _ effect: GameEffect,
+        dispatch: @escaping (GameEvent) -> Void
+    ) {
         switch effect {
         case let .flipCard(index, faceUp):
             handleFlipCard(index: index, faceUp: faceUp)
@@ -113,7 +122,10 @@ private extension GameEffectHandler {
     }
 
     /// Animates the card at `index` to the given face direction on the main thread.
-    func handleFlipCard(index: Int, faceUp: Bool) {
+    func handleFlipCard(
+        index: Int,
+        faceUp: Bool
+    ) {
         // Cell lookups and animations must run on the main thread.
         onMain { [weak self] in
             guard

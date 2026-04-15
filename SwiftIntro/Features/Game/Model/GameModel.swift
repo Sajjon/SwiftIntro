@@ -56,7 +56,10 @@ struct GameModel {
         cards.count / 2
     }
 
-    init(cards: [CardModel], level: Level) {
+    init(
+        cards: [CardModel],
+        level: Level
+    ) {
         self.cards = cards
         self.level = level
         clickCount = 0

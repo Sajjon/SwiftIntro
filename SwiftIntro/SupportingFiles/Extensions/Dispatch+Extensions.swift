@@ -23,7 +23,10 @@ func onMain(_ closure: @escaping Closure) {
 /// Dispatches a pre-built `DispatchWorkItem` on the main queue after `delay` seconds.
 ///
 /// The work item can be cancelled before the delay expires by calling `workItem.cancel()`.
-func onMain(delay: Double, workItem: DispatchWorkItem) {
+func onMain(
+    delay: Double,
+    workItem: DispatchWorkItem
+) {
     onMain(delay: delay) {
         workItem.perform()
     }
@@ -34,7 +37,10 @@ func onMain(delay: Double, workItem: DispatchWorkItem) {
 /// - Parameters:
 ///   - delay: Seconds to wait before executing the closure.
 ///   - closure: The work to perform on the main thread.
-func onMain(delay: Double, closure: @escaping Closure) {
+func onMain(
+    delay: Double,
+    closure: @escaping Closure
+) {
     // Convert the delay to nanoseconds and back to avoid floating-point precision
     // issues when computing the `DispatchTime` deadline.
     let delay = Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)

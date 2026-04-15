@@ -19,7 +19,10 @@ import XCTest
 private final class MockHTTPClient: HTTPClientProtocol {
     var result: Result<Data, Error> = .failure(URLError(.unknown))
 
-    func get(url _: URL, done: @escaping (Result<Data, Error>) -> Void) {
+    func get(
+        url _: URL,
+        done: @escaping (Result<Data, Error>) -> Void
+    ) {
         done(result)
     }
 }

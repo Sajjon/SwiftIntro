@@ -3,6 +3,13 @@ disabled_rules:
   - trailing_whitespace
   - todo
 
+opt_in_rules:
+  # Require every function/method with 2+ parameters to place each on its own line.
+  - multiline_parameters
+
+multiline_parameters:
+  allows_single_line: false
+
 # SwiftFormat's --commas always adds trailing commas in multi-line collections;
 # require them here so both tools agree.
 trailing_comma:

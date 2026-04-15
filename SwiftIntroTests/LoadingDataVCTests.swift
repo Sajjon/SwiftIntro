@@ -11,9 +11,9 @@
 //
 
 import Factory
+@testable import SwiftIntro
 import UIKit
 import XCTest
-@testable import SwiftIntro
 
 // MARK: - Stubs
 
@@ -21,7 +21,10 @@ private final class StubAPIClient: APIClientProtocol {
     var result: Result<CardSingles, Error> = .failure(URLError(.unknown))
     var getPhotosQuery: ((String) -> Void)?
 
-    func getPhotos(_ searchQuery: String, done: @escaping (Result<CardSingles, Error>) -> Void) {
+    func getPhotos(
+        _ searchQuery: String,
+        done: @escaping (Result<CardSingles, Error>) -> Void
+    ) {
         getPhotosQuery?(searchQuery)
         done(result)
     }
@@ -30,16 +33,24 @@ private final class StubAPIClient: APIClientProtocol {
 private final class StubImageCache: ImageCacheProtocol {
     private(set) var prefetchedURLs: [URL] = []
 
-    func prefetchImages(_ urls: [URL], done: Closure?) {
+    func prefetchImages(
+        _ urls: [URL],
+        done: Closure?
+    ) {
         prefetchedURLs.append(contentsOf: urls)
         done?()
     }
 
-    func prefetchImage(_ url: URL, done: Closure?) {
+    func prefetchImage(
+        _ url: URL,
+        done: Closure?
+    ) {
         prefetchImages([url], done: done)
     }
 
-    func imageFromCache(_ url: URL?) -> UIImage? { nil }
+    func imageFromCache(_: URL?) -> UIImage? {
+        nil
+    }
 }
 
 private final class SpyNavigator: LoadingDataNavigatorProtocol {
@@ -48,7 +59,10 @@ private final class SpyNavigator: LoadingDataNavigatorProtocol {
     private(set) var lastCards: CardDuplicates?
     var onNavigateToGame: (() -> Void)?
 
-    func navigateToGame(config: GameConfiguration, cards: CardDuplicates) {
+    func navigateToGame(
+        config: GameConfiguration,
+        cards: CardDuplicates
+    ) {
         navigateToGameCallCount += 1
         lastConfig = config
         lastCards = cards
@@ -59,13 +73,12 @@ private final class SpyNavigator: LoadingDataNavigatorProtocol {
 // MARK: - Helpers
 
 private func makeCards(count: Int) -> CardSingles {
-    CardSingles(cards: (0..<count).map { Card(imageUrl: URL(string: "https://a.test/\($0).jpg")!) })
+    CardSingles(cards: (0 ..< count).map { Card(imageUrl: URL(string: "https://a.test/\($0).jpg")!) })
 }
 
 // MARK: - Tests
 
 final class LoadingDataVCTests: XCTestCase {
-
     private var apiStub: StubAPIClient!
     private var cacheStub: StubImageCache!
 
@@ -73,8 +86,8 @@ final class LoadingDataVCTests: XCTestCase {
         super.setUp()
         apiStub = StubAPIClient()
         cacheStub = StubImageCache()
-        Container.shared.apiClient.register { [unowned self] in self.apiStub }
-        Container.shared.imageCache.register { [unowned self] in self.cacheStub }
+        Container.shared.apiClient.register { [unowned self] in apiStub }
+        Container.shared.imageCache.register { [unowned self] in cacheStub }
     }
 
     override func tearDown() {
@@ -87,8 +100,10 @@ final class LoadingDataVCTests: XCTestCase {
 
     // MARK: - Helpers
 
-    private func makeVC(level: Level = .easy,
-                        query: String = "cats") -> LoadingDataVC {
+    private func makeVC(
+        level: Level = .easy,
+        query: String = "cats"
+    ) -> LoadingDataVC {
         LoadingDataVC(config: GameConfiguration(level: level, searchQuery: query))
     }
 

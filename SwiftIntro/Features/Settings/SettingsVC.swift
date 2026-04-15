@@ -41,7 +41,10 @@ final class SettingsVC: UIViewController {
 extension SettingsVC: LoadingDataNavigatorProtocol {
     /// Replaces `LoadingDataVC` in the navigation stack with `GameVC` so the player
     /// cannot navigate back to the loading screen with the back gesture.
-    func navigateToGame(config: GameConfiguration, cards: CardDuplicates) {
+    func navigateToGame(
+        config: GameConfiguration,
+        cards: CardDuplicates
+    ) {
         let gameVC = GameVC(config: config, cards: cards)
         guard var viewControllers = navigationController?.viewControllers else { return }
         viewControllers[viewControllers.count - 1] = gameVC

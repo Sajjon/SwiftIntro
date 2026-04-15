@@ -22,7 +22,10 @@ final class GameOverVC: UIViewController {
     /// The root view; installed via `loadView()`.
     private let gameOverView = GameOverView()
 
-    init(config: GameConfiguration, outcome: GameOutcome) {
+    init(
+        config: GameConfiguration,
+        outcome: GameOutcome
+    ) {
         self.config = config
         self.outcome = outcome
         super.init(nibName: nil, bundle: nil)

@@ -44,7 +44,10 @@ final class GameVCTests: XCTestCase {
         )
     }
 
-    private func makeModel(level: Level = .easy, matches: Int = 0) -> GameModel {
+    private func makeModel(
+        level: Level = .easy,
+        matches: Int = 0
+    ) -> GameModel {
         let cards = (0 ..< level.cardCount).map {
             CardModel(imageUrl: URL(string: "https://a.test/\($0).jpg")!)
         }

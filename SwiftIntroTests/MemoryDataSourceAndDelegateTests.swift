@@ -10,19 +10,24 @@
 //  - Assert:  verify a single observable outcome (1 line)
 //
 
+@testable import SwiftIntro
 import UIKit
 import XCTest
-@testable import SwiftIntro
 
 final class MemoryDataSourceAndDelegateTests: XCTestCase {
-
     // MARK: - Helpers
 
-    private func makeDS(rows: Int = 2, columns: Int = 3) -> MemoryDataSourceAndDelegate {
+    private func makeDS(
+        rows: Int = 2,
+        columns: Int = 3
+    ) -> MemoryDataSourceAndDelegate {
         MemoryDataSourceAndDelegate(rows: rows, columns: columns)
     }
 
-    private func makeCV(width: CGFloat = 300, height: CGFloat = 400) -> (UICollectionView, UICollectionViewFlowLayout) {
+    private func makeCV(
+        width: CGFloat = 300,
+        height: CGFloat = 400
+    ) -> (UICollectionView, UICollectionViewFlowLayout) {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 8
         layout.minimumInteritemSpacing = 8
@@ -227,7 +232,10 @@ final class MemoryDataSourceAndDelegateTests: XCTestCase {
         // Arrange
         let ds = makeDS()
         let nonFlowLayout = UICollectionViewLayout()
-        let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: 300, height: 400), collectionViewLayout: nonFlowLayout)
+        let cv = UICollectionView(
+            frame: CGRect(x: 0, y: 0, width: 300, height: 400),
+            collectionViewLayout: nonFlowLayout
+        )
 
         // Act
         let size = ds.collectionView(cv, layout: nonFlowLayout, sizeForItemAt: IndexPath(item: 0, section: 0))

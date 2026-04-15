@@ -21,7 +21,10 @@ protocol HTTPClientProtocol {
     ///   - url: The endpoint to fetch.
     ///   - done: Called with `.success(Data)` on a 2xx response with a body,
     ///     or `.failure(Error)` on a network error or missing response body.
-    func get(url: URL, done: @escaping (Result<Data, Swift.Error>) -> Void)
+    func get(
+        url: URL,
+        done: @escaping (Result<Data, Swift.Error>) -> Void
+    )
 }
 
 /// Concrete HTTP client backed by `URLSession`.
@@ -63,7 +66,10 @@ extension HTTPClient {
     /// Returns `.failure(error)` if a network error occurred, `.success(data)` on a
     /// valid response body, or `.failure(URLError(.badServerResponse))` when neither
     /// is present (e.g. a 204 No Content with an empty body).
-    private static func parseResponse(data: Data?, error: Error?) -> Result<Data, Swift.Error> {
+    private static func parseResponse(
+        data: Data?,
+        error: Error?
+    ) -> Result<Data, Swift.Error> {
         if let error { return .failure(error) }
         guard let data else { return .failure(URLError(.badServerResponse)) }
         return .success(data)

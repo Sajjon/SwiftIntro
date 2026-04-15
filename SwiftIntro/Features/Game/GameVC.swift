@@ -39,7 +39,10 @@ final class GameVC: UIViewController {
 
     // MARK: Inits
 
-    init(config: GameConfiguration, cards: CardDuplicates) {
+    init(
+        config: GameConfiguration,
+        cards: CardDuplicates
+    ) {
         let cardModels = cards.memoryCards.map { CardModel(imageUrl: $0.imageUrl) }
         loop = GameLoop(initialModel: GameModel(cards: cardModels, level: config.level))
         super.init(nibName: nil, bundle: nil)

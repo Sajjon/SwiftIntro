@@ -23,7 +23,10 @@ struct CardDuplicates {
 
     /// Creates a deck from unique cards, duplicating and shuffling to fill the board
     /// defined by `config.level`.
-    init(singles: CardSingles, config: GameConfiguration) {
+    init(
+        singles: CardSingles,
+        config: GameConfiguration
+    ) {
         self.init(memoryCards: makeMemoryCards(
             from: singles,
             cardCount: config.level.cardCount

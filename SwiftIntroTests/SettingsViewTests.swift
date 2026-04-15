@@ -23,7 +23,10 @@ final class SettingsViewTests: XCTestCase {
     // MARK: - Helpers
 
     /// Depth-first search for the first subview of the given type.
-    private func findSubview<T: UIView>(_ type: T.Type, in view: UIView) -> T? {
+    private func findSubview<T: UIView>(
+        _ type: T.Type,
+        in view: UIView
+    ) -> T? {
         if let found = view as? T { return found }
         return view.subviews.compactMap { findSubview(type, in: $0) }.first
     }
