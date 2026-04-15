@@ -11,7 +11,7 @@ import Foundation
 import Kingfisher
 import UIKit
 
-// MARK: - ImageRetrieverProtocol
+// MARK: - ImageFetcherProtocol
 
 /// Abstracts the single `KingfisherManager` call used by `Cache` for pre-fetching,
 /// so that tests can inject a stub that completes synchronously without hitting the network.
