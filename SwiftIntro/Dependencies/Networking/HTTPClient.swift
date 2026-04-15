@@ -23,7 +23,7 @@ protocol HTTPClientProtocol {
     ///     or `.failure(Error)` on a network error or missing response body.
     func get(
         url: URL,
-        done: @escaping (Result<Data, Swift.Error>) -> Void
+        done: @escaping @Sendable (Result<Data, Swift.Error>) -> Void
     )
 }
 
@@ -52,11 +52,11 @@ extension HTTPClient {
     ///     or `.failure(Error)` on a network error or missing response body.
     func get(
         url: URL,
-        done: @escaping (Result<Data, Swift.Error>) -> Void
+        done: @escaping @Sendable (Result<Data, Swift.Error>) -> Void
     ) {
         // `dataTask` runs asynchronously on a background URLSession delegate queue.
         // `.resume()` must be called explicitly — tasks start suspended by default.
-        urlSession.dataTask(with: url) { data, _, error in
+        urlSession.dataTask(with: url) { [done] data, _, error in
             done(Self.parseResponse(data: data, error: error))
         }.resume()
     }

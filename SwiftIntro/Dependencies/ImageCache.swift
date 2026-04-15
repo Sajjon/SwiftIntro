@@ -1,40 +1,18 @@
 //
-//  ImagePrefetcher.swift
+//  ImageCache.swift
 //  SwiftIntro
 //
-//  Created by Alexander Cyon on 02/06/16.
-//  Copyright © 2016-2026 SwiftIntro. All rights reserved.
+//  Created by Alexander Cyon on 2026-04-15.
+//  Copyright © 2026 SwiftIntro. All rights reserved.
 //
 
 import Factory
-import Foundation
 import Kingfisher
 import UIKit
 
-// MARK: - ImageRetrieverProtocol
-
-/// Abstracts the single `KingfisherManager` call used by `Cache` for pre-fetching,
-/// so that tests can inject a stub that completes synchronously without hitting the network.
-protocol ImageRetrieverProtocol {
-    /// Fetches the image at `url` (memory → disk → network) and calls `done` when complete.
-    func retrieveImage(
-        with url: URL,
-        done: @escaping () -> Void
-    )
-}
-
-// MARK: KingfisherManager + ImageRetrieverProtocol
-
-extension KingfisherManager: ImageRetrieverProtocol {
-    /// Wraps `KingfisherManager.retrieveImage(with:completionHandler:)`, discarding the result
-    /// and calling `done` once the fetch (memory → disk → network) completes.
-    func retrieveImage(
-        with url: URL,
-        done: @escaping () -> Void
-    ) {
-        retrieveImage(with: url) { _ in done() }
-    }
-}
+/// A zero-argument, no-return closure — used throughout the app for completion callbacks
+/// and button-action handlers where no parameters need to be passed.
+typealias Closure = @Sendable () -> Void
 
 // MARK: ImageCacheProtocol
 
@@ -60,21 +38,31 @@ protocol ImageCacheProtocol {
     func imageFromCache(_ url: URL?) -> UIImage?
 }
 
+extension ImageCacheProtocol {
+    /// Convenience wrapper that pre-fetches a single URL by delegating to `prefetchImages`.
+    func prefetchImage(
+        _ url: URL,
+        done: Closure? = nil
+    ) {
+        prefetchImages([url], done: done)
+    }
+}
+
 // MARK: Cache
 
 /// Concrete image cache backed by Kingfisher's `ImageCache` and `KingfisherManager`.
-final class Cache {
-    /// Kingfisher's shared cache, which manages both memory and disk storage.
-    private var cache: ImageCache {
-        ImageCache.default
-    }
-
+final class ImageCache {
     /// Injected retriever — defaults to `KingfisherManager.shared` in production,
     /// replaced with a stub in tests to avoid network calls.
     @Injected(\.imageRetriever) private var retriever
+
+    /// Kingfisher's shared cache, which manages both memory and disk storage.
+    private var cache: Kingfisher.ImageCache {
+        Kingfisher.ImageCache.default
+    }
 }
 
-extension Cache: ImageCacheProtocol {
+extension ImageCache: ImageCacheProtocol {
     /// Performs a synchronous memory-cache lookup via `ImageCache.retrieveImageInMemoryCache`.
     func imageFromCache(_ url: URL?) -> UIImage? {
         guard let url else { return nil }
@@ -99,17 +87,9 @@ extension Cache: ImageCacheProtocol {
         for url in urls {
             group.enter()
             // The result is intentionally discarded — we only care that the fetch completes.
-            retriever.retrieveImage(with: url) { group.leave() }
+            retriever.fetchImage(with: url) { group.leave() }
         }
         // `notify` fires on the main queue once every `group.leave()` has been called.
         group.notify(queue: .main) { done?() }
-    }
-
-    /// Convenience wrapper that pre-fetches a single URL by delegating to `prefetchImages`.
-    func prefetchImage(
-        _ url: URL,
-        done: Closure? = nil
-    ) {
-        prefetchImages([url], done: done)
     }
 }

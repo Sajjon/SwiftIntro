@@ -1,5 +1,5 @@
 //
-//  Dispatch+Extensions.swift
+//  Clock.swift
 //  SwiftIntro
 //
 //  Created by Alexander Cyon on 09/01/16.
@@ -7,10 +7,6 @@
 //
 
 import Foundation
-
-/// A zero-argument, no-return closure — used throughout the app for completion callbacks
-/// and button-action handlers where no parameters need to be passed.
-typealias Closure = @Sendable () -> Void
 
 // MARK: - Clock
 

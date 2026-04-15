@@ -50,7 +50,7 @@ final class GameOverView: UIView {
 
     /// Updates model-driven UI — called once by `GameOverVC` after the outcome is known.
     func render(_ outcome: GameOutcome) {
-        scoreLabel.setLocalizedText(L10n.clickScore(outcome.clickCount))
+        scoreLabel.text = L10n.clickScore(outcome.clickCount)
     }
 }
 
@@ -121,9 +121,9 @@ private extension GameOverView {
 
     /// Applies localised strings to the title, subtitle, and encouragement labels.
     func setupLocalizedText() {
-        titleLabel.setLocalizedText(L10n.gameOverTitle)
-        subtitleLabel.setLocalizedText(L10n.gameOverSubtitle)
-        tryHarderLabel.setLocalizedText(L10n.tryHarder)
+        titleLabel.text = L10n.gameOverTitle
+        subtitleLabel.text = L10n.gameOverSubtitle
+        tryHarderLabel.text = L10n.tryHarder
     }
 
     /// Forwards the restart tap to `onRestart`.

@@ -46,7 +46,7 @@ private extension LoadingView {
 
     /// Sets the loading label text and starts the activity indicator animation.
     func configureSubviews() {
-        loadingLabel.setLocalizedText(L10n.loading)
+        loadingLabel.text = L10n.loading
         loadingLabel.textAlignment = .center
         // Start animating immediately — the indicator is visible as soon as the view appears.
         activityIndicator.startAnimating()

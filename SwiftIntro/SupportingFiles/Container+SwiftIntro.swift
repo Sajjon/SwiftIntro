@@ -26,11 +26,11 @@ extension Container {
 
     /// Kingfisher-backed image cache used to pre-load card images before a game starts.
     var imageCache: Factory<ImageCacheProtocol> {
-        self { Cache() }.singleton
+        self { ImageCache() }.singleton
     }
 
     /// The image retriever used by `Cache` to pre-fetch card images into memory.
-    var imageRetriever: Factory<ImageRetrieverProtocol> {
+    var imageRetriever: Factory<ImageFetcherProtocol> {
         self { KingfisherManager.shared }.singleton
     }
 

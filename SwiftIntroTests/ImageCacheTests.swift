@@ -1,5 +1,5 @@
 //
-//  CacheTests.swift
+//  ImageCacheTests.swift
 //  SwiftIntroTests
 //
 //  Copyright © 2016-2026 SwiftIntro. All rights reserved.
@@ -16,13 +16,13 @@ import XCTest
 
 // MARK: - Stub
 
-private final class StubRetriever: ImageRetrieverProtocol, @unchecked Sendable {
+private final class StubRetriever: ImageFetcherProtocol, @unchecked Sendable {
     /// URLs whose retrieval should be delayed instead of completing immediately.
     var delayedURLs: Set<URL> = []
     /// All URLs that have been requested, in order.
     private(set) var retrievedURLs: [URL] = []
 
-    func retrieveImage(
+    func fetchImage(
         with url: URL,
         done: @escaping () -> Void
     ) {
@@ -57,7 +57,7 @@ final class CacheTests: XCTestCase {
 
     func test_imageFromCache_returnsNilForUnknownURL() {
         // Arrange
-        let cache = Cache()
+        let cache = ImageCache()
 
         // Act
         let image = cache.imageFromCache(URL(string: "https://a.test/unknown.jpg"))
@@ -68,7 +68,7 @@ final class CacheTests: XCTestCase {
 
     func test_imageFromCache_returnsNilForNilURL() {
         // Arrange
-        let cache = Cache()
+        let cache = ImageCache()
 
         // Act
         let image = cache.imageFromCache(nil)
@@ -85,7 +85,7 @@ final class CacheTests: XCTestCase {
             XCTUnwrap(URL(string: "https://a.test/1.jpg")),
             XCTUnwrap(URL(string: "https://a.test/2.jpg")),
         ]
-        let cache = Cache()
+        let cache = ImageCache()
         let exp = expectation(description: "done called")
 
         // Act
@@ -98,7 +98,7 @@ final class CacheTests: XCTestCase {
 
     func test_prefetchImages_callsDoneForEmptyArray() {
         // Arrange
-        let cache = Cache()
+        let cache = ImageCache()
         let exp = expectation(description: "done called")
 
         // Act
@@ -115,7 +115,7 @@ final class CacheTests: XCTestCase {
             XCTUnwrap(URL(string: "https://a.test/b.jpg")),
             XCTUnwrap(URL(string: "https://a.test/c.jpg")),
         ]
-        let cache = Cache()
+        let cache = ImageCache()
         let exp = expectation(description: "done called")
 
         // Act
@@ -131,7 +131,7 @@ final class CacheTests: XCTestCase {
         let url1 = try XCTUnwrap(URL(string: "https://a.test/1.jpg"))
         let url2 = try XCTUnwrap(URL(string: "https://a.test/2.jpg"))
         stub.delayedURLs = [url2]
-        let cache = Cache()
+        let cache = ImageCache()
         let doneNotExpected = expectation(description: "done must not be called")
         doneNotExpected.isInverted = true
 
@@ -144,7 +144,7 @@ final class CacheTests: XCTestCase {
 
     func test_prefetchImages_nilDoneDoesNotCrash() throws {
         // Arrange
-        let cache = Cache()
+        let cache = ImageCache()
 
         // Act + Assert
         XCTAssertNoThrow(try cache.prefetchImages([XCTUnwrap(URL(string: "https://a.test/1.jpg"))], done: nil))
@@ -159,7 +159,7 @@ final class CacheTests: XCTestCase {
     func test_prefetchImage_callsDoneAfterRetrieval() throws {
         // Arrange
         let url = try XCTUnwrap(URL(string: "https://a.test/single.jpg"))
-        let cache = Cache()
+        let cache = ImageCache()
         let exp = expectation(description: "done called")
 
         // Act

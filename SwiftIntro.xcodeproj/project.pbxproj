@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		45773A371D00C088002E6F56 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45773A361D00C088002E6F56 /* SettingsVC.swift */; };
+		48CD1B3A2F8FC1EB0016C950 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CD1B392F8FC1E30016C950 /* ImageCache.swift */; };
 		48D053AE2F8E355C006B3DEF /* CardSingles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D053AD2F8E355A006B3DEF /* CardSingles.swift */; };
 		48D053B62F8E5500006B3DEF /* GameLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D053B52F8E5500006B3DEF /* GameLoop.swift */; };
 		7B21A5B01CFF5C17002E5EE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5AC1CFF5C17002E5EE5 /* AppDelegate.swift */; };
@@ -17,19 +18,18 @@
 		7B21A5BB1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5BA1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift */; };
 		7B21A5C21CFF639D002E5EE5 /* CardCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5C11CFF639D002E5EE5 /* CardCVCell.swift */; };
 		7B21A5C51CFF6586002E5EE5 /* NSObject_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5C41CFF6586002E5EE5 /* NSObject_Extension.swift */; };
-		7B2F90AA1D00B9A400613325 /* ImagePrefetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2F90A91D00B9A400613325 /* ImagePrefetcher.swift */; };
+		7B2F90AA1D00B9A400613325 /* ImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2F90A91D00B9A400613325 /* ImageFetcher.swift */; };
 		7B2F90AC1D00C88800613325 /* UIView_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2F90AB1D00C88800613325 /* UIView_Extension.swift */; };
 		7B4497EE1D189BA100E080C7 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497EC1D189BA100E080C7 /* Card.swift */; };
 		7B4497EF1D189BA100E080C7 /* CardDuplicates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497ED1D189BA100E080C7 /* CardDuplicates.swift */; };
 		7B4497F11D189BA900E080C7 /* GameOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497F01D189BA900E080C7 /* GameOutcome.swift */; };
 		7B4497F31D189BC000E080C7 /* GameConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497F21D189BC000E080C7 /* GameConfiguration.swift */; };
 		7B4497FA1D189C3400E080C7 /* CellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497F91D189C3400E080C7 /* CellProtocol.swift */; };
-		7B5876491D157F3B00095036 /* Dispatch+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5876481D157F3B00095036 /* Dispatch+Extensions.swift */; };
+		7B5876491D157F3B00095036 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5876481D157F3B00095036 /* Clock.swift */; };
 		7B7542301CFF3F9E009B2629 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B75422F1CFF3F9E009B2629 /* Assets.xcassets */; };
 		7B86085C1D1594FE00037D36 /* GameOverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B86085B1D1594FE00037D36 /* GameOverVC.swift */; };
 		7B86085F1D1597FB00037D36 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B86085D1D1597FB00037D36 /* Localizable.strings */; };
 		7B8608621D15993400037D36 /* UIButton_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8608611D15993400037D36 /* UIButton_Extension.swift */; };
-		7B8608641D15999500037D36 /* UILabel_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8608631D15999500037D36 /* UILabel_Extension.swift */; };
 		7B8608661D15A1DB00037D36 /* Array_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8608651D15A1DB00037D36 /* Array_Extension.swift */; };
 		7BA112A11D97F75A003B5D69 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA1129F1D97F75A003B5D69 /* Strings.swift */; };
 		7BAD45931CFF6F3A00C7D7EF /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45921CFF6F3900C7D7EF /* Router.swift */; };
@@ -69,7 +69,7 @@
 		TM000002TM000002TM000002 /* GameLoopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TM000001TM000001TM000001 /* GameLoopTests.swift */; };
 		TN000002TN000002TN000002 /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TN000001TN000001TN000001 /* APIClientTests.swift */; };
 		TO000002TO000002TO000002 /* MemoryDataSourceAndDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TO000001TO000001TO000001 /* MemoryDataSourceAndDelegateTests.swift */; };
-		TP000002TP000002TP000002 /* CacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TP000001TP000001TP000001 /* CacheTests.swift */; };
+		TP000002TP000002TP000002 /* ImageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TP000001TP000001TP000001 /* ImageCacheTests.swift */; };
 		TQ000002TQ000002TQ000002 /* LoadingDataVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TQ000001TQ000001TQ000001 /* LoadingDataVCTests.swift */; };
 		TR000002TR000002TR000002 /* GameVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TR000001TR000001TR000001 /* GameVCTests.swift */; };
 		TS010002TS010002TS010002 /* CircularButtonSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS010001TS010001TS010001 /* CircularButtonSnapshotTests.swift */; };
@@ -102,6 +102,7 @@
 		48ABFE192F8ED04C00AC357E /* DESIGN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DESIGN.md; sourceTree = "<group>"; };
 		48ABFE1A2F8ED04C00AC357E /* Justfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Justfile; sourceTree = "<group>"; };
 		48ABFE1B2F8ED04C00AC357E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		48CD1B392F8FC1E30016C950 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		48D053AD2F8E355A006B3DEF /* CardSingles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSingles.swift; sourceTree = "<group>"; };
 		48D053B52F8E5500006B3DEF /* GameLoop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLoop.swift; sourceTree = "<group>"; };
 		7B21A5AC1CFF5C17002E5EE5 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -112,21 +113,20 @@
 		7B21A5BA1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryDataSourceAndDelegate.swift; sourceTree = "<group>"; };
 		7B21A5C11CFF639D002E5EE5 /* CardCVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCVCell.swift; sourceTree = "<group>"; };
 		7B21A5C41CFF6586002E5EE5 /* NSObject_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSObject_Extension.swift; sourceTree = "<group>"; };
-		7B2F90A91D00B9A400613325 /* ImagePrefetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePrefetcher.swift; sourceTree = "<group>"; };
+		7B2F90A91D00B9A400613325 /* ImageFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageFetcher.swift; sourceTree = "<group>"; };
 		7B2F90AB1D00C88800613325 /* UIView_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView_Extension.swift; sourceTree = "<group>"; };
 		7B4497EC1D189BA100E080C7 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		7B4497ED1D189BA100E080C7 /* CardDuplicates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDuplicates.swift; sourceTree = "<group>"; };
 		7B4497F01D189BA900E080C7 /* GameOutcome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOutcome.swift; sourceTree = "<group>"; };
 		7B4497F21D189BC000E080C7 /* GameConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameConfiguration.swift; sourceTree = "<group>"; };
 		7B4497F91D189C3400E080C7 /* CellProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellProtocol.swift; sourceTree = "<group>"; };
-		7B5876481D157F3B00095036 /* Dispatch+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dispatch+Extensions.swift"; sourceTree = "<group>"; };
+		7B5876481D157F3B00095036 /* Clock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
 		7B7542231CFF3F9E009B2629 /* SwiftIntro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftIntro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B75422F1CFF3F9E009B2629 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7B86085B1D1594FE00037D36 /* GameOverVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverVC.swift; sourceTree = "<group>"; };
 		7B86085E1D1597FB00037D36 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B8608601D15980F00037D36 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B8608611D15993400037D36 /* UIButton_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButton_Extension.swift; sourceTree = "<group>"; };
-		7B8608631D15999500037D36 /* UILabel_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabel_Extension.swift; sourceTree = "<group>"; };
 		7B8608651D15A1DB00037D36 /* Array_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array_Extension.swift; sourceTree = "<group>"; };
 		7BA1129F1D97F75A003B5D69 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		7BAD45921CFF6F3900C7D7EF /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -162,7 +162,7 @@
 		TM000001TM000001TM000001 /* GameLoopTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLoopTests.swift; sourceTree = "<group>"; };
 		TN000001TN000001TN000001 /* APIClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
 		TO000001TO000001TO000001 /* MemoryDataSourceAndDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryDataSourceAndDelegateTests.swift; sourceTree = "<group>"; };
-		TP000001TP000001TP000001 /* CacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheTests.swift; sourceTree = "<group>"; };
+		TP000001TP000001TP000001 /* ImageCacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheTests.swift; sourceTree = "<group>"; };
 		TQ000001TQ000001TQ000001 /* LoadingDataVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingDataVCTests.swift; sourceTree = "<group>"; };
 		TR000001TR000001TR000001 /* GameVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameVCTests.swift; sourceTree = "<group>"; };
 		TS010001TS010001TS010001 /* CircularButtonSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularButtonSnapshotTests.swift; sourceTree = "<group>"; };
@@ -201,6 +201,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		48CD1B382F8FC1BB0016C950 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				7B5876481D157F3B00095036 /* Clock.swift */,
+				48CD1B392F8FC1E30016C950 /* ImageCache.swift */,
+				A5000001A5000001A5000001 /* Networking */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
 		48D053AB2F8E273F006B3DEF /* Features */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,9 +282,7 @@
 				7B21A5C41CFF6586002E5EE5 /* NSObject_Extension.swift */,
 				7B2F90AB1D00C88800613325 /* UIView_Extension.swift */,
 				7B8608611D15993400037D36 /* UIButton_Extension.swift */,
-				7B8608631D15999500037D36 /* UILabel_Extension.swift */,
 				7B8608651D15A1DB00037D36 /* Array_Extension.swift */,
-				7B5876481D157F3B00095036 /* Dispatch+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -305,11 +313,11 @@
 		7B7542251CFF3F9E009B2629 /* SwiftIntro */ = {
 			isa = PBXGroup;
 			children = (
+				48CD1B382F8FC1BB0016C950 /* Dependencies */,
 				48D053AC2F8E2775006B3DEF /* Views */,
 				48D053AB2F8E273F006B3DEF /* Features */,
 				7B75422F1CFF3F9E009B2629 /* Assets.xcassets */,
 				A6000001A6000001A6000001 /* Models */,
-				A5000001A5000001A5000001 /* Networking */,
 				7B21A5AB1CFF5C17002E5EE5 /* SupportingFiles */,
 			);
 			path = SwiftIntro;
@@ -368,7 +376,7 @@
 			children = (
 				7B21A5B31CFF5CAC002E5EE5 /* APIClient.swift */,
 				7B21A5B51CFF5DAE002E5EE5 /* HTTPClient.swift */,
-				7B2F90A91D00B9A400613325 /* ImagePrefetcher.swift */,
+				7B2F90A91D00B9A400613325 /* ImageFetcher.swift */,
 				7BAD45921CFF6F3900C7D7EF /* Router.swift */,
 			);
 			path = Networking;
@@ -404,7 +412,7 @@
 				TM000001TM000001TM000001 /* GameLoopTests.swift */,
 				TN000001TN000001TN000001 /* APIClientTests.swift */,
 				TO000001TO000001TO000001 /* MemoryDataSourceAndDelegateTests.swift */,
-				TP000001TP000001TP000001 /* CacheTests.swift */,
+				TP000001TP000001TP000001 /* ImageCacheTests.swift */,
 				TQ000001TQ000001TQ000001 /* LoadingDataVCTests.swift */,
 				TR000001TR000001TR000001 /* GameVCTests.swift */,
 				TU000001TU000001TU000001 /* GameOverVCTests.swift */,
@@ -569,6 +577,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45773A371D00C088002E6F56 /* SettingsVC.swift in Sources */,
+				48CD1B3A2F8FC1EB0016C950 /* ImageCache.swift in Sources */,
 				AA010002AA010002AA010002 /* SettingsView.swift in Sources */,
 				AA020002AA020002AA020002 /* LoadingView.swift in Sources */,
 				AA030002AA030002AA030002 /* GameView.swift in Sources */,
@@ -579,7 +588,6 @@
 				7B8608621D15993400037D36 /* UIButton_Extension.swift in Sources */,
 				7B21A5B01CFF5C17002E5EE5 /* AppDelegate.swift in Sources */,
 				7B4497EF1D189BA100E080C7 /* CardDuplicates.swift in Sources */,
-				7B8608641D15999500037D36 /* UILabel_Extension.swift in Sources */,
 				7B21A5BB1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift in Sources */,
 				7B2F90AC1D00C88800613325 /* UIView_Extension.swift in Sources */,
 				7BADD6AD1D16DE8C005EEBE3 /* LoadingDataVC.swift in Sources */,
@@ -595,9 +603,9 @@
 				7B21A5C51CFF6586002E5EE5 /* NSObject_Extension.swift in Sources */,
 				FF080002FF080002FF080002 /* Container+SwiftIntro.swift in Sources */,
 				7B86085C1D1594FE00037D36 /* GameOverVC.swift in Sources */,
-				7B2F90AA1D00B9A400613325 /* ImagePrefetcher.swift in Sources */,
+				7B2F90AA1D00B9A400613325 /* ImageFetcher.swift in Sources */,
 				7BADD6AB1D16D9DF005EEBE3 /* Level.swift in Sources */,
-				7B5876491D157F3B00095036 /* Dispatch+Extensions.swift in Sources */,
+				7B5876491D157F3B00095036 /* Clock.swift in Sources */,
 				7B21A5B81CFF5E7B002E5EE5 /* GameVC.swift in Sources */,
 				7B21A5B61CFF5DAE002E5EE5 /* HTTPClient.swift in Sources */,
 				7B8608661D15A1DB00037D36 /* Array_Extension.swift in Sources */,
@@ -630,7 +638,7 @@
 				TM000002TM000002TM000002 /* GameLoopTests.swift in Sources */,
 				TN000002TN000002TN000002 /* APIClientTests.swift in Sources */,
 				TO000002TO000002TO000002 /* MemoryDataSourceAndDelegateTests.swift in Sources */,
-				TP000002TP000002TP000002 /* CacheTests.swift in Sources */,
+				TP000002TP000002TP000002 /* ImageCacheTests.swift in Sources */,
 				TQ000002TQ000002TQ000002 /* LoadingDataVCTests.swift in Sources */,
 				TR000002TR000002TR000002 /* GameVCTests.swift in Sources */,
 				TU000002TU000002TU000002 /* GameOverVCTests.swift in Sources */,

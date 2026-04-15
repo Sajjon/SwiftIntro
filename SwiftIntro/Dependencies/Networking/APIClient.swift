@@ -23,7 +23,7 @@ protocol APIClientProtocol {
     ///     on success, or `.failure(Error)` if the network request or JSON decoding fails.
     func getPhotos(
         _ searchQuery: String,
-        done: @escaping (Result<CardSingles, Swift.Error>) -> Void
+        done: @escaping @Sendable (Result<CardSingles, Swift.Error>) -> Void
     )
 }
 
@@ -39,7 +39,7 @@ final class APIClient: APIClientProtocol {
 
     func getPhotos(
         _ searchQuery: String,
-        done: @escaping (Result<CardSingles, Swift.Error>) -> Void
+        done: @escaping @Sendable (Result<CardSingles, Swift.Error>) -> Void
     ) {
         let url = Router.searchImages(searchQuery).url
         httpClient.get(url: url) { result in APIClient.decodeAndDeliver(result, done: done) }
