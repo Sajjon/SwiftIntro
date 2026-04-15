@@ -69,8 +69,6 @@ jobs:
       COV_XML: .build/coverage.xml
       SCHEME: SwiftIntro
       PROJECT: SwiftIntro.xcodeproj
-      # Omit OS so xcodebuild picks whichever runtime is installed on the runner.
-      DESTINATION: platform=iOS Simulator,name=iPhone 17
 
     steps:
       - uses: actions/checkout@v4
@@ -87,6 +85,33 @@ jobs:
       - name: Install xcresultparser
         run: brew install xcresultparser
 
+      # Discover the best available iPhone simulator at runtime so CI never
+      # breaks because a specific device name was dropped from the runner image.
+      # Strategy: parse JSON, collect all available iPhone devices across all
+      # runtimes, sort by (runtime-identifier DESC, device-name DESC) to prefer
+      # the newest runtime + newest model, and emit a UDID-based destination.
+      # Using a UDID is unambiguous — xcodebuild never adds "OS:latest" to it.
+      - name: Resolve iOS simulator
+        id: sim
+        run: |
+          UDID=$(xcrun simctl list devices available --json | python3 - <<'EOF'
+          import json, sys
+          devs = json.load(sys.stdin)["devices"]
+          iphones = sorted(
+              [(rt, d) for rt, ds in devs.items()
+               for d in ds if d["isAvailable"] and "iPhone" in d["name"]],
+              key=lambda x: (x[0], x[1]["name"]),
+              reverse=True,
+          )
+          if not iphones:
+              sys.exit("No available iPhone simulator found — check runner image")
+          rt, dev = iphones[0]
+          print(f"Selected: {dev['name']} on {rt}", file=sys.stderr)
+          print(dev["udid"])
+          EOF
+          )
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+
       - name: Build & test with coverage
         run: |
           set -o pipefail
@@ -94,7 +119,7 @@ jobs:
           xcodebuild test \
             -project "$PROJECT" \
             -scheme "$SCHEME" \
-            -destination "$DESTINATION" \
+            -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
             -only-testing:SwiftIntroTests \
             -enableCodeCoverage YES \
             -resultBundlePath "$RESULT_BUNDLE" \

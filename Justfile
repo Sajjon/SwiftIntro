@@ -8,12 +8,26 @@ set shell := ["zsh", "-cu"]
 
 project    := "SwiftIntro.xcodeproj"
 scheme     := "SwiftIntro"
-# Keep in sync with the simulator used in .github/workflows/ci.yml.
-device     := "iPhone 17"
-sim        := "platform=iOS Simulator,name=" + device
 result_dir := ".build"
 result     := result_dir + "/TestResults.xcresult"
 cov_json   := result_dir + "/coverage.json"
+
+# Discover the best available iPhone simulator at runtime.
+# Mirrors the logic in .github/workflows/ci.yml so local and CI always pick
+# their own best simulator without hardcoding a device name that may not exist.
+sim := `xcrun simctl list devices available --json | python3 -c "
+import json, sys
+devs = json.load(sys.stdin)['devices']
+iphones = sorted(
+    [(rt, d) for rt, ds in devs.items()
+     for d in ds if d['isAvailable'] and 'iPhone' in d['name']],
+    key=lambda x: (x[0], x[1]['name']),
+    reverse=True,
+)
+if not iphones:
+    sys.exit('No available iPhone simulator found')
+print('platform=iOS Simulator,id=' + iphones[0][1]['udid'])
+"`
 
 # ── Default ───────────────────────────────────────────────────────────────────
 
