@@ -85,32 +85,32 @@ jobs:
       - name: Install xcresultparser
         run: brew install xcresultparser
 
-      # Discover the best available iPhone simulator at runtime so CI never
-      # breaks because a specific device name was dropped from the runner image.
-      # Strategy: parse JSON, collect all available iPhone devices across all
-      # runtimes, sort by (runtime-identifier DESC, device-name DESC) to prefer
-      # the newest runtime + newest model, and emit a UDID-based destination.
-      # Using a UDID is unambiguous — xcodebuild never adds "OS:latest" to it.
-      - name: Resolve iOS simulator
+      # Print the active Xcode and list available simulators so failures are
+      # easy to diagnose without SSH-ing into the runner.
+      - name: Runner info
+        run: |
+          xcodebuild -version
+          xcrun simctl list runtimes
+          xcrun simctl list devices available | grep -i iphone || echo "(none)"
+
+      # Pick the UDID of the first available iPhone simulator.
+      # xcrun simctl list -j is plain JSON with no stdin dependency, so a
+      # single awk/grep pipeline is enough — no Python heredoc needed.
+      - name: Resolve simulator UDID
         id: sim
         run: |
-          UDID=$(xcrun simctl list devices available --json | python3 - <<'EOF'
-          import json, sys
-          devs = json.load(sys.stdin)["devices"]
-          iphones = sorted(
-              [(rt, d) for rt, ds in devs.items()
-               for d in ds if d["isAvailable"] and "iPhone" in d["name"]],
-              key=lambda x: (x[0], x[1]["name"]),
-              reverse=True,
+          UDID=$(
+            xcrun simctl list devices available --json |
+            grep -oE '"udid" : "[A-F0-9-]+"' |
+            head -1 |
+            grep -oE '[A-F0-9-]{36}'
           )
-          if not iphones:
-              sys.exit("No available iPhone simulator found — check runner image")
-          rt, dev = iphones[0]
-          print(f"Selected: {dev['name']} on {rt}", file=sys.stderr)
-          print(dev["udid"])
-          EOF
-          )
+          if [ -z "$UDID" ]; then
+            echo "No available iPhone simulator found" >&2
+            exit 1
+          fi
           echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+          xcrun simctl list devices | grep "$UDID"
 
       - name: Build & test with coverage
         run: |

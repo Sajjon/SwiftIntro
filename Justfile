@@ -12,22 +12,10 @@ result_dir := ".build"
 result     := result_dir + "/TestResults.xcresult"
 cov_json   := result_dir + "/coverage.json"
 
-# Discover the best available iPhone simulator at runtime.
-# Mirrors the logic in .github/workflows/ci.yml so local and CI always pick
-# their own best simulator without hardcoding a device name that may not exist.
-sim := `xcrun simctl list devices available --json | python3 -c "
-import json, sys
-devs = json.load(sys.stdin)['devices']
-iphones = sorted(
-    [(rt, d) for rt, ds in devs.items()
-     for d in ds if d['isAvailable'] and 'iPhone' in d['name']],
-    key=lambda x: (x[0], x[1]['name']),
-    reverse=True,
-)
-if not iphones:
-    sys.exit('No available iPhone simulator found')
-print('platform=iOS Simulator,id=' + iphones[0][1]['udid'])
-"`
+# Pick the first available iPhone simulator UDID at runtime.
+# Mirrors .github/workflows/ci.yml so local and CI use the same approach
+# without hardcoding a device name that may not exist on every machine.
+sim := `xcrun simctl list devices available --json | grep -oE '"udid" : "[A-F0-9-]+"' | head -1 | grep -oE '[A-F0-9-]{36}' | xargs -I{} echo "platform=iOS Simulator,id={}"`
 
 # ── Default ───────────────────────────────────────────────────────────────────
 
