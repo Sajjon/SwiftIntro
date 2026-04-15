@@ -1,0 +1,159 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# ── Jobs ──────────────────────────────────────────────────────────────────────
+
+jobs:
+
+  # ── 1. Spell-check ──────────────────────────────────────────────────────────
+  typos:
+    name: Typos
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for typos
+        uses: crate-ci/typos@v1
+
+  # ── 2. SwiftFormat ──────────────────────────────────────────────────────────
+  swiftformat:
+    name: SwiftFormat
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install SwiftFormat
+        run: brew install swiftformat
+
+      - name: Check formatting
+        # --lint exits non-zero if any file would be reformatted, without writing changes.
+        run: swiftformat --lint SwiftIntro
+
+  # ── 3. SwiftLint ────────────────────────────────────────────────────────────
+  swiftlint:
+    name: SwiftLint
+    runs-on: macos-15
+    env:
+      # Keep in sync with the version installed locally via Homebrew.
+      SWIFTLINT_VERSION: "0.63.2"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install SwiftLint ${{ env.SWIFTLINT_VERSION }}
+        run: |
+          curl -fsSL \
+            "https://github.com/realm/SwiftLint/releases/download/${SWIFTLINT_VERSION}/SwiftLint.pkg" \
+            -o /tmp/swiftlint.pkg
+          sudo installer -pkg /tmp/swiftlint.pkg -target /
+          swiftlint version
+
+      - name: Lint
+        # github-actions-logging emits ::error / ::warning annotations
+        # that appear inline in the PR diff view.
+        run: swiftlint lint --strict --reporter github-actions-logging
+
+  # ── 4. Test + coverage ──────────────────────────────────────────────────────
+  coverage:
+    name: Test & Coverage
+    runs-on: macos-26
+    env:
+      RESULT_BUNDLE: .build/TestResults.xcresult
+      COV_XML: .build/coverage.xml
+      SCHEME: SwiftIntro
+      PROJECT: SwiftIntro.xcodeproj
+      SIM_DEVICE: iPhone 17
+      SIM_OS: "26.1"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Resolve the SPM dependency graph once and cache the result so that
+      # subsequent runs skip the network fetch entirely.
+      - name: Cache SPM packages
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData
+          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: spm-${{ runner.os }}-
+
+      - name: Install xcresultparser
+        run: brew install xcresultparser
+
+      - name: Select Xcode 26.1.1
+        run: sudo xcode-select -s /Applications/Xcode_26.1.1.app/Contents/Developer
+
+      # Print the active Xcode and list available simulators so failures are
+      # easy to diagnose without SSH-ing into the runner.
+      - name: Runner info
+        run: |
+          xcodebuild -version
+          xcrun simctl list runtimes
+          xcrun simctl list devices available | grep -i iphone || echo "(none)"
+
+      - name: Validate simulator destination
+        run: |
+          if ! AVAILABLE_IOS_DEVICES=$(xcrun simctl list devices available "iOS $SIM_OS"); then
+            echo "Failed to query simulators for runtime iOS $SIM_OS" >&2
+            xcrun simctl list runtimes || true
+            exit 1
+          fi
+          echo "$AVAILABLE_IOS_DEVICES"
+          MATCHED_SIMULATOR_LINE=$(
+            echo "$AVAILABLE_IOS_DEVICES" | awk -v device="$SIM_DEVICE" '
+              /^[[:space:]]+/ {
+                line = $0
+                sub(/^[[:space:]]+/, "", line)
+                name = line
+                sub(/ \(.*/, "", name)
+                if (name == device) {
+                  print $0
+                  exit
+                }
+              }
+            '
+          )
+          if [ -z "$MATCHED_SIMULATOR_LINE" ]; then
+            echo "Expected simulator not available: $SIM_DEVICE (iOS $SIM_OS)" >&2
+            exit 1
+          fi
+          echo "$MATCHED_SIMULATOR_LINE"
+
+      - name: Install xcpretty
+        run: gem install xcpretty --no-document
+
+      - name: Build & test with coverage
+        run: |
+          set -o pipefail
+          mkdir -p .build
+          xcodebuild test \
+            -project "$PROJECT" \
+            -scheme "$SCHEME" \
+            -destination "platform=iOS Simulator,name=$SIM_DEVICE,OS=$SIM_OS,arch=arm64" \
+            -only-testing:SwiftIntroTests \
+            -enableCodeCoverage YES \
+            -resultBundlePath "$RESULT_BUNDLE" \
+            | xcpretty
+
+      - name: Convert coverage to Cobertura XML
+        # xcresultparser writes the report to stdout, so redirect it to the file.
+        run: xcresultparser --output-format cobertura "$RESULT_BUNDLE" > "$COV_XML"
+
+      - name: Print coverage summary
+        run: xcrun xccov view --report "$RESULT_BUNDLE"
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ${{ env.COV_XML }}
+          # CODECOV_TOKEN must be added to the repo's Actions secrets.
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true

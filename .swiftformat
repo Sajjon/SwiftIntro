@@ -1,0 +1,23 @@
+--swiftversion 6.0
+--maxwidth 120
+
+# Indentation
+--indent 4
+--tabwidth 4
+--smarttabs enabled
+
+# Wrapping — wrap function parameters/arguments/collections to one-per-line
+# when the declaration exceeds --maxwidth.
+--wrapparameters before-first
+--wraparguments before-first
+--wrapcollections before-first
+--closingparen balanced
+
+# Trailing commas in wrapped collections/parameters
+--commas always
+
+# Copyright headers — leave as-is (hand-edited per file)
+--header ignore
+
+# Exclusions
+--exclude SwiftIntro/Models/Generated

@@ -1,0 +1,43 @@
+fail_fast: true
+default_install_hook_types: [pre-commit, pre-push]
+default_stages: [pre-commit]
+repos:
+    - repo: https://github.com/crate-ci/typos
+      rev: v1.45.1
+      hooks:
+          - id: typos
+            stages: [pre-commit]
+
+    - repo: https://github.com/shellcheck-py/shellcheck-py
+      rev: v0.10.0.1
+      hooks:
+          - id: shellcheck
+            args: [--severity=warning]
+            stages: [pre-commit]
+
+    - repo: local
+      hooks:
+          - id: swiftformat
+            name: SwiftFormat
+            entry: swiftformat --swiftversion 6.0
+            language: system
+            types: [swift]
+            pass_filenames: true
+
+          - id: swiftlint
+            name: SwiftLint
+            entry: swiftlint lint --force-exclude --strict
+            language: system
+            types: [swift]
+            # pre-commit passes each staged Swift file as a positional argument,
+            # so only modified files are linted rather than the whole project.
+            pass_filenames: true
+
+          - id: swift-unit-tests
+            name: Swift unit tests
+            # Run the full test suite before every push, not on every commit,
+            # because xcodebuild is slow.
+            entry: just test
+            language: system
+            pass_filenames: false
+            stages: [pre-push]

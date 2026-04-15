@@ -1,0 +1,9 @@
+[files]
+extend-exclude = [
+	"SwiftIntro.xcodeproj/project.pbxproj",
+	"SwiftIntro/SupportingFiles/sv.lproj/Localizable.strings"
+]
+
+[default.extend-identifiers]
+udid = "udid"
+UDID = "UDID"
