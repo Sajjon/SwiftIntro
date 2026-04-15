@@ -8,8 +8,8 @@ set shell := ["zsh", "-cu"]
 
 project    := "SwiftIntro.xcodeproj"
 scheme     := "SwiftIntro"
-# Override on the command line: just device="iPhone 16" test
-device     := "iPhone 17"
+# Keep in sync with the simulator used in .github/workflows/ci.yml.
+device     := "iPhone 16"
 sim        := "platform=iOS Simulator,name=" + device + ",OS=latest"
 result_dir := ".build"
 result     := result_dir + "/TestResults.xcresult"

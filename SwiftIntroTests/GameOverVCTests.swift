@@ -106,10 +106,17 @@ final class GameOverVCTests: XCTestCase {
     // MARK: - onQuit
 
     func test_onQuit_popsToRootViewController() {
-        // Arrange
+        // Arrange — spy records whether popToRootViewController is called,
+        // avoiding a dependency on UIKit's async animated-transition timing.
+        final class SpyNav: UINavigationController {
+            private(set) var didPopToRoot = false
+            override func popToRootViewController(animated: Bool) -> [UIViewController]? {
+                didPopToRoot = true
+                return super.popToRootViewController(animated: animated)
+            }
+        }
         let vc = makeVC()
-        let root = UIViewController()
-        let nav = UINavigationController(rootViewController: root)
+        let nav = SpyNav(rootViewController: UIViewController())
         nav.pushViewController(UIViewController(), animated: false)
         nav.pushViewController(vc, animated: false)
         _ = vc.view
@@ -118,7 +125,7 @@ final class GameOverVCTests: XCTestCase {
         gameOverView(of: vc).onQuit?()
 
         // Assert
-        XCTAssertTrue(nav.topViewController === root)
+        XCTAssertTrue(nav.didPopToRoot)
     }
 
     // MARK: - onRestart (restartGame)
