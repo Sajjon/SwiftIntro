@@ -29,8 +29,8 @@ extension Container {
         self { ImageCache() }.singleton
     }
 
-    /// The image retriever used by `Cache` to pre-fetch card images into memory.
-    var imageRetriever: Factory<ImageFetcherProtocol> {
+    /// The image fetcher used by `ImageCache` to pre-fetch card images into memory.
+    var imageFetcher: Factory<ImageFetcherProtocol> {
         self { KingfisherManager.shared }.singleton
     }
 

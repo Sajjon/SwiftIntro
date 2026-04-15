@@ -24,7 +24,7 @@ private final class StubRetriever: ImageFetcherProtocol, @unchecked Sendable {
 
     func fetchImage(
         with url: URL,
-        done: @escaping @Sendable () -> Void
+        done: @escaping Closure
     ) {
         retrievedURLs.append(url)
         if !delayedURLs.contains(url) {
@@ -44,11 +44,11 @@ final class CacheTests: XCTestCase {
         super.setUp()
         stub = StubRetriever()
         let stub = stub!
-        Container.shared.imageRetriever.register { stub }
+        Container.shared.imageFetcher.register { stub }
     }
 
     override func tearDown() {
-        Container.shared.imageRetriever.reset()
+        Container.shared.imageFetcher.reset()
         stub = nil
         super.tearDown()
     }

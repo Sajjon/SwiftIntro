@@ -13,7 +13,7 @@ import UIKit
 
 // MARK: - ImageFetcherProtocol
 
-/// Abstracts the single `KingfisherManager` call used by `Cache` for pre-fetching,
+/// Abstracts the single `KingfisherManager` call used by `ImageCache` for pre-fetching,
 /// so that tests can inject a stub that completes synchronously without hitting the network.
 protocol ImageFetcherProtocol {
     /// Fetches the image at `url` (memory → disk → network) and calls `done` when complete.

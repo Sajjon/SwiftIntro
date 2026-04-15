@@ -54,7 +54,7 @@ extension ImageCacheProtocol {
 final class ImageCache {
     /// Injected retriever — defaults to `KingfisherManager.shared` in production,
     /// replaced with a stub in tests to avoid network calls.
-    @Injected(\.imageRetriever) private var retriever
+    @Injected(\.imageFetcher) private var fetcher
 
     /// Kingfisher's shared cache, which manages both memory and disk storage.
     private var cache: Kingfisher.ImageCache {
@@ -87,7 +87,7 @@ extension ImageCache: ImageCacheProtocol {
         for url in urls {
             group.enter()
             // The result is intentionally discarded — we only care that the fetch completes.
-            retriever.fetchImage(with: url) { group.leave() }
+            fetcher.fetchImage(with: url) { group.leave() }
         }
         // `notify` fires on the main queue once every `group.leave()` has been called.
         group.notify(queue: .main) { done?() }
