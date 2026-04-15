@@ -180,6 +180,9 @@ private extension GameEffectHandler {
     /// The collection view uses sections for rows and items for columns:
     /// `section = flatIndex / columnCount`, `item = flatIndex % columnCount`.
     func indexPath(for flatIndex: Int) -> IndexPath {
-        IndexPath(item: flatIndex % level.columnCount, section: flatIndex / level.columnCount)
+        IndexPath(
+			item: flatIndex % level.columnCount,
+			section: flatIndex / level.columnCount
+		)
     }
 }

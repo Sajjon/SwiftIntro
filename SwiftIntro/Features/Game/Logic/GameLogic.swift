@@ -70,7 +70,8 @@ private extension GameLogic {
         pendingIndex: Int,
         newModel: GameModel
     ) -> Next<GameModel, GameEffect> {
-        if newModel.cards[index].imageUrl == newModel.cards[pendingIndex].imageUrl {
+		let isMatchingPair = newModel.isCard(at: index, matchingCardAt: pendingIndex)
+        if isMatchingPair {
             return handleMatch(index: index, pendingIndex: pendingIndex, newModel: newModel)
         }
         return .next(newModel, effects: [
