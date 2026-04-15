@@ -28,7 +28,7 @@ default:
 
 # Build and run the unit test suite
 test:
-    set -o pipefail && xcodebuild test \
+    xcodebuild test \
         -project {{project}} \
         -scheme {{scheme}} \
         -destination '{{sim}}' \
@@ -51,7 +51,7 @@ cov-detailed: _run-cov
 _run-cov:
     rm -rf {{result}}
     mkdir -p {{result_dir}}
-    set -o pipefail && xcodebuild test \
+    xcodebuild test \
         -project {{project}} \
         -scheme {{scheme}} \
         -destination '{{sim}}' \

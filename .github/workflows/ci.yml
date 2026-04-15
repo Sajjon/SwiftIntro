@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [master, main]
+    branches: [main]
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 
@@ -88,9 +88,6 @@ jobs:
       - name: Install xcresultparser
         run: brew install xcresultparser
 
-      - name: Install xcpretty
-        run: gem install xcpretty --no-document
-
       - name: Select Xcode 26.1.1
         run: sudo xcode-select -s /Applications/Xcode_26.1.1.app/Contents/Developer
 
@@ -129,6 +126,9 @@ jobs:
             exit 1
           fi
           echo "$MATCHED_SIMULATOR_LINE"
+
+      - name: Install xcpretty
+        run: gem install xcpretty --no-document
 
       - name: Build & test with coverage
         run: |
