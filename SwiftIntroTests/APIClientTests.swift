@@ -16,7 +16,7 @@ import XCTest
 
 // MARK: - Mock HTTPClient
 
-private final class MockHTTPClient: HTTPClientProtocol {
+private final class MockHTTPClient: HTTPClientProtocol, @unchecked Sendable {
     var result: Result<Data, Error> = .failure(URLError(.unknown))
 
     func get(
@@ -54,14 +54,16 @@ private let invalidJSON = Data("not json".utf8)
 
 // MARK: - Tests
 
+@MainActor
 final class APIClientTests: XCTestCase {
     private let mock = MockHTTPClient()
-    private var apiClient: APIClient!
+    private nonisolated(unsafe) var apiClient: APIClient!
 
     override func setUp() {
         super.setUp()
         // Override the Factory-injected httpClient with the mock for this test.
-        Container.shared.httpClient.register { self.mock }
+        let mock = mock
+        Container.shared.httpClient.register { mock }
         apiClient = APIClient()
     }
 

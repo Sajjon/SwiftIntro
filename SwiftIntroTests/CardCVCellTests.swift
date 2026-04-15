@@ -19,6 +19,7 @@
 import UIKit
 import XCTest
 
+@MainActor
 final class CardCVCellTests: XCTestCase {
     // MARK: - Helpers
 

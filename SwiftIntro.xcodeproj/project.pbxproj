@@ -72,10 +72,6 @@
 		TP000002TP000002TP000002 /* CacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TP000001TP000001TP000001 /* CacheTests.swift */; };
 		TQ000002TQ000002TQ000002 /* LoadingDataVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TQ000001TQ000001TQ000001 /* LoadingDataVCTests.swift */; };
 		TR000002TR000002TR000002 /* GameVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TR000001TR000001TR000001 /* GameVCTests.swift */; };
-		TU000002TU000002TU000002 /* GameOverVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TU000001TU000001TU000001 /* GameOverVCTests.swift */; };
-		TV000002TV000002TV000002 /* SettingsVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TV000001TV000001TV000001 /* SettingsVCTests.swift */; };
-		TW000002TW000002TW000002 /* SettingsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TW000001TW000001TW000001 /* SettingsViewTests.swift */; };
-		TX000002TX000002TX000002 /* CardCVCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TX000001TX000001TX000001 /* CardCVCellTests.swift */; };
 		TS010002TS010002TS010002 /* CircularButtonSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS010001TS010001TS010001 /* CircularButtonSnapshotTests.swift */; };
 		TS020002TS020002TS020002 /* GameHeaderViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS020001TS020001TS020001 /* GameHeaderViewSnapshotTests.swift */; };
 		TS030002TS030002TS030002 /* LoadingViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS030001TS030001TS030001 /* LoadingViewSnapshotTests.swift */; };
@@ -83,6 +79,10 @@
 		TS050002TS050002TS050002 /* SettingsViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS050001TS050001TS050001 /* SettingsViewSnapshotTests.swift */; };
 		TS060002TS060002TS060002 /* GameViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS060001TS060001TS060001 /* GameViewSnapshotTests.swift */; };
 		TS070002TS070002TS070002 /* CardCVCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS070001TS070001TS070001 /* CardCVCellSnapshotTests.swift */; };
+		TU000002TU000002TU000002 /* GameOverVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TU000001TU000001TU000001 /* GameOverVCTests.swift */; };
+		TV000002TV000002TV000002 /* SettingsVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TV000001TV000001TV000001 /* SettingsVCTests.swift */; };
+		TW000002TW000002TW000002 /* SettingsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TW000001TW000001TW000001 /* SettingsViewTests.swift */; };
+		TX000002TX000002TX000002 /* CardCVCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TX000001TX000001TX000001 /* CardCVCellTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,10 +165,6 @@
 		TP000001TP000001TP000001 /* CacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheTests.swift; sourceTree = "<group>"; };
 		TQ000001TQ000001TQ000001 /* LoadingDataVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingDataVCTests.swift; sourceTree = "<group>"; };
 		TR000001TR000001TR000001 /* GameVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameVCTests.swift; sourceTree = "<group>"; };
-		TU000001TU000001TU000001 /* GameOverVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverVCTests.swift; sourceTree = "<group>"; };
-		TV000001TV000001TV000001 /* SettingsVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVCTests.swift; sourceTree = "<group>"; };
-		TW000001TW000001TW000001 /* SettingsViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewTests.swift; sourceTree = "<group>"; };
-		TX000001TX000001TX000001 /* CardCVCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCVCellTests.swift; sourceTree = "<group>"; };
 		TS010001TS010001TS010001 /* CircularButtonSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularButtonSnapshotTests.swift; sourceTree = "<group>"; };
 		TS020001TS020001TS020001 /* GameHeaderViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHeaderViewSnapshotTests.swift; sourceTree = "<group>"; };
 		TS030001TS030001TS030001 /* LoadingViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewSnapshotTests.swift; sourceTree = "<group>"; };
@@ -176,6 +172,10 @@
 		TS050001TS050001TS050001 /* SettingsViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewSnapshotTests.swift; sourceTree = "<group>"; };
 		TS060001TS060001TS060001 /* GameViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewSnapshotTests.swift; sourceTree = "<group>"; };
 		TS070001TS070001TS070001 /* CardCVCellSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCVCellSnapshotTests.swift; sourceTree = "<group>"; };
+		TU000001TU000001TU000001 /* GameOverVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverVCTests.swift; sourceTree = "<group>"; };
+		TV000001TV000001TV000001 /* SettingsVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVCTests.swift; sourceTree = "<group>"; };
+		TW000001TW000001TW000001 /* SettingsViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewTests.swift; sourceTree = "<group>"; };
+		TX000001TX000001TX000001 /* CardCVCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCVCellTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -726,6 +726,7 @@
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -779,6 +780,7 @@
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -796,7 +798,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftintro.SwiftIntro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -813,7 +814,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftintro.SwiftIntro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -830,7 +830,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftintro.SwiftIntroTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftIntro.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SwiftIntro";
 			};
 			name = Debug;
@@ -848,7 +847,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftintro.SwiftIntroTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftIntro.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SwiftIntro";
 			};
 			name = Release;

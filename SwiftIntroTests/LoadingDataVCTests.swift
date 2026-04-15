@@ -17,7 +17,7 @@ import XCTest
 
 // MARK: - Stubs
 
-private final class StubAPIClient: APIClientProtocol {
+private final class StubAPIClient: APIClientProtocol, @unchecked Sendable {
     var result: Result<CardSingles, Error> = .failure(URLError(.unknown))
     var getPhotosQuery: ((String) -> Void)?
 
@@ -30,7 +30,7 @@ private final class StubAPIClient: APIClientProtocol {
     }
 }
 
-private final class StubImageCache: ImageCacheProtocol {
+private final class StubImageCache: ImageCacheProtocol, @unchecked Sendable {
     private(set) var prefetchedURLs: [URL] = []
 
     func prefetchImages(
@@ -78,16 +78,19 @@ private func makeCards(count: Int) -> CardSingles {
 
 // MARK: - Tests
 
+@MainActor
 final class LoadingDataVCTests: XCTestCase {
-    private var apiStub: StubAPIClient!
-    private var cacheStub: StubImageCache!
+    private nonisolated(unsafe) var apiStub: StubAPIClient!
+    private nonisolated(unsafe) var cacheStub: StubImageCache!
 
     override func setUp() {
         super.setUp()
         apiStub = StubAPIClient()
         cacheStub = StubImageCache()
-        Container.shared.apiClient.register { [unowned self] in apiStub }
-        Container.shared.imageCache.register { [unowned self] in cacheStub }
+        let apiStub = apiStub!
+        let cacheStub = cacheStub!
+        Container.shared.apiClient.register { apiStub }
+        Container.shared.imageCache.register { cacheStub }
     }
 
     override func tearDown() {
@@ -138,8 +141,11 @@ final class LoadingDataVCTests: XCTestCase {
         apiStub.result = .success(cards)
         let vc = makeVC()
 
-        // Act
+        // Act — drain one main-queue cycle so the async main-queue dispatch in fetchData fires
         _ = vc.view
+        let exp = expectation(description: "main queue drain")
+        DispatchQueue.main.async { exp.fulfill() }
+        waitForExpectations(timeout: 1)
 
         // Assert
         XCTAssertFalse(cacheStub.prefetchedURLs.isEmpty)
@@ -151,8 +157,11 @@ final class LoadingDataVCTests: XCTestCase {
         apiStub.result = .success(cards)
         let vc = makeVC()
 
-        // Act
+        // Act — drain one main-queue cycle so the async main-queue dispatch in fetchData fires
         _ = vc.view
+        let exp = expectation(description: "main queue drain")
+        DispatchQueue.main.async { exp.fulfill() }
+        waitForExpectations(timeout: 1)
 
         // Assert
         XCTAssertEqual(cacheStub.prefetchedURLs.count, cards.cards.count)
@@ -164,8 +173,11 @@ final class LoadingDataVCTests: XCTestCase {
         apiStub.result = .success(cards)
         let vc = makeVC()
 
-        // Act
+        // Act — drain one main-queue cycle so the async main-queue dispatch in fetchData fires
         _ = vc.view
+        let exp = expectation(description: "main queue drain")
+        DispatchQueue.main.async { exp.fulfill() }
+        waitForExpectations(timeout: 1)
 
         // Assert
         XCTAssertEqual(Set(cacheStub.prefetchedURLs), Set(cards.cards.map(\.imageUrl)))

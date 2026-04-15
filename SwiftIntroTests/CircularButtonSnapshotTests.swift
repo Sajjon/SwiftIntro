@@ -6,11 +6,11 @@
 //
 
 import SnapshotTesting
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
+@MainActor
 final class CircularButtonSnapshotTests: XCTestCase {
-
     func test_circularButton_defaultAppearance() {
         // Arrange
         let button = CircularButton(title: "OK")

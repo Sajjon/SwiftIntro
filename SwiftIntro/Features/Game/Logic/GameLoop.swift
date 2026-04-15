@@ -79,17 +79,21 @@ final class GameLoop {
     /// Forwards the latest model to the effect handler so `canSelectCard` and
     /// `configureCell` reflect current game state.
     ///
-    /// Called from `GameVC`'s `Connectable.acceptClosure` on every model update.
+    /// Called from `GameVC`'s `Connectable.acceptClosure` inside `MainActor.assumeIsolated`
+    /// on every model update.
+    @MainActor
     func update(with model: GameModel) {
         effectHandler.update(with: model)
     }
 
     /// Returns whether the card at `index` may currently be selected.
+    @MainActor
     func canSelectCard(at index: Int) -> Bool {
         effectHandler.canSelectCard(at: index)
     }
 
     /// Configures `cell` to match the current visual state of the card at `index`.
+    @MainActor
     func configureCell(
         _ cell: CardCVCell,
         at index: Int

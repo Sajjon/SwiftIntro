@@ -82,7 +82,7 @@ extension GameVC {
 
 // MARK: - Connectable
 
-extension GameVC: Connectable {
+extension GameVC: @preconcurrency Connectable {
     typealias Input = GameModel
     typealias Output = GameEvent
 
@@ -94,13 +94,14 @@ extension GameVC: Connectable {
     ///   and whose `disposeClosure` cleans up the tap handler on disconnect.
     func connect(_ consumer: @escaping (GameEvent) -> Void) -> Connection<GameModel> {
         dataSourceAndDelegate.onCardTapped = { consumer(.cardTapped(index: $0)) }
-
         return Connection(
             acceptClosure: { [weak self] model in
-                // Keep the loop's effect handler in sync so canSelectCard /
-                // configureCell reflect the latest game state.
-                self?.loop.update(with: model)
-                self?.gameView.render(model)
+                MainActor.assumeIsolated {
+                    // Keep the loop's effect handler in sync so canSelectCard /
+                    // configureCell reflect the latest game state.
+                    self?.loop.update(with: model)
+                    self?.gameView.render(model)
+                }
             },
             disposeClosure: { [weak self] in
                 self?.dataSourceAndDelegate.onCardTapped = nil

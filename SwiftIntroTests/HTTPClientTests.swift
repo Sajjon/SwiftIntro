@@ -22,7 +22,7 @@ private struct StubResult {
 }
 
 private final class StubURLProtocol: URLProtocol {
-    static var handler: ((URLRequest) -> StubResult) = { _ in StubResult() }
+    nonisolated(unsafe) static var handler: ((URLRequest) -> StubResult) = { _ in StubResult() }
 
     // swiftlint:disable:next static_over_final_class
     override class func canInit(with _: URLRequest) -> Bool {
@@ -54,8 +54,9 @@ private final class StubURLProtocol: URLProtocol {
 
 // MARK: - Tests
 
+@MainActor
 final class HTTPClientTests: XCTestCase {
-    private var client: HTTPClient!
+    private nonisolated(unsafe) var client: HTTPClient!
     private let url = URL(string: "https://example.com")!
 
     override func setUp() {

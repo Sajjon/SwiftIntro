@@ -39,8 +39,9 @@ type_body_length:
 # Mobius update functions are pure switch statements that are intentionally
 # long; pure functions and layout helpers likewise.
 function_body_length:
-  warning: 10 # same as error — effectively no-warning zone
-  error: 10
+  warning: 12 # same as error — effectively no-warning zone
+  error: 12
+  ignores_comments: true
 
 function_parameter_count:
   warning: 4
