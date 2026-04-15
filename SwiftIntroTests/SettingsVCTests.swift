@@ -19,6 +19,7 @@
 import UIKit
 import XCTest
 
+@MainActor
 final class SettingsVCTests: XCTestCase {
     // MARK: - Helpers
 

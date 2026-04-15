@@ -15,6 +15,7 @@ import MobiusCore
 import UIKit
 import XCTest
 
+@MainActor
 final class GameLoopTests: XCTestCase {
     // MARK: - Helpers
 

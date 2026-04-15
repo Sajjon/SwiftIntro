@@ -6,11 +6,11 @@
 //
 
 import SnapshotTesting
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
+@MainActor
 final class LoadingViewSnapshotTests: XCTestCase {
-
     private let size = CGSize(width: 393, height: 852)
 
     func test_loadingView_defaultAppearance() {

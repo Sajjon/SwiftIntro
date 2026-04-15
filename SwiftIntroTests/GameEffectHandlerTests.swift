@@ -35,6 +35,7 @@ final class ImmediateClock: Clock {
 
 // MARK: - Tests
 
+@MainActor
 final class GameEffectHandlerTests: XCTestCase {
     override func setUp() {
         super.setUp()

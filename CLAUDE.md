@@ -30,7 +30,7 @@ UIKit memory card game using Mobius unidirectional data flow, Factory DI, and Ki
 
 ### Networking
 - No `async/await` — use closure callbacks (`done: @escaping (Result<T, Error>) -> Void`).
-- Completion closures are called on an arbitrary background queue; always dispatch UI updates via `onMain { }`.
+- Completion closures are called on an arbitrary background queue; always dispatch UI updates via `DispatchQueue.main.async { }`.
 - Wikimedia-specific decoding types stay `private` inside `APIClient.swift`.
 
 ### Naming

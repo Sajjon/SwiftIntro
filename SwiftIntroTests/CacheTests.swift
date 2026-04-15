@@ -16,7 +16,7 @@ import XCTest
 
 // MARK: - Stub
 
-private final class StubRetriever: ImageRetrieverProtocol {
+private final class StubRetriever: ImageRetrieverProtocol, @unchecked Sendable {
     /// URLs whose retrieval should be delayed instead of completing immediately.
     var delayedURLs: Set<URL> = []
     /// All URLs that have been requested, in order.
@@ -36,13 +36,15 @@ private final class StubRetriever: ImageRetrieverProtocol {
 
 // MARK: - Tests
 
+@MainActor
 final class CacheTests: XCTestCase {
-    private var stub: StubRetriever!
+    private nonisolated(unsafe) var stub: StubRetriever!
 
     override func setUp() {
         super.setUp()
         stub = StubRetriever()
-        Container.shared.imageRetriever.register { [unowned self] in stub }
+        let stub = stub!
+        Container.shared.imageRetriever.register { stub }
     }
 
     override func tearDown() {
@@ -125,21 +127,19 @@ final class CacheTests: XCTestCase {
     }
 
     func test_prefetchImages_doesNotCallDoneUntilAllComplete() throws {
-        // Arrange — stall the second URL
+        // Arrange — stall the second URL; done must NOT fire
         let url1 = try XCTUnwrap(URL(string: "https://a.test/1.jpg"))
         let url2 = try XCTUnwrap(URL(string: "https://a.test/2.jpg"))
         stub.delayedURLs = [url2]
         let cache = Cache()
-        var doneCalled = false
+        let doneNotExpected = expectation(description: "done must not be called")
+        doneNotExpected.isInverted = true
 
         // Act
-        cache.prefetchImages([url1, url2]) { doneCalled = true }
+        cache.prefetchImages([url1, url2]) { doneNotExpected.fulfill() }
 
-        // Assert — drain one main-queue cycle; url2 never fires, so done must still be false
-        let waiter = expectation(description: "main queue drain")
-        DispatchQueue.main.async { waiter.fulfill() }
+        // Assert — inverted expectation fails (test fails) if done fires within the timeout
         waitForExpectations(timeout: 0.5)
-        XCTAssertFalse(doneCalled)
     }
 
     func test_prefetchImages_nilDoneDoesNotCrash() throws {

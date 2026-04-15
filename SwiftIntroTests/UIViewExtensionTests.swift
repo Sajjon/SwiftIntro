@@ -10,11 +10,11 @@
 //  - Assert:  verify a single observable outcome (1 line)
 //
 
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
+@MainActor
 final class UIViewExtensionTests: XCTestCase {
-
     // MARK: - isVisible getter
 
     func test_isVisible_returnsTrueWhenNotHidden() {

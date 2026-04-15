@@ -18,6 +18,7 @@
 import UIKit
 import XCTest
 
+@MainActor
 final class GameOverVCTests: XCTestCase {
     // MARK: - Helpers
 

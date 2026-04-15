@@ -15,6 +15,7 @@ import UIKit
 ///
 /// Conforming to this protocol rather than coupling directly to `UINavigationController`
 /// keeps `LoadingDataVC` navigation-agnostic and makes it trivially testable.
+@MainActor
 protocol LoadingDataNavigatorProtocol: AnyObject {
     /// Called on the main thread after images are in the memory cache and the game
     /// is ready to start. The conformer is responsible for replacing `LoadingDataVC`
@@ -83,7 +84,10 @@ private extension LoadingDataVC {
             case let .failure(error):
                 log.error("Failed to get photos: \(error)")
             case let .success(cardSingles):
-                self.setupWithModel(cardSingles: cardSingles)
+                DispatchQueue.main
+                    .async { [weak self] in
+                        MainActor.assumeIsolated { self?.setupWithModel(cardSingles: cardSingles) }
+                    }
             }
         }
     }
@@ -99,17 +103,17 @@ private extension LoadingDataVC {
     /// Pre-fetching prevents the visible lag that would occur if Kingfisher had to hit the
     /// network (or even disk) on the first card flip during gameplay.
     func prefetchImagesForCards(urls: [URL]) {
-        imageCache.prefetchImages(urls) {
-            log.info("Images in memory cache — starting game")
-            self.startGame()
+        imageCache.prefetchImages(urls) { [weak self] in
+            MainActor.assumeIsolated {
+                log.info("Images in memory cache — starting game")
+                self?.startGame()
+            }
         }
     }
 
     /// Delegates to `navigator` so `LoadingDataVC` stays navigation-agnostic.
     func startGame() {
         guard let cards else { return }
-        onMain {
-            self.navigator?.navigateToGame(config: self.config, cards: cards)
-        }
+        navigator?.navigateToGame(config: config, cards: cards)
     }
 }

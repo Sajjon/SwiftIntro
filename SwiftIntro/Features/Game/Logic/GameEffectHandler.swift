@@ -19,7 +19,13 @@ import UIKit
 /// It also caches the latest `GameModel` so the UIKit data source can ask
 /// "can this card be selected?" and "how should this cell look?" without
 /// coupling the data source to the Mobius loop directly.
-final class GameEffectHandler {
+/// - Safety: All mutable state (`currentModel`, `flipBackWorkItem`, `collectionView`,
+///   `onNavigateToGameOver`) is accessed exclusively on the main thread:
+///   `update(with:)`, `canSelectCard`, and `configureCell` are all `@MainActor`-isolated;
+///   `handleFlipCard` and `handleNavigateToGameOver` dispatch to `DispatchQueue.main`
+///   before touching UI or stored state. `@unchecked Sendable` is required because
+///   MobiusCore predates Swift 6 and does not declare `Sendable` on `Connectable`/`Connection`.
+final class GameEffectHandler: @unchecked Sendable {
     /// The collection view managed by the game screen.
     /// Held weakly to avoid a retain cycle with the view controller.
     weak var collectionView: UICollectionView?
@@ -59,6 +65,11 @@ final class GameEffectHandler {
 
     /// Stores the latest model so closure-based queries from the data source reflect
     /// current game state (flip status, match status).
+    ///
+    /// Called exclusively from `GameVC`'s `Connectable.acceptClosure` inside
+    /// `MainActor.assumeIsolated`, which MobiusController delivers on `viewQueue`
+    /// (defaults to `DispatchQueue.main`).
+    @MainActor
     func update(with model: GameModel) {
         currentModel = model
     }
@@ -66,6 +77,7 @@ final class GameEffectHandler {
     /// Returns whether the card at `index` may be selected by the player.
     ///
     /// Matched cards are permanently locked face-up and must not be tappable.
+    @MainActor
     func canSelectCard(at index: Int) -> Bool {
         guard let model = currentModel else { return false }
         return !model.cards[index].isMatched
@@ -75,6 +87,7 @@ final class GameEffectHandler {
     ///
     /// Called from `willDisplay` in the data source, which fires whenever a cell
     /// enters the visible area of the collection view.
+    @MainActor
     func configureCell(
         _ cell: CardCVCell,
         at index: Int
@@ -131,13 +144,13 @@ private extension GameEffectHandler {
         index: Int,
         faceUp: Bool
     ) {
-        // Cell lookups and animations must run on the main thread.
-        onMain { [weak self] in
-            guard
-                let self,
-                let cell = collectionView?.cellForItem(at: indexPath(for: index)) as? CardCVCell
-            else { return }
-            cell.animateFlip(faceUp: faceUp)
+        DispatchQueue.main.async { [weak self] in
+            MainActor.assumeIsolated {
+                guard let self,
+                      let cell = self.collectionView?.cellForItem(at: self.indexPath(for: index)) as? CardCVCell
+                else { return }
+                cell.animateFlip(faceUp: faceUp)
+            }
         }
     }
 

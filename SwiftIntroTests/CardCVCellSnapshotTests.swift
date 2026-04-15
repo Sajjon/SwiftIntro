@@ -6,17 +6,17 @@
 //
 
 import SnapshotTesting
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
+@MainActor
 final class CardCVCellSnapshotTests: XCTestCase {
-
     private let cellSize = CGSize(width: 90, height: 120)
 
-    func test_cardCVCell_faceDown() {
+    func test_cardCVCell_faceDown() throws {
         // Arrange
         let cell = CardCVCell(frame: CGRect(origin: .zero, size: cellSize))
-        let card = CardModel(imageUrl: URL(string: "https://a.test/img.jpg")!)
+        let card = try CardModel(imageUrl: XCTUnwrap(URL(string: "https://a.test/img.jpg")))
         cell.configure(with: card)
 
         // Act + Assert
