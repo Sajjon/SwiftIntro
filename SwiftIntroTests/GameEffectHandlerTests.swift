@@ -11,6 +11,7 @@
 //
 
 @testable import SwiftIntro
+import UIKit
 import XCTest
 
 final class GameEffectHandlerTests: XCTestCase {
@@ -121,6 +122,28 @@ final class GameEffectHandlerTests: XCTestCase {
         // Assert — must not crash
         waitForExpectations(timeout: 1)
         XCTAssertNil(handler.collectionView)
+    }
+
+    func test_connect_flipCardEffect_withCollectionView_doesNotCrash() {
+        // Arrange — non-nil collectionView exercises indexPath(for:) even though
+        // cellForItem(at:) returns nil (no window) and animateFlip is skipped.
+        let cv = UICollectionView(
+            frame: CGRect(x: 0, y: 0, width: 300, height: 400),
+            collectionViewLayout: UICollectionViewFlowLayout()
+        )
+        let handler = makeHandler()
+        handler.collectionView = cv
+        let connection = handler.connect { _ in }
+        let exp = expectation(description: "main queue drain")
+
+        // Act
+        connection.accept(.flipCard(index: 0, faceUp: true))
+        DispatchQueue.main.async { exp.fulfill() }
+
+        // Assert — must not crash; collectionView reference is still set
+        waitForExpectations(timeout: 1)
+        XCTAssertNotNil(handler.collectionView)
+        connection.dispose()
     }
 
     // MARK: - scheduleFlipBack effect (via connect)

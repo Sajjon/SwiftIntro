@@ -41,6 +41,24 @@ final class MemoryDataSourceAndDelegateTests: XCTestCase {
 
     // MARK: - UICollectionViewDataSource
 
+    func test_cellForItemAt_returnsCardCVCell() {
+        // Arrange — attach cv + ds to a UIWindow so dequeueReusableCell works
+        let ds = makeDS(rows: 2, columns: 3)
+        let (cv, _) = makeCV()
+        cv.dataSource = ds
+        let window = UIWindow(frame: cv.frame)
+        window.addSubview(cv)
+        window.makeKeyAndVisible()
+        cv.reloadData()
+        cv.layoutIfNeeded()
+
+        // Act
+        let cell = cv.cellForItem(at: IndexPath(item: 0, section: 0))
+
+        // Assert
+        XCTAssertTrue(cell is CardCVCell)
+    }
+
     func test_numberOfSections_returnsRowCount() {
         // Arrange
         let ds = makeDS(rows: 3, columns: 4)

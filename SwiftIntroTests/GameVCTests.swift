@@ -277,4 +277,60 @@ final class GameVCTests: XCTestCase {
         XCTAssertNil(dataSourceAndDelegate(of: vc).onCardTapped)
         vc.viewDidDisappear(false)
     }
+
+    // MARK: - wireDataSourceClosures
+
+    func test_canSelectCard_closure_returnsTrueForUnmatchedCard() {
+        // Arrange
+        let vc = makeVC()
+        _ = vc.view
+
+        // Act — invoke the canSelectCard closure body wired in wireDataSourceClosures
+        let result = dataSourceAndDelegate(of: vc).canSelectCard?(0)
+
+        // Assert — fresh model has no matched cards
+        XCTAssertEqual(result, true)
+        vc.viewDidDisappear(false)
+    }
+
+    func test_configureCell_closure_doesNotCrash() {
+        // Arrange
+        let vc = makeVC()
+        _ = vc.view
+        let cell = CardCVCell(frame: CGRect(origin: .zero, size: CGSize(width: 80, height: 100)))
+
+        // Act + Assert — invoke the configureCell closure body wired in wireDataSourceClosures
+        XCTAssertNoThrow(dataSourceAndDelegate(of: vc).configureCell?(cell, 0))
+        vc.viewDidDisappear(false)
+    }
+
+    // MARK: - navigateToGameOver
+
+    func test_navigateToGameOver_pushesGameOverVC() {
+        // Arrange — build properly paired cards so all 3 easy pairs can be matched.
+        // Adjacent indices share a URL: (0,1), (2,3), (4,5).
+        let pairURL: (Int) -> URL = { URL(string: "https://a.test/pair\($0).jpg")! }
+        let pairedCards = CardDuplicates(memoryCards: (0 ..< 3).flatMap { i -> [Card] in
+            let url = pairURL(i)
+            return [Card(imageUrl: url), Card(imageUrl: url)]
+        })
+        let vc = GameVC(config: GameConfiguration(level: .easy), cards: pairedCards)
+        let nav = UINavigationController(rootViewController: UIViewController())
+        nav.pushViewController(vc, animated: false)
+        _ = vc.view
+        let exp = expectation(description: "game over navigation")
+
+        // Act — tap each pair; the last match triggers navigateToGameOver after 1-second delay
+        let ds = dataSourceAndDelegate(of: vc)
+        for i in stride(from: 0, to: Level.easy.cardCount, by: 2) {
+            ds.onCardTapped?(i)
+            ds.onCardTapped?(i + 1)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { exp.fulfill() }
+
+        // Assert
+        waitForExpectations(timeout: 2)
+        XCTAssertTrue(nav.topViewController is GameOverVC)
+        vc.viewDidDisappear(false)
+    }
 }

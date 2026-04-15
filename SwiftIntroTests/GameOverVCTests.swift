@@ -53,6 +53,16 @@ final class GameOverVCTests: XCTestCase {
         vc.view as! GameOverView
     }
 
+    /// Recursively collects every `CircularButton` in the view hierarchy, depth-first.
+    private func findCircularButtons(in view: UIView) -> [CircularButton] {
+        var result: [CircularButton] = []
+        if let btn = view as? CircularButton { result.append(btn) }
+        for sub in view.subviews {
+            result.append(contentsOf: findCircularButtons(in: sub))
+        }
+        return result
+    }
+
     // MARK: - init
 
     func test_init_doesNotCrash() {
@@ -169,6 +179,36 @@ final class GameOverVCTests: XCTestCase {
 
         // Assert — removeLast(2) + append(1) = net −1
         XCTAssertEqual(nav.viewControllers.count, initial.count - 1)
+    }
+
+    // MARK: - @objc button targets
+
+    func test_restartButton_invokesOnRestartClosure() {
+        // Arrange
+        let vc = makeVC()
+        _ = vc.view
+        var restartCalled = false
+        gameOverView(of: vc).onRestart = { restartCalled = true }
+
+        // Act — trigger the @objc target-action registered on the restart button
+        findCircularButtons(in: gameOverView(of: vc)).first?.sendActions(for: .touchUpInside)
+
+        // Assert
+        XCTAssertTrue(restartCalled)
+    }
+
+    func test_quitButton_invokesOnQuitClosure() {
+        // Arrange
+        let vc = makeVC()
+        _ = vc.view
+        var quitCalled = false
+        gameOverView(of: vc).onQuit = { quitCalled = true }
+
+        // Act — trigger the @objc target-action registered on the quit button
+        findCircularButtons(in: gameOverView(of: vc)).last?.sendActions(for: .touchUpInside)
+
+        // Assert
+        XCTAssertTrue(quitCalled)
     }
 
     // MARK: - GameOverView.render
