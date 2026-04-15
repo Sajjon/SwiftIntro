@@ -137,7 +137,8 @@ jobs:
             | xcpretty
 
       - name: Convert coverage to Cobertura XML
-        run: xcresultparser --output-format cobertura "$RESULT_BUNDLE" "$COV_XML"
+        # xcresultparser writes the report to stdout, so redirect it to the file.
+        run: xcresultparser --output-format cobertura "$RESULT_BUNDLE" > "$COV_XML"
 
       - name: Print coverage summary
         run: xcrun xccov view --report "$RESULT_BUNDLE"
