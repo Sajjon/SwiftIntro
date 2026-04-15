@@ -97,13 +97,31 @@ jobs:
 
       - name: Validate simulator destination
         run: |
-          AVAILABLE_IOS_DEVICES=$(xcrun simctl list devices available "iOS $SIM_OS")
+          if ! AVAILABLE_IOS_DEVICES=$(xcrun simctl list devices available "iOS $SIM_OS"); then
+            echo "Failed to query simulators for runtime iOS $SIM_OS" >&2
+            xcrun simctl list runtimes || true
+            exit 1
+          fi
           echo "$AVAILABLE_IOS_DEVICES"
-          if ! echo "$AVAILABLE_IOS_DEVICES" | grep -F "$SIM_DEVICE" > /dev/null; then
+          MATCHED_SIMULATOR_LINE=$(
+            echo "$AVAILABLE_IOS_DEVICES" | awk -v device="$SIM_DEVICE" '
+              /^[[:space:]]+/ {
+                line = $0
+                sub(/^[[:space:]]+/, "", line)
+                name = line
+                sub(/ \(.*/, "", name)
+                if (name == device) {
+                  print $0
+                  exit
+                }
+              }
+            '
+          )
+          if [ -z "$MATCHED_SIMULATOR_LINE" ]; then
             echo "Expected simulator not available: $SIM_DEVICE (iOS $SIM_OS)" >&2
             exit 1
           fi
-          echo "$AVAILABLE_IOS_DEVICES" | grep -F "$SIM_DEVICE"
+          echo "$MATCHED_SIMULATOR_LINE"
 
       - name: Build & test with coverage
         run: |
