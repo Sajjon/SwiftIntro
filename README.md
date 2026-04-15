@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/Sajjon/SwiftIntro/graph/badge.svg?token=siapXgVmia)](https://codecov.io/gh/Sajjon/SwiftIntro)
+
 # 📱 My first Memory 🤔💭
 #### _An introduction to iOS development with Swift._
 
