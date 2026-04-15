@@ -25,10 +25,10 @@ final class GameOverView: UIView {
     private let tryHarderLabel = UILabel()
 
     /// Triggers a new game with the same images shuffled.
-    private let restartButton = CircularButton(title: L10n.restart)
+    private let restartButton = CircularButton(title: String(localized: .GameOver.restart))
 
     /// Returns the player to the settings screen.
-    private let quitButton = CircularButton(title: L10n.quit)
+    private let quitButton = CircularButton(title: String(localized: .GameOver.quit))
 
     /// Called when the player taps "Restart". Wired by `GameOverVC`.
     var onRestart: (@MainActor () -> Void)?
@@ -50,7 +50,7 @@ final class GameOverView: UIView {
 
     /// Updates model-driven UI — called once by `GameOverVC` after the outcome is known.
     func render(_ outcome: GameOutcome) {
-        scoreLabel.text = L10n.clickScore(outcome.clickCount)
+        scoreLabel.text = String(localized: .GameOver.clickScore(score: outcome.clickCount))
     }
 }
 
@@ -121,9 +121,9 @@ private extension GameOverView {
 
     /// Applies localised strings to the title, subtitle, and encouragement labels.
     func setupLocalizedText() {
-        titleLabel.text = L10n.gameOverTitle
-        subtitleLabel.text = L10n.gameOverSubtitle
-        tryHarderLabel.text = L10n.tryHarder
+        titleLabel.text = String(localized: .GameOver.gameOverTitle)
+        subtitleLabel.text = String(localized: .GameOver.gameOverSubtitle)
+        tryHarderLabel.text = String(localized: .GameOver.tryHarder)
     }
 
     /// Forwards the restart tap to `onRestart`.

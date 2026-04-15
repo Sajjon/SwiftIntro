@@ -1,0 +1,33 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "PairsFoundUnformatted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pairs found %1$(pairsFound)lld of %2$(totalPairs)lld"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Par funna %#@pairsFound@ av %#@totalPairs@"
+          }
+        }
+      },
+      "substitutions" : {
+        "pairsFound" : {
+          "argNum" : 1,
+          "formatSpecifier" : "d"
+        },
+        "totalPairs" : {
+          "argNum" : 2,
+          "formatSpecifier" : "d"
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

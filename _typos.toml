@@ -1,7 +1,10 @@
 [files]
 extend-exclude = [
 	"SwiftIntro.xcodeproj/project.pbxproj",
-	"SwiftIntro/SupportingFiles/sv.lproj/Localizable.strings"
+	"SwiftIntro/Features/GameOver/GameOver.xcstrings",
+	"SwiftIntro/Features/Game/View/Game.xcstrings",
+	"SwiftIntro/Features/Settings/Settings.xcstrings",
+	"SwiftIntro/Features/Loading/Loading.xcstrings",
 ]
 
 [default.extend-identifiers]

@@ -92,11 +92,11 @@ private extension SettingsView {
     /// Fills all labels and control titles with localised strings, including each
     /// level segment title derived from the corresponding `Level` case.
     func setupLocalizedStrings() {
-        titleLabel.text = L10n.title
-        usernameTextField.placeholder = L10n.usernamePlaceholder
-        usernameLabel.text = L10n.username
-        segmentTitleLabel.text = L10n.level
-        startGameButton.setLocalizedTitle(L10n.startGame)
+        titleLabel.text = String(localized: .Settings.title)
+        usernameTextField.placeholder = String(localized: .Settings.usernamePlaceholder)
+        usernameLabel.text = String(localized: .Settings.username)
+        segmentTitleLabel.text = String(localized: .Settings.level)
+        startGameButton.setLocalizedTitle(String(localized: .Settings.startGame))
         setupLevelSegmentTitles()
     }
 

@@ -45,9 +45,9 @@ extension Level {
     /// The localized display title shown in the segmented control.
     var title: String {
         switch self {
-        case .easy: L10n.easy
-        case .normal: L10n.normal
-        case .hard: L10n.hard
+        case .easy: String(localized: .Settings.easy)
+        case .normal: String(localized: .Settings.normal)
+        case .hard: String(localized: .Settings.hard)
         }
     }
 

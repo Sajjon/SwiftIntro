@@ -4,146 +4,89 @@
 //
 //  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
+//  Verifies that every key in every .xcstrings catalog resolves to a non-empty
+//  string at runtime using Xcode's generated LocalizedStringResource symbols.
+//  A missing key is a compile error, not a test failure.
+//
 //  All tests follow the Arrange-Act-Assert (AAA) pattern:
-//  - Arrange: nothing — all tests exercise static L10n accessors directly
-//  - Act:     access the L10n property or call the L10n function (1 line)
-//  - Assert:  verify the returned string is non-empty and matches the fallback (1 line)
+//  - Arrange: nothing — all tests exercise generated symbols directly
+//  - Act:     resolve the symbol to a String (1 line)
+//  - Assert:  verify the returned string is non-empty (1 line)
 //
 
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
 final class StringsTests: XCTestCase {
-
-    // MARK: - Static let keys
+    // MARK: - Settings.xcstrings
 
     func test_title_isNonEmpty() {
-        // Act
-        let value = L10n.title
-
-        // Assert
-        XCTAssertFalse(value.isEmpty)
+        XCTAssertFalse(String(localized: .Settings.title).isEmpty)
     }
 
     func test_startGame_isNonEmpty() {
-        // Act
-        let value = L10n.startGame
-
-        // Assert
-        XCTAssertFalse(value.isEmpty)
+        XCTAssertFalse(String(localized: .Settings.startGame).isEmpty)
     }
 
     func test_level_isNonEmpty() {
-        // Act
-        let value = L10n.level
-
-        // Assert
-        XCTAssertFalse(value.isEmpty)
+        XCTAssertFalse(String(localized: .Settings.level).isEmpty)
     }
 
     func test_usernamePlaceholder_isNonEmpty() {
-        // Act
-        let value = L10n.usernamePlaceholder
-
-        // Assert
-        XCTAssertFalse(value.isEmpty)
+        XCTAssertFalse(String(localized: .Settings.usernamePlaceholder).isEmpty)
     }
 
     func test_username_isNonEmpty() {
-        // Act
-        let value = L10n.username
-
-        // Assert
-        XCTAssertFalse(value.isEmpty)
+        XCTAssertFalse(String(localized: .Settings.username).isEmpty)
     }
 
     func test_easy_isNonEmpty() {
-        // Act
-        let value = L10n.easy
-
-        // Assert
-        XCTAssertFalse(value.isEmpty)
+        XCTAssertFalse(String(localized: .Settings.easy).isEmpty)
     }
 
     func test_normal_isNonEmpty() {
-        // Act
-        let value = L10n.normal
-
-        // Assert
-        XCTAssertFalse(value.isEmpty)
+        XCTAssertFalse(String(localized: .Settings.normal).isEmpty)
     }
 
     func test_hard_isNonEmpty() {
-        // Act
-        let value = L10n.hard
-
-        // Assert
-        XCTAssertFalse(value.isEmpty)
+        XCTAssertFalse(String(localized: .Settings.hard).isEmpty)
     }
 
-    func test_gameOverTitle_isNonEmpty() {
-        // Act
-        let value = L10n.gameOverTitle
+    // MARK: - Loading.xcstrings
 
-        // Assert
-        XCTAssertFalse(value.isEmpty)
+    func test_loading_isNonEmpty() {
+        XCTAssertFalse(String(localized: .Loading.loading).isEmpty)
+    }
+
+    // MARK: - GameOver.xcstrings
+
+    func test_gameOverTitle_isNonEmpty() {
+        XCTAssertFalse(String(localized: .GameOver.gameOverTitle).isEmpty)
     }
 
     func test_gameOverSubtitle_isNonEmpty() {
-        // Act
-        let value = L10n.gameOverSubtitle
-
-        // Assert
-        XCTAssertFalse(value.isEmpty)
+        XCTAssertFalse(String(localized: .GameOver.gameOverSubtitle).isEmpty)
     }
 
     func test_tryHarder_isNonEmpty() {
-        // Act
-        let value = L10n.tryHarder
-
-        // Assert
-        XCTAssertFalse(value.isEmpty)
+        XCTAssertFalse(String(localized: .GameOver.tryHarder).isEmpty)
     }
 
     func test_quit_isNonEmpty() {
-        // Act
-        let value = L10n.quit
-
-        // Assert
-        XCTAssertFalse(value.isEmpty)
+        XCTAssertFalse(String(localized: .GameOver.quit).isEmpty)
     }
 
     func test_restart_isNonEmpty() {
-        // Act
-        let value = L10n.restart
-
-        // Assert
-        XCTAssertFalse(value.isEmpty)
-    }
-
-    func test_loading_isNonEmpty() {
-        // Act
-        let value = L10n.loading
-
-        // Assert
-        XCTAssertFalse(value.isEmpty)
-    }
-
-    // MARK: - Functions with format arguments
-
-    func test_pairsFoundUnformatted_isNonEmpty() {
-        // Act
-        let value = L10n.pairsFoundUnformatted(3, 6)
-
-        // Assert
-        XCTAssertFalse(value.isEmpty)
+        XCTAssertFalse(String(localized: .GameOver.restart).isEmpty)
     }
 
     func test_clickScore_isNonEmpty() {
-        // Act
-        let value = L10n.clickScore(42)
+        XCTAssertFalse(String(localized: .GameOver.clickScore(score: 42)).isEmpty)
+    }
 
-        // Assert
-        XCTAssertFalse(value.isEmpty)
+    // MARK: - Game.xcstrings
+
+    func test_pairsFoundUnformatted_isNonEmpty() {
+        XCTAssertFalse(String(localized: .Game.pairsFoundUnformatted(pairsFound: 3, totalPairs: 6)).isEmpty)
     }
 }

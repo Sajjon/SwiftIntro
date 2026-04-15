@@ -27,7 +27,7 @@ final class GameHeaderViewSnapshotTests: XCTestCase {
     func test_gameHeaderView_withScore() {
         // Arrange
         let header = GameHeaderView()
-        header.scoreLabel.text = L10n.pairsFoundUnformatted(3, 6)
+        header.scoreLabel.text = String(localized: .Game.pairsFoundUnformatted(pairsFound: 3, totalPairs: 6))
 
         // Act + Assert
         withSnapshotTesting(record: .missing) {
@@ -38,7 +38,7 @@ final class GameHeaderViewSnapshotTests: XCTestCase {
     func test_gameHeaderView_fullScore() {
         // Arrange
         let header = GameHeaderView()
-        header.scoreLabel.text = L10n.pairsFoundUnformatted(10, 10)
+        header.scoreLabel.text = String(localized: .Game.pairsFoundUnformatted(pairsFound: 10, totalPairs: 10))
 
         // Act + Assert
         withSnapshotTesting(record: .missing) {
