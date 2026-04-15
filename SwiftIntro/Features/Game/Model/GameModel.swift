@@ -29,15 +29,13 @@ struct CardModel {
 }
 
 extension CardModel {
-
-	/// Checks if this card forms a matching pair with `other`
-	/// - Parameter other: another card
-	/// - Returns: If the pair is a match
-	func isMatchingPair(with other: Self) -> Bool {
-		imageUrl == other.imageUrl
-	}
+    /// Checks if this card forms a matching pair with `other`
+    /// - Parameter other: another card
+    /// - Returns: If the pair is a match
+    func isMatchingPair(with other: Self) -> Bool {
+        imageUrl == other.imageUrl
+    }
 }
-
 
 /// The complete snapshot of the game at any point in time.
 ///
@@ -80,7 +78,10 @@ struct GameModel {
 }
 
 extension GameModel {
-	func isCard(at index: Int, matchingCardAt otherCardIndex: Int) -> Bool {
-		cards[index].isMatchingPair(with: cards[otherCardIndex])
-	}
+    func isCard(
+        at index: Int,
+        matchingCardAt otherCardIndex: Int
+    ) -> Bool {
+        cards[index].isMatchingPair(with: cards[otherCardIndex])
+    }
 }
