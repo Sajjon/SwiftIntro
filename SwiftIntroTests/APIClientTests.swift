@@ -11,46 +11,47 @@
 //
 
 import Factory
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
 // MARK: - Mock HTTPClient
 
 private final class MockHTTPClient: HTTPClientProtocol {
     var result: Result<Data, Error> = .failure(URLError(.unknown))
 
-    func get(url: URL, done: @escaping (Result<Data, Error>) -> Void) {
+    func get(url _: URL, done: @escaping (Result<Data, Error>) -> Void) {
         done(result)
     }
 }
 
 // MARK: - Valid Wikimedia JSON fixture
 
-private let validWikimediaJSON = """
-{
-  "query": {
-    "pages": {
-      "1": {
-        "imageinfo": [
-          { "url": "https://upload.wikimedia.org/a.jpg" }
-        ]
-      },
-      "2": {
-        "imageinfo": [
-          { "url": "https://upload.wikimedia.org/b.jpg" }
-        ]
+private let validWikimediaJSON = Data(
+    """
+    {
+      "query": {
+        "pages": {
+          "1": {
+            "imageinfo": [
+              { "url": "https://upload.wikimedia.org/a.jpg" }
+            ]
+          },
+          "2": {
+            "imageinfo": [
+              { "url": "https://upload.wikimedia.org/b.jpg" }
+            ]
+          }
+        }
       }
     }
-  }
-}
-""".data(using: .utf8)!
+    """.utf8
+)
 
 private let invalidJSON = Data("not json".utf8)
 
 // MARK: - Tests
 
 final class APIClientTests: XCTestCase {
-
     private let mock = MockHTTPClient()
     private var apiClient: APIClient!
 
@@ -77,7 +78,7 @@ final class APIClientTests: XCTestCase {
 
         // Act
         apiClient.getPhotos("cats") { result in
-            if case .success(let singles) = result { receivedSingles = singles }
+            if case let .success(singles) = result { receivedSingles = singles }
             exp.fulfill()
         }
 
@@ -94,7 +95,7 @@ final class APIClientTests: XCTestCase {
 
         // Act
         apiClient.getPhotos("cats") { result in
-            if case .success(let singles) = result { count = singles.cards.count }
+            if case let .success(singles) = result { count = singles.cards.count }
             exp.fulfill()
         }
 
@@ -113,7 +114,7 @@ final class APIClientTests: XCTestCase {
 
         // Act
         apiClient.getPhotos("cats") { result in
-            if case .failure(let error) = result { receivedError = error }
+            if case let .failure(error) = result { receivedError = error }
             exp.fulfill()
         }
 
@@ -132,7 +133,7 @@ final class APIClientTests: XCTestCase {
 
         // Act
         apiClient.getPhotos("cats") { result in
-            if case .failure(let error) = result { receivedError = error }
+            if case let .failure(error) = result { receivedError = error }
             exp.fulfill()
         }
 

@@ -6,3 +6,9 @@
 function_body_length:
   warning: 20
   error: 20
+
+# Test files are naturally longer than production files — each test case adds
+# several lines of Arrange / Act / Assert, so the 400-line default is too tight.
+file_length:
+  warning: 500
+  error: 500

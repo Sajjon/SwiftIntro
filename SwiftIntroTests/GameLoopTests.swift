@@ -11,12 +11,11 @@
 //
 
 import MobiusCore
+@testable import SwiftIntro
 import UIKit
 import XCTest
-@testable import SwiftIntro
 
 final class GameLoopTests: XCTestCase {
-
     // MARK: - Helpers
 
     private func makeCard(url: URL = URL(string: "https://a.test/img.jpg")!) -> CardModel {
@@ -24,7 +23,7 @@ final class GameLoopTests: XCTestCase {
     }
 
     private func makeModel(level: Level = .easy) -> GameModel {
-        let cards = (0..<level.cardCount).map { i in
+        let cards = (0 ..< level.cardCount).map { i in
             CardModel(imageUrl: URL(string: "https://a.test/\(i).jpg")!)
         }
         return GameModel(cards: cards, level: level)
@@ -140,8 +139,8 @@ final class GameLoopTests: XCTestCase {
         var receivedModel: GameModel?
         let view = AnyConnectable<GameModel, GameEvent> { _ in
             Connection(
-                acceptClosure: { m in
-                    receivedModel = m
+                acceptClosure: { model in
+                    receivedModel = model
                     exp.fulfill()
                 },
                 disposeClosure: {}

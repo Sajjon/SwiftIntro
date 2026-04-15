@@ -10,16 +10,17 @@
 //  - Assert:  verify a single observable outcome (1 line)
 //
 
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
 final class GameEffectHandlerTests: XCTestCase {
-
     // MARK: - Helpers
 
-    private func makeCard(url: URL = URL(string: "https://a.test/img.jpg")!,
-                          isFlipped: Bool = false,
-                          isMatched: Bool = false) -> CardModel {
+    private func makeCard(
+        url: URL = URL(string: "https://a.test/img.jpg")!,
+        isFlipped: Bool = false,
+        isMatched: Bool = false
+    ) -> CardModel {
         var card = CardModel(imageUrl: url)
         card.isFlipped = isFlipped
         card.isMatched = isMatched
@@ -31,8 +32,8 @@ final class GameEffectHandlerTests: XCTestCase {
     }
 
     private func makeHandler(model: GameModel? = nil, level: Level = .easy) -> GameEffectHandler {
-        let m = model ?? makeModel(level: level)
-        return GameEffectHandler(level: level, initialModel: m)
+        let initialModel = model ?? makeModel(level: level)
+        return GameEffectHandler(level: level, initialModel: initialModel)
     }
 
     // MARK: - canSelectCard
@@ -133,7 +134,7 @@ final class GameEffectHandlerTests: XCTestCase {
 
         // Assert
         waitForExpectations(timeout: 2)
-        if case .flipBackCards(let i1, let i2) = receivedEvent {
+        if case let .flipBackCards(i1, i2) = receivedEvent {
             XCTAssertEqual(i1, 0)
             XCTAssertEqual(i2, 1)
         } else {

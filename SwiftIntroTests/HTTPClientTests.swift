@@ -10,27 +10,39 @@
 //  - Assert:  verify a single outcome in the done closure (1 line)
 //
 
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
 // MARK: - Stub URLProtocol
 
+private struct StubResult {
+    var data: Data?
+    var response: URLResponse?
+    var error: Error?
+}
+
 private final class StubURLProtocol: URLProtocol {
+    static var handler: ((URLRequest) -> StubResult) = { _ in StubResult() }
 
-    static var handler: ((URLRequest) -> (Data?, URLResponse?, Error?)) = { _ in (nil, nil, nil) }
+    // swiftlint:disable:next static_over_final_class
+    override class func canInit(with _: URLRequest) -> Bool {
+        true
+    }
 
-    override class func canInit(with request: URLRequest) -> Bool { true }
-    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    // swiftlint:disable:next static_over_final_class
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
+        request
+    }
 
     override func startLoading() {
-        let (data, response, error) = StubURLProtocol.handler(request)
-        if let error = error {
+        let result = StubURLProtocol.handler(request)
+        if let error = result.error {
             client?.urlProtocol(self, didFailWithError: error)
         } else {
-            if let response = response {
+            if let response = result.response {
                 client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
             }
-            if let data = data {
+            if let data = result.data {
                 client?.urlProtocol(self, didLoad: data)
             }
             client?.urlProtocolDidFinishLoading(self)
@@ -43,7 +55,6 @@ private final class StubURLProtocol: URLProtocol {
 // MARK: - Tests
 
 final class HTTPClientTests: XCTestCase {
-
     private var client: HTTPClient!
     private let url = URL(string: "https://example.com")!
 
@@ -56,7 +67,7 @@ final class HTTPClientTests: XCTestCase {
 
     override func tearDown() {
         client = nil
-        StubURLProtocol.handler = { _ in (nil, nil, nil) }
+        StubURLProtocol.handler = { _ in StubResult() }
         super.tearDown()
     }
 
@@ -66,13 +77,13 @@ final class HTTPClientTests: XCTestCase {
         // Arrange
         let expected = Data("hello".utf8)
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
-        StubURLProtocol.handler = { _ in (expected, response, nil) }
+        StubURLProtocol.handler = { _ in StubResult(data: expected, response: response) }
         let exp = expectation(description: "done called")
         var received: Data?
 
         // Act
         client.get(url: url) { result in
-            if case .success(let data) = result { received = data }
+            if case let .success(data) = result { received = data }
             exp.fulfill()
         }
 
@@ -86,13 +97,13 @@ final class HTTPClientTests: XCTestCase {
     func test_get_callsDoneWithErrorOnNetworkFailure() {
         // Arrange
         let networkError = URLError(.notConnectedToInternet)
-        StubURLProtocol.handler = { _ in (nil, nil, networkError) }
+        StubURLProtocol.handler = { _ in StubResult(error: networkError) }
         let exp = expectation(description: "done called")
         var receivedError: Error?
 
         // Act
         client.get(url: url) { result in
-            if case .failure(let error) = result { receivedError = error }
+            if case let .failure(error) = result { receivedError = error }
             exp.fulfill()
         }
 
