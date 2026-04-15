@@ -69,6 +69,8 @@ jobs:
       COV_XML: .build/coverage.xml
       SCHEME: SwiftIntro
       PROJECT: SwiftIntro.xcodeproj
+      SIM_DEVICE: iPhone 16
+      SIM_OS: "18.6"
 
     steps:
       - uses: actions/checkout@v4
@@ -93,24 +95,33 @@ jobs:
           xcrun simctl list runtimes
           xcrun simctl list devices available | grep -i iphone || echo "(none)"
 
-      # Pick the UDID of the first available iPhone simulator.
-      # xcrun simctl list -j is plain JSON with no stdin dependency, so a
-      # single awk/grep pipeline is enough — no Python heredoc needed.
-      - name: Resolve simulator UDID
-        id: sim
+      - name: Validate simulator destination
         run: |
-          UDID=$(
-            xcrun simctl list devices available --json |
-            grep -oE '"udid" : "[A-F0-9-]+"' |
-            head -1 |
-            grep -oE '[A-F0-9-]{36}'
-          )
-          if [ -z "$UDID" ]; then
-            echo "No available iPhone simulator found" >&2
+          if ! AVAILABLE_IOS_DEVICES=$(xcrun simctl list devices available "iOS $SIM_OS"); then
+            echo "Failed to query simulators for runtime iOS $SIM_OS" >&2
+            xcrun simctl list runtimes || true
             exit 1
           fi
-          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
-          xcrun simctl list devices | grep "$UDID"
+          echo "$AVAILABLE_IOS_DEVICES"
+          MATCHED_SIMULATOR_LINE=$(
+            echo "$AVAILABLE_IOS_DEVICES" | awk -v device="$SIM_DEVICE" '
+              /^[[:space:]]+/ {
+                line = $0
+                sub(/^[[:space:]]+/, "", line)
+                name = line
+                sub(/ \(.*/, "", name)
+                if (name == device) {
+                  print $0
+                  exit
+                }
+              }
+            '
+          )
+          if [ -z "$MATCHED_SIMULATOR_LINE" ]; then
+            echo "Expected simulator not available: $SIM_DEVICE (iOS $SIM_OS)" >&2
+            exit 1
+          fi
+          echo "$MATCHED_SIMULATOR_LINE"
 
       - name: Build & test with coverage
         run: |
@@ -119,14 +130,15 @@ jobs:
           xcodebuild test \
             -project "$PROJECT" \
             -scheme "$SCHEME" \
-            -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
+            -destination "platform=iOS Simulator,name=$SIM_DEVICE,OS=$SIM_OS" \
             -only-testing:SwiftIntroTests \
             -enableCodeCoverage YES \
             -resultBundlePath "$RESULT_BUNDLE" \
             | xcpretty
 
       - name: Convert coverage to Cobertura XML
-        run: xcresultparser --output-format cobertura "$RESULT_BUNDLE" "$COV_XML"
+        # xcresultparser writes the report to stdout, so redirect it to the file.
+        run: xcresultparser --output-format cobertura "$RESULT_BUNDLE" > "$COV_XML"
 
       - name: Print coverage summary
         run: xcrun xccov view --report "$RESULT_BUNDLE"
