@@ -72,6 +72,7 @@
 		TP000002TP000002TP000002 /* CacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TP000001TP000001TP000001 /* CacheTests.swift */; };
 		TQ000002TQ000002TQ000002 /* LoadingDataVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TQ000001TQ000001TQ000001 /* LoadingDataVCTests.swift */; };
 		TR000002TR000002TR000002 /* GameVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TR000001TR000001TR000001 /* GameVCTests.swift */; };
+		TU000002TU000002TU000002 /* GameOverVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TU000001TU000001TU000001 /* GameOverVCTests.swift */; };
 		TS010002TS010002TS010002 /* CircularButtonSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS010001TS010001TS010001 /* CircularButtonSnapshotTests.swift */; };
 		TS020002TS020002TS020002 /* GameHeaderViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS020001TS020001TS020001 /* GameHeaderViewSnapshotTests.swift */; };
 		TS030002TS030002TS030002 /* LoadingViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS030001TS030001TS030001 /* LoadingViewSnapshotTests.swift */; };
@@ -161,6 +162,7 @@
 		TP000001TP000001TP000001 /* CacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheTests.swift; sourceTree = "<group>"; };
 		TQ000001TQ000001TQ000001 /* LoadingDataVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingDataVCTests.swift; sourceTree = "<group>"; };
 		TR000001TR000001TR000001 /* GameVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameVCTests.swift; sourceTree = "<group>"; };
+		TU000001TU000001TU000001 /* GameOverVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverVCTests.swift; sourceTree = "<group>"; };
 		TS010001TS010001TS010001 /* CircularButtonSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularButtonSnapshotTests.swift; sourceTree = "<group>"; };
 		TS020001TS020001TS020001 /* GameHeaderViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHeaderViewSnapshotTests.swift; sourceTree = "<group>"; };
 		TS030001TS030001TS030001 /* LoadingViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewSnapshotTests.swift; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 				TP000001TP000001TP000001 /* CacheTests.swift */,
 				TQ000001TQ000001TQ000001 /* LoadingDataVCTests.swift */,
 				TR000001TR000001TR000001 /* GameVCTests.swift */,
+				TU000001TU000001TU000001 /* GameOverVCTests.swift */,
 				TS010001TS010001TS010001 /* CircularButtonSnapshotTests.swift */,
 				TS020001TS020001TS020001 /* GameHeaderViewSnapshotTests.swift */,
 				TS030001TS030001TS030001 /* LoadingViewSnapshotTests.swift */,
@@ -621,6 +624,7 @@
 				TP000002TP000002TP000002 /* CacheTests.swift in Sources */,
 				TQ000002TQ000002TQ000002 /* LoadingDataVCTests.swift in Sources */,
 				TR000002TR000002TR000002 /* GameVCTests.swift in Sources */,
+				TU000002TU000002TU000002 /* GameOverVCTests.swift in Sources */,
 				TS010002TS010002TS010002 /* CircularButtonSnapshotTests.swift in Sources */,
 				TS020002TS020002TS020002 /* GameHeaderViewSnapshotTests.swift in Sources */,
 				TS030002TS030002TS030002 /* LoadingViewSnapshotTests.swift in Sources */,
