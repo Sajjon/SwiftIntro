@@ -4,8 +4,8 @@
 # Test functions are intentionally longer than production functions:
 # each test has a full Arrange / Act / Assert section.
 function_body_length:
-  warning: 20
-  error: 20
+  warning: 30
+  error: 40
 
 # Test files are naturally longer than production files — each test case adds
 # several lines of Arrange / Act / Assert, so the 400-line default is too tight.

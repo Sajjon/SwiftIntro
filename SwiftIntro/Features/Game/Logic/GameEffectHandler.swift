@@ -5,6 +5,7 @@
 //  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 
+import Factory
 import MobiusCore
 import UIKit
 
@@ -28,6 +29,10 @@ final class GameEffectHandler {
 
     /// Called on the main thread when the game is won, to trigger navigation.
     var onNavigateToGameOver: ((GameOutcome) -> Void)?
+
+    /// Injected clock — controls how delayed dispatches are scheduled.
+    /// `MainQueueClock` in production; `ImmediateClock` in tests.
+    @Injected(\.clock) private var clock
 
     /// Cancellable work item for the delayed flip-back timer.
     /// Stored so it can be cancelled if the loop stops before the delay fires.
@@ -142,18 +147,16 @@ private extension GameEffectHandler {
         index2: Int,
         dispatch: @escaping (GameEvent) -> Void
     ) {
-        // Wrap in a cancellable DispatchWorkItem so stop() can cancel the timer.
-        let workItem = DispatchWorkItem {
+        // The returned work item is stored so stop() can cancel it before the delay fires.
+        flipBackWorkItem = clock.schedule(after: 1.0) {
             dispatch(.flipBackCards(index1: index1, index2: index2))
         }
-        flipBackWorkItem = workItem
-        onMain(delay: 1.0, workItem: workItem)
     }
 
     /// Fires `onNavigateToGameOver` after a short delay so the final flip animation finishes first.
     func handleNavigateToGameOver(outcome: GameOutcome) {
         // Short delay lets the final flip animation complete before navigating away.
-        onMain(delay: 1.0) { [weak self] in self?.onNavigateToGameOver?(outcome) }
+        clock.schedule(after: 1.0) { [weak self] in self?.onNavigateToGameOver?(outcome) }
     }
 
     /// Converts a row-major flat index into a `UICollectionView` `IndexPath`.

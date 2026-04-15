@@ -33,4 +33,12 @@ extension Container {
     var imageRetriever: Factory<ImageRetrieverProtocol> {
         self { KingfisherManager.shared }.singleton
     }
+
+    /// The clock used for all time-delayed dispatches (flip-back timer, navigation delay).
+    ///
+    /// Tests register `ImmediateClock` via `Container.shared.clock.register { ImmediateClock() }`
+    /// to skip real-time waits entirely.
+    var clock: Factory<Clock> {
+        self { MainQueueClock() }.singleton
+    }
 }

@@ -10,11 +10,42 @@
 //  - Assert:  verify a single observable outcome (1 line)
 //
 
+import Factory
 @testable import SwiftIntro
 import UIKit
 import XCTest
 
+// MARK: - ImmediateClock
+
+/// Test clock: ignores the requested delay and fires on the next main-queue cycle.
+///
+/// Defined as `internal` so every test file in this module can share it.
+/// Register it in `setUp` via `Container.shared.clock.register { ImmediateClock() }`.
+final class ImmediateClock: Clock {
+    @discardableResult
+    func schedule(
+        after _: TimeInterval,
+        execute block: @escaping () -> Void
+    ) -> DispatchWorkItem {
+        let item = DispatchWorkItem(block: block)
+        DispatchQueue.main.async(execute: item)
+        return item
+    }
+}
+
+// MARK: - Tests
+
 final class GameEffectHandlerTests: XCTestCase {
+    override func setUp() {
+        super.setUp()
+        Container.shared.clock.register { ImmediateClock() }
+    }
+
+    override func tearDown() {
+        Container.shared.clock.reset()
+        super.tearDown()
+    }
+
     // MARK: - Helpers
 
     private func makeCard(
@@ -161,8 +192,8 @@ final class GameEffectHandlerTests: XCTestCase {
         // Act
         connection.accept(.scheduleFlipBack(index1: 0, index2: 1))
 
-        // Assert
-        waitForExpectations(timeout: 2)
+        // Assert — ImmediateClock fires on the next main-queue cycle, so a short timeout suffices
+        waitForExpectations(timeout: 0.1)
         if case let .flipBackCards(i1, i2) = receivedEvent {
             XCTAssertEqual(i1, 0)
             XCTAssertEqual(i2, 1)
@@ -178,14 +209,14 @@ final class GameEffectHandlerTests: XCTestCase {
         var didDispatch = false
         let connection = handler.connect { _ in didDispatch = true }
 
-        // Act — schedule, then immediately dispose to cancel
+        // Act — schedule, then immediately dispose to cancel before the async block fires
         connection.accept(.scheduleFlipBack(index1: 0, index2: 1))
         connection.dispose()
 
-        // Assert — after the 1-second delay, no event should have fired
-        let waiter = expectation(description: "wait past delay")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { waiter.fulfill() }
-        waitForExpectations(timeout: 2)
+        // Assert — drain one main-queue cycle; the cancelled item must not have fired
+        let waiter = expectation(description: "main queue drain")
+        DispatchQueue.main.async { waiter.fulfill() }
+        waitForExpectations(timeout: 0.1)
         XCTAssertFalse(didDispatch)
     }
 
@@ -207,8 +238,8 @@ final class GameEffectHandlerTests: XCTestCase {
         // Act
         connection.accept(.navigateToGameOver(outcome: outcome))
 
-        // Assert
-        waitForExpectations(timeout: 2)
+        // Assert — ImmediateClock fires on the next main-queue cycle
+        waitForExpectations(timeout: 0.1)
         XCTAssertEqual(receivedOutcome?.clickCount, 7)
         connection.dispose()
     }

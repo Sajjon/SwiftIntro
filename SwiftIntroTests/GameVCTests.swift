@@ -19,12 +19,23 @@
 //    `onCardTapped`, which is safe in a test context.
 //
 
+import Factory
 import MobiusCore
 @testable import SwiftIntro
 import UIKit
 import XCTest
 
 final class GameVCTests: XCTestCase {
+    override func setUp() {
+        super.setUp()
+        Container.shared.clock.register { ImmediateClock() }
+    }
+
+    override func tearDown() {
+        Container.shared.clock.reset()
+        super.tearDown()
+    }
+
     // MARK: - Helpers
 
     private func makeCard(index: Int) -> Card {
@@ -315,21 +326,34 @@ final class GameVCTests: XCTestCase {
             return [Card(imageUrl: url), Card(imageUrl: url)]
         })
         let vc = GameVC(config: GameConfiguration(level: .easy), cards: pairedCards)
-        let nav = UINavigationController(rootViewController: UIViewController())
+        // SpyNav fulfils the expectation the moment pushViewController is called —
+        // no fixed time delay needed because ImmediateClock fires on the next queue cycle.
+        final class SpyNav: UINavigationController {
+            var onPush: (() -> Void)?
+            override func pushViewController(
+                _ viewController: UIViewController,
+                animated: Bool
+            ) {
+                super.pushViewController(viewController, animated: animated)
+                onPush?()
+            }
+        }
+        let nav = SpyNav(rootViewController: UIViewController())
         nav.pushViewController(vc, animated: false)
         _ = vc.view
+        // Arm the spy AFTER vc is already on the stack so its own push doesn't fire it.
         let exp = expectation(description: "game over navigation")
+        nav.onPush = { exp.fulfill() }
 
-        // Act — tap each pair; the last match triggers navigateToGameOver after 1-second delay
+        // Act — tap each pair; the last match triggers navigateToGameOver via ImmediateClock
         let ds = dataSourceAndDelegate(of: vc)
         for i in stride(from: 0, to: Level.easy.cardCount, by: 2) {
             ds.onCardTapped?(i)
             ds.onCardTapped?(i + 1)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { exp.fulfill() }
 
-        // Assert
-        waitForExpectations(timeout: 2)
+        // Assert — ImmediateClock fires on the next main-queue cycle, well within 1 s
+        waitForExpectations(timeout: 1)
         XCTAssertTrue(nav.topViewController is GameOverVC)
         vc.viewDidDisappear(false)
     }

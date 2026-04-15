@@ -10,11 +10,10 @@
 //  - Assert:  verify a single observable outcome (1 line)
 //
 
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
 final class DispatchExtensionTests: XCTestCase {
-
     // MARK: - onMain(_:)
 
     func test_onMain_executesClosureOnMainThread() {
@@ -57,7 +56,7 @@ final class DispatchExtensionTests: XCTestCase {
         var didRun = false
 
         // Act
-        onMain(delay: 0.05) {
+        onMain(delay: 0.001) {
             didRun = true
             expectation.fulfill()
         }
@@ -73,7 +72,7 @@ final class DispatchExtensionTests: XCTestCase {
         var isMain = false
 
         // Act
-        onMain(delay: 0.05) {
+        onMain(delay: 0.001) {
             isMain = Thread.isMainThread
             expectation.fulfill()
         }
@@ -95,7 +94,7 @@ final class DispatchExtensionTests: XCTestCase {
         }
 
         // Act
-        onMain(delay: 0.05, workItem: workItem)
+        onMain(delay: 0.001, workItem: workItem)
 
         // Assert
         waitForExpectations(timeout: 1)
@@ -107,14 +106,14 @@ final class DispatchExtensionTests: XCTestCase {
         var didRun = false
         let workItem = DispatchWorkItem { didRun = true }
 
-        // Act
-        onMain(delay: 0.5, workItem: workItem)
+        // Act — use a tiny delay so the test completes in < 100 ms
+        onMain(delay: 0.001, workItem: workItem)
         workItem.cancel()
 
-        // Assert — after the delay, the item must not have fired
+        // Assert — wait past the 0.01 s deadline; the cancelled item must not have fired
         let waiter = expectation(description: "wait past delay")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { waiter.fulfill() }
-        waitForExpectations(timeout: 1)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { waiter.fulfill() }
+        waitForExpectations(timeout: 0.5)
         XCTAssertFalse(didRun)
     }
 }

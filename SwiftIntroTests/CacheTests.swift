@@ -135,10 +135,10 @@ final class CacheTests: XCTestCase {
         // Act
         cache.prefetchImages([url1, url2]) { doneCalled = true }
 
-        // Assert — url2 never completed, so done must not have fired
-        let waiter = expectation(description: "brief wait")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { waiter.fulfill() }
-        waitForExpectations(timeout: 1)
+        // Assert — drain one main-queue cycle; url2 never fires, so done must still be false
+        let waiter = expectation(description: "main queue drain")
+        DispatchQueue.main.async { waiter.fulfill() }
+        waitForExpectations(timeout: 0.5)
         XCTAssertFalse(doneCalled)
     }
 
@@ -149,9 +149,9 @@ final class CacheTests: XCTestCase {
         // Act + Assert
         XCTAssertNoThrow(try cache.prefetchImages([XCTUnwrap(URL(string: "https://a.test/1.jpg"))], done: nil))
         // Allow the group.notify to fire before tearDown resets the stub
-        let waiter = expectation(description: "drain")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { waiter.fulfill() }
-        waitForExpectations(timeout: 1)
+        let waiter = expectation(description: "main queue drain")
+        DispatchQueue.main.async { waiter.fulfill() }
+        waitForExpectations(timeout: 0.5)
     }
 
     // MARK: - prefetchImage (single URL)
