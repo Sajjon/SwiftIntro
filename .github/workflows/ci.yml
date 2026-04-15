@@ -50,7 +50,7 @@ jobs:
       - name: Install SwiftLint ${{ env.SWIFTLINT_VERSION }}
         run: |
           curl -fsSL \
-            "https://github.com/realm/SwiftLint/releases/download/${SWIFTLINT_VERSION}/swiftlint_macos.pkg" \
+            "https://github.com/realm/SwiftLint/releases/download/${SWIFTLINT_VERSION}/SwiftLint.pkg" \
             -o /tmp/swiftlint.pkg
           sudo installer -pkg /tmp/swiftlint.pkg -target /
           swiftlint version
