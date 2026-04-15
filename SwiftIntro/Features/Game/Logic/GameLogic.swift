@@ -70,7 +70,7 @@ private extension GameLogic {
         pendingIndex: Int,
         newModel: GameModel
     ) -> Next<GameModel, GameEffect> {
-		let isMatchingPair = newModel.isCard(at: index, matchingCardAt: pendingIndex)
+        let isMatchingPair = newModel.isCard(at: index, matchingCardAt: pendingIndex)
         if isMatchingPair {
             return handleMatch(index: index, pendingIndex: pendingIndex, newModel: newModel)
         }

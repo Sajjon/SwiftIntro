@@ -19,19 +19,17 @@ repos:
       hooks:
           - id: swiftformat
             name: SwiftFormat
-            entry: swiftformat --swiftversion 6.0
+            entry: swiftformat --lint SwiftIntro
             language: system
             types: [swift]
-            pass_filenames: true
+            pass_filenames: false
 
           - id: swiftlint
             name: SwiftLint
             entry: swiftlint lint --force-exclude --strict
             language: system
             types: [swift]
-            # pre-commit passes each staged Swift file as a positional argument,
-            # so only modified files are linted rather than the whole project.
-            pass_filenames: true
+            pass_filenames: false
 
           - id: swift-unit-tests
             name: Swift unit tests

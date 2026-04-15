@@ -45,6 +45,13 @@ cov: _run-cov
 cov-detailed: _run-cov
     @python3 scripts/cov_detailed.py {{result}} {{cov_json}}
 
+# ── Formatting ────────────────────────────────────────────────────────────────
+
+# Auto-format all Swift sources in-place; silently skips any tool not installed.
+fmt:
+    @if command -v swiftformat >/dev/null 2>&1; then swiftformat SwiftIntro; fi
+    @if command -v swiftlint  >/dev/null 2>&1; then swiftlint --fix --force-exclude; fi
+
 # ── Internal ──────────────────────────────────────────────────────────────────
 
 # Run xcodebuild with coverage enabled and write the result bundle + JSON.
