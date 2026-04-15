@@ -80,7 +80,7 @@ final class HTTPClientTests: XCTestCase {
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
         StubURLProtocol.handler = { _ in StubResult(data: expected, response: response) }
         let exp = expectation(description: "done called")
-        var received: Data?
+        nonisolated(unsafe) var received: Data?
 
         // Act
         client.get(url: url) { result in
@@ -100,7 +100,7 @@ final class HTTPClientTests: XCTestCase {
         let networkError = URLError(.notConnectedToInternet)
         StubURLProtocol.handler = { _ in StubResult(error: networkError) }
         let exp = expectation(description: "done called")
-        var receivedError: Error?
+        nonisolated(unsafe) var receivedError: Error?
 
         // Act
         client.get(url: url) { result in

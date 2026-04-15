@@ -24,7 +24,7 @@ private final class StubRetriever: ImageFetcherProtocol, @unchecked Sendable {
 
     func fetchImage(
         with url: URL,
-        done: @escaping () -> Void
+        done: @escaping @Sendable () -> Void
     ) {
         retrievedURLs.append(url)
         if !delayedURLs.contains(url) {

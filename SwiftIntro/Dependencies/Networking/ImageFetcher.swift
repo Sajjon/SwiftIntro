@@ -19,7 +19,7 @@ protocol ImageFetcherProtocol {
     /// Fetches the image at `url` (memory → disk → network) and calls `done` when complete.
     func fetchImage(
         with url: URL,
-        done: @escaping () -> Void
+        done: @escaping Closure
     )
 }
 
@@ -30,7 +30,7 @@ extension KingfisherManager: ImageFetcherProtocol {
     /// and calling `done` once the fetch (memory → disk → network) completes.
     func fetchImage(
         with url: URL,
-        done: @escaping () -> Void
+        done: @escaping Closure
     ) {
         retrieveImage(with: url) { _ in done() }
     }

@@ -13,3 +13,6 @@ We should use state driven UIKit elements
 
 ### Multi-window
 Lets add an iPad only feature, where we can see the cards we have already matched, in another window.
+
+## Swift techniques
+Split immutable values from mutable ones in GameModel and use @dynamicMemberLookup to make this virtually identical to what we had.

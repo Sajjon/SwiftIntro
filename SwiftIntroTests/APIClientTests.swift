@@ -79,7 +79,7 @@ final class APIClientTests: XCTestCase {
         // Arrange
         mock.result = .success(validWikimediaJSON)
         let exp = expectation(description: "done called")
-        var receivedSingles: CardSingles?
+        nonisolated(unsafe) var receivedSingles: CardSingles?
 
         // Act
         apiClient.getPhotos("cats") { result in
@@ -96,7 +96,7 @@ final class APIClientTests: XCTestCase {
         // Arrange — fixture contains 2 image pages
         mock.result = .success(validWikimediaJSON)
         let exp = expectation(description: "done called")
-        var count = 0
+        nonisolated(unsafe) var count = 0
 
         // Act
         apiClient.getPhotos("cats") { result in
@@ -115,7 +115,7 @@ final class APIClientTests: XCTestCase {
         // Arrange
         mock.result = .failure(URLError(.notConnectedToInternet))
         let exp = expectation(description: "done called")
-        var receivedError: Error?
+        nonisolated(unsafe) var receivedError: Error?
 
         // Act
         apiClient.getPhotos("cats") { result in
@@ -134,7 +134,7 @@ final class APIClientTests: XCTestCase {
         // Arrange
         mock.result = .success(invalidJSON)
         let exp = expectation(description: "done called")
-        var receivedError: Error?
+        nonisolated(unsafe) var receivedError: Error?
 
         // Act
         apiClient.getPhotos("cats") { result in
