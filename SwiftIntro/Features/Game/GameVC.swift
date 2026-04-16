@@ -41,11 +41,8 @@ final class GameVC: UIViewController {
     /// The root view; installed via `loadView()`.
     private let gameView = GameView()
 
-    /// The UIKit data source and delegate, created lazily so `loop.level` is available.
-    private lazy var dataSourceAndDelegate: MemoryDataSourceAndDelegate = .init(
-        rows: self.loop.level.rowCount,
-        columns: self.loop.level.columnCount
-    )
+    /// The UIKit data source and delegate — sized from `loop.level` in `init`.
+    private let dataSourceAndDelegate: MemoryDataSourceAndDelegate
 
     /// Wired by the presenting controller (e.g. `GameSetupVC`) before the push.
     weak var navigator: GameNavigatorProtocol?
@@ -54,7 +51,12 @@ final class GameVC: UIViewController {
 
     init(_ game: PreparedGame) {
         let cardModels = game.cards.memoryCards.map(CardModel.init)
-        loop = GameLoop(initialModel: GameModel(cards: cardModels, level: game.config.level))
+        let loop = GameLoop(initialModel: GameModel(cards: cardModels, level: game.config.level))
+        self.loop = loop
+        dataSourceAndDelegate = MemoryDataSourceAndDelegate(
+            rows: loop.level.rowCount,
+            columns: loop.level.columnCount
+        )
         super.init(nibName: nil, bundle: nil)
     }
 
