@@ -61,19 +61,18 @@ final class GameOverVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // swiftformat:disable redundantSelf
+        // swiftformat:disable:next redundantSelf
         logGame.notice("Game over screen shown — outcome: \(self.outcome)")
-        gameOverView.render(self.outcome)
+        gameOverView.render(outcome)
         gameOverView.onRestart = { [weak self] in
             guard let self else { return }
             logGame.info("Player chose Restart — starting new game with same images")
-            self.navigator?.restartGame(PreparedGame(config: self.config, cards: self.outcome.cards))
+            navigator?.restartGame(PreparedGame(config: config, cards: outcome.cards))
         }
         gameOverView.onQuit = { [weak self] in
             guard let self else { return }
             logGame.info("Player chose Quit — returning to GameSetup screen")
-            self.navigator?.quitGame()
+            navigator?.quitGame()
         }
-        // swiftformat:enable redundantSelf
     }
 }
