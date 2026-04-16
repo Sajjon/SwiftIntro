@@ -1021,40 +1021,40 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
+				kind = exactVersion;
+				version = 7.12.0;
 			};
 		};
 		DFSR0001DFSR0001DFSR0001 /* XCRemoteSwiftPackageReference "diffuser" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/spotify/diffuser";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = revision;
+				revision = fea166a5c366209e68bfd957b18780e7abba522c;
 			};
 		};
 		EEFE0001EEFE0001EEFE0001 /* XCRemoteSwiftPackageReference "Mobius" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/spotify/Mobius.swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.0;
+				kind = revision;
+				revision = 74baa7e07b86ae4c2673204a92230db397b8a6ae;
 			};
 		};
 		FFFE0001FFFE0001FFFE0001 /* XCRemoteSwiftPackageReference "Factory" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hmlongco/Factory.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				kind = exactVersion;
+				version = 2.5.3;
 			};
 		};
 		SSST0001SSST0001SSST0001 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.19.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
