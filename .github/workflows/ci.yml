@@ -76,20 +76,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Select Xcode 26.1.1
+        run: sudo xcode-select -s /Applications/Xcode_26.1.1.app/Contents/Developer
+
+      # Capture the Xcode build version so it can be included in cache keys.
+      # When the toolchain is patched on the runner the version changes,
+      # which invalidates the DerivedData cache and avoids stale-PCM errors.
+      - name: Resolve Xcode build version
+        run: echo "XCODE_BUILD=$(xcodebuild -version | tail -1 | awk '{print $NF}')" >> "$GITHUB_ENV"
+
       # Resolve the SPM dependency graph once and cache the result so that
       # subsequent runs skip the network fetch entirely.
       - name: Cache SPM packages
         uses: actions/cache@v4
         with:
           path: ~/Library/Developer/Xcode/DerivedData
-          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
-          restore-keys: spm-${{ runner.os }}-
+          key: spm-${{ runner.os }}-xcode-${{ env.XCODE_BUILD }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: spm-${{ runner.os }}-xcode-${{ env.XCODE_BUILD }}-
+
+      # A partial cache hit from restore-keys may still contain stale
+      # precompiled modules from a prior toolchain patch. Purging the
+      # module cache is cheap and guarantees a clean build.
+      - name: Purge stale module cache
+        run: rm -rf ~/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
 
       - name: Install xcresultparser
         run: brew install xcresultparser
-
-      - name: Select Xcode 26.1.1
-        run: sudo xcode-select -s /Applications/Xcode_26.1.1.app/Contents/Developer
 
       # Print the active Xcode and list available simulators so failures are
       # easy to diagnose without SSH-ing into the runner.
