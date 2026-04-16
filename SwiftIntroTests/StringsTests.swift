@@ -18,38 +18,38 @@
 import XCTest
 
 final class StringsTests: XCTestCase {
-    // MARK: - Settings.xcstrings
+    // MARK: - GameSetup.xcstrings
 
     func test_title_isNonEmpty() {
-        XCTAssertFalse(String(localized: .Settings.title).isEmpty)
+        XCTAssertFalse(String(localized: .GameSetup.title).isEmpty)
     }
 
     func test_startGame_isNonEmpty() {
-        XCTAssertFalse(String(localized: .Settings.startGame).isEmpty)
+        XCTAssertFalse(String(localized: .GameSetup.startGame).isEmpty)
     }
 
     func test_level_isNonEmpty() {
-        XCTAssertFalse(String(localized: .Settings.level).isEmpty)
+        XCTAssertFalse(String(localized: .GameSetup.level).isEmpty)
     }
 
     func test_usernamePlaceholder_isNonEmpty() {
-        XCTAssertFalse(String(localized: .Settings.usernamePlaceholder).isEmpty)
+        XCTAssertFalse(String(localized: .GameSetup.usernamePlaceholder).isEmpty)
     }
 
     func test_username_isNonEmpty() {
-        XCTAssertFalse(String(localized: .Settings.username).isEmpty)
+        XCTAssertFalse(String(localized: .GameSetup.username).isEmpty)
     }
 
     func test_easy_isNonEmpty() {
-        XCTAssertFalse(String(localized: .Settings.easy).isEmpty)
+        XCTAssertFalse(String(localized: .GameSetup.easy).isEmpty)
     }
 
     func test_normal_isNonEmpty() {
-        XCTAssertFalse(String(localized: .Settings.normal).isEmpty)
+        XCTAssertFalse(String(localized: .GameSetup.normal).isEmpty)
     }
 
     func test_hard_isNonEmpty() {
-        XCTAssertFalse(String(localized: .Settings.hard).isEmpty)
+        XCTAssertFalse(String(localized: .GameSetup.hard).isEmpty)
     }
 
     // MARK: - Loading.xcstrings

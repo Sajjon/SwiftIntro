@@ -27,6 +27,7 @@
 		7B2F90AC1D00C88800613325 /* UIView_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2F90AB1D00C88800613325 /* UIView_Extension.swift */; };
 		7B4497EE1D189BA100E080C7 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497EC1D189BA100E080C7 /* Card.swift */; };
 		7B4497EF1D189BA100E080C7 /* CardDuplicates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497ED1D189BA100E080C7 /* CardDuplicates.swift */; };
+		PG000002PG000002PG000002 /* PreparedGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = PG000001PG000001PG000001 /* PreparedGame.swift */; };
 		7B4497F11D189BA900E080C7 /* GameOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497F01D189BA900E080C7 /* GameOutcome.swift */; };
 		7B4497F31D189BC000E080C7 /* GameConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497F21D189BC000E080C7 /* GameConfiguration.swift */; };
 		7B4497FA1D189C3400E080C7 /* CellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497F91D189C3400E080C7 /* CellProtocol.swift */; };
@@ -129,6 +130,7 @@
 		7B2F90AB1D00C88800613325 /* UIView_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView_Extension.swift; sourceTree = "<group>"; };
 		7B4497EC1D189BA100E080C7 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		7B4497ED1D189BA100E080C7 /* CardDuplicates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDuplicates.swift; sourceTree = "<group>"; };
+		PG000001PG000001PG000001 /* PreparedGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparedGame.swift; sourceTree = "<group>"; };
 		7B4497F01D189BA900E080C7 /* GameOutcome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOutcome.swift; sourceTree = "<group>"; };
 		7B4497F21D189BC000E080C7 /* GameConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameConfiguration.swift; sourceTree = "<group>"; };
 		7B4497F91D189C3400E080C7 /* CellProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellProtocol.swift; sourceTree = "<group>"; };
@@ -461,6 +463,7 @@
 				7B4497EC1D189BA100E080C7 /* Card.swift */,
 				7B4497ED1D189BA100E080C7 /* CardDuplicates.swift */,
 				7BADD6AA1D16D9DF005EEBE3 /* Level.swift */,
+				PG000001PG000001PG000001 /* PreparedGame.swift */,
 			);
 			path = Values;
 			sourceTree = "<group>";
@@ -623,6 +626,7 @@
 				7B8608621D15993400037D36 /* UIButton_Extension.swift in Sources */,
 				7B21A5B01CFF5C17002E5EE5 /* App.swift in Sources */,
 				7B4497EF1D189BA100E080C7 /* CardDuplicates.swift in Sources */,
+				PG000002PG000002PG000002 /* PreparedGame.swift in Sources */,
 				7B21A5BB1CFF6281002E5EE5 /* MemoryDataSourceAndDelegate.swift in Sources */,
 				7B2F90AC1D00C88800613325 /* UIView_Extension.swift in Sources */,
 				7BADD6AD1D16DE8C005EEBE3 /* LoadingVC.swift in Sources */,

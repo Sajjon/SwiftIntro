@@ -42,26 +42,26 @@ final class RootVCTests: XCTestCase {
         XCTAssertTrue(gameSetupVC?.navigator === root)
     }
 
-    // MARK: - startGame (GameSetupNavigatorProtocol)
+    // MARK: - navigateToLoading (GameSetupNavigatorProtocol)
 
-    func test_startGame_pushesLoadingVC() {
+    func test_navigateToLoading_pushesLoadingVC() {
         // Arrange
         let root = RootVC()
 
         // Act
-        root.startGame(config: GameConfiguration())
+        root.navigateToLoading(config: GameConfiguration())
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.05))
 
         // Assert
         XCTAssertTrue(root.topViewController is LoadingVC)
     }
 
-    func test_startGame_setsNavigatorOnLoadingVC() {
+    func test_navigateToLoading_setsNavigatorOnLoadingVC() {
         // Arrange
         let root = RootVC()
 
         // Act
-        root.startGame(config: GameConfiguration())
+        root.navigateToLoading(config: GameConfiguration())
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.05))
 
         // Assert
@@ -74,7 +74,7 @@ final class RootVCTests: XCTestCase {
     func test_navigateToGame_withEmptyStack_doesNotCrash() {
         let root = RootVC()
         root.setViewControllers([], animated: false)
-        XCTAssertNoThrow(root.navigateToGame(config: GameConfiguration(), cards: makeCards(count: 6)))
+        XCTAssertNoThrow(root.navigateToGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6))))
     }
 
     func test_navigateToGame_replacesTopVCWithGameVC() {
@@ -83,7 +83,7 @@ final class RootVCTests: XCTestCase {
         root.pushViewController(UIViewController(), animated: false)
 
         // Act
-        root.navigateToGame(config: GameConfiguration(), cards: makeCards(count: 6))
+        root.navigateToGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6)))
 
         // Assert — LoadingVC stand-in replaced; player cannot back-swipe to loading
         XCTAssertTrue(root.topViewController is GameVC)
@@ -96,7 +96,7 @@ final class RootVCTests: XCTestCase {
         let countBefore = root.viewControllers.count
 
         // Act
-        root.navigateToGame(config: GameConfiguration(), cards: makeCards(count: 6))
+        root.navigateToGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6)))
 
         // Assert — replace (not push) keeps depth the same
         XCTAssertEqual(root.viewControllers.count, countBefore)
@@ -108,7 +108,7 @@ final class RootVCTests: XCTestCase {
         root.pushViewController(UIViewController(), animated: false)
 
         // Act
-        root.navigateToGame(config: GameConfiguration(), cards: makeCards(count: 6))
+        root.navigateToGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6)))
 
         // Assert
         let gameVC = root.topViewController as? GameVC
@@ -148,7 +148,7 @@ final class RootVCTests: XCTestCase {
 
     func test_restartGame_withShallowStack_doesNotCrash() {
         let root = RootVC()
-        XCTAssertNoThrow(root.restartGame(config: GameConfiguration(), cards: makeCards(count: 6)))
+        XCTAssertNoThrow(root.restartGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6))))
     }
 
     func test_restartGame_topVCIsGameVC() {
@@ -157,7 +157,7 @@ final class RootVCTests: XCTestCase {
         root.setViewControllers([GameSetupVC(), UIViewController(), UIViewController()], animated: false)
 
         // Act
-        root.restartGame(config: GameConfiguration(), cards: makeCards(count: 6))
+        root.restartGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6)))
 
         // Assert
         XCTAssertTrue(root.topViewController is GameVC)
@@ -170,7 +170,7 @@ final class RootVCTests: XCTestCase {
         root.setViewControllers(initial, animated: false)
 
         // Act
-        root.restartGame(config: GameConfiguration(), cards: makeCards(count: 6))
+        root.restartGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6)))
 
         // Assert — removeLast(2) + append(1) = net −1
         XCTAssertEqual(root.viewControllers.count, initial.count - 1)

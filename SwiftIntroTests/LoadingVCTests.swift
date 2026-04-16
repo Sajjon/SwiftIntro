@@ -59,17 +59,12 @@ private final class StubImageCache: ImageCacheProtocol {
 
 private final class SpyNavigator: LoadingNavigatorProtocol {
     private(set) var navigateToGameCallCount = 0
-    private(set) var lastConfig: GameConfiguration?
-    private(set) var lastCards: CardDuplicates?
+    private(set) var lastGame: PreparedGame?
     var onNavigateToGame: (() -> Void)?
 
-    func navigateToGame(
-        config: GameConfiguration,
-        cards: CardDuplicates
-    ) {
+    func navigateToGame(_ game: PreparedGame) {
         navigateToGameCallCount += 1
-        lastConfig = config
-        lastCards = cards
+        lastGame = game
         onNavigateToGame?()
     }
 }
@@ -221,8 +216,8 @@ final class LoadingVCTests: XCTestCase {
 
         // Assert
         waitForExpectations(timeout: 1)
-        XCTAssertEqual(spy.lastConfig?.level, .easy)
-        XCTAssertEqual(spy.lastConfig?.searchQuery, "trees")
+        XCTAssertEqual(spy.lastGame?.config.level, .easy)
+        XCTAssertEqual(spy.lastGame?.config.searchQuery, "trees")
     }
 
     func test_navigateToGame_passesNonEmptyCardsToNavigator() {
@@ -240,8 +235,8 @@ final class LoadingVCTests: XCTestCase {
 
         // Assert
         waitForExpectations(timeout: 1)
-        XCTAssertNotNil(spy.lastCards)
-        XCTAssertFalse(spy.lastCards?.memoryCards.isEmpty ?? true)
+        XCTAssertNotNil(spy.lastGame?.cards)
+        XCTAssertFalse(spy.lastGame?.cards.memoryCards.isEmpty ?? true)
     }
 
     func test_navigateToGame_withNoNavigator_doesNotCrash() {

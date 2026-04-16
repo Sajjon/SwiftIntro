@@ -44,7 +44,7 @@ final class LoadingViewModel {
     // MARK: - Navigation
 
     /// Called on the main thread when images are cached and the game is ready to start.
-    var onNavigateToGame: ((GameConfiguration, CardDuplicates) -> Void)?
+    var onNavigateToGame: ((PreparedGame) -> Void)?
 
     // MARK: - Init
 
@@ -104,7 +104,7 @@ extension LoadingViewModel {
         imageCache.prefetchImages(urls) { [weak self] in
             log.info("Images in memory cache — starting game")
             guard let self else { return }
-            onNavigateToGame?(config, cards)
+            onNavigateToGame?(PreparedGame(config: config, cards: cards))
         }
     }
 }

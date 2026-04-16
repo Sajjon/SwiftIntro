@@ -12,7 +12,7 @@ import UIKit
 
 /// Handles navigation triggered by `GameSetupVC` when the player taps "Start Game".
 protocol GameSetupNavigatorProtocol: AnyObject {
-    func startGame(config: GameConfiguration)
+    func navigateToLoading(config: GameConfiguration)
 }
 
 // MARK: - GameSetupVC
@@ -31,7 +31,7 @@ final class GameSetupVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         gameSetupView.onStartGame = { [weak self] config in
-            self?.navigator?.startGame(config: config)
+            self?.navigator?.navigateToLoading(config: config)
         }
     }
 }

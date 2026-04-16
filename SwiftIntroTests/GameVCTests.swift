@@ -49,10 +49,10 @@ final class GameVCTests: XCTestCase {
     }
 
     private func makeVC(level: Level = .easy) -> GameVC {
-        GameVC(
+        GameVC(PreparedGame(
             config: GameConfiguration(level: level),
             cards: makeCards(count: level.cardCount)
-        )
+        ))
     }
 
     private func makeModel(
@@ -309,7 +309,7 @@ final class GameVCTests: XCTestCase {
             let url = pairURL(i)
             return [Card(imageUrl: url), Card(imageUrl: url)]
         })
-        let vc = GameVC(config: GameConfiguration(level: .easy), cards: pairedCards)
+        let vc = GameVC(PreparedGame(config: GameConfiguration(level: .easy), cards: pairedCards))
         final class SpyNavigator: GameNavigatorProtocol {
             var onNavigateToGameOver: (() -> Void)?
             private(set) var lastOutcome: GameOutcome?

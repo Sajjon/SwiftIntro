@@ -35,7 +35,7 @@ final class RootVC: UINavigationController {
 
 extension RootVC: GameSetupNavigatorProtocol {
     /// Pushes the loading screen onto the stack to begin data fetching.
-    func startGame(config: GameConfiguration) {
+    func navigateToLoading(config: GameConfiguration) {
         let loadingVC = LoadingVC(config: config)
         loadingVC.navigator = self
         pushViewController(loadingVC, animated: true)
@@ -46,11 +46,8 @@ extension RootVC: GameSetupNavigatorProtocol {
 
 extension RootVC: LoadingNavigatorProtocol {
     /// Replaces `LoadingVC` with `GameVC` so the player cannot back-swipe to the loading screen.
-    func navigateToGame(
-        config: GameConfiguration,
-        cards: CardDuplicates
-    ) {
-        let gameVC = GameVC(config: config, cards: cards)
+    func navigateToGame(_ game: PreparedGame) {
+        let gameVC = GameVC(game)
         gameVC.navigator = self
         var vcs = viewControllers
         guard !vcs.isEmpty else {
@@ -78,13 +75,10 @@ extension RootVC: GameNavigatorProtocol {
 
 extension RootVC: GameOverNavigatorProtocol {
     /// Replaces `GameOverVC` + `GameVC` with a new `GameVC` using the same images reshuffled.
-    func restartGame(
-        config: GameConfiguration,
-        cards: CardDuplicates
-    ) {
-        var shuffled = cards
-        shuffled.shuffle()
-        let gameVC = GameVC(config: config, cards: shuffled)
+    func restartGame(_ game: PreparedGame) {
+        var shuffledCards = game.cards
+        shuffledCards.shuffle()
+        let gameVC = GameVC(PreparedGame(config: game.config, cards: shuffledCards))
         gameVC.navigator = self
         var vcs = viewControllers
         guard vcs.count >= 2 else {

@@ -13,10 +13,7 @@ import UIKit
 
 /// Handles navigation triggered by `LoadingVC` once data loading is complete.
 protocol LoadingNavigatorProtocol: AnyObject {
-    func navigateToGame(
-        config: GameConfiguration,
-        cards: CardDuplicates
-    )
+    func navigateToGame(_ game: PreparedGame)
 }
 
 // MARK: - LoadingVC
@@ -64,8 +61,8 @@ extension LoadingVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.onNavigateToGame = { [weak self] config, cards in
-            self?.navigator?.navigateToGame(config: config, cards: cards)
+        viewModel.onNavigateToGame = { [weak self] game in
+            self?.navigator?.navigateToGame(game)
         }
         viewModel.start()
     }

@@ -16,10 +16,7 @@ import UIKit
 protocol GameOverNavigatorProtocol: AnyObject {
     /// Replaces the current game and game-over screens with a new game using the same
     /// images (freshly shuffled). Called when the player taps "Restart".
-    func restartGame(
-        config: GameConfiguration,
-        cards: CardDuplicates
-    )
+    func restartGame(_ game: PreparedGame)
 
     /// Pops back to the settings screen. Called when the player taps "Quit".
     func quitGame()
@@ -67,7 +64,7 @@ final class GameOverVC: UIViewController {
         gameOverView.render(outcome)
         gameOverView.onRestart = { [weak self] in
             guard let self else { return }
-            navigator?.restartGame(config: config, cards: outcome.cards)
+            navigator?.restartGame(PreparedGame(config: config, cards: outcome.cards))
         }
         gameOverView.onQuit = { [weak self] in
             self?.navigator?.quitGame()

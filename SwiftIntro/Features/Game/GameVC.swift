@@ -52,12 +52,9 @@ final class GameVC: UIViewController {
 
     // MARK: Inits
 
-    init(
-        config: GameConfiguration,
-        cards: CardDuplicates
-    ) {
-        let cardModels = cards.memoryCards.map(CardModel.init)
-        loop = GameLoop(initialModel: GameModel(cards: cardModels, level: config.level))
+    init(_ game: PreparedGame) {
+        let cardModels = game.cards.memoryCards.map(CardModel.init)
+        loop = GameLoop(initialModel: GameModel(cards: cardModels, level: game.config.level))
         super.init(nibName: nil, bundle: nil)
     }
 

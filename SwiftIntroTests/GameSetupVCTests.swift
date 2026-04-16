@@ -47,11 +47,11 @@ final class GameSetupVCTests: XCTestCase {
 
     // MARK: - onStartGame
 
-    func test_onStartGame_callsNavigatorStartGame() {
+    func test_onStartGame_callsNavigatorNavigateToLoading() {
         // Arrange
         final class SpyNavigator: GameSetupNavigatorProtocol {
             var receivedConfig: GameConfiguration?
-            func startGame(config: GameConfiguration) { receivedConfig = config }
+            func navigateToLoading(config: GameConfiguration) { receivedConfig = config }
         }
         let vc = GameSetupVC()
         let spy = SpyNavigator()

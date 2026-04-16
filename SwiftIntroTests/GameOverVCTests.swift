@@ -23,16 +23,11 @@ import XCTest
 private final class SpyNavigator: GameOverNavigatorProtocol {
     private(set) var restartGameCalled = false
     private(set) var quitGameCalled = false
-    private(set) var lastConfig: GameConfiguration?
-    private(set) var lastCards: CardDuplicates?
+    private(set) var lastGame: PreparedGame?
 
-    func restartGame(
-        config: GameConfiguration,
-        cards: CardDuplicates
-    ) {
+    func restartGame(_ game: PreparedGame) {
         restartGameCalled = true
-        lastConfig = config
-        lastCards = cards
+        lastGame = game
     }
 
     func quitGame() {
@@ -178,7 +173,7 @@ final class GameOverVCTests: XCTestCase {
         gameOverView(of: vc).onRestart?()
 
         // Assert
-        XCTAssertEqual(spy.lastCards?.memoryCards.count, outcome.cards.memoryCards.count)
+        XCTAssertEqual(spy.lastGame?.cards.memoryCards.count, outcome.cards.memoryCards.count)
     }
 
     func test_onRestart_withoutNavigator_doesNotCrash() {
