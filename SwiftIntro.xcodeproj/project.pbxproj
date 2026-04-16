@@ -931,6 +931,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftintro.SwiftIntro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5;
 			};
 			name = Debug;
 		};
@@ -950,6 +952,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftintro.SwiftIntro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5;
 			};
 			name = Release;
 		};
@@ -967,6 +971,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftintro.SwiftIntroTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftIntro.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SwiftIntro";
 			};
 			name = Debug;
@@ -985,6 +991,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftintro.SwiftIntroTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftIntro.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SwiftIntro";
 			};
 			name = Release;

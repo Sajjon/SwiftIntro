@@ -76,7 +76,8 @@ extension GameVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        logGame.notice("Game started — level: \(loop.level.debugDescription)")
+        // swiftformat:disable:next redundantSelf
+        logGame.notice("Game started — level: \(self.loop.level.debugDescription)")
         setupCollectionView()
         setupLoop()
     }
