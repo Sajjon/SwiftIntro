@@ -24,13 +24,13 @@ final class GameLogicTests: XCTestCase {
 
     /// Returns a `GameModel` with three pairs (6 cards): urlA×2, urlB×2, urlC×2.
     private func threePairModel() -> GameModel {
-        let cards = [urlA, urlA, urlB, urlB, urlC, urlC].map { CardModel(imageUrl: $0) }
+        let cards = [urlA, urlA, urlB, urlB, urlC, urlC].map { CardModel(card: Card(imageUrl: $0)) }
         return GameModel(cards: cards, level: .easy)
     }
 
     /// Returns a `GameModel` with exactly one pair: two cards sharing `urlA`.
     private func onePairModel() -> GameModel {
-        let cards = [urlA, urlA].map { CardModel(imageUrl: $0) }
+        let cards = [urlA, urlA].map { CardModel(card: Card(imageUrl: $0)) }
         return GameModel(cards: cards, level: .easy)
     }
 
@@ -347,7 +347,7 @@ final class GameLogicTests: XCTestCase {
 
     func test_cardTapped_lastMatch_navigateOutcomeCarriesLevel() {
         // Arrange
-        let cards = [urlA, urlA].map { CardModel(imageUrl: $0) }
+        let cards = [urlA, urlA].map { CardModel(card: Card(imageUrl: $0)) }
         var model = GameModel(cards: cards, level: .hard)
         model.pendingCardIndex = 0
         model.cards[0].isFlipped = true

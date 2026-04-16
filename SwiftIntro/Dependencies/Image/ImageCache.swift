@@ -18,7 +18,7 @@ typealias Closure = @Sendable () -> Void
 
 /// Abstraction over Kingfisher's image cache, used for pre-loading and retrieval.
 ///
-/// Decoupled from `Cache` so `LoadingDataVC` can be tested with a stub that
+/// Decoupled from `Cache` so `LoadingVC` can be tested with a stub that
 /// reports instant completion without touching the network or disk.
 protocol ImageCacheProtocol {
     /// Ensures all `urls` are present in the **memory** cache, then calls `done`.
@@ -26,26 +26,6 @@ protocol ImageCacheProtocol {
         _ urls: [URL],
         done: Closure?
     )
-
-    /// Ensures a single `url` is present in the memory cache, then calls `done`.
-    func prefetchImage(
-        _ url: URL,
-        done: Closure?
-    )
-
-    /// Returns the cached `UIImage` for `url` if it is already in the memory cache,
-    /// or `nil` if the image has not been loaded yet.
-    func imageFromCache(_ url: URL?) -> UIImage?
-}
-
-extension ImageCacheProtocol {
-    /// Convenience wrapper that pre-fetches a single URL by delegating to `prefetchImages`.
-    func prefetchImage(
-        _ url: URL,
-        done: Closure? = nil
-    ) {
-        prefetchImages([url], done: done)
-    }
 }
 
 // MARK: Cache
@@ -63,14 +43,6 @@ final class ImageCache {
 }
 
 extension ImageCache: ImageCacheProtocol {
-    /// Performs a synchronous memory-cache lookup via `ImageCache.retrieveImageInMemoryCache`.
-    func imageFromCache(_ url: URL?) -> UIImage? {
-        guard let url else { return nil }
-        // `retrieveImageInMemoryCache` is synchronous and returns immediately —
-        // safe to call from any thread.
-        return cache.retrieveImageInMemoryCache(forKey: url.absoluteString)
-    }
-
     /// Uses a `DispatchGroup` to fan out concurrent retrieval requests and calls `done` on the
     /// main queue once every URL has been resolved through memory, disk, or network.
     func prefetchImages(

@@ -21,23 +21,30 @@ final class GameLoop {
     /// The Mobius loop controller — drives the `update → effect → event` cycle.
     private let controller: MobiusController<GameModel, GameEvent, GameEffect>
 
-    /// The difficulty level for this session — exposed so `GameVC` can size the grid
-    /// without storing `GameConfiguration` or `CardDuplicates` separately.
-    let level: Level
-
     /// Builds the complete Mobius loop from the given initial model.
     ///
     /// `effectHandler` is pre-seeded with `initialModel` so cell configuration works
     /// on the very first `willDisplay` call, before the loop's first async model delivery.
     init(initialModel: GameModel) {
-        level = initialModel.level
-        let effectHandler = GameEffectHandler(level: initialModel.level, initialModel: initialModel)
+        let effectHandler = GameEffectHandler(initialModel: initialModel)
         self.effectHandler = effectHandler
         controller = Mobius
             .loop(update: GameLogic.update, effectHandler: effectHandler)
             .makeController(from: initialModel)
     }
+}
 
+// MARK: Computed Properties
+
+extension GameLoop {
+    /// The difficulty level for this session — exposed so `GameVC` can size the grid
+    /// without storing `GameConfiguration` or `CardDuplicates` separately.
+    var level: Level {
+        effectHandler.level
+    }
+}
+
+extension GameLoop {
     /// Connects the view to the loop, wires the effect handler's UIKit dependencies,
     /// and starts the Mobius loop.
     ///

@@ -61,7 +61,7 @@ final class GameVCTests: XCTestCase {
         matches: Int = 0
     ) -> GameModel {
         let cards = (0 ..< level.cardCount).map {
-            CardModel(imageUrl: URL(string: "https://a.test/\($0).jpg")!)
+            CardModel(card: Card(imageUrl: URL(string: "https://a.test/\($0).jpg")!))
         }
         var model = GameModel(cards: cards, level: level)
         model.matches = matches
@@ -318,7 +318,7 @@ final class GameVCTests: XCTestCase {
 
     // MARK: - navigateToGameOver
 
-    func test_navigateToGameOver_pushesGameOverVC() {
+    func test_navigateToGameOver_callsNavigatorWithOutcome() {
         // Arrange — build properly paired cards so all 3 easy pairs can be matched.
         // Adjacent indices share a URL: (0,1), (2,3), (4,5).
         let pairURL: (Int) -> URL = { URL(string: "https://a.test/pair\($0).jpg")! }
@@ -327,26 +327,21 @@ final class GameVCTests: XCTestCase {
             return [Card(imageUrl: url), Card(imageUrl: url)]
         })
         let vc = GameVC(config: GameConfiguration(level: .easy), cards: pairedCards)
-        // SpyNav fulfils the expectation the moment pushViewController is called —
-        // no fixed time delay needed because ImmediateClock fires on the next queue cycle.
-        final class SpyNav: UINavigationController {
-            var onPush: (() -> Void)?
-            override func pushViewController(
-                _ viewController: UIViewController,
-                animated: Bool
-            ) {
-                super.pushViewController(viewController, animated: animated)
-                onPush?()
+        final class SpyNavigator: GameNavigatorProtocol {
+            var onNavigateToGameOver: (() -> Void)?
+            private(set) var lastOutcome: GameOutcome?
+            func navigateToGameOver(outcome: GameOutcome) {
+                lastOutcome = outcome
+                onNavigateToGameOver?()
             }
         }
-        let nav = SpyNav(rootViewController: UIViewController())
-        nav.pushViewController(vc, animated: false)
+        let spy = SpyNavigator()
+        vc.navigator = spy
         _ = vc.view
-        // Arm the spy AFTER vc is already on the stack so its own push doesn't fire it.
-        let exp = expectation(description: "game over navigation")
-        nav.onPush = { exp.fulfill() }
+        let exp = expectation(description: "navigateToGameOver called")
+        spy.onNavigateToGameOver = { exp.fulfill() }
 
-        // Act — tap each pair; the last match triggers navigateToGameOver via ImmediateClock
+        // Act — tap each pair; the last match triggers the navigator via ImmediateClock
         let ds = dataSourceAndDelegate(of: vc)
         for i in stride(from: 0, to: Level.easy.cardCount, by: 2) {
             ds.onCardTapped?(i)
@@ -355,7 +350,7 @@ final class GameVCTests: XCTestCase {
 
         // Assert — ImmediateClock fires on the next main-queue cycle, well within 1 s
         waitForExpectations(timeout: 1)
-        XCTAssertTrue(nav.topViewController is GameOverVC)
+        XCTAssertNotNil(spy.lastOutcome)
         vc.viewDidDisappear(false)
     }
 }

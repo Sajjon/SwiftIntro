@@ -54,7 +54,7 @@ final class GameEffectHandlerTests: XCTestCase {
         isFlipped: Bool = false,
         isMatched: Bool = false
     ) -> CardModel {
-        var card = CardModel(imageUrl: url)
+        var card = CardModel(card: Card(imageUrl: url))
         card.isFlipped = isFlipped
         card.isMatched = isMatched
         return card
@@ -72,7 +72,7 @@ final class GameEffectHandlerTests: XCTestCase {
         level: Level = .easy
     ) -> GameEffectHandler {
         let initialModel = model ?? makeModel(level: level)
-        return GameEffectHandler(level: level, initialModel: initialModel)
+        return GameEffectHandler(initialModel: initialModel)
     }
 
     // MARK: - canSelectCard

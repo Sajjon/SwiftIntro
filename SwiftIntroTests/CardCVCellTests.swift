@@ -30,7 +30,7 @@ final class CardCVCellTests: XCTestCase {
     }
 
     private func makeCardModel(isFlipped: Bool = false) -> CardModel {
-        var card = CardModel(imageUrl: URL(string: "https://a.test/img.jpg")!)
+        var card = CardModel(card: Card(imageUrl: URL(string: "https://a.test/img.jpg")!))
         card.isFlipped = isFlipped
         return card
     }

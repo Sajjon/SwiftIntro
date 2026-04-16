@@ -6,37 +6,6 @@
 //  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 
-import Foundation
-
-/// The view-facing representation of a single card during a game session.
-///
-/// Wraps a `Card`'s image URL with mutable flip and match state driven by the Mobius loop.
-struct CardModel {
-    /// The remote URL of the image shown on the card's face.
-    let imageUrl: URL
-
-    /// Whether this card is currently face-up (visible to the player).
-    var isFlipped: Bool
-
-    /// Whether this card has been successfully matched and is locked face-up.
-    var isMatched: Bool
-
-    init(imageUrl: URL) {
-        self.imageUrl = imageUrl
-        isFlipped = false
-        isMatched = false
-    }
-}
-
-extension CardModel {
-    /// Checks if this card forms a matching pair with `other`
-    /// - Parameter other: another card
-    /// - Returns: If the pair is a match
-    func isMatchingPair(with other: Self) -> Bool {
-        imageUrl == other.imageUrl
-    }
-}
-
 /// The complete snapshot of the game at any point in time.
 ///
 /// This is the single source of truth in the Mobius loop. Every UI update is derived

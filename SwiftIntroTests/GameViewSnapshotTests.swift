@@ -14,7 +14,7 @@ final class GameViewSnapshotTests: XCTestCase {
     private let size = CGSize(width: 393, height: 852)
 
     private func makeCards(count: Int) -> [CardModel] {
-        (0 ..< count).map { i in CardModel(imageUrl: URL(string: "https://a.test/\(i).jpg")!) }
+        (0 ..< count).map { i in CardModel(card: Card(imageUrl: URL(string: "https://a.test/\(i).jpg")!)) }
     }
 
     func test_gameView_defaultAppearance() {

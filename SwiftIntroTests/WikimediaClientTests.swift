@@ -82,7 +82,7 @@ final class WikimediaClientTests: XCTestCase {
         nonisolated(unsafe) var receivedSingles: CardSingles?
 
         // Act
-        wikimediaClient.getPhotos("cats") { result in
+		wikimediaClient.findImages(with: "cats") { result in
             if case let .success(singles) = result { receivedSingles = singles }
             exp.fulfill()
         }
@@ -99,7 +99,7 @@ final class WikimediaClientTests: XCTestCase {
         nonisolated(unsafe) var count = 0
 
         // Act
-        wikimediaClient.getPhotos("cats") { result in
+        wikimediaClient.findImages(with: "cats") { result in
             if case let .success(singles) = result { count = singles.cards.count }
             exp.fulfill()
         }
@@ -118,7 +118,7 @@ final class WikimediaClientTests: XCTestCase {
         nonisolated(unsafe) var receivedError: Error?
 
         // Act
-        wikimediaClient.getPhotos("cats") { result in
+        wikimediaClient.findImages(with: "cats") { result in
             if case let .failure(error) = result { receivedError = error }
             exp.fulfill()
         }
@@ -137,7 +137,7 @@ final class WikimediaClientTests: XCTestCase {
         nonisolated(unsafe) var receivedError: Error?
 
         // Act
-        wikimediaClient.getPhotos("cats") { result in
+        wikimediaClient.findImages(with: "cats") { result in
             if case let .failure(error) = result { receivedError = error }
             exp.fulfill()
         }

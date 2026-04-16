@@ -103,7 +103,7 @@ private extension GameLogic {
     ) -> Next<GameModel, GameEffect> {
         // Reconstruct the deck from image URLs so the game-over screen can restart
         // with the same images in a freshly shuffled order.
-        let cards = newModel.cards.map(\.imageUrl).map(Card.init)
+        let cards = newModel.cards.map(\.card)
         let outcome = GameOutcome(
             level: newModel.level,
             clickCount: newModel.clickCount,

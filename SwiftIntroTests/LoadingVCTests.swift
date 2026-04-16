@@ -1,12 +1,16 @@
 //
-//  LoadingDataVCTests.swift
+//  LoadingVCTests.swift
 //  SwiftIntroTests
 //
 //  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
+//  Integration tests for `LoadingVC` → `LoadingViewModel` → async side-effects.
+//  These tests verify that the wiring between the VC and view model
+//  produces the correct observable outcomes.
+//
 //  All tests follow the Arrange-Act-Assert (AAA) pattern:
-//  - Arrange: register stub APIClient + ImageCache, create the VC (1–5 lines)
-//  - Act:     access vc.view to trigger viewDidLoad (1 line)
+//  - Arrange: register stub dependencies, create the VC (1–5 lines)
+//  - Act:     access `vc.view` to trigger `viewDidLoad` (1 line)
 //  - Assert:  verify a single observable outcome (1 line)
 //
 
@@ -19,13 +23,13 @@ import XCTest
 
 private final class StubWikimediaClient: WikimediaClientProtocol, @unchecked Sendable {
     var result: Result<CardSingles, Error> = .failure(URLError(.unknown))
-    var getPhotosQuery: ((String) -> Void)?
+    var findImagesQuery: ((String) -> Void)?
 
-    func getPhotos(
-        _ searchQuery: String,
-        done: @escaping (Result<CardSingles, Error>) -> Void
+    func findImages(
+        with searchQuery: String,
+        done: @escaping @Sendable (Result<CardSingles, Swift.Error>) -> Void
     ) {
-        getPhotosQuery?(searchQuery)
+        findImagesQuery?(searchQuery)
         done(result)
     }
 }
@@ -53,7 +57,7 @@ private final class StubImageCache: ImageCacheProtocol, @unchecked Sendable {
     }
 }
 
-private final class SpyNavigator: LoadingDataNavigatorProtocol {
+private final class SpyNavigator: LoadingNavigatorProtocol {
     private(set) var navigateToGameCallCount = 0
     private(set) var lastConfig: GameConfiguration?
     private(set) var lastCards: CardDuplicates?
@@ -79,7 +83,7 @@ private func makeCards(count: Int) -> CardSingles {
 // MARK: - Tests
 
 @MainActor
-final class LoadingDataVCTests: XCTestCase {
+final class LoadingVCTests: XCTestCase {
     private nonisolated(unsafe) var apiStub: StubWikimediaClient!
     private nonisolated(unsafe) var cacheStub: StubImageCache!
 
@@ -106,18 +110,18 @@ final class LoadingDataVCTests: XCTestCase {
     private func makeVC(
         level: Level = .easy,
         query: String = "cats"
-    ) -> LoadingDataVC {
-        LoadingDataVC(config: GameConfiguration(level: level, searchQuery: query))
+    ) -> LoadingVC {
+        LoadingVC(config: GameConfiguration(level: level, searchQuery: query))
     }
 
     // MARK: - viewDidLoad → fetchData
 
-    func test_viewDidLoad_callsGetPhotos() {
+    func test_viewDidLoad_callsFindImages() {
         // Arrange
         let vc = makeVC(query: "dogs")
         var receivedQuery: String?
         apiStub.result = .failure(URLError(.unknown))
-        apiStub.getPhotosQuery = { receivedQuery = $0 }
+        apiStub.findImagesQuery = { receivedQuery = $0 }
 
         // Act
         _ = vc.view
@@ -141,7 +145,7 @@ final class LoadingDataVCTests: XCTestCase {
         apiStub.result = .success(cards)
         let vc = makeVC()
 
-        // Act — drain one main-queue cycle so the async main-queue dispatch in fetchData fires
+        // Act — drain one main-queue cycle so the async dispatch in LoadingViewModel fires
         _ = vc.view
         let exp = expectation(description: "main queue drain")
         DispatchQueue.main.async { exp.fulfill() }
@@ -157,7 +161,7 @@ final class LoadingDataVCTests: XCTestCase {
         apiStub.result = .success(cards)
         let vc = makeVC()
 
-        // Act — drain one main-queue cycle so the async main-queue dispatch in fetchData fires
+        // Act
         _ = vc.view
         let exp = expectation(description: "main queue drain")
         DispatchQueue.main.async { exp.fulfill() }
@@ -173,7 +177,7 @@ final class LoadingDataVCTests: XCTestCase {
         apiStub.result = .success(cards)
         let vc = makeVC()
 
-        // Act — drain one main-queue cycle so the async main-queue dispatch in fetchData fires
+        // Act
         _ = vc.view
         let exp = expectation(description: "main queue drain")
         DispatchQueue.main.async { exp.fulfill() }
@@ -183,9 +187,9 @@ final class LoadingDataVCTests: XCTestCase {
         XCTAssertEqual(Set(cacheStub.prefetchedURLs), Set(cards.cards.map(\.imageUrl)))
     }
 
-    // MARK: - startGame → navigator
+    // MARK: - navigateToGame → navigator
 
-    func test_startGame_callsNavigatorAfterPrefetch() {
+    func test_navigateToGame_callsNavigatorAfterPrefetch() {
         // Arrange
         let cards = makeCards(count: 3)
         apiStub.result = .success(cards)
@@ -203,7 +207,7 @@ final class LoadingDataVCTests: XCTestCase {
         XCTAssertEqual(spy.navigateToGameCallCount, 1)
     }
 
-    func test_startGame_passesCorrectConfigToNavigator() {
+    func test_navigateToGame_passesCorrectConfigToNavigator() {
         // Arrange
         let cards = makeCards(count: 3)
         apiStub.result = .success(cards)
@@ -222,7 +226,7 @@ final class LoadingDataVCTests: XCTestCase {
         XCTAssertEqual(spy.lastConfig?.searchQuery, "trees")
     }
 
-    func test_startGame_passesNonEmptyCardsToNavigator() {
+    func test_navigateToGame_passesNonEmptyCardsToNavigator() {
         // Arrange
         let cards = makeCards(count: 3)
         apiStub.result = .success(cards)
@@ -241,7 +245,7 @@ final class LoadingDataVCTests: XCTestCase {
         XCTAssertFalse(spy.lastCards?.memoryCards.isEmpty ?? true)
     }
 
-    func test_startGame_withNoNavigator_doesNotCrash() {
+    func test_navigateToGame_withNoNavigator_doesNotCrash() {
         // Arrange — navigator intentionally not set
         let cards = makeCards(count: 3)
         apiStub.result = .success(cards)
@@ -255,7 +259,7 @@ final class LoadingDataVCTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func test_startGame_onAPIFailure_doesNotCallNavigator() {
+    func test_navigateToGame_onAPIFailure_doesNotCallNavigator() {
         // Arrange
         apiStub.result = .failure(URLError(.unknown))
         let vc = makeVC()
@@ -270,5 +274,36 @@ final class LoadingDataVCTests: XCTestCase {
 
         // Assert
         XCTAssertEqual(spy.navigateToGameCallCount, 0)
+    }
+
+    // MARK: - retry
+
+    func test_retry_afterFailure_callsFindImagesAgain() {
+        // Arrange — first call fails, second call succeeds
+        apiStub.result = .failure(URLError(.unknown))
+        let vc = makeVC(query: "cats")
+        var queryCount = 0
+        apiStub.findImagesQuery = { _ in queryCount += 1 }
+        _ = vc.view
+
+        // Drain first fetch (fails)
+        let firstDrain = expectation(description: "first drain")
+        DispatchQueue.main.async { firstDrain.fulfill() }
+        waitForExpectations(timeout: 1)
+
+        // Now switch to success so the retry navigates
+        apiStub.result = .success(makeCards(count: 3))
+        let spy = SpyNavigator()
+        vc.navigator = spy
+        let navExp = expectation(description: "navigateToGame after retry")
+        spy.onNavigateToGame = { navExp.fulfill() }
+
+        // Act — simulate the retry button tap via onRetry on the LoadingView
+        // swiftlint:disable:next force_cast
+        (vc.view as! LoadingView).onRetry?()
+
+        // Assert
+        waitForExpectations(timeout: 1)
+        XCTAssertEqual(spy.navigateToGameCallCount, 1)
     }
 }

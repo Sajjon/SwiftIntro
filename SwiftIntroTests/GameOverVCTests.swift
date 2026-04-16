@@ -18,6 +18,30 @@
 import UIKit
 import XCTest
 
+// MARK: - SpyNavigator
+
+private final class SpyNavigator: GameOverNavigatorProtocol {
+    private(set) var restartGameCalled = false
+    private(set) var quitGameCalled = false
+    private(set) var lastConfig: GameConfiguration?
+    private(set) var lastCards: CardDuplicates?
+
+    func restartGame(
+        config: GameConfiguration,
+        cards: CardDuplicates
+    ) {
+        restartGameCalled = true
+        lastConfig = config
+        lastCards = cards
+    }
+
+    func quitGame() {
+        quitGameCalled = true
+    }
+}
+
+// MARK: - Tests
+
 @MainActor
 final class GameOverVCTests: XCTestCase {
     // MARK: - Helpers
@@ -119,67 +143,67 @@ final class GameOverVCTests: XCTestCase {
 
     // MARK: - onQuit
 
-    func test_onQuit_popsToRootViewController() {
-        // Arrange — spy records whether popToRootViewController is called,
-        // avoiding a dependency on UIKit's async animated-transition timing.
-        final class SpyNav: UINavigationController {
-            private(set) var didPopToRoot = false
-            override func popToRootViewController(animated: Bool) -> [UIViewController]? {
-                didPopToRoot = true
-                return super.popToRootViewController(animated: animated)
-            }
-        }
+    func test_onQuit_callsNavigatorQuitGame() {
+        // Arrange
         let vc = makeVC()
-        let nav = SpyNav(rootViewController: UIViewController())
-        nav.pushViewController(UIViewController(), animated: false)
-        nav.pushViewController(vc, animated: false)
+        let spy = SpyNavigator()
+        vc.navigator = spy
         _ = vc.view
 
         // Act
         gameOverView(of: vc).onQuit?()
 
         // Assert
-        XCTAssertTrue(nav.didPopToRoot)
+        XCTAssertTrue(spy.quitGameCalled)
     }
 
-    // MARK: - onRestart (restartGame)
+    func test_onQuit_withoutNavigator_doesNotCrash() {
+        // Arrange — navigator intentionally not set
+        let vc = makeVC()
+        _ = vc.view
 
-    func test_onRestart_withoutNavController_doesNotCrash() {
-        // Arrange — no nav controller; the guard in restartGame() exits early
+        // Act + Assert
+        XCTAssertNoThrow(gameOverView(of: vc).onQuit?())
+    }
+
+    // MARK: - onRestart
+
+    func test_onRestart_callsNavigatorRestartGame() {
+        // Arrange
+        let vc = makeVC()
+        let spy = SpyNavigator()
+        vc.navigator = spy
+        _ = vc.view
+
+        // Act
+        gameOverView(of: vc).onRestart?()
+
+        // Assert
+        XCTAssertTrue(spy.restartGameCalled)
+    }
+
+    func test_onRestart_passesOutcomeCardsToNavigator() {
+        // Arrange
+        let outcome = makeOutcome(level: .easy)
+        let vc = makeVC(outcome: outcome)
+        let spy = SpyNavigator()
+        vc.navigator = spy
+        _ = vc.view
+
+        // Act
+        gameOverView(of: vc).onRestart?()
+
+        // Assert
+        XCTAssertEqual(spy.lastCards?.memoryCards.count, outcome.cards.memoryCards.count)
+    }
+
+    func test_onRestart_withoutNavigator_doesNotCrash() {
+        // Arrange — navigator intentionally not set
         let vc = makeVC()
         _ = vc.view
 
         // Act + Assert
         XCTAssertNoThrow(gameOverView(of: vc).onRestart?())
-    }
-
-    func test_onRestart_topVCIsGameVC() {
-        // Arrange — [root, stand-in, gameOverVC]
-        let vc = makeVC()
-        let nav = UINavigationController()
-        nav.setViewControllers([UIViewController(), UIViewController(), vc], animated: false)
-        _ = vc.view
-
-        // Act
-        gameOverView(of: vc).onRestart?()
-
-        // Assert — restartGame removes the last 2 VCs and pushes a fresh GameVC
-        XCTAssertTrue(nav.topViewController is GameVC)
-    }
-
-    func test_onRestart_stackCountDecreasesByOne() {
-        // Arrange
-        let vc = makeVC()
-        let nav = UINavigationController()
-        let initial: [UIViewController] = [UIViewController(), UIViewController(), vc]
-        nav.setViewControllers(initial, animated: false)
-        _ = vc.view
-
-        // Act
-        gameOverView(of: vc).onRestart?()
-
-        // Assert — removeLast(2) + append(1) = net −1
-        XCTAssertEqual(nav.viewControllers.count, initial.count - 1)
     }
 
     // MARK: - @objc button targets

@@ -68,7 +68,7 @@ extension CardCVCell {
     /// Called from `willDisplay` via the `configureCell` closure. Uses Kingfisher
     /// to load (or retrieve from cache) the card's image asynchronously.
     func configure(with cardModel: CardModel) {
-        cardFrontImageView.kf.setImage(with: cardModel.imageUrl)
+        cardFrontImageView.kf.setImage(with: cardModel.card.imageUrl)
         isFlipped = cardModel.isFlipped
     }
 

@@ -12,7 +12,7 @@
 //  - `onStartGame?()` fires the closure wired in viewDidLoad — exercising the push
 //    path without simulating a real UIKit tap event.
 //  - `navigateToGame` is called directly; a plain `UIViewController` acts as
-//    a stand-in for `LoadingDataVC` in the preceding stack position.
+//    a stand-in for `LoadingVC` in the preceding stack position.
 //
 
 @testable import SwiftIntro
@@ -81,7 +81,7 @@ final class SettingsVCTests: XCTestCase {
 
     // MARK: - onStartGame
 
-    func test_onStartGame_pushesLoadingDataVC() {
+    func test_onStartGame_pushesLoadingVC() {
         // Arrange
         let vc = SettingsVC()
         let nav = UINavigationController(rootViewController: vc)
@@ -91,10 +91,10 @@ final class SettingsVCTests: XCTestCase {
         settingsView(of: vc).onStartGame?(GameConfiguration())
 
         // Assert
-        XCTAssertTrue(nav.topViewController is LoadingDataVC)
+        XCTAssertTrue(nav.topViewController is LoadingVC)
     }
 
-    func test_onStartGame_setsNavigatorOnLoadingDataVC() {
+    func test_onStartGame_setsNavigatorOnLoadingVC() {
         // Arrange
         let vc = SettingsVC()
         let nav = UINavigationController(rootViewController: vc)
@@ -104,7 +104,7 @@ final class SettingsVCTests: XCTestCase {
         settingsView(of: vc).onStartGame?(GameConfiguration())
 
         // Assert — SettingsVC wires itself as the navigator so it can receive the callback
-        let loadingVC = nav.topViewController as? LoadingDataVC
+        let loadingVC = nav.topViewController as? LoadingVC
         XCTAssertTrue(loadingVC?.navigator === vc)
     }
 
@@ -119,7 +119,7 @@ final class SettingsVCTests: XCTestCase {
     }
 
     func test_navigateToGame_replacesTopVCWithGameVC() {
-        // Arrange — [settingsVC, stand-in for LoadingDataVC]
+        // Arrange — [settingsVC, stand-in for LoadingVC]
         let vc = SettingsVC()
         let nav = UINavigationController(rootViewController: vc)
         nav.pushViewController(UIViewController(), animated: false)
@@ -127,7 +127,7 @@ final class SettingsVCTests: XCTestCase {
         // Act
         vc.navigateToGame(config: GameConfiguration(), cards: makeCards(count: 6))
 
-        // Assert — LoadingDataVC stand-in is replaced; no way to go back to loading
+        // Assert — LoadingVC stand-in is replaced; no way to go back to loading
         XCTAssertTrue(nav.topViewController is GameVC)
     }
 
@@ -143,5 +143,125 @@ final class SettingsVCTests: XCTestCase {
 
         // Assert — replace (not push) keeps the stack depth the same
         XCTAssertEqual(nav.viewControllers.count, countBefore)
+    }
+
+    func test_navigateToGame_setsNavigatorOnGameVC() {
+        // Arrange
+        let vc = SettingsVC()
+        let nav = UINavigationController(rootViewController: vc)
+        nav.pushViewController(UIViewController(), animated: false)
+
+        // Act
+        vc.navigateToGame(config: GameConfiguration(), cards: makeCards(count: 6))
+
+        // Assert — SettingsVC wires itself as GameVC's navigator
+        let gameVC = nav.topViewController as? GameVC
+        XCTAssertTrue(gameVC?.navigator === vc)
+    }
+
+    // MARK: - navigateToGameOver (GameNavigatorProtocol)
+
+    func test_navigateToGameOver_withoutNavController_doesNotCrash() {
+        // Arrange
+        let vc = SettingsVC()
+        let outcome = GameOutcome(level: .easy, clickCount: 4, cards: makeCards(count: 6))
+
+        // Act + Assert
+        XCTAssertNoThrow(vc.navigateToGameOver(outcome: outcome))
+    }
+
+    func test_navigateToGameOver_pushesGameOverVC() {
+        // Arrange
+        let vc = SettingsVC()
+        let nav = UINavigationController(rootViewController: vc)
+        let outcome = GameOutcome(level: .easy, clickCount: 4, cards: makeCards(count: 6))
+
+        // Act
+        vc.navigateToGameOver(outcome: outcome)
+
+        // Assert
+        XCTAssertTrue(nav.topViewController is GameOverVC)
+    }
+
+    func test_navigateToGameOver_setsNavigatorOnGameOverVC() {
+        // Arrange
+        let vc = SettingsVC()
+        let nav = UINavigationController(rootViewController: vc)
+        let outcome = GameOutcome(level: .easy, clickCount: 4, cards: makeCards(count: 6))
+
+        // Act
+        vc.navigateToGameOver(outcome: outcome)
+
+        // Assert — SettingsVC wires itself as GameOverVC's navigator
+        let gameOverVC = nav.topViewController as? GameOverVC
+        XCTAssertTrue(gameOverVC?.navigator === vc)
+    }
+
+    // MARK: - restartGame (GameOverNavigatorProtocol)
+
+    func test_restartGame_withoutNavController_doesNotCrash() {
+        // Arrange
+        let vc = SettingsVC()
+
+        // Act + Assert
+        XCTAssertNoThrow(vc.restartGame(config: GameConfiguration(), cards: makeCards(count: 6)))
+    }
+
+    func test_restartGame_topVCIsGameVC() {
+        // Arrange — [settingsVC, stand-in for GameVC, stand-in for GameOverVC]
+        let vc = SettingsVC()
+        let nav = UINavigationController(rootViewController: vc)
+        nav.setViewControllers([vc, UIViewController(), UIViewController()], animated: false)
+
+        // Act
+        vc.restartGame(config: GameConfiguration(), cards: makeCards(count: 6))
+
+        // Assert — removeLast(2) + append(new GameVC) keeps depth the same
+        XCTAssertTrue(nav.topViewController is GameVC)
+    }
+
+    func test_restartGame_stackCountDecreasesByOne() {
+        // Arrange
+        let vc = SettingsVC()
+        let nav = UINavigationController(rootViewController: vc)
+        let initial: [UIViewController] = [vc, UIViewController(), UIViewController()]
+        nav.setViewControllers(initial, animated: false)
+
+        // Act
+        vc.restartGame(config: GameConfiguration(), cards: makeCards(count: 6))
+
+        // Assert — removeLast(2) + append(1) = net −1
+        XCTAssertEqual(nav.viewControllers.count, initial.count - 1)
+    }
+
+    // MARK: - quitGame (GameOverNavigatorProtocol)
+
+    func test_quitGame_withoutNavController_doesNotCrash() {
+        // Arrange
+        let vc = SettingsVC()
+
+        // Act + Assert
+        XCTAssertNoThrow(vc.quitGame())
+    }
+
+    func test_quitGame_popsToRootViewController() {
+        // Arrange — spy records the pop call without depending on UIKit animation timing
+        final class SpyNav: UINavigationController {
+            private(set) var didPopToRoot = false
+            override func popToRootViewController(animated: Bool) -> [UIViewController]? {
+                didPopToRoot = true
+                return super.popToRootViewController(animated: animated)
+            }
+        }
+        let vc = SettingsVC()
+        let nav = SpyNav(rootViewController: vc)
+        nav.pushViewController(UIViewController(), animated: false)
+        nav.pushViewController(UIViewController(), animated: false)
+
+        // Act
+        vc.quitGame()
+
+        // Assert
+        XCTAssertTrue(nav.didPopToRoot)
     }
 }

@@ -16,7 +16,7 @@ final class CardCVCellSnapshotTests: XCTestCase {
     func test_cardCVCell_faceDown() throws {
         // Arrange
         let cell = CardCVCell(frame: CGRect(origin: .zero, size: cellSize))
-        let card = try CardModel(imageUrl: XCTUnwrap(URL(string: "https://a.test/img.jpg")))
+        let card = CardModel(card: Card(imageUrl: try XCTUnwrap(URL(string: "https://a.test/img.jpg"))))
         cell.configure(with: card)
 
         // Act + Assert

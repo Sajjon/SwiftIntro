@@ -20,12 +20,12 @@ final class GameLoopTests: XCTestCase {
     // MARK: - Helpers
 
     private func makeCard(url: URL = URL(string: "https://a.test/img.jpg")!) -> CardModel {
-        CardModel(imageUrl: url)
+        CardModel(card: Card(imageUrl: url))
     }
 
     private func makeModel(level: Level = .easy) -> GameModel {
         let cards = (0 ..< level.cardCount).map { i in
-            CardModel(imageUrl: URL(string: "https://a.test/\(i).jpg")!)
+            CardModel(card: Card(imageUrl: URL(string: "https://a.test/\(i).jpg")!))
         }
         return GameModel(cards: cards, level: level)
     }

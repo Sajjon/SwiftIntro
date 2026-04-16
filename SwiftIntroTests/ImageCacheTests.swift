@@ -6,7 +6,7 @@
 //
 //  All tests follow the Arrange-Act-Assert (AAA) pattern:
 //  - Arrange: register a stub ImageRetrieverProtocol that completes synchronously (1–5 lines)
-//  - Act:     call prefetchImages / prefetchImage / imageFromCache (1 line)
+//  - Act:     call prefetchImages
 //  - Assert:  verify a single observable outcome (1 line)
 //
 
@@ -51,30 +51,6 @@ final class CacheTests: XCTestCase {
         Container.shared.imageFetcher.reset()
         stub = nil
         super.tearDown()
-    }
-
-    // MARK: - imageFromCache
-
-    func test_imageFromCache_returnsNilForUnknownURL() {
-        // Arrange
-        let cache = ImageCache()
-
-        // Act
-        let image = cache.imageFromCache(URL(string: "https://a.test/unknown.jpg"))
-
-        // Assert — nothing has been loaded yet
-        XCTAssertNil(image)
-    }
-
-    func test_imageFromCache_returnsNilForNilURL() {
-        // Arrange
-        let cache = ImageCache()
-
-        // Act
-        let image = cache.imageFromCache(nil)
-
-        // Assert
-        XCTAssertNil(image)
     }
 
     // MARK: - prefetchImages
@@ -152,21 +128,5 @@ final class CacheTests: XCTestCase {
         let waiter = expectation(description: "main queue drain")
         DispatchQueue.main.async { waiter.fulfill() }
         waitForExpectations(timeout: 0.5)
-    }
-
-    // MARK: - prefetchImage (single URL)
-
-    func test_prefetchImage_callsDoneAfterRetrieval() throws {
-        // Arrange
-        let url = try XCTUnwrap(URL(string: "https://a.test/single.jpg"))
-        let cache = ImageCache()
-        let exp = expectation(description: "done called")
-
-        // Act
-        cache.prefetchImage(url) { exp.fulfill() }
-
-        // Assert
-        waitForExpectations(timeout: 1)
-        XCTAssertEqual(stub.retrievedURLs, [url])
     }
 }

@@ -1,5 +1,5 @@
 //
-//  Container+SwiftIntro.swift
+//  DependencyInjection+Registration.swift
 //  SwiftIntro
 //
 //  Copyright © 2016-2026 SwiftIntro. All rights reserved.

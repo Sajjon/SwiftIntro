@@ -32,7 +32,7 @@ final class GameEffectHandler: @unchecked Sendable {
     weak var collectionView: UICollectionView?
 
     /// The difficulty level — used to convert flat card indices into `IndexPath` values.
-    private let level: Level
+    let level: Level
 
     /// Called on the main actor when the game is won, to trigger navigation.
     var onNavigateToGameOver: (@MainActor (GameOutcome) -> Void)?
@@ -53,14 +53,12 @@ final class GameEffectHandler: @unchecked Sendable {
     private var currentModel: GameModel?
 
     /// - Parameters:
-    ///   - level: The board level, required to map flat indices to `IndexPath`s.
     ///   - initialModel: The starting model, used to configure cells on first display
     ///     before the Mobius loop delivers its first asynchronous model update.
     init(
-        level: Level,
         initialModel: GameModel
     ) {
-        self.level = level
+        level = initialModel.level
         currentModel = initialModel
     }
 

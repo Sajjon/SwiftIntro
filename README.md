@@ -13,6 +13,7 @@ A memory game implementation fetching images from Wikimedia. This project aims t
 This repo is from June 1st, 2016, using **iOS 9.3**. A lot has happened to UIKit since then. 
 
 ### iOS 13 updates
+iOS 13 was released in 2019, 3 years after this repo was originally created.
 
 #### `UIAction`
 [`UIAction`](https://developer.apple.com/documentation/uikit/uiaction) allows us to remove `#selector`:
