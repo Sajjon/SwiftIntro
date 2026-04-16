@@ -104,13 +104,13 @@ extension GameVC: Connectable {
     func connect(_ consumer: @escaping (GameEvent) -> Void) -> Connection<GameModel> {
         logGame.debug("GameVC connecting to Mobius loop — wiring card-tap dispatch")
         dataSourceAndDelegate.onCardTapped = { consumer(.cardTapped(index: $0)) }
-        let gameLoop = loop
         return Connection(
             acceptClosure: { [weak self] model in
+                guard let self else { return }
                 // Keep the loop's effect handler in sync so canSelectCard /
                 // configureCell reflect the latest game state.
-                gameLoop.update(with: model)
-                self?.gameView.render(model)
+                self.loop.update(with: model)
+                self.gameView.render(model)
             },
             disposeClosure: { [weak self] in
                 logGame.debug("GameVC disconnecting from Mobius loop — removing card-tap handler")
@@ -144,12 +144,13 @@ private extension GameVC {
 
     /// Connects the data source's query closures to the loop so it stays decoupled from `GameVC`.
     func wireDataSourceClosures() {
-        let gameLoop = loop
-        dataSourceAndDelegate.canSelectCard = { index in
-            gameLoop.canSelectCard(at: index)
+        dataSourceAndDelegate.canSelectCard = { [weak self] index in
+            guard let self else { return false }
+            return self.loop.canSelectCard(at: index)
         }
-        dataSourceAndDelegate.configureCell = { cell, index in
-            gameLoop.configureCell(cell, at: index)
+        dataSourceAndDelegate.configureCell = { [weak self] cell, index in
+            guard let self else { return }
+            self.loop.configureCell(cell, at: index)
         }
     }
 }
