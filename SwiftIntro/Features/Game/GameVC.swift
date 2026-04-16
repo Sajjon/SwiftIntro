@@ -106,13 +106,11 @@ extension GameVC: Connectable {
         logGame.debug("GameVC connecting to Mobius loop — wiring card-tap dispatch")
         dataSourceAndDelegate.onCardTapped = { consumer(.cardTapped(index: $0)) }
         return Connection(
-            // swiftformat:disable redundantSelf
             acceptClosure: { [weak self] model in
                 guard let self else { return }
-                self.loop.update(with: model)
-                self.gameView.render(model)
+                loop.update(with: model)
+                gameView.render(model)
             },
-            // swiftformat:enable redundantSelf
             disposeClosure: { [weak self] in
                 logGame.debug("GameVC disconnecting from Mobius loop — removing card-tap handler")
                 self?.dataSourceAndDelegate.onCardTapped = nil
