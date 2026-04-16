@@ -62,6 +62,7 @@ final class LoadingViewModel {
 extension LoadingViewModel {
     /// Renders the initial state and kicks off the data fetch.
     func start() {
+        // Logger interpolation is @autoclosure → closure context; compiler needs self.
         // swiftformat:disable:next redundantSelf
         logNet.info("LoadingViewModel starting — config: \(self.config)")
         diffuser.run(phase)
@@ -88,6 +89,8 @@ extension LoadingViewModel {
 
 extension LoadingViewModel {
     private func fetchData() {
+        // Logger interpolation is @autoclosure → closure context; compiler needs self.
+        // swiftformat:disable:next redundantSelf
         logNet.debug("Fetching images from Wikimedia for query: '\(self.config.searchQuery)'")
         wikimediaClient.findImages(with: config.searchQuery) { [weak self] result in
             guard let self else { return }

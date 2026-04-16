@@ -61,6 +61,7 @@ final class GameOverVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Logger interpolation is @autoclosure → closure context; compiler needs self.
         // swiftformat:disable:next redundantSelf
         logGame.notice("Game over screen shown — outcome: \(self.outcome)")
         gameOverView.render(outcome)
