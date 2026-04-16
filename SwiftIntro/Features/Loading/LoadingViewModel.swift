@@ -88,7 +88,7 @@ extension LoadingViewModel {
 
 extension LoadingViewModel {
     private func fetchData() {
-        logNet.debug("Fetching images from Wikimedia for query: '\(config.searchQuery)'")
+        logNet.debug("Fetching images from Wikimedia for query: '\(self.config.searchQuery)'")
         wikimediaClient.findImages(with: config.searchQuery) { [weak self] result in
             guard let self else { return }
             DispatchQueue.main.async {
