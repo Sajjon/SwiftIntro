@@ -26,7 +26,7 @@ UIKit memory card game using Mobius unidirectional data flow, Factory DI, and Ki
 ### Dependency injection
 - Use `@Injected(\.keyPath)` property wrappers — never pass dependencies through constructors unless they vary per instance (e.g. `config`, `cards`).
 - Consumers reference protocols (`WikimediaClientProtocol`, `HTTPClientProtocol`, `ImageCacheProtocol`), never concrete types.
-- Register new services as `.singleton` in `Container+SwiftIntro.swift`.
+- Register new services as `.singleton` in `DependencyInjection+Registration.swift`.
 
 ### Networking
 - No `async/await` — use closure callbacks (`done: @escaping (Result<T, Error>) -> Void`).
