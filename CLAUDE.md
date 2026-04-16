@@ -65,7 +65,15 @@ SupportingFiles/       — AppDelegate, SceneDelegate, Container+SwiftIntro, Log
 
 Every new file must be added to `SwiftIntro.xcodeproj/project.pbxproj`.
 
+## Session setup — always do this first
+
+1. Run `scripts/setup.sh` (or manually `pip install pre-commit && pre-commit install`) to install git hooks and, on macOS, the `swiftformat`, `swiftlint`, `just`, and `xcpretty` binaries. The script is idempotent.
+2. Run `pre-commit run --all-files` before pushing to catch lint/format issues early. SwiftFormat/SwiftLint/tests skip gracefully when their binaries aren't on `$PATH` (Linux sandbox), so always verify against CI results in that case.
+3. Never use `git commit --no-verify`. If a hook blocks a commit, fix the underlying issue.
+
 ## Key gotchas
+
+- **UIViewController is `@MainActor`** in the Xcode 26 SDK. This makes the Swift compiler stricter about implicit `self` in escaping closures inside VC subclasses than in plain classes. Use `guard let self else { return }` + explicit `self.property` and wrap with `// swiftformat:disable redundantSelf` / `// swiftformat:enable redundantSelf` so SwiftFormat doesn't strip the `self.` that the compiler requires.
 
 - `configureCell` is called from `willDisplay`, not `cellForItemAt` — this ensures Kingfisher is invoked every time a cell re-enters the visible area, not only on first dequeue.
 - `GameEffectHandler.currentModel` is pre-seeded with `initialModel` at init time. Do not change this to `nil` — the Mobius loop delivers the first model asynchronously and cells would appear blank otherwise.

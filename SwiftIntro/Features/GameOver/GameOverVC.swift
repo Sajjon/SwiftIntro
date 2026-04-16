@@ -63,6 +63,7 @@ final class GameOverVC: UIViewController {
         super.viewDidLoad()
         logGame.notice("Game over screen shown — outcome: \(outcome)")
         gameOverView.render(outcome)
+        // swiftformat:disable redundantSelf
         gameOverView.onRestart = { [weak self] in
             guard let self else { return }
             logGame.info("Player chose Restart — starting new game with same images")
@@ -73,5 +74,6 @@ final class GameOverVC: UIViewController {
             logGame.info("Player chose Quit — returning to GameSetup screen")
             self.navigator?.quitGame()
         }
+        // swiftformat:enable redundantSelf
     }
 }
