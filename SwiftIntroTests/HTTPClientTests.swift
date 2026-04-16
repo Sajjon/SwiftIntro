@@ -21,7 +21,7 @@ private struct StubResult {
     var error: Error?
 }
 
-private final class StubURLProtocol: URLProtocol {
+private final class StubURLProtocol: URLProtocol, @unchecked Sendable {
     nonisolated(unsafe) static var handler: ((URLRequest) -> StubResult) = { _ in StubResult() }
 
     // swiftlint:disable:next static_over_final_class
@@ -34,18 +34,25 @@ private final class StubURLProtocol: URLProtocol {
         request
     }
 
+    // Dispatch callbacks to a background queue so URLSession always delivers the
+    // dataTask completion handler asynchronously — matching production behaviour and
+    // avoiding a potential deadlock between synchronous main-thread delivery and
+    // `waitForExpectations` in `@MainActor` tests on macOS 26.
     override func startLoading() {
         let result = StubURLProtocol.handler(request)
-        if let error = result.error {
-            client?.urlProtocol(self, didFailWithError: error)
-        } else {
-            if let response = result.response {
-                client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        DispatchQueue.global().async { [weak self] in
+            guard let self else { return }
+            if let error = result.error {
+                self.client?.urlProtocol(self, didFailWithError: error)
+            } else {
+                if let response = result.response {
+                    self.client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+                }
+                if let data = result.data {
+                    self.client?.urlProtocol(self, didLoad: data)
+                }
+                self.client?.urlProtocolDidFinishLoading(self)
             }
-            if let data = result.data {
-                client?.urlProtocol(self, didLoad: data)
-            }
-            client?.urlProtocolDidFinishLoading(self)
         }
     }
 
