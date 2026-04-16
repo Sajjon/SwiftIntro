@@ -24,7 +24,6 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/spotify/diffuser",
       "state" : {
-        "branch" : "master",
         "revision" : "fea166a5c366209e68bfd957b18780e7abba522c"
       }
     },
@@ -51,8 +50,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/spotify/Mobius.swift",
       "state" : {
-        "revision" : "2ce2f0641cb19194405d553ca8b54196f01d8969",
-        "version" : "0.7.0"
+        "revision" : "74baa7e07b86ae4c2673204a92230db397b8a6ae"
       }
     },
     {
