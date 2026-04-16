@@ -38,7 +38,7 @@ final class RootVC: UINavigationController {
 extension RootVC: GameSetupNavigatorProtocol {
     /// Pushes the loading screen onto the stack to begin data fetching.
     func navigateToLoading(config: GameConfiguration) {
-        logNav.info("Pushing LoadingVC — query: '\(config.searchQuery)', level: \(config.level)")
+        logNav.info("Pushing LoadingVC — config: \(config)")
         let loadingVC = LoadingVC(config: config)
         loadingVC.navigator = self
         pushViewController(loadingVC, animated: true)

@@ -14,7 +14,7 @@ A memory game implementation fetching images from Wikimedia. This project aims t
 #### Subclassing
 10 years ago SwiftIntro used InterfaceBuilder, part of refresh done mid April 2026 the creation of views was converted to programmatic declarations. 
 
-We create lots of UIStackViews with similar code, we can DRY-up this code using a View superclass, subclassed by each view. This also introduces an opportunity to log the UIKit lifecycles.
+We create lots of UIStackViews with similar code, we can DRY-up this code using a View superclass, subclassed by each view. This also introduces an opportunity to log the UIKit lifecycles. We might benefit from a Never type `interfaceBuilderNotUsed: Never` in `required init?(coder _: NSCoder)`
 
 There might be benefits from subclassing of UIViewControllers too, at least as a scaffolding of UIKit lifecycle events.
 

@@ -27,7 +27,7 @@ jobs:
   # ── 2. SwiftFormat ──────────────────────────────────────────────────────────
   swiftformat:
     name: SwiftFormat
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
 
@@ -41,7 +41,7 @@ jobs:
   # ── 3. SwiftLint ────────────────────────────────────────────────────────────
   swiftlint:
     name: SwiftLint
-    runs-on: macos-15
+    runs-on: macos-26
     env:
       # Keep in sync with the version installed locally via Homebrew.
       SWIFTLINT_VERSION: "0.63.2"
