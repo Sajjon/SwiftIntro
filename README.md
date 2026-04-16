@@ -16,7 +16,7 @@ A memory game implementation fetching images from Wikimedia. This project aims t
 
 We create lots of UIStackViews with similar code, we can DRY-up this code using a View superclass, subclassed by each view. This also introduces an opportunity to log the UIKit lifecycles.
 
-There might be benefits from subclassing of UIViewControllers too, at least as as a scaffolding of UIKit lifecycle events.
+There might be benefits from subclassing of UIViewControllers too, at least as a scaffolding of UIKit lifecycle events.
 
 ### Modernize UIKit
 This repo is from June 1st, 2016, using **iOS 9.3**. A lot has happened to UIKit since then. 
