@@ -31,8 +31,8 @@ extension GameEffect: CustomStringConvertible {
             "flipCard(index: \(index), faceUp: \(faceUp))"
         case let .scheduleFlipBack(index1, index2):
             "scheduleFlipBack(index1: \(index1), index2: \(index2))"
-        case .navigateToGameOver:
-            "navigateToGameOver"
+        case let .navigateToGameOver(outcome):
+            "navigateToGameOver(outcome: \(String(describing: outcome)))"
         }
     }
 }
