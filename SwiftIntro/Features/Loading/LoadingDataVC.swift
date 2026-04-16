@@ -40,7 +40,7 @@ protocol LoadingDataNavigatorProtocol: AnyObject {
 /// to `navigator` so this VC has no dependency on `UINavigationController`.
 final class LoadingDataVC: UIViewController {
     /// Injected API client used to fetch card images from Wikimedia Commons.
-    @Injected(\.wikimediaClient) private var apiClient
+    @Injected(\.wikimediaClient) private var wikimediaClient
 
     /// Injected image cache used to pre-warm Kingfisher's memory cache before the game starts.
     @Injected(\.imageCache) private var imageCache
@@ -79,7 +79,7 @@ final class LoadingDataVC: UIViewController {
 private extension LoadingDataVC {
     /// Requests photos from the API using the configured search query, then calls `setupWithModel`.
     func fetchData() {
-        apiClient.getPhotos(config.searchQuery) { result in
+        wikimediaClient.findImages(with: config.searchQuery) { result in
             switch result {
             case let .failure(error):
                 log.error("Failed to get photos: \(error)")

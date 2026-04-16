@@ -7,13 +7,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$(score)lld clicks "
+            "value" : "%1$(score)lld card flips"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$(score)lld klick "
+            "value" : "%1$(score)lld kortvändningar"
           }
         }
       },
@@ -30,13 +30,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You made it ^__^,\nyour click count was:"
+            "value" : "Good job! You made it in:"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Du klarade det ^__^,\nantal klick var:"
+            "value" : "Bra jobbat! Du klarade det på: "
           }
         }
       }

@@ -21,8 +21,8 @@ protocol WikimediaClientProtocol {
     ///   - searchQuery: The search term (e.g. "cats") forwarded to the Wikimedia API.
     ///   - done: Called on an arbitrary background queue with `.success(CardSingles)`
     ///     on success, or `.failure(Error)` if the network request or JSON decoding fails.
-    func getPhotos(
-        _ searchQuery: String,
+    func findImages(
+        with searchQuery: String,
         done: @escaping @Sendable (Result<CardSingles, Swift.Error>) -> Void
     )
 }
@@ -37,8 +37,8 @@ final class WikimediaClient: WikimediaClientProtocol {
     /// substituted without touching URLSession or any real networking.
     @Injected(\.httpClient) private var httpClient
 
-    func getPhotos(
-        _ searchQuery: String,
+    func findImages(
+        with searchQuery: String,
         done: @escaping @Sendable (Result<CardSingles, Swift.Error>) -> Void
     ) {
         let url = WikimediaRouter.searchImages(searchQuery).url
