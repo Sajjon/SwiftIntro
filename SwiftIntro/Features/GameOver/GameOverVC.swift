@@ -63,7 +63,7 @@ final class GameOverVC: UIViewController {
         super.viewDidLoad()
         logGame.notice("Game over screen shown — outcome: \(outcome)")
         gameOverView.render(outcome)
-        gameOverView.onRestart = { [weak self, config, outcome] in
+        gameOverView.onRestart = { [weak self, config = self.config, outcome = self.outcome] in
             logGame.info("Player chose Restart — starting new game with same images")
             self?.navigator?.restartGame(PreparedGame(config: config, cards: outcome.cards))
         }
