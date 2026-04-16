@@ -61,13 +61,19 @@ final class GameOverVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Logger interpolation is @autoclosure → closure context; compiler needs self.
+        // swiftformat:disable:next redundantSelf
+        logGame.notice("Game over screen shown — outcome: \(self.outcome)")
         gameOverView.render(outcome)
         gameOverView.onRestart = { [weak self] in
             guard let self else { return }
+            logGame.info("Player chose Restart — starting new game with same images")
             navigator?.restartGame(PreparedGame(config: config, cards: outcome.cards))
         }
         gameOverView.onQuit = { [weak self] in
-            self?.navigator?.quitGame()
+            guard let self else { return }
+            logGame.info("Player chose Quit — returning to GameSetup screen")
+            navigator?.quitGame()
         }
     }
 }

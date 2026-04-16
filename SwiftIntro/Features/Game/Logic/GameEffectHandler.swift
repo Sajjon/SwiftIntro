@@ -114,6 +114,7 @@ private extension GameEffectHandler {
         _ effect: GameEffect,
         dispatch: @escaping (GameEvent) -> Void
     ) {
+        logGame.debug("Handling effect: \(effect)")
         switch effect {
         case let .flipCard(index, faceUp):
             handleFlipCard(index: index, faceUp: faceUp)
@@ -129,6 +130,7 @@ private extension GameEffectHandler {
         index: Int,
         faceUp: Bool
     ) {
+        logGame.debug("Animating card \(index) face \(faceUp ? "up" : "down")")
         DispatchQueue.main.async { [weak self] in
             guard let self,
                   let cell = collectionView?.cellForItem(at: indexPath(for: index)) as? CardCVCell
@@ -143,6 +145,7 @@ private extension GameEffectHandler {
         index2: Int,
         dispatch: @escaping (GameEvent) -> Void
     ) {
+        logGame.debug("Scheduling flip-back for cards \(index1) and \(index2) after 1 s")
         // The returned work item is stored so stop() can cancel it before the delay fires.
         flipBackWorkItem = clock.schedule(after: 1.0) {
             dispatch(.flipBackCards(index1: index1, index2: index2))
@@ -151,8 +154,10 @@ private extension GameEffectHandler {
 
     /// Fires `onNavigateToGameOver` after a short delay so the final flip animation finishes first.
     func handleNavigateToGameOver(outcome: GameOutcome) {
+        logGame.info("Final flip complete — scheduling navigation to game-over screen after 1 s delay")
         // Short delay lets the final flip animation complete before navigating away.
         clock.schedule(after: 1.0) { [weak self] in
+            logGame.debug("Firing onNavigateToGameOver callback")
             self?.onNavigateToGameOver?(outcome)
         }
     }

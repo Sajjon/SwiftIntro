@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/Sajjon/SwiftIntro/graph/badge.svg?token=siapXgVmia)](https://codecov.io/gh/Sajjon/SwiftIntro)
+[![codecov](https://codecov.io/gh/Sajjon/SwiftIntro/branch/main/graph/badge.svg?token=siapXgVmia)](https://codecov.io/gh/Sajjon/SwiftIntro/tree/main)
 
 # 📱 My first Memory 🤔💭
 #### _An introduction to iOS development with Swift._
@@ -9,13 +9,22 @@ A memory game implementation fetching images from Wikimedia. This project aims t
 > **AI assistant instructions:** [CLAUDE.md](CLAUDE.md)
 
 # Challenges
-## Modernize UIKit
+## UIKit
+### Improvements
+#### Subclassing
+10 years ago SwiftIntro used InterfaceBuilder, part of refresh done mid April 2026 the creation of views was converted to programmatic declarations. 
+
+We create lots of UIStackViews with similar code, we can DRY-up this code using a View superclass, subclassed by each view. This also introduces an opportunity to log the UIKit lifecycles.
+
+There might be benefits from subclassing of UIViewControllers too, at least as a scaffolding of UIKit lifecycle events.
+
+### Modernize UIKit
 This repo is from June 1st, 2016, using **iOS 9.3**. A lot has happened to UIKit since then. 
 
-### iOS 13 updates
+#### iOS 13 updates
 iOS 13 was released in 2019, 3 years after this repo was originally created.
 
-#### `UIAction`
+##### `UIAction`
 [`UIAction`](https://developer.apple.com/documentation/uikit/uiaction) allows us to remove `#selector`:
 ```diff
 -restartButton.addTarget(self, action: #selector(restartTapped), for: .touchUpInside)
@@ -37,7 +46,7 @@ and:
 +)
 ```
 
-#### `UICollectionViewCompositionalLayout`
+##### `UICollectionViewCompositionalLayout`
 We can drastically simplify logic in `MemoryDataSourceAndDelegate` if we
 ```diff
 -    let collectionView: UICollectionView = {
@@ -123,9 +132,10 @@ private extension MemoryDataSourceAndDelegate {
 
 ```
 
-### iOS 15 updates
+#### iOS 15 updates
 > iOS 15 was released 2021
 
+##### `UIButton.Configuration`
 [`UIButton.Configuration`](https://developer.apple.com/documentation/uikit/uibutton/configuration-swift.struct) makes buttons more declarative, more consistent, and easier to update correctly as state and design change
 ```diff
  final class CircularButton: UIButton {

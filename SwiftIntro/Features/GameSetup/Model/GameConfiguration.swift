@@ -16,3 +16,9 @@ struct GameConfiguration {
     /// The Wikimedia Commons search term used to fetch card images.
     var searchQuery: String = "cats"
 }
+
+extension GameConfiguration: CustomStringConvertible {
+    var description: String {
+        "query: '\(searchQuery)', level: \(level)"
+    }
+}

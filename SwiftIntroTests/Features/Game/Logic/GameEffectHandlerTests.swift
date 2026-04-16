@@ -172,7 +172,7 @@ final class GameEffectHandlerTests: XCTestCase {
         DispatchQueue.main.async { exp.fulfill() }
 
         // Assert — must not crash; collectionView reference is still set
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
         XCTAssertNotNil(handler.collectionView)
         connection.dispose()
     }

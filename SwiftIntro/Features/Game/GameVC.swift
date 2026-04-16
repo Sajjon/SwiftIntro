@@ -41,11 +41,8 @@ final class GameVC: UIViewController {
     /// The root view; installed via `loadView()`.
     private let gameView = GameView()
 
-    /// The UIKit data source and delegate, created lazily so `loop.level` is available.
-    private lazy var dataSourceAndDelegate: MemoryDataSourceAndDelegate = .init(
-        rows: self.loop.level.rowCount,
-        columns: self.loop.level.columnCount
-    )
+    /// The UIKit data source and delegate — sized from `loop.level` in `init`.
+    private let dataSourceAndDelegate: MemoryDataSourceAndDelegate
 
     /// Wired by the presenting controller (e.g. `GameSetupVC`) before the push.
     weak var navigator: GameNavigatorProtocol?
@@ -54,7 +51,12 @@ final class GameVC: UIViewController {
 
     init(_ game: PreparedGame) {
         let cardModels = game.cards.memoryCards.map(CardModel.init)
-        loop = GameLoop(initialModel: GameModel(cards: cardModels, level: game.config.level))
+        let loop = GameLoop(initialModel: GameModel(cards: cardModels, level: game.config.level))
+        self.loop = loop
+        dataSourceAndDelegate = MemoryDataSourceAndDelegate(
+            rows: loop.level.rowCount,
+            columns: loop.level.columnCount
+        )
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -74,6 +76,9 @@ extension GameVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Logger interpolation is @autoclosure → closure context; compiler needs self.
+        // swiftformat:disable:next redundantSelf
+        logGame.notice("Game started — level: \(self.loop.level.debugDescription)")
         setupCollectionView()
         setupLoop()
     }
@@ -81,6 +86,7 @@ extension GameVC {
     /// Stops the loop and cancels any pending timers when the screen leaves the hierarchy.
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        logGame.debug("GameVC disappeared — stopping Mobius loop")
         loop.stop()
     }
 }
@@ -98,15 +104,16 @@ extension GameVC: Connectable {
     /// - Returns: A `Connection<GameModel>` whose `acceptClosure` renders each new model
     ///   and whose `disposeClosure` cleans up the tap handler on disconnect.
     func connect(_ consumer: @escaping (GameEvent) -> Void) -> Connection<GameModel> {
+        logGame.debug("GameVC connecting to Mobius loop — wiring card-tap dispatch")
         dataSourceAndDelegate.onCardTapped = { consumer(.cardTapped(index: $0)) }
         return Connection(
             acceptClosure: { [weak self] model in
-                // Keep the loop's effect handler in sync so canSelectCard /
-                // configureCell reflect the latest game state.
-                self?.loop.update(with: model)
-                self?.gameView.render(model)
+                guard let self else { return }
+                loop.update(with: model)
+                gameView.render(model)
             },
             disposeClosure: { [weak self] in
+                logGame.debug("GameVC disconnecting from Mobius loop — removing card-tap handler")
                 self?.dataSourceAndDelegate.onCardTapped = nil
             }
         )
@@ -138,10 +145,12 @@ private extension GameVC {
     /// Connects the data source's query closures to the loop so it stays decoupled from `GameVC`.
     func wireDataSourceClosures() {
         dataSourceAndDelegate.canSelectCard = { [weak self] index in
-            self?.loop.canSelectCard(at: index) ?? false
+            guard let self else { return false }
+            return loop.canSelectCard(at: index)
         }
         dataSourceAndDelegate.configureCell = { [weak self] cell, index in
-            self?.loop.configureCell(cell, at: index)
+            guard let self else { return }
+            loop.configureCell(cell, at: index)
         }
     }
 }

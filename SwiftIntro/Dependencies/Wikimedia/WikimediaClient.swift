@@ -24,6 +24,7 @@ final class WikimediaClient: WikimediaClientProtocol {
         done: @escaping (Result<CardSingles, Swift.Error>) -> Void
     ) {
         let url = WikimediaRouter.searchImages(searchQuery).url
+        logNet.debug("WikimediaClient requesting URL: \(url)")
         httpClient.get(url: url) { result in WikimediaClient.decodeAndDeliver(result, done: done) }
     }
 }
@@ -75,6 +76,7 @@ private struct WikimediaImageInfo: Decodable {
 private extension WikimediaClient {
     /// Decodes raw JSON and filters out non-image URLs, returning a `CardSingles` collection.
     static func parse(_ data: Data) throws -> CardSingles {
+        logNet.debug("Parsing Wikimedia JSON response (\(data.count) bytes)")
         let response = try JSONDecoder().decode(WikimediaResponse.self, from: data)
         let cards = response.query.pages.values.compactMap { page -> Card? in
             guard
@@ -84,6 +86,7 @@ private extension WikimediaClient {
             else { return nil }
             return Card(imageUrl: url)
         }
+        logNet.debug("Parsed \(cards.count) valid image card(s) from \(response.query.pages.count) page(s)")
         return CardSingles(cards: cards)
     }
 
