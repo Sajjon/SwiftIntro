@@ -1,5 +1,5 @@
 //
-//  SettingsView.swift
+//  GameSetupView.swift
 //  SwiftIntro
 //
 //  Copyright © 2016-2026 SwiftIntro. All rights reserved.
@@ -12,7 +12,7 @@ import UIKit
 /// Manages its own `GameConfiguration` state internally and calls `onStartGame`
 /// when the player taps the start button, passing the fully-built config out to
 /// `SettingsVC` for navigation.
-final class SettingsView: UIView {
+final class GameSetupView: UIView {
     /// Displays the app title at the top of the settings screen.
     private let titleLabel = UILabel()
 
@@ -55,7 +55,7 @@ final class SettingsView: UIView {
 
 // MARK: - Private
 
-private extension SettingsView {
+private extension GameSetupView {
     /// Configures controls, builds the vertical stack, and centres it horizontally with insets.
     func setupLayout() {
         configureControls()
@@ -92,11 +92,11 @@ private extension SettingsView {
     /// Fills all labels and control titles with localised strings, including each
     /// level segment title derived from the corresponding `Level` case.
     func setupLocalizedStrings() {
-        titleLabel.text = String(localized: .Settings.title)
-        usernameTextField.placeholder = String(localized: .Settings.usernamePlaceholder)
-        usernameLabel.text = String(localized: .Settings.username)
-        segmentTitleLabel.text = String(localized: .Settings.level)
-        startGameButton.setLocalizedTitle(String(localized: .Settings.startGame))
+        titleLabel.text = String(localized: .GameSetup.title)
+        usernameTextField.placeholder = String(localized: .GameSetup.usernamePlaceholder)
+        usernameLabel.text = String(localized: .GameSetup.username)
+        segmentTitleLabel.text = String(localized: .GameSetup.level)
+        startGameButton.setLocalizedTitle(String(localized: .GameSetup.startGame))
         setupLevelSegmentTitles()
     }
 

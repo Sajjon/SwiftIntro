@@ -31,15 +31,15 @@ final class SettingsViewTests: XCTestCase {
         return view.subviews.compactMap { findSubview(type, in: $0) }.first
     }
 
-    private func startButton(in view: SettingsView) -> UIButton {
+    private func startButton(in view: GameSetupView) -> UIButton {
         findSubview(UIButton.self, in: view)!
     }
 
-    private func textField(in view: SettingsView) -> UITextField {
+    private func textField(in view: GameSetupView) -> UITextField {
         findSubview(UITextField.self, in: view)!
     }
 
-    private func segmentedControl(in view: SettingsView) -> UISegmentedControl {
+    private func segmentedControl(in view: GameSetupView) -> UISegmentedControl {
         findSubview(UISegmentedControl.self, in: view)!
     }
 
@@ -47,25 +47,25 @@ final class SettingsViewTests: XCTestCase {
 
     func test_init_doesNotCrash() {
         // Act + Assert
-        XCTAssertNoThrow(SettingsView())
+        XCTAssertNoThrow(GameSetupView())
     }
 
     func test_init_onStartGameIsNil() {
         // Act + Assert
-        XCTAssertNil(SettingsView().onStartGame)
+        XCTAssertNil(GameSetupView().onStartGame)
     }
 
     // MARK: - populateViews (initial control state)
 
     func test_init_textFieldContainsDefaultSearchQuery() {
         // Act + Assert
-        XCTAssertEqual(textField(in: SettingsView()).text, GameConfiguration().searchQuery)
+        XCTAssertEqual(textField(in: GameSetupView()).text, GameConfiguration().searchQuery)
     }
 
     func test_init_segmentSelectedIndexMatchesDefaultLevel() {
         // Act + Assert
         XCTAssertEqual(
-            segmentedControl(in: SettingsView()).selectedSegmentIndex,
+            segmentedControl(in: GameSetupView()).selectedSegmentIndex,
             GameConfiguration().level.segmentedControlIndex
         )
     }
@@ -74,7 +74,7 @@ final class SettingsViewTests: XCTestCase {
 
     func test_startGameTapped_firesOnStartGame() {
         // Arrange
-        let view = SettingsView()
+        let view = GameSetupView()
         var fired = false
         view.onStartGame = { _ in fired = true }
 
@@ -87,7 +87,7 @@ final class SettingsViewTests: XCTestCase {
 
     func test_startGameTapped_defaultConfig_passesDefaultSearchQuery() {
         // Arrange
-        let view = SettingsView()
+        let view = GameSetupView()
         var config: GameConfiguration?
         view.onStartGame = { config = $0 }
 
@@ -100,7 +100,7 @@ final class SettingsViewTests: XCTestCase {
 
     func test_startGameTapped_defaultConfig_passesDefaultLevel() {
         // Arrange
-        let view = SettingsView()
+        let view = GameSetupView()
         var config: GameConfiguration?
         view.onStartGame = { config = $0 }
 
@@ -113,7 +113,7 @@ final class SettingsViewTests: XCTestCase {
 
     func test_startGameTapped_withCustomText_passesQueryInConfig() {
         // Arrange
-        let view = SettingsView()
+        let view = GameSetupView()
         textField(in: view).text = "dogs"
         var config: GameConfiguration?
         view.onStartGame = { config = $0 }
@@ -127,7 +127,7 @@ final class SettingsViewTests: XCTestCase {
 
     func test_startGameTapped_withEmptyText_keepsDefaultQuery() {
         // Arrange — empty text does not override the default search query
-        let view = SettingsView()
+        let view = GameSetupView()
         textField(in: view).text = ""
         var config: GameConfiguration?
         view.onStartGame = { config = $0 }
@@ -143,7 +143,7 @@ final class SettingsViewTests: XCTestCase {
 
     func test_changedLevel_toEasy_passesEasyLevelInConfig() {
         // Arrange
-        let view = SettingsView()
+        let view = GameSetupView()
         let seg = segmentedControl(in: view)
         seg.selectedSegmentIndex = Level.easy.segmentedControlIndex
         seg.sendActions(for: .valueChanged)
@@ -159,7 +159,7 @@ final class SettingsViewTests: XCTestCase {
 
     func test_changedLevel_toHard_passesHardLevelInConfig() {
         // Arrange
-        let view = SettingsView()
+        let view = GameSetupView()
         let seg = segmentedControl(in: view)
         seg.selectedSegmentIndex = Level.hard.segmentedControlIndex
         seg.sendActions(for: .valueChanged)

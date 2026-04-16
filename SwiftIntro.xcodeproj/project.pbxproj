@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		45773A371D00C088002E6F56 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45773A361D00C088002E6F56 /* SettingsVC.swift */; };
+		45773A371D00C088002E6F56 /* GameSetupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45773A361D00C088002E6F56 /* GameSetupVC.swift */; };
 		48D053AE2F8E355C006B3DEF /* CardSingles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D053AD2F8E355A006B3DEF /* CardSingles.swift */; };
 		48D053B62F8E5500006B3DEF /* GameLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D053B52F8E5500006B3DEF /* GameLoop.swift */; };
 		48DEC8A52F90207100DEBF95 /* Loading.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 48DEC8A42F90207100DEBF95 /* Loading.xcstrings */; };
@@ -38,15 +38,15 @@
 		7BAD45931CFF6F3A00C7D7EF /* WikimediaRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAD45921CFF6F3900C7D7EF /* WikimediaRouter.swift */; };
 		7BADD6AB1D16D9DF005EEBE3 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD6AA1D16D9DF005EEBE3 /* Level.swift */; };
 		7BADD6AD1D16DE8C005EEBE3 /* LoadingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD6AC1D16DE8C005EEBE3 /* LoadingVC.swift */; };
-		AA010002AA010002AA010002 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA010001AA010001AA010001 /* SettingsView.swift */; };
+		AA010002AA010002AA010002 /* GameSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA010001AA010001AA010001 /* GameSetupView.swift */; };
 		AA020002AA020002AA020002 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA020001AA020001AA020001 /* LoadingView.swift */; };
 		AA030002AA030002AA030002 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA030001AA030001AA030001 /* GameView.swift */; };
 		AA040002AA040002AA040002 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA040001AA040001AA040001 /* GameOverView.swift */; };
 		AA200001AA200001AA200001 /* CircularButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100001AA100001AA100001 /* CircularButton.swift */; };
 		BB200001BB200001BB200001 /* GameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB100001BB100001BB100001 /* GameHeaderView.swift */; };
 		BBFE0003BBFE0003BBFE0003 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = BBFE0002BBFE0002BBFE0002 /* Kingfisher */; };
+		CC020002CC020002CC020002 /* GameSetup.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = CC020001CC020001CC020001 /* GameSetup.xcstrings */; };
 		DFSR0003DFSR0003DFSR0003 /* Diffuser in Frameworks */ = {isa = PBXBuildFile; productRef = DFSR0002DFSR0002DFSR0002 /* Diffuser */; };
-		CC020002CC020002CC020002 /* Settings.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = CC020001CC020001CC020001 /* Settings.xcstrings */; };
 		EEFE0003EEFE0003EEFE0003 /* MobiusCore in Frameworks */ = {isa = PBXBuildFile; productRef = EEFE0002EEFE0002EEFE0002 /* MobiusCore */; };
 		EEFE0007EEFE0007EEFE0007 /* MobiusCore in Frameworks */ = {isa = PBXBuildFile; productRef = EEFE0006EEFE0006EEFE0006 /* MobiusCore */; };
 		FF010002FF010002FF010002 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF010001FF010001FF010001 /* GameModel.swift */; };
@@ -59,6 +59,8 @@
 		FF080002FF080002FF080002 /* DependencyInjection+Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF080001FF080001FF080001 /* DependencyInjection+Registration.swift */; };
 		FFFE0003FFFE0003FFFE0003 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = FFFE0002FFFE0002FFFE0002 /* Factory */; };
 		LD010002LD010002LD010002 /* LoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = LD010001LD010001LD010001 /* LoadingViewModel.swift */; };
+		RC000002RC000002RC000002 /* RootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = RC000001RC000001RC000001 /* RootVC.swift */; };
+		RV000002RV000002RV000002 /* RootVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = RV000001RV000001RV000001 /* RootVCTests.swift */; };
 		SSST0003SSST0003SSST0003 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = SSST0002SSST0002SSST0002 /* SnapshotTesting */; };
 		TA000002TA000002TA000002 /* GameLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TA000001TA000001TA000001 /* GameLogicTests.swift */; };
 		TB000002TB000002TB000002 /* LevelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TB000001TB000001TB000001 /* LevelTests.swift */; };
@@ -86,7 +88,7 @@
 		TS060002TS060002TS060002 /* GameViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS060001TS060001TS060001 /* GameViewSnapshotTests.swift */; };
 		TS070002TS070002TS070002 /* CardCVCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS070001TS070001TS070001 /* CardCVCellSnapshotTests.swift */; };
 		TU000002TU000002TU000002 /* GameOverVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TU000001TU000001TU000001 /* GameOverVCTests.swift */; };
-		TV000002TV000002TV000002 /* SettingsVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TV000001TV000001TV000001 /* SettingsVCTests.swift */; };
+		TV000002TV000002TV000002 /* GameSetupVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TV000001TV000001TV000001 /* GameSetupVCTests.swift */; };
 		TW000002TW000002TW000002 /* SettingsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TW000001TW000001TW000001 /* SettingsViewTests.swift */; };
 		TX000002TX000002TX000002 /* CardCVCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TX000001TX000001TX000001 /* CardCVCellTests.swift */; };
 /* End PBXBuildFile section */
@@ -102,7 +104,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		45773A361D00C088002E6F56 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		45773A361D00C088002E6F56 /* GameSetupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSetupVC.swift; sourceTree = "<group>"; };
 		48ABFE172F8ED04C00AC357E /* _typos.toml */ = {isa = PBXFileReference; lastKnownFileType = text; path = _typos.toml; sourceTree = "<group>"; };
 		48ABFE182F8ED04C00AC357E /* CLAUDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CLAUDE.md; sourceTree = "<group>"; };
 		48ABFE192F8ED04C00AC357E /* DESIGN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DESIGN.md; sourceTree = "<group>"; };
@@ -139,13 +141,13 @@
 		7BAD45921CFF6F3900C7D7EF /* WikimediaRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikimediaRouter.swift; sourceTree = "<group>"; };
 		7BADD6AA1D16D9DF005EEBE3 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		7BADD6AC1D16DE8C005EEBE3 /* LoadingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingVC.swift; sourceTree = "<group>"; };
-		AA010001AA010001AA010001 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		AA010001AA010001AA010001 /* GameSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSetupView.swift; sourceTree = "<group>"; };
 		AA020001AA020001AA020001 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		AA030001AA030001AA030001 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		AA040001AA040001AA040001 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		AA100001AA100001AA100001 /* CircularButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularButton.swift; sourceTree = "<group>"; };
 		BB100001BB100001BB100001 /* GameHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHeaderView.swift; sourceTree = "<group>"; };
-		CC020001CC020001CC020001 /* Settings.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Settings.xcstrings; sourceTree = "<group>"; };
+		CC020001CC020001CC020001 /* GameSetup.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = GameSetup.xcstrings; sourceTree = "<group>"; };
 		FF010001FF010001FF010001 /* GameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		FF020001FF020001FF020001 /* GameEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEvent.swift; sourceTree = "<group>"; };
 		FF030001FF030001FF030001 /* GameEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEffect.swift; sourceTree = "<group>"; };
@@ -155,6 +157,8 @@
 		FF070001FF070001FF070001 /* Logger+SwiftIntro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Logger+SwiftIntro.swift"; sourceTree = "<group>"; };
 		FF080001FF080001FF080001 /* DependencyInjection+Registration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DependencyInjection+Registration.swift"; sourceTree = "<group>"; };
 		LD010001LD010001LD010001 /* LoadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewModel.swift; sourceTree = "<group>"; };
+		RC000001RC000001RC000001 /* RootVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootVC.swift; sourceTree = "<group>"; };
+		RV000001RV000001RV000001 /* RootVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootVCTests.swift; sourceTree = "<group>"; };
 		TA000001TA000001TA000001 /* GameLogicTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLogicTests.swift; sourceTree = "<group>"; };
 		TB000001TB000001TB000001 /* LevelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelTests.swift; sourceTree = "<group>"; };
 		TC000001TC000001TC000001 /* WikimediaRouterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikimediaRouterTests.swift; sourceTree = "<group>"; };
@@ -182,7 +186,7 @@
 		TS060001TS060001TS060001 /* GameViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewSnapshotTests.swift; sourceTree = "<group>"; };
 		TS070001TS070001TS070001 /* CardCVCellSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCVCellSnapshotTests.swift; sourceTree = "<group>"; };
 		TU000001TU000001TU000001 /* GameOverVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverVCTests.swift; sourceTree = "<group>"; };
-		TV000001TV000001TV000001 /* SettingsVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVCTests.swift; sourceTree = "<group>"; };
+		TV000001TV000001TV000001 /* GameSetupVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSetupVCTests.swift; sourceTree = "<group>"; };
 		TW000001TW000001TW000001 /* SettingsViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewTests.swift; sourceTree = "<group>"; };
 		TX000001TX000001TX000001 /* CardCVCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCVCellTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -224,7 +228,7 @@
 			children = (
 				A1000001A1000001A1000001 /* Game */,
 				A2000001A2000001A2000001 /* GameOver */,
-				A3000001A3000001A3000001 /* Settings */,
+				A3000001A3000001A3000001 /* GameSetup */,
 				A4000001A4000001A4000001 /* Loading */,
 			);
 			path = Features;
@@ -284,8 +288,8 @@
 		48DEC8AC2F90C4F300DEBF95 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				AA010001AA010001AA010001 /* SettingsView.swift */,
-				CC020001CC020001CC020001 /* Settings.xcstrings */,
+				AA010001AA010001AA010001 /* GameSetupView.swift */,
+				CC020001CC020001CC020001 /* GameSetup.xcstrings */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -321,6 +325,7 @@
 				7B21A5AC1CFF5C17002E5EE5 /* App.swift */,
 				FF060001FF060001FF060001 /* SceneDelegate.swift */,
 				FF070001FF070001FF070001 /* Logger+SwiftIntro.swift */,
+				RC000001RC000001RC000001 /* RootVC.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -419,14 +424,14 @@
 			path = GameOver;
 			sourceTree = "<group>";
 		};
-		A3000001A3000001A3000001 /* Settings */ = {
+		A3000001A3000001A3000001 /* GameSetup */ = {
 			isa = PBXGroup;
 			children = (
 				48DEC8AF2F90C52D00DEBF95 /* Model */,
 				48DEC8AC2F90C4F300DEBF95 /* View */,
-				45773A361D00C088002E6F56 /* SettingsVC.swift */,
+				45773A361D00C088002E6F56 /* GameSetupVC.swift */,
 			);
-			path = Settings;
+			path = GameSetup;
 			sourceTree = "<group>";
 		};
 		A4000001A4000001A4000001 /* Loading */ = {
@@ -482,7 +487,8 @@
 				TQ000001TQ000001TQ000001 /* LoadingVCTests.swift */,
 				TR000001TR000001TR000001 /* GameVCTests.swift */,
 				TU000001TU000001TU000001 /* GameOverVCTests.swift */,
-				TV000001TV000001TV000001 /* SettingsVCTests.swift */,
+				TV000001TV000001TV000001 /* GameSetupVCTests.swift */,
+				RV000001RV000001RV000001 /* RootVCTests.swift */,
 				TW000001TW000001TW000001 /* SettingsViewTests.swift */,
 				TX000001TX000001TX000001 /* CardCVCellTests.swift */,
 				TS010001TS010001TS010001 /* CircularButtonSnapshotTests.swift */,
@@ -572,7 +578,7 @@
 			mainGroup = 7B75421A1CFF3F9E009B2629;
 			packageReferences = (
 				BBFE0001BBFE0001BBFE0001 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-			DFSR0001DFSR0001DFSR0001 /* XCRemoteSwiftPackageReference "Diffuser" */,
+				DFSR0001DFSR0001DFSR0001 /* XCRemoteSwiftPackageReference "diffuser" */,
 				EEFE0001EEFE0001EEFE0001 /* XCRemoteSwiftPackageReference "Mobius" */,
 				FFFE0001FFFE0001FFFE0001 /* XCRemoteSwiftPackageReference "Factory" */,
 				SSST0001SSST0001SSST0001 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
@@ -592,7 +598,7 @@
 		7B7542211CFF3F9E009B2629 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
-				CC020002CC020002CC020002 /* Settings.xcstrings in Resources */,
+				CC020002CC020002CC020002 /* GameSetup.xcstrings in Resources */,
 				48DEC8A92F90207D00DEBF95 /* Game.xcstrings in Resources */,
 				7B7542301CFF3F9E009B2629 /* Assets.xcassets in Resources */,
 				48DEC8A72F90207700DEBF95 /* GameOver.xcstrings in Resources */,
@@ -605,8 +611,9 @@
 		7B75421F1CFF3F9E009B2629 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
-				45773A371D00C088002E6F56 /* SettingsVC.swift in Sources */,
-				AA010002AA010002AA010002 /* SettingsView.swift in Sources */,
+				45773A371D00C088002E6F56 /* GameSetupVC.swift in Sources */,
+				RC000002RC000002RC000002 /* RootVC.swift in Sources */,
+				AA010002AA010002AA010002 /* GameSetupView.swift in Sources */,
 				AA020002AA020002AA020002 /* LoadingView.swift in Sources */,
 				AA030002AA030002AA030002 /* GameView.swift in Sources */,
 				AA040002AA040002AA040002 /* GameOverView.swift in Sources */,
@@ -671,7 +678,8 @@
 				TQ000002TQ000002TQ000002 /* LoadingVCTests.swift in Sources */,
 				TR000002TR000002TR000002 /* GameVCTests.swift in Sources */,
 				TU000002TU000002TU000002 /* GameOverVCTests.swift in Sources */,
-				TV000002TV000002TV000002 /* SettingsVCTests.swift in Sources */,
+				TV000002TV000002TV000002 /* GameSetupVCTests.swift in Sources */,
+				RV000002RV000002RV000002 /* RootVCTests.swift in Sources */,
 				TW000002TW000002TW000002 /* SettingsViewTests.swift in Sources */,
 				TX000002TX000002TX000002 /* CardCVCellTests.swift in Sources */,
 				TS010002TS010002TS010002 /* CircularButtonSnapshotTests.swift in Sources */,
@@ -921,12 +929,12 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		DFSR0001DFSR0001DFSR0001 /* XCRemoteSwiftPackageReference "Diffuser" */ = {
+		DFSR0001DFSR0001DFSR0001 /* XCRemoteSwiftPackageReference "diffuser" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/spotify/diffuser";
 			requirement = {
-				kind = branch;
 				branch = master;
+				kind = branch;
 			};
 		};
 		EEFE0001EEFE0001EEFE0001 /* XCRemoteSwiftPackageReference "Mobius" */ = {
@@ -963,7 +971,7 @@
 		};
 		DFSR0002DFSR0002DFSR0002 /* Diffuser */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DFSR0001DFSR0001DFSR0001 /* XCRemoteSwiftPackageReference "Diffuser" */;
+			package = DFSR0001DFSR0001DFSR0001 /* XCRemoteSwiftPackageReference "diffuser" */;
 			productName = Diffuser;
 		};
 		EEFE0002EEFE0002EEFE0002 /* MobiusCore */ = {

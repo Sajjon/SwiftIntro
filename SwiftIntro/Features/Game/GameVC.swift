@@ -81,11 +81,6 @@ extension GameVC {
         setupLoop()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
-    }
-
     /// Stops the loop and cancels any pending timers when the screen leaves the hierarchy.
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)

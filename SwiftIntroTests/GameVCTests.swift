@@ -168,22 +168,6 @@ final class GameVCTests: XCTestCase {
         vc.viewDidDisappear(false)
     }
 
-    // MARK: - viewWillAppear
-
-    func test_viewWillAppear_hidesNavigationBar() {
-        // Arrange — embed in a nav controller so the property is observable
-        let vc = makeVC()
-        let nav = UINavigationController(rootViewController: vc)
-        _ = vc.view
-
-        // Act
-        vc.viewWillAppear(false)
-
-        // Assert
-        XCTAssertTrue(nav.isNavigationBarHidden)
-        vc.viewDidDisappear(false)
-    }
-
     // MARK: - viewDidDisappear
 
     func test_viewDidDisappear_doesNotCrash() {

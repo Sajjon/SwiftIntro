@@ -73,9 +73,4 @@ final class GameOverVC: UIViewController {
             self?.navigator?.quitGame()
         }
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
-    }
 }

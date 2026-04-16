@@ -125,21 +125,6 @@ final class GameOverVCTests: XCTestCase {
         XCTAssertNotNil(gameOverView(of: vc).onQuit)
     }
 
-    // MARK: - viewWillAppear
-
-    func test_viewWillAppear_hidesNavigationBar() {
-        // Arrange
-        let vc = makeVC()
-        let nav = UINavigationController(rootViewController: vc)
-        _ = vc.view
-
-        // Act
-        vc.viewWillAppear(false)
-
-        // Assert
-        XCTAssertTrue(nav.isNavigationBarHidden)
-    }
-
     // MARK: - onQuit
 
     func test_onQuit_callsNavigatorQuitGame() {

@@ -14,7 +14,7 @@ final class SettingsViewSnapshotTests: XCTestCase {
 
     func test_settingsView_defaultAppearance() {
         // Arrange
-        let view = SettingsView()
+        let view = GameSetupView()
 
         // Act + Assert
         withSnapshotTesting(record: .missing) {
@@ -24,7 +24,7 @@ final class SettingsViewSnapshotTests: XCTestCase {
 
     func test_settingsView_onStartGameClosureAssignable() {
         // Arrange
-        let view = SettingsView()
+        let view = GameSetupView()
         var capturedConfig: GameConfiguration?
 
         // Act

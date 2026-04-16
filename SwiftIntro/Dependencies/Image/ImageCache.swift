@@ -7,6 +7,7 @@
 //
 
 import Factory
+import Foundation
 import Kingfisher
 
 /// A zero-argument, no-return closure — used throughout the app for completion callbacks
