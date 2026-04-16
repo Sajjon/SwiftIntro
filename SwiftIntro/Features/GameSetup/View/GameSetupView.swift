@@ -7,13 +7,13 @@
 
 import UIKit
 
-/// The settings screen view — collects game configuration from the player before starting.
+/// The setup game screen view — collects game configuration from the player before starting.
 ///
 /// Manages its own `GameConfiguration` state internally and calls `onStartGame`
 /// when the player taps the start button, passing the fully-built config out to
-/// `SettingsVC` for navigation.
+/// `GameSetupVC` for navigation.
 final class GameSetupView: UIView {
-    /// Displays the app title at the top of the settings screen.
+    /// Displays the app title at the top of the game setup screen.
     private let titleLabel = UILabel()
 
     /// Label above the search query text field.

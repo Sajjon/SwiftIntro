@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Parameters chosen by the player on the settings screen before a game starts.
+/// Parameters chosen by the player on the GameSetup screen before a game starts.
 struct GameConfiguration {
     /// The board difficulty that determines grid dimensions and total card count.
     var level: Level = .normal

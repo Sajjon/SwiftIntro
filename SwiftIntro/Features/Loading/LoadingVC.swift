@@ -29,7 +29,7 @@ final class LoadingVC: UIViewController {
     /// ViewModel with logic
     private let viewModel: LoadingViewModel
 
-    /// Navigate used to navigate to next screen
+    /// Navigator which we use to navigate to next screen
     weak var navigator: LoadingNavigatorProtocol?
 
     init(config: GameConfiguration) {

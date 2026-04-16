@@ -27,7 +27,7 @@ final class GameOverView: UIView {
     /// Triggers a new game with the same images shuffled.
     private let restartButton = CircularButton(title: String(localized: .GameOver.restart))
 
-    /// Returns the player to the settings screen.
+    /// Returns the player to the GameSetup screen.
     private let quitButton = CircularButton(title: String(localized: .GameOver.quit))
 
     /// Called when the player taps "Restart". Wired by `GameOverVC`.

@@ -15,7 +15,7 @@ final class GameSetupVCTests: XCTestCase {
 
     // MARK: - Helpers
 
-    private func settingsView(of vc: GameSetupVC) -> GameSetupView {
+    private func gameSetupView(of vc: GameSetupVC) -> GameSetupView {
         // swiftlint:disable:next force_cast
         vc.view as! GameSetupView
     }
@@ -28,7 +28,7 @@ final class GameSetupVCTests: XCTestCase {
 
     // MARK: - loadView
 
-    func test_view_isSettingsView() {
+    func test_view_isGameSetupView() {
         XCTAssertTrue(GameSetupVC().view is GameSetupView)
     }
 
@@ -42,7 +42,7 @@ final class GameSetupVCTests: XCTestCase {
         _ = vc.view
 
         // Assert
-        XCTAssertNotNil(settingsView(of: vc).onStartGame)
+        XCTAssertNotNil(gameSetupView(of: vc).onStartGame)
     }
 
     // MARK: - onStartGame
@@ -60,7 +60,7 @@ final class GameSetupVCTests: XCTestCase {
         let config = GameConfiguration(level: .hard, searchQuery: "dogs")
 
         // Act
-        settingsView(of: vc).onStartGame?(config)
+        gameSetupView(of: vc).onStartGame?(config)
 
         // Assert
         XCTAssertEqual(spy.receivedConfig?.level, .hard)
@@ -73,6 +73,6 @@ final class GameSetupVCTests: XCTestCase {
         _ = vc.view
 
         // Act + Assert
-        XCTAssertNoThrow(settingsView(of: vc).onStartGame?(GameConfiguration()))
+        XCTAssertNoThrow(gameSetupView(of: vc).onStartGame?(GameConfiguration()))
     }
 }

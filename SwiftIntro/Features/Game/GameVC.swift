@@ -47,7 +47,7 @@ final class GameVC: UIViewController {
         columns: self.loop.level.columnCount
     )
 
-    /// Wired by the presenting controller (e.g. `SettingsVC`) before the push.
+    /// Wired by the presenting controller (e.g. `GameSetupVC`) before the push.
     weak var navigator: GameNavigatorProtocol?
 
     // MARK: Inits

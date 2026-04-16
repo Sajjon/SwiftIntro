@@ -18,7 +18,7 @@ protocol GameOverNavigatorProtocol: AnyObject {
     /// images (freshly shuffled). Called when the player taps "Restart".
     func restartGame(_ game: PreparedGame)
 
-    /// Pops back to the settings screen. Called when the player taps "Quit".
+    /// Pops back to the GameSetup screen. Called when the player taps "Quit".
     func quitGame()
 }
 
@@ -38,7 +38,7 @@ final class GameOverVC: UIViewController {
     /// The root view; installed via `loadView()`.
     private let gameOverView = GameOverView()
 
-    /// Wired by the presenting controller (e.g. `SettingsVC`) before the push.
+    /// Wired by the presenting controller (e.g. `GameSetupVC`) before the push.
     weak var navigator: GameOverNavigatorProtocol?
 
     init(
