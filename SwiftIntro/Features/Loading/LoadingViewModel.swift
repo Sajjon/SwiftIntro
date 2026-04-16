@@ -109,12 +109,10 @@ extension LoadingViewModel {
         let cards = CardDuplicates(singles: singles, config: config)
         let urls = singles.cards.map(\.imageUrl)
         logNet.debug("Prefetching \(urls.count) image URL(s) into cache")
-        // swiftformat:disable redundantSelf
         imageCache.prefetchImages(urls) { [weak self] in
             logNet.info("All images in memory cache — navigating to game")
             guard let self else { return }
-            self.onNavigateToGame?(PreparedGame(config: self.config, cards: cards))
+            onNavigateToGame?(PreparedGame(config: config, cards: cards))
         }
-        // swiftformat:enable redundantSelf
     }
 }
