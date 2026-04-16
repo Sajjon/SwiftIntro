@@ -145,15 +145,13 @@ private extension GameVC {
 
     /// Connects the data source's query closures to the loop so it stays decoupled from `GameVC`.
     func wireDataSourceClosures() {
-        // swiftformat:disable redundantSelf
         dataSourceAndDelegate.canSelectCard = { [weak self] index in
             guard let self else { return false }
-            return self.loop.canSelectCard(at: index)
+            return loop.canSelectCard(at: index)
         }
         dataSourceAndDelegate.configureCell = { [weak self] cell, index in
             guard let self else { return }
-            self.loop.configureCell(cell, at: index)
+            loop.configureCell(cell, at: index)
         }
-        // swiftformat:enable redundantSelf
     }
 }
