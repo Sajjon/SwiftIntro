@@ -15,11 +15,16 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         willConnectTo _: UISceneSession,
         options _: UIScene.ConnectionOptions
     ) {
-        guard let windowScene = scene as? UIWindowScene else { return }
+        logApp.debug("Scene connecting — setting up window")
+        guard let windowScene = scene as? UIWindowScene else {
+            logApp.error("Scene is not a UIWindowScene — aborting window setup")
+            return
+        }
 
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = RootVC()
         window.makeKeyAndVisible()
         self.window = window
+        logApp.info("Window is key and visible — root view controller installed")
     }
 }

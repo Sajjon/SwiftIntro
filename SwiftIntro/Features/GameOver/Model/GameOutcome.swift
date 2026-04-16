@@ -19,3 +19,11 @@ struct GameOutcome {
     /// The deck used during the session, available so the player can restart with the same images.
     var cards: CardDuplicates
 }
+
+// MARK: CustomStringConvertible
+
+extension GameOutcome: CustomStringConvertible {
+    var description: String {
+        "\(level) - \(clickCount) taps"
+    }
+}

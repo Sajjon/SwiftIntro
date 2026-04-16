@@ -74,6 +74,7 @@ extension GameVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        logGame.notice("Game started — level: \(loop.level.debugDescription)")
         setupCollectionView()
         setupLoop()
     }
@@ -81,6 +82,7 @@ extension GameVC {
     /// Stops the loop and cancels any pending timers when the screen leaves the hierarchy.
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        logGame.debug("GameVC disappeared — stopping Mobius loop")
         loop.stop()
     }
 }
@@ -98,6 +100,7 @@ extension GameVC: Connectable {
     /// - Returns: A `Connection<GameModel>` whose `acceptClosure` renders each new model
     ///   and whose `disposeClosure` cleans up the tap handler on disconnect.
     func connect(_ consumer: @escaping (GameEvent) -> Void) -> Connection<GameModel> {
+        logGame.debug("GameVC connecting to Mobius loop — wiring card-tap dispatch")
         dataSourceAndDelegate.onCardTapped = { consumer(.cardTapped(index: $0)) }
         return Connection(
             acceptClosure: { [weak self] model in
@@ -107,6 +110,7 @@ extension GameVC: Connectable {
                 self?.gameView.render(model)
             },
             disposeClosure: { [weak self] in
+                logGame.debug("GameVC disconnecting from Mobius loop — removing card-tap handler")
                 self?.dataSourceAndDelegate.onCardTapped = nil
             }
         )

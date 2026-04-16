@@ -14,7 +14,8 @@ final class App: UIResponder, UIApplicationDelegate {
         _: UIApplication,
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        true
+        logApp.notice("App launched")
+        return true
     }
 
     func application(

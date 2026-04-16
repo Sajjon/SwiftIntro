@@ -61,6 +61,7 @@ extension LoadingVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        logNet.debug("LoadingVC loaded — starting data fetch")
         viewModel.onNavigateToGame = { [weak self] game in
             self?.navigator?.navigateToGame(game)
         }
@@ -69,6 +70,7 @@ extension LoadingVC {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        logNet.debug("LoadingVC disappeared — stopping view model")
         viewModel.stop()
     }
 }

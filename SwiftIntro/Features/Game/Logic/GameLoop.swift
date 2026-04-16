@@ -26,6 +26,7 @@ final class GameLoop {
     /// `effectHandler` is pre-seeded with `initialModel` so cell configuration works
     /// on the very first `willDisplay` call, before the loop's first async model delivery.
     init(initialModel: GameModel) {
+        logGame.debug("GameLoop initializing — level: \(initialModel.level), pairs: \(initialModel.totalPairs)")
         let effectHandler = GameEffectHandler(initialModel: initialModel)
         self.effectHandler = effectHandler
         controller = Mobius
@@ -59,10 +60,12 @@ extension GameLoop {
         collectionView: UICollectionView,
         onNavigateToGameOver: @escaping (GameOutcome) -> Void
     ) where View.Input == GameModel, View.Output == GameEvent {
+        logGame.debug("GameLoop starting — connecting view and effect handler")
         effectHandler.collectionView = collectionView
         effectHandler.onNavigateToGameOver = onNavigateToGameOver
         controller.connectView(view)
         controller.start()
+        logGame.debug("Mobius loop is running")
     }
 
     /// Stops the loop and disconnects the view, cancelling any pending timers.
@@ -70,7 +73,11 @@ extension GameLoop {
     /// Idempotent — safe to call more than once; subsequent calls are no-ops.
     /// Call this from `viewDidDisappear`.
     func stop() {
-        guard controller.running else { return }
+        guard controller.running else {
+            logGame.debug("GameLoop.stop() called but loop is not running — skipping")
+            return
+        }
+        logGame.debug("GameLoop stopping — cancelling pending timers and disconnecting view")
         controller.stop()
         controller.disconnectView()
     }

@@ -19,10 +19,12 @@ import UIKit
 /// never touch the navigation stack directly.
 final class RootVC: UINavigationController {
     init() {
+        logNav.debug("RootVC initializing — GameSetupVC will be root")
         let gameSetupVC = GameSetupVC()
         super.init(rootViewController: gameSetupVC)
         isNavigationBarHidden = true
         gameSetupVC.navigator = self
+        logNav.debug("RootVC ready — navigation stack: [GameSetupVC]")
     }
 
     @available(*, unavailable)
@@ -36,6 +38,7 @@ final class RootVC: UINavigationController {
 extension RootVC: GameSetupNavigatorProtocol {
     /// Pushes the loading screen onto the stack to begin data fetching.
     func navigateToLoading(config: GameConfiguration) {
+        logNav.info("Pushing LoadingVC — query: '\(config.searchQuery)', level: \(config.level)")
         let loadingVC = LoadingVC(config: config)
         loadingVC.navigator = self
         pushViewController(loadingVC, animated: true)
@@ -47,11 +50,15 @@ extension RootVC: GameSetupNavigatorProtocol {
 extension RootVC: LoadingNavigatorProtocol {
     /// Replaces `LoadingVC` with `GameVC` so the player cannot back-swipe to the loading screen.
     func navigateToGame(_ game: PreparedGame) {
+        logNav
+            .info(
+                "Replacing LoadingVC with GameVC — level: \(game.config.level), cards: \(game.cards.memoryCards.count)"
+            )
         let gameVC = GameVC(game)
         gameVC.navigator = self
         var vcs = viewControllers
         guard !vcs.isEmpty else {
-            log.error("navigateToGame: navigation stack is empty — cannot replace last VC")
+            logNav.error("navigateToGame: navigation stack is empty — cannot replace last VC")
             return
         }
         vcs[vcs.count - 1] = gameVC
@@ -64,6 +71,7 @@ extension RootVC: LoadingNavigatorProtocol {
 extension RootVC: GameNavigatorProtocol {
     /// Pushes `GameOverVC` after the final flip animation completes.
     func navigateToGameOver(outcome: GameOutcome) {
+        logNav.info("Pushing GameOverVC — clicks: \(outcome.clickCount), level: \(outcome.level)")
         let config = GameConfiguration(level: outcome.level)
         let gameOverVC = GameOverVC(config: config, outcome: outcome)
         gameOverVC.navigator = self
@@ -76,13 +84,14 @@ extension RootVC: GameNavigatorProtocol {
 extension RootVC: GameOverNavigatorProtocol {
     /// Replaces `GameOverVC` + `GameVC` with a new `GameVC` using the same images reshuffled.
     func restartGame(_ game: PreparedGame) {
+        logNav.info("Restarting game — replacing GameOverVC + GameVC with a fresh GameVC (same images, reshuffled)")
         var shuffledCards = game.cards
         shuffledCards.shuffle()
         let gameVC = GameVC(PreparedGame(config: game.config, cards: shuffledCards))
         gameVC.navigator = self
         var vcs = viewControllers
         guard vcs.count >= 2 else {
-            log.error("restartGame: navigation stack too shallow — expected at least 2")
+            logNav.error("restartGame: navigation stack too shallow — expected at least 2")
             return
         }
         vcs.removeLast(2)
@@ -92,6 +101,7 @@ extension RootVC: GameOverNavigatorProtocol {
 
     /// Pops back to `GameSetupVC` (the root).
     func quitGame() {
+        logNav.info("Quitting game — popping to GameSetupVC (root)")
         popToRootViewController(animated: true)
     }
 }

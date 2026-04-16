@@ -42,9 +42,15 @@ private extension GameLogic {
         index: Int,
         model: GameModel
     ) -> Next<GameModel, GameEffect> {
-        log.debug("Card tapped at index \(index)")
-        guard index < model.cards.count else { return .noChange }
-        guard !model.cards[index].isFlipped, !model.cards[index].isMatched else { return .noChange }
+        logGame.debug("Card tapped at index \(index)")
+        guard index < model.cards.count else {
+            logGame.debug("Tap ignored — index \(index) is out of bounds (card count: \(model.cards.count))")
+            return .noChange
+        }
+        guard !model.cards[index].isFlipped, !model.cards[index].isMatched else {
+            logGame.debug("Tap ignored — card at index \(index) is already flipped or matched")
+            return .noChange
+        }
         return applyFlip(index: index, model: model)
     }
 
@@ -57,9 +63,12 @@ private extension GameLogic {
         newModel.clickCount += 1
         newModel.cards[index].isFlipped = true
         guard let pendingIndex = model.pendingCardIndex else {
+            logGame.debug("First card flipped at index \(index) — waiting for second 🃏 (click #\(newModel.clickCount))")
             newModel.pendingCardIndex = index
             return .next(newModel, effects: [.flipCard(index: index, faceUp: true)])
         }
+        logGame
+            .debug("Second card of pair flipped at index \(index) — evaluating against pending index \(pendingIndex)")
         newModel.pendingCardIndex = nil
         return evaluatePair(index: index, pendingIndex: pendingIndex, newModel: newModel)
     }
@@ -72,8 +81,10 @@ private extension GameLogic {
     ) -> Next<GameModel, GameEffect> {
         let isMatchingPair = newModel.isCard(at: index, matchingCardAt: pendingIndex)
         if isMatchingPair {
+            logGame.debug("Pair match! Indices \(pendingIndex) and \(index) are the same card")
             return handleMatch(index: index, pendingIndex: pendingIndex, newModel: newModel)
         }
+        logGame.debug("No match — scheduling flip-back for indices \(pendingIndex) and \(index)")
         return .next(newModel, effects: [
             .flipCard(index: index, faceUp: true),
             .scheduleFlipBack(index1: pendingIndex, index2: index),
@@ -90,6 +101,10 @@ private extension GameLogic {
         newModel.cards[index].isMatched = true
         newModel.cards[pendingIndex].isMatched = true
         newModel.matches += 1
+        logGame
+            .info(
+                "Match confirmed — \(newModel.matches)/\(newModel.totalPairs) pairs found (click #\(newModel.clickCount))"
+            )
         guard newModel.matches == newModel.totalPairs else {
             return .next(newModel, effects: [.flipCard(index: index, faceUp: true)])
         }
@@ -101,6 +116,10 @@ private extension GameLogic {
         index: Int,
         newModel: GameModel
     ) -> Next<GameModel, GameEffect> {
+        logGame
+            .notice(
+                "Game over — all \(newModel.totalPairs) pairs matched in \(newModel.clickCount) clicks (level: \(newModel.level))"
+            )
         // Reconstruct the deck from image URLs so the game-over screen can restart
         // with the same images in a freshly shuffled order.
         let cards = newModel.cards.map(\.card)
@@ -118,6 +137,7 @@ private extension GameLogic {
         index2: Int,
         model: GameModel
     ) -> Next<GameModel, GameEffect> {
+        logGame.debug("Flip-back timer fired — returning cards \(index1) and \(index2) face-down")
         var newModel = model
         newModel.cards[index1].isFlipped = false
         newModel.cards[index2].isFlipped = false

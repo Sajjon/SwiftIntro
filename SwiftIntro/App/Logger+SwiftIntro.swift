@@ -7,11 +7,18 @@
 
 import OSLog
 
-/// App-wide `Logger` instance backed by the unified Apple logging system (OSLog).
-///
-/// Messages are visible in Console.app and in the Xcode debug console.
-/// The subsystem is the bundle identifier so logs can be filtered by app in Console.
-let log = Logger(
-    subsystem: Bundle.main.bundleIdentifier ?? "com.swiftintro",
-    category: "SwiftIntro"
-)
+private let subsystem = Bundle.main.bundleIdentifier ?? "com.swiftintro"
+
+/// Logs app lifecycle events (launch, scene setup). Use for `.notice` app-start milestones.
+let logApp = Logger(subsystem: subsystem, category: "App")
+
+/// Logs screen transitions. Use for `.info` pushes/replacements across the navigation stack.
+let logNav = Logger(subsystem: subsystem, category: "Navigation")
+
+/// Logs game-logic events (card taps, matches, game over). Use `.notice` for milestones,
+/// `.info` for significant state changes, `.debug` for per-event detail.
+let logGame = Logger(subsystem: subsystem, category: "Game")
+
+/// Logs networking activity (Wikimedia fetch, image prefetch). Use `.info` for completions,
+/// `.debug` for per-request detail, `.error` for failures.
+let logNet = Logger(subsystem: subsystem, category: "Network")

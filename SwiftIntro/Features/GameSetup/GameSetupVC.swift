@@ -30,7 +30,9 @@ final class GameSetupVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        logGame.debug("GameSetupVC loaded — waiting for player to start a game")
         gameSetupView.onStartGame = { [weak self] config in
+            logGame.info("Player tapped Start Game — query: '\(config.searchQuery)', level: \(config.level)")
             self?.navigator?.navigateToLoading(config: config)
         }
     }

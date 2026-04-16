@@ -62,12 +62,14 @@ final class LoadingViewModel {
 extension LoadingViewModel {
     /// Renders the initial state and kicks off the data fetch.
     func start() {
+        logNet.info("LoadingViewModel starting — config: \(config)")
         diffuser.run(phase)
         fetchData()
     }
 
     /// Clears callbacks. Call from `viewDidDisappear`.
     func stop() {
+        logNet.debug("LoadingViewModel stopping — clearing navigation callback")
         onNavigateToGame = nil
     }
 
@@ -75,6 +77,7 @@ extension LoadingViewModel {
 
     /// Called when the player taps "Retry" after a failure.
     func retry() {
+        logNet.info("Player tapped Retry — re-fetching images")
         phase = .loading
         fetchData()
     }
@@ -84,14 +87,16 @@ extension LoadingViewModel {
 
 extension LoadingViewModel {
     private func fetchData() {
+        logNet.debug("Fetching images from Wikimedia for query: '\(config.searchQuery)'")
         wikimediaClient.findImages(with: config.searchQuery) { [weak self] result in
             guard let self else { return }
             DispatchQueue.main.async {
                 switch result {
                 case let .success(singles):
+                    logNet.info("Wikimedia returned \(singles.cards.count) image(s) — starting cache prefetch")
                     self.handleFetchSuccess(singles: singles)
                 case let .failure(error):
-                    log.error("Failed to fetch images: \(error)")
+                    logNet.error("Failed to fetch images: \(error)")
                     self.phase = .failed(error)
                 }
             }
@@ -101,8 +106,9 @@ extension LoadingViewModel {
     private func handleFetchSuccess(singles: CardSingles) {
         let cards = CardDuplicates(singles: singles, config: config)
         let urls = singles.cards.map(\.imageUrl)
+        logNet.debug("Prefetching \(urls.count) image URL(s) into cache")
         imageCache.prefetchImages(urls) { [weak self] in
-            log.info("Images in memory cache — starting game")
+            logNet.info("All images in memory cache — navigating to game")
             guard let self else { return }
             onNavigateToGame?(PreparedGame(config: config, cards: cards))
         }

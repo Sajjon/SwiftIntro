@@ -18,9 +18,28 @@ enum Level {
     case hard
 }
 
+// MARK: - CustomStringConvertible
+
+extension Level: CustomStringConvertible {
+    /// Human-readable name used in log messages and debug output.
+    var description: String {
+        title
+    }
+}
+
+extension Level: CustomDebugStringConvertible {
+    var debugDescription: String {
+        "Level: \(title) (pairs: \(pairs))"
+    }
+}
+
 // MARK: Init
 
 extension Level {
+    var pairs: Int {
+        rowCount * columnCount / 2
+    }
+
     /// Creates a `Level` from a `UISegmentedControl` segment index.
     ///
     /// Segment order: 0 = easy, 1 = normal, 2 = hard.

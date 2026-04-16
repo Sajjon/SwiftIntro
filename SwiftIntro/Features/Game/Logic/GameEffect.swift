@@ -21,3 +21,18 @@ enum GameEffect {
     /// Navigate to the game-over screen after a short delay, carrying the result.
     case navigateToGameOver(outcome: GameOutcome)
 }
+
+// MARK: - CustomStringConvertible
+
+extension GameEffect: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case let .flipCard(index, faceUp):
+            "flipCard(index: \(index), faceUp: \(faceUp))"
+        case let .scheduleFlipBack(index1, index2):
+            "scheduleFlipBack(index1: \(index1), index2: \(index2))"
+        case .navigateToGameOver:
+            "navigateToGameOver"
+        }
+    }
+}
