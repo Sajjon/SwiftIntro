@@ -16,7 +16,7 @@ import XCTest
 
 // MARK: - Mock HTTPClient
 
-private final class MockHTTPClient: HTTPClientProtocol, @unchecked Sendable {
+private final class MockHTTPClient: HTTPClientProtocol {
     var result: Result<Data, Error> = .failure(URLError(.unknown))
 
     func get(
@@ -54,10 +54,9 @@ private let invalidJSON = Data("not json".utf8)
 
 // MARK: - Tests
 
-@MainActor
 final class WikimediaClientTests: XCTestCase {
     private let mock = MockHTTPClient()
-    private nonisolated(unsafe) var wikimediaClient: WikimediaClient!
+    private var wikimediaClient: WikimediaClient!
 
     override func setUp() {
         super.setUp()
@@ -79,7 +78,7 @@ final class WikimediaClientTests: XCTestCase {
         // Arrange
         mock.result = .success(validWikimediaJSON)
         let exp = expectation(description: "done called")
-        nonisolated(unsafe) var receivedSingles: CardSingles?
+        var receivedSingles: CardSingles?
 
         // Act
 		wikimediaClient.findImages(with: "cats") { result in
@@ -96,7 +95,7 @@ final class WikimediaClientTests: XCTestCase {
         // Arrange — fixture contains 2 image pages
         mock.result = .success(validWikimediaJSON)
         let exp = expectation(description: "done called")
-        nonisolated(unsafe) var count = 0
+        var count = 0
 
         // Act
         wikimediaClient.findImages(with: "cats") { result in
@@ -115,7 +114,7 @@ final class WikimediaClientTests: XCTestCase {
         // Arrange
         mock.result = .failure(URLError(.notConnectedToInternet))
         let exp = expectation(description: "done called")
-        nonisolated(unsafe) var receivedError: Error?
+        var receivedError: Error?
 
         // Act
         wikimediaClient.findImages(with: "cats") { result in
@@ -134,7 +133,7 @@ final class WikimediaClientTests: XCTestCase {
         // Arrange
         mock.result = .success(invalidJSON)
         let exp = expectation(description: "done called")
-        nonisolated(unsafe) var receivedError: Error?
+        var receivedError: Error?
 
         // Act
         wikimediaClient.findImages(with: "cats") { result in

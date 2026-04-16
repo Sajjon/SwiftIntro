@@ -12,7 +12,7 @@ import UIKit
 
 /// A zero-argument, no-return closure — used throughout the app for completion callbacks
 /// and button-action handlers where no parameters need to be passed.
-typealias Closure = @Sendable () -> Void
+typealias Closure = () -> Void
 
 // MARK: ImageCacheProtocol
 

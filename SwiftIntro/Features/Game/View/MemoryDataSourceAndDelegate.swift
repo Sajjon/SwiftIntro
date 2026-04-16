@@ -15,7 +15,6 @@ import UIKit
 ///
 /// `NSObject` is required because `UICollectionViewDataSource` and
 /// `UICollectionViewDelegate` are `@objc` protocols.
-@MainActor
 final class MemoryDataSourceAndDelegate: NSObject {
     /// Number of rows on the board (= number of collection view sections).
     private let numberOfRows: Int
@@ -24,13 +23,13 @@ final class MemoryDataSourceAndDelegate: NSObject {
     private let numberOfColumns: Int
 
     /// Called when the player taps a valid, selectable card. Receives the flat index.
-    var onCardTapped: (@MainActor (Int) -> Void)?
+    var onCardTapped: ((Int) -> Void)?
 
     /// Returns `true` if the card at the given flat index may be selected right now.
-    var canSelectCard: (@MainActor (Int) -> Bool)?
+    var canSelectCard: ((Int) -> Bool)?
 
     /// Configures the given cell to match the current visual state of the card at `index`.
-    var configureCell: (@MainActor (CardCVCell, Int) -> Void)?
+    var configureCell: ((CardCVCell, Int) -> Void)?
 
     init(
         rows: Int,

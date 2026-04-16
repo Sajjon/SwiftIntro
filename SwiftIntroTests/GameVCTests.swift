@@ -25,7 +25,6 @@ import MobiusCore
 import UIKit
 import XCTest
 
-@MainActor
 final class GameVCTests: XCTestCase {
     override func setUp() {
         super.setUp()

@@ -9,7 +9,6 @@ import SnapshotTesting
 @testable import SwiftIntro
 import XCTest
 
-@MainActor
 final class GameHeaderViewSnapshotTests: XCTestCase {
     private let size = CGSize(width: 393, height: 44)
 

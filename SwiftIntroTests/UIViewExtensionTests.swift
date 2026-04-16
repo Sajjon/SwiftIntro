@@ -13,7 +13,6 @@
 @testable import SwiftIntro
 import XCTest
 
-@MainActor
 final class UIViewExtensionTests: XCTestCase {
     // MARK: - isVisible getter
 

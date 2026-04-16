@@ -9,7 +9,6 @@ import SnapshotTesting
 @testable import SwiftIntro
 import XCTest
 
-@MainActor
 final class SettingsViewSnapshotTests: XCTestCase {
     private let size = CGSize(width: 393, height: 852)
 

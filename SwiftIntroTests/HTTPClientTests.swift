@@ -21,8 +21,8 @@ private struct StubResult {
     var error: Error?
 }
 
-private final class StubURLProtocol: URLProtocol, @unchecked Sendable {
-    nonisolated(unsafe) static var handler: ((URLRequest) -> StubResult) = { _ in StubResult() }
+private final class StubURLProtocol: URLProtocol {
+    static var handler: ((URLRequest) -> StubResult) = { _ in StubResult() }
 
     // swiftlint:disable:next static_over_final_class
     override class func canInit(with _: URLRequest) -> Bool {
@@ -37,7 +37,7 @@ private final class StubURLProtocol: URLProtocol, @unchecked Sendable {
     // Dispatch callbacks to a background queue so URLSession always delivers the
     // dataTask completion handler asynchronously — matching production behaviour and
     // avoiding a potential deadlock between synchronous main-thread delivery and
-    // `waitForExpectations` in `@MainActor` tests on macOS 26.
+    // `waitForExpectations` on macOS 26.
     override func startLoading() {
         let result = StubURLProtocol.handler(request)
         DispatchQueue.global().async { [weak self] in
@@ -61,9 +61,8 @@ private final class StubURLProtocol: URLProtocol, @unchecked Sendable {
 
 // MARK: - Tests
 
-@MainActor
 final class HTTPClientTests: XCTestCase {
-    private nonisolated(unsafe) var client: HTTPClient!
+    private var client: HTTPClient!
     private let url = URL(string: "https://example.com")!
 
     override func setUp() {
@@ -87,7 +86,7 @@ final class HTTPClientTests: XCTestCase {
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
         StubURLProtocol.handler = { _ in StubResult(data: expected, response: response) }
         let exp = expectation(description: "done called")
-        nonisolated(unsafe) var received: Data?
+        var received: Data?
 
         // Act
         client.get(url: url) { result in
@@ -107,7 +106,7 @@ final class HTTPClientTests: XCTestCase {
         let networkError = URLError(.notConnectedToInternet)
         StubURLProtocol.handler = { _ in StubResult(error: networkError) }
         let exp = expectation(description: "done called")
-        nonisolated(unsafe) var receivedError: Error?
+        var receivedError: Error?
 
         // Act
         client.get(url: url) { result in

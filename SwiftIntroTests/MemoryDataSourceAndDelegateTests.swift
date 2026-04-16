@@ -14,7 +14,6 @@
 import UIKit
 import XCTest
 
-@MainActor
 final class MemoryDataSourceAndDelegateTests: XCTestCase {
     // MARK: - Helpers
 

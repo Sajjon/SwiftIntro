@@ -9,7 +9,6 @@ import SnapshotTesting
 @testable import SwiftIntro
 import XCTest
 
-@MainActor
 final class CardCVCellSnapshotTests: XCTestCase {
     private let cellSize = CGSize(width: 90, height: 120)
 

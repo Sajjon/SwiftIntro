@@ -21,7 +21,7 @@ final class WikimediaClient: WikimediaClientProtocol {
 
     func findImages(
         with searchQuery: String,
-        done: @escaping @Sendable (Result<CardSingles, Swift.Error>) -> Void
+        done: @escaping (Result<CardSingles, Swift.Error>) -> Void
     ) {
         let url = WikimediaRouter.searchImages(searchQuery).url
         httpClient.get(url: url) { result in WikimediaClient.decodeAndDeliver(result, done: done) }

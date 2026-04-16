@@ -53,11 +53,11 @@ extension GameLoop {
     /// - Parameters:
     ///   - view: The `Connectable` view that renders `GameModel` and dispatches `GameEvent`s.
     ///   - collectionView: The card grid — used by the effect handler to find cells for flip animations.
-    ///   - onNavigateToGameOver: Called on the main actor when the player wins.
+    ///   - onNavigateToGameOver: Called on the main thread when the player wins.
     func start<View: Connectable>(
         view: View,
         collectionView: UICollectionView,
-        onNavigateToGameOver: @escaping @MainActor (GameOutcome) -> Void
+        onNavigateToGameOver: @escaping (GameOutcome) -> Void
     ) where View.Input == GameModel, View.Output == GameEvent {
         effectHandler.collectionView = collectionView
         effectHandler.onNavigateToGameOver = onNavigateToGameOver
@@ -77,22 +77,16 @@ extension GameLoop {
 
     /// Forwards the latest model to the effect handler so `canSelectCard` and
     /// `configureCell` reflect current game state.
-    ///
-    /// Called from `GameVC`'s `Connectable.acceptClosure` inside `MainActor.assumeIsolated`
-    /// on every model update.
-    @MainActor
     func update(with model: GameModel) {
         effectHandler.update(with: model)
     }
 
     /// Returns whether the card at `index` may currently be selected.
-    @MainActor
     func canSelectCard(at index: Int) -> Bool {
         effectHandler.canSelectCard(at: index)
     }
 
     /// Configures `cell` to match the current visual state of the card at `index`.
-    @MainActor
     func configureCell(
         _ cell: CardCVCell,
         at index: Int

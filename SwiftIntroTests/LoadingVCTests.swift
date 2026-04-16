@@ -21,20 +21,20 @@ import XCTest
 
 // MARK: - Stubs
 
-private final class StubWikimediaClient: WikimediaClientProtocol, @unchecked Sendable {
+private final class StubWikimediaClient: WikimediaClientProtocol {
     var result: Result<CardSingles, Error> = .failure(URLError(.unknown))
     var findImagesQuery: ((String) -> Void)?
 
     func findImages(
         with searchQuery: String,
-        done: @escaping @Sendable (Result<CardSingles, Swift.Error>) -> Void
+        done: @escaping (Result<CardSingles, Swift.Error>) -> Void
     ) {
         findImagesQuery?(searchQuery)
         done(result)
     }
 }
 
-private final class StubImageCache: ImageCacheProtocol, @unchecked Sendable {
+private final class StubImageCache: ImageCacheProtocol {
     private(set) var prefetchedURLs: [URL] = []
 
     func prefetchImages(
@@ -82,10 +82,9 @@ private func makeCards(count: Int) -> CardSingles {
 
 // MARK: - Tests
 
-@MainActor
 final class LoadingVCTests: XCTestCase {
-    private nonisolated(unsafe) var apiStub: StubWikimediaClient!
-    private nonisolated(unsafe) var cacheStub: StubImageCache!
+    private var apiStub: StubWikimediaClient!
+    private var cacheStub: StubImageCache!
 
     override func setUp() {
         super.setUp()

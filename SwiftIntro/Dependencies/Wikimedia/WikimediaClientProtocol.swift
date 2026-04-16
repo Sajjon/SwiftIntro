@@ -20,6 +20,6 @@ protocol WikimediaClientProtocol {
     ///     on success, or `.failure(Error)` if the network request or JSON decoding fails.
     func findImages(
         with searchQuery: String,
-        done: @escaping @Sendable (Result<CardSingles, Swift.Error>) -> Void
+        done: @escaping (Result<CardSingles, Swift.Error>) -> Void
     )
 }

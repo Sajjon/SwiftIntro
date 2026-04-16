@@ -14,11 +14,7 @@ import UIKit
 ///
 /// `LoadingVC` creates a `Diffuser<Phase>` and injects it at init time, so state
 /// changes flow directly to `LoadingView` with no optionality or separate `start` wiring.
-///
-/// `@unchecked Sendable` is required because `findImages` and `prefetchImages`
-/// completions arrive on background queues and capture `self`. All mutations of
-/// `self` are confined to the main thread.
-final class LoadingViewModel: @unchecked Sendable {
+final class LoadingViewModel {
     // MARK: - Phase
 
     /// The two visual states the loading screen can be in.
@@ -47,8 +43,8 @@ final class LoadingViewModel: @unchecked Sendable {
 
     // MARK: - Navigation
 
-    /// Called on the main actor when images are cached and the game is ready to start.
-    var onNavigateToGame: (@MainActor (GameConfiguration, CardDuplicates) -> Void)?
+    /// Called on the main thread when images are cached and the game is ready to start.
+    var onNavigateToGame: ((GameConfiguration, CardDuplicates) -> Void)?
 
     // MARK: - Init
 
@@ -91,14 +87,12 @@ extension LoadingViewModel {
         wikimediaClient.findImages(with: config.searchQuery) { [weak self] result in
             guard let self else { return }
             DispatchQueue.main.async {
-                MainActor.assumeIsolated {
-                    switch result {
-                    case let .success(singles):
-                        self.handleFetchSuccess(singles: singles)
-                    case let .failure(error):
-                        log.error("Failed to fetch images: \(error)")
-                        self.phase = .failed(error)
-                    }
+                switch result {
+                case let .success(singles):
+                    self.handleFetchSuccess(singles: singles)
+                case let .failure(error):
+                    log.error("Failed to fetch images: \(error)")
+                    self.phase = .failed(error)
                 }
             }
         }
@@ -109,10 +103,8 @@ extension LoadingViewModel {
         let urls = singles.cards.map(\.imageUrl)
         imageCache.prefetchImages(urls) { [weak self] in
             log.info("Images in memory cache — starting game")
-            MainActor.assumeIsolated {
-                guard let self else { return }
-                self.onNavigateToGame?(self.config, cards)
-            }
+            guard let self else { return }
+            onNavigateToGame?(config, cards)
         }
     }
 }

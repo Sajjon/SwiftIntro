@@ -15,9 +15,8 @@ import UIKit
 ///
 /// Conforming to this protocol rather than coupling directly to `UINavigationController`
 /// keeps `GameVC` navigation-agnostic and makes it trivially testable.
-@MainActor
 protocol GameNavigatorProtocol: AnyObject {
-    /// Called on the main actor once the final card-flip animation completes.
+    /// Called on the main thread once the final card-flip animation completes.
     func navigateToGameOver(outcome: GameOutcome)
 }
 
@@ -96,7 +95,7 @@ extension GameVC {
 
 // MARK: - Connectable
 
-extension GameVC: @preconcurrency Connectable {
+extension GameVC: Connectable {
     typealias Input = GameModel
     typealias Output = GameEvent
 
@@ -110,12 +109,10 @@ extension GameVC: @preconcurrency Connectable {
         dataSourceAndDelegate.onCardTapped = { consumer(.cardTapped(index: $0)) }
         return Connection(
             acceptClosure: { [weak self] model in
-                MainActor.assumeIsolated {
-                    // Keep the loop's effect handler in sync so canSelectCard /
-                    // configureCell reflect the latest game state.
-                    self?.loop.update(with: model)
-                    self?.gameView.render(model)
-                }
+                // Keep the loop's effect handler in sync so canSelectCard /
+                // configureCell reflect the latest game state.
+                self?.loop.update(with: model)
+                self?.gameView.render(model)
             },
             disposeClosure: { [weak self] in
                 self?.dataSourceAndDelegate.onCardTapped = nil

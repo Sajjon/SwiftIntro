@@ -16,7 +16,7 @@ import XCTest
 
 // MARK: - Stub
 
-private final class StubRetriever: ImageFetcherProtocol, @unchecked Sendable {
+private final class StubRetriever: ImageFetcherProtocol {
     /// URLs whose retrieval should be delayed instead of completing immediately.
     var delayedURLs: Set<URL> = []
     /// All URLs that have been requested, in order.
@@ -36,9 +36,8 @@ private final class StubRetriever: ImageFetcherProtocol, @unchecked Sendable {
 
 // MARK: - Tests
 
-@MainActor
 final class CacheTests: XCTestCase {
-    private nonisolated(unsafe) var stub: StubRetriever!
+    private var stub: StubRetriever!
 
     override func setUp() {
         super.setUp()

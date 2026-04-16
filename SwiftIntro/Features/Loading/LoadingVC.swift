@@ -12,7 +12,6 @@ import UIKit
 // MARK: - LoadingNavigatorProtocol
 
 /// Handles navigation triggered by `LoadingVC` once data loading is complete.
-@MainActor
 protocol LoadingNavigatorProtocol: AnyObject {
     func navigateToGame(
         config: GameConfiguration,
@@ -42,7 +41,7 @@ final class LoadingVC: UIViewController {
         let vm = LoadingViewModel(
             config: config,
             diffuser: .intoAlways { phase in
-                MainActor.assumeIsolated { view.render(phase) }
+                view.render(phase)
             }
         )
         viewModel = vm

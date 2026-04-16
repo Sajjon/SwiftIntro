@@ -42,7 +42,6 @@ private final class SpyNavigator: GameOverNavigatorProtocol {
 
 // MARK: - Tests
 
-@MainActor
 final class GameOverVCTests: XCTestCase {
     // MARK: - Helpers
 

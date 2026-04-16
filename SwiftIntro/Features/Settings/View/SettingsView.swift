@@ -36,7 +36,7 @@ final class SettingsView: UIView {
     private var config = GameConfiguration()
 
     /// Called when the player taps "Start Game". Receives the finalized `GameConfiguration`.
-    var onStartGame: (@MainActor (GameConfiguration) -> Void)?
+    var onStartGame: ((GameConfiguration) -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)

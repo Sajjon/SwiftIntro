@@ -13,7 +13,6 @@ import UIKit
 ///
 /// Conforming to this protocol rather than coupling directly to `UINavigationController`
 /// keeps `GameOverVC` navigation-agnostic and makes it trivially testable.
-@MainActor
 protocol GameOverNavigatorProtocol: AnyObject {
     /// Replaces the current game and game-over screens with a new game using the same
     /// images (freshly shuffled). Called when the player taps "Restart".

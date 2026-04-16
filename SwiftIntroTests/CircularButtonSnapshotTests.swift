@@ -9,7 +9,6 @@ import SnapshotTesting
 @testable import SwiftIntro
 import XCTest
 
-@MainActor
 final class CircularButtonSnapshotTests: XCTestCase {
     func test_circularButton_defaultAppearance() {
         // Arrange
