@@ -50,7 +50,12 @@ extension SettingsVC: LoadingNavigatorProtocol {
     ) {
         let gameVC = GameVC(config: config, cards: cards)
         gameVC.navigator = self
-        guard var viewControllers = navigationController?.viewControllers else { return }
+        guard var viewControllers = navigationController?.viewControllers,
+              !viewControllers.isEmpty
+        else {
+            log.error("navigateToGame: navigation stack is empty — cannot replace last VC")
+            return
+        }
         viewControllers[viewControllers.count - 1] = gameVC
         navigationController?.setViewControllers(viewControllers, animated: false)
     }
@@ -81,7 +86,13 @@ extension SettingsVC: GameOverNavigatorProtocol {
         shuffled.shuffle()
         let gameVC = GameVC(config: config, cards: shuffled)
         gameVC.navigator = self
-        guard var viewControllers = navigationController?.viewControllers else { return }
+        guard
+            var viewControllers = navigationController?.viewControllers,
+            viewControllers.count >= 2
+        else {
+            log.error("restartGame: navigation stack too shallow — expected at least 2")
+            return
+        }
         viewControllers.removeLast(2)
         viewControllers.append(gameVC)
         navigationController?.setViewControllers(viewControllers, animated: false)

@@ -17,10 +17,10 @@ typealias Closure = () -> Void
 
 /// Abstraction over Kingfisher's image cache, used for pre-loading and retrieval.
 ///
-/// Decoupled from `Cache` so `LoadingVC` can be tested with a stub that
+/// Decoupled from `ImageCache` so `LoadingVC` can be tested with a stub that
 /// reports instant completion without touching the network or disk.
 protocol ImageCacheProtocol {
-    /// Ensures all `urls` are present in the **memory** cache, then calls `done`.
+    /// Ensures all `urls` are present in the **memory** cache, then calls `done` on the main thread.
     func prefetchImages(
         _ urls: [URL],
         done: Closure?
@@ -34,11 +34,6 @@ final class ImageCache {
     /// Injected retriever — defaults to `KingfisherManager.shared` in production,
     /// replaced with a stub in tests to avoid network calls.
     @Injected(\.imageFetcher) private var fetcher
-
-    /// Kingfisher's shared cache, which manages both memory and disk storage.
-    private var cache: Kingfisher.ImageCache {
-        Kingfisher.ImageCache.default
-    }
 }
 
 extension ImageCache: ImageCacheProtocol {
