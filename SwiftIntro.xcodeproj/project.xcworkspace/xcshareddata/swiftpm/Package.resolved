@@ -1,5 +1,5 @@
 {
-  "originHash" : "d46efdcbbee1b75e76094c2caf0f96372e984a9ac6e941d2c99cff5952ca72dd",
+  "originHash" : "5f26bab62909d0aeab94329a0156b41b6c704a571c8d5aea62ee4e4bbf9b952c",
   "pins" : [
     {
       "identity" : "cwlcatchexception",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "0139c665ebb45e6a9fbdb68aabfd7c39f3fe0071",
         "version" : "2.2.2"
+      }
+    },
+    {
+      "identity" : "diffuser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/spotify/diffuser",
+      "state" : {
+        "branch" : "master",
+        "revision" : "fea166a5c366209e68bfd957b18780e7abba522c"
       }
     },
     {

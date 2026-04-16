@@ -70,7 +70,8 @@ private extension GameLogic {
         pendingIndex: Int,
         newModel: GameModel
     ) -> Next<GameModel, GameEffect> {
-        if newModel.cards[index].imageUrl == newModel.cards[pendingIndex].imageUrl {
+        let isMatchingPair = newModel.isCard(at: index, matchingCardAt: pendingIndex)
+        if isMatchingPair {
             return handleMatch(index: index, pendingIndex: pendingIndex, newModel: newModel)
         }
         return .next(newModel, effects: [
@@ -102,7 +103,7 @@ private extension GameLogic {
     ) -> Next<GameModel, GameEffect> {
         // Reconstruct the deck from image URLs so the game-over screen can restart
         // with the same images in a freshly shuffled order.
-        let cards = newModel.cards.map(\.imageUrl).map(Card.init)
+        let cards = newModel.cards.map(\.card)
         let outcome = GameOutcome(
             level: newModel.level,
             clickCount: newModel.clickCount,

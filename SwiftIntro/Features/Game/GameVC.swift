@@ -1,6 +1,5 @@
 //
 //  GameVC.swift
-//  SwiftIntro
 //
 //  Created by Alexander Cyon on 01/06/16.
 //  Copyright © 2016-2026 SwiftIntro. All rights reserved.
@@ -10,7 +9,18 @@ import Factory
 import MobiusCore
 import UIKit
 
-// MARK: GameVC
+// MARK: - GameNavigatorProtocol
+
+/// Handles navigation triggered by `GameVC` when the player wins.
+///
+/// Conforming to this protocol rather than coupling directly to `UINavigationController`
+/// keeps `GameVC` navigation-agnostic and makes it trivially testable.
+protocol GameNavigatorProtocol: AnyObject {
+    /// Called on the main thread once the final card-flip animation completes.
+    func navigateToGameOver(outcome: GameOutcome)
+}
+
+// MARK: - GameVC
 
 /// The game screen view controller.
 ///
@@ -37,14 +47,14 @@ final class GameVC: UIViewController {
         columns: self.loop.level.columnCount
     )
 
+    /// Wired by the presenting controller (e.g. `GameSetupVC`) before the push.
+    weak var navigator: GameNavigatorProtocol?
+
     // MARK: Inits
 
-    init(
-        config: GameConfiguration,
-        cards: CardDuplicates
-    ) {
-        let cardModels = cards.memoryCards.map { CardModel(imageUrl: $0.imageUrl) }
-        loop = GameLoop(initialModel: GameModel(cards: cardModels, level: config.level))
+    init(_ game: PreparedGame) {
+        let cardModels = game.cards.memoryCards.map(CardModel.init)
+        loop = GameLoop(initialModel: GameModel(cards: cardModels, level: game.config.level))
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -54,7 +64,7 @@ final class GameVC: UIViewController {
     }
 }
 
-// MARK: Override
+// MARK: - Override
 
 extension GameVC {
     /// Installs `GameView` as the root view instead of the default plain `UIView`.
@@ -68,11 +78,6 @@ extension GameVC {
         setupLoop()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
-    }
-
     /// Stops the loop and cancels any pending timers when the screen leaves the hierarchy.
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -82,7 +87,7 @@ extension GameVC {
 
 // MARK: - Connectable
 
-extension GameVC: @preconcurrency Connectable {
+extension GameVC: Connectable {
     typealias Input = GameModel
     typealias Output = GameEvent
 
@@ -96,12 +101,10 @@ extension GameVC: @preconcurrency Connectable {
         dataSourceAndDelegate.onCardTapped = { consumer(.cardTapped(index: $0)) }
         return Connection(
             acceptClosure: { [weak self] model in
-                MainActor.assumeIsolated {
-                    // Keep the loop's effect handler in sync so canSelectCard /
-                    // configureCell reflect the latest game state.
-                    self?.loop.update(with: model)
-                    self?.gameView.render(model)
-                }
+                // Keep the loop's effect handler in sync so canSelectCard /
+                // configureCell reflect the latest game state.
+                self?.loop.update(with: model)
+                self?.gameView.render(model)
             },
             disposeClosure: { [weak self] in
                 self?.dataSourceAndDelegate.onCardTapped = nil
@@ -112,20 +115,20 @@ extension GameVC: @preconcurrency Connectable {
 
 // MARK: - Private
 
-extension GameVC {
+private extension GameVC {
     /// Wires the effect handler's UIKit dependencies and starts the Mobius loop.
-    private func setupLoop() {
+    func setupLoop() {
         loop.start(
             view: self,
             collectionView: gameView.collectionView,
             onNavigateToGameOver: { [weak self] outcome in
-                self?.navigateToGameOver(outcome: outcome)
+                self?.navigator?.navigateToGameOver(outcome: outcome)
             }
         )
     }
 
     /// Assigns the data source and delegate, registers the cell class, and wires closures.
-    private func setupCollectionView() {
+    func setupCollectionView() {
         gameView.collectionView.dataSource = dataSourceAndDelegate
         gameView.collectionView.delegate = dataSourceAndDelegate
         gameView.collectionView.register(CardCVCell.self, forCellWithReuseIdentifier: CardCVCell.cellIdentifier)
@@ -133,21 +136,12 @@ extension GameVC {
     }
 
     /// Connects the data source's query closures to the loop so it stays decoupled from `GameVC`.
-    private func wireDataSourceClosures() {
+    func wireDataSourceClosures() {
         dataSourceAndDelegate.canSelectCard = { [weak self] index in
             self?.loop.canSelectCard(at: index) ?? false
         }
         dataSourceAndDelegate.configureCell = { [weak self] cell, index in
             self?.loop.configureCell(cell, at: index)
         }
-    }
-
-    /// Pushes `GameOverVC` onto the navigation stack with the completed game's outcome.
-    private func navigateToGameOver(outcome: GameOutcome) {
-        let config = GameConfiguration(level: loop.level)
-        navigationController?.pushViewController(
-            GameOverVC(config: config, outcome: outcome),
-            animated: true
-        )
     }
 }

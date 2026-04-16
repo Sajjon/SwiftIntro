@@ -15,7 +15,6 @@ import UIKit
 ///
 /// `NSObject` is required because `UICollectionViewDataSource` and
 /// `UICollectionViewDelegate` are `@objc` protocols.
-@MainActor
 final class MemoryDataSourceAndDelegate: NSObject {
     /// Number of rows on the board (= number of collection view sections).
     private let numberOfRows: Int

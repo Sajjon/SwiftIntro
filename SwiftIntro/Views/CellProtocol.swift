@@ -13,7 +13,6 @@ import UIKit
 /// Conforming types (e.g. `CardCVCell`) derive `cellIdentifier` from `NSObject.className`,
 /// keeping the identifier and the `register(_:forCellWithReuseIdentifier:)` call in sync
 /// automatically.
-@MainActor
 protocol CellProtocol {
     /// The string used to register and dequeue this cell type.
     static var cellIdentifier: String { get }

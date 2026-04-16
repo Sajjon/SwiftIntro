@@ -1,0 +1,74 @@
+//
+//  LoadingVC.swift
+//  SwiftIntro
+//
+//  Created by Alexander Cyon on 19/06/16.
+//  Copyright © 2016-2026 SwiftIntro. All rights reserved.
+//
+
+import Diffuser
+import UIKit
+
+// MARK: - LoadingNavigatorProtocol
+
+/// Handles navigation triggered by `LoadingVC` once data loading is complete.
+protocol LoadingNavigatorProtocol: AnyObject {
+    func navigateToGame(_ game: PreparedGame)
+}
+
+// MARK: - LoadingVC
+
+/// Installs `LoadingView`, wires the retry tap, and owns `LoadingViewModel`.
+///
+/// The diffuser is created here and injected into the view model at init time,
+/// so the view model never holds an optional diffuser.
+final class LoadingVC: UIViewController {
+    /// Content view
+    private let loadingView: LoadingView
+
+    /// ViewModel with logic
+    private let viewModel: LoadingViewModel
+
+    /// Navigator which we use to navigate to next screen
+    weak var navigator: LoadingNavigatorProtocol?
+
+    init(config: GameConfiguration) {
+        let view = LoadingView()
+        loadingView = view
+        let vm = LoadingViewModel(
+            config: config,
+            diffuser: .intoAlways { phase in
+                view.render(phase)
+            }
+        )
+        viewModel = vm
+        view.onRetry = { [weak vm] in vm?.retry() }
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError()
+    }
+}
+
+// MARK: Override(s)
+
+extension LoadingVC {
+    override func loadView() {
+        view = loadingView
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewModel.onNavigateToGame = { [weak self] game in
+            self?.navigator?.navigateToGame(game)
+        }
+        viewModel.start()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel.stop()
+    }
+}

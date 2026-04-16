@@ -40,7 +40,9 @@ final class GameView: UIView {
 
     /// Updates all model-driven UI — called by the Mobius loop `acceptClosure` on every model update.
     func render(_ model: GameModel) {
-        headerView.scoreLabel.text = L10n.pairsFoundUnformatted(model.matches, model.totalPairs)
+        headerView.scoreLabel.text = String(
+            localized: .Game.pairsFoundUnformatted(pairsFound: model.matches, totalPairs: model.totalPairs)
+        )
     }
 }
 

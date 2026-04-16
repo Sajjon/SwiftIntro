@@ -21,30 +21,30 @@ final class GameLoop {
     /// The Mobius loop controller — drives the `update → effect → event` cycle.
     private let controller: MobiusController<GameModel, GameEvent, GameEffect>
 
-    /// The difficulty level for this session — exposed so `GameVC` can size the grid
-    /// without storing `GameConfiguration` or `CardDuplicates` separately.
-    let level: Level
-
-    /// Guards against calling `MobiusController.stop()` more than once.
-    ///
-    /// `viewDidDisappear` can fire multiple times (e.g. a modal is presented on top
-    /// of `GameVC` and then dismissed). Mobius asserts on a second `stop()`, so we
-    /// short-circuit here instead.
-    private var isStopped = false
-
     /// Builds the complete Mobius loop from the given initial model.
     ///
     /// `effectHandler` is pre-seeded with `initialModel` so cell configuration works
     /// on the very first `willDisplay` call, before the loop's first async model delivery.
     init(initialModel: GameModel) {
-        level = initialModel.level
-        let effectHandler = GameEffectHandler(level: initialModel.level, initialModel: initialModel)
+        let effectHandler = GameEffectHandler(initialModel: initialModel)
         self.effectHandler = effectHandler
         controller = Mobius
             .loop(update: GameLogic.update, effectHandler: effectHandler)
             .makeController(from: initialModel)
     }
+}
 
+// MARK: Computed Properties
+
+extension GameLoop {
+    /// The difficulty level for this session — exposed so `GameVC` can size the grid
+    /// without storing `GameConfiguration` or `CardDuplicates` separately.
+    var level: Level {
+        effectHandler.level
+    }
+}
+
+extension GameLoop {
     /// Connects the view to the loop, wires the effect handler's UIKit dependencies,
     /// and starts the Mobius loop.
     ///
@@ -70,30 +70,23 @@ final class GameLoop {
     /// Idempotent — safe to call more than once; subsequent calls are no-ops.
     /// Call this from `viewDidDisappear`.
     func stop() {
-        guard !isStopped else { return }
-        isStopped = true
+        guard controller.running else { return }
         controller.stop()
         controller.disconnectView()
     }
 
     /// Forwards the latest model to the effect handler so `canSelectCard` and
     /// `configureCell` reflect current game state.
-    ///
-    /// Called from `GameVC`'s `Connectable.acceptClosure` inside `MainActor.assumeIsolated`
-    /// on every model update.
-    @MainActor
     func update(with model: GameModel) {
         effectHandler.update(with: model)
     }
 
     /// Returns whether the card at `index` may currently be selected.
-    @MainActor
     func canSelectCard(at index: Int) -> Bool {
         effectHandler.canSelectCard(at: index)
     }
 
     /// Configures `cell` to match the current visual state of the card at `index`.
-    @MainActor
     func configureCell(
         _ cell: CardCVCell,
         at index: Int
