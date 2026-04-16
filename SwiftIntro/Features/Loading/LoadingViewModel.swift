@@ -62,7 +62,8 @@ final class LoadingViewModel {
 extension LoadingViewModel {
     /// Renders the initial state and kicks off the data fetch.
     func start() {
-        logNet.info("LoadingViewModel starting — config: \(config)")
+        // swiftformat:disable:next redundantSelf
+        logNet.info("LoadingViewModel starting — config: \(self.config)")
         diffuser.run(phase)
         fetchData()
     }
@@ -87,7 +88,8 @@ extension LoadingViewModel {
 
 extension LoadingViewModel {
     private func fetchData() {
-        logNet.debug("Fetching images from Wikimedia for query: '\(config.searchQuery)'")
+        // swiftformat:disable:next redundantSelf
+        logNet.debug("Fetching images from Wikimedia for query: '\(self.config.searchQuery)'")
         wikimediaClient.findImages(with: config.searchQuery) { [weak self] result in
             guard let self else { return }
             DispatchQueue.main.async {
@@ -107,10 +109,12 @@ extension LoadingViewModel {
         let cards = CardDuplicates(singles: singles, config: config)
         let urls = singles.cards.map(\.imageUrl)
         logNet.debug("Prefetching \(urls.count) image URL(s) into cache")
+        // swiftformat:disable redundantSelf
         imageCache.prefetchImages(urls) { [weak self] in
             logNet.info("All images in memory cache — navigating to game")
             guard let self else { return }
-            onNavigateToGame?(PreparedGame(config: config, cards: cards))
+            self.onNavigateToGame?(PreparedGame(config: self.config, cards: cards))
         }
+        // swiftformat:enable redundantSelf
     }
 }
