@@ -4,6 +4,13 @@
 # Patch coverage (per-PR diff) is disabled because the test suite covers
 # core logic exhaustively and per-diff reporting adds noise without value.
 
+codecov:
+  # Pin Codecov's "default branch" to main. Without this, a stale
+  # master-era default on codecov.io would cause the unadorned badge URL
+  # (…/graph/badge.svg) to report an empty branch and render "unknown".
+  branch: main
+  require_ci_to_pass: true
+
 coverage:
   status:
     project:

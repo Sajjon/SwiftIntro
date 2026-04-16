@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/Sajjon/SwiftIntro/graph/badge.svg?token=siapXgVmia)](https://codecov.io/gh/Sajjon/SwiftIntro)
+[![codecov](https://codecov.io/gh/Sajjon/SwiftIntro/branch/main/graph/badge.svg?token=siapXgVmia)](https://codecov.io/gh/Sajjon/SwiftIntro/tree/main)
 
 # 📱 My first Memory 🤔💭
 #### _An introduction to iOS development with Swift._

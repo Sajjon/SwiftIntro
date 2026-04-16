@@ -151,9 +151,11 @@ jobs:
         run: xcrun xccov view --report "$RESULT_BUNDLE"
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           files: ${{ env.COV_XML }}
+          slug: Sajjon/SwiftIntro
           # CODECOV_TOKEN must be added to the repo's Actions secrets.
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
+          verbose: true
