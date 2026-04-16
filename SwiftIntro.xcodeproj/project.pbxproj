@@ -69,7 +69,6 @@
 		TD000002TD000002TD000002 /* GameModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TD000001TD000001TD000001 /* GameModelTests.swift */; };
 		TE000002TE000002TE000002 /* CardDuplicatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TE000001TE000001TE000001 /* CardDuplicatesTests.swift */; };
 		TF000002TF000002TF000002 /* ArrayExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TF000001TF000001TF000001 /* ArrayExtensionTests.swift */; };
-		TG000002TG000002TG000002 /* DispatchExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TG000001TG000001TG000001 /* DispatchExtensionTests.swift */; };
 		TH000002TH000002TH000002 /* NSObjectExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TH000001TH000001TH000001 /* NSObjectExtensionTests.swift */; };
 		TI000002TI000002TI000002 /* UIViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TI000001TI000001TI000001 /* UIViewExtensionTests.swift */; };
 		TJ000002TJ000002TJ000002 /* StringsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TJ000001TJ000001TJ000001 /* StringsTests.swift */; };
@@ -168,7 +167,6 @@
 		TE000001TE000001TE000001 /* CardDuplicatesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDuplicatesTests.swift; sourceTree = "<group>"; };
 		TEST0002TEST0002TEST0002 /* SwiftIntroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftIntroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		TF000001TF000001TF000001 /* ArrayExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensionTests.swift; sourceTree = "<group>"; };
-		TG000001TG000001TG000001 /* DispatchExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchExtensionTests.swift; sourceTree = "<group>"; };
 		TH000001TH000001TH000001 /* NSObjectExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSObjectExtensionTests.swift; sourceTree = "<group>"; };
 		TI000001TI000001TI000001 /* UIViewExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensionTests.swift; sourceTree = "<group>"; };
 		TJ000001TJ000001TJ000001 /* StringsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringsTests.swift; sourceTree = "<group>"; };
@@ -468,39 +466,134 @@
 			path = Values;
 			sourceTree = "<group>";
 		};
-		TEST0005TEST0005TEST0005 /* SwiftIntroTests */ = {
+		GRPAPP001GRPAPP001GRPAPP001 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				RV000001RV000001RV000001 /* RootVCTests.swift */,
+				TJ000001TJ000001TJ000001 /* StringsTests.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		GRPDEP001GRPDEP001GRPDEP001 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				TK000001TK000001TK000001 /* HTTPClientTests.swift */,
+				TN000001TN000001TN000001 /* WikimediaClientTests.swift */,
+				TC000001TC000001TC000001 /* WikimediaRouterTests.swift */,
+				TP000001TP000001TP000001 /* ImageCacheTests.swift */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		GRPEXT001GRPEXT001GRPEXT001 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				TF000001TF000001TF000001 /* ArrayExtensionTests.swift */,
+				TH000001TH000001TH000001 /* NSObjectExtensionTests.swift */,
+				TI000001TI000001TI000001 /* UIViewExtensionTests.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		GRPFEA001GRPFEA001GRPFEA001 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				GRPGAM001GRPGAM001GRPGAM001 /* Game */,
+				GRPGSU001GRPGSU001GRPGSU001 /* GameSetup */,
+				GRPLOA001GRPLOA001GRPLOA001 /* Loading */,
+				GRPGOV001GRPGOV001GRPGOV001 /* GameOver */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		GRPGAM001GRPGAM001GRPGAM001 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				GRPGAM002GRPGAM002GRPGAM002 /* Logic */,
+				GRPGAM003GRPGAM003GRPGAM003 /* View */,
+				TR000001TR000001TR000001 /* GameVCTests.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		GRPGAM002GRPGAM002GRPGAM002 /* Logic */ = {
 			isa = PBXGroup;
 			children = (
 				TA000001TA000001TA000001 /* GameLogicTests.swift */,
-				TB000001TB000001TB000001 /* LevelTests.swift */,
-				TC000001TC000001TC000001 /* WikimediaRouterTests.swift */,
 				TD000001TD000001TD000001 /* GameModelTests.swift */,
-				TE000001TE000001TE000001 /* CardDuplicatesTests.swift */,
-				TF000001TF000001TF000001 /* ArrayExtensionTests.swift */,
-				TG000001TG000001TG000001 /* DispatchExtensionTests.swift */,
-				TH000001TH000001TH000001 /* NSObjectExtensionTests.swift */,
-				TI000001TI000001TI000001 /* UIViewExtensionTests.swift */,
-				TJ000001TJ000001TJ000001 /* StringsTests.swift */,
-				TK000001TK000001TK000001 /* HTTPClientTests.swift */,
 				TL000001TL000001TL000001 /* GameEffectHandlerTests.swift */,
 				TM000001TM000001TM000001 /* GameLoopTests.swift */,
-				TN000001TN000001TN000001 /* WikimediaClientTests.swift */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
+		GRPGAM003GRPGAM003GRPGAM003 /* View */ = {
+			isa = PBXGroup;
+			children = (
 				TO000001TO000001TO000001 /* MemoryDataSourceAndDelegateTests.swift */,
-				TP000001TP000001TP000001 /* ImageCacheTests.swift */,
-				TQ000001TQ000001TQ000001 /* LoadingVCTests.swift */,
-				TR000001TR000001TR000001 /* GameVCTests.swift */,
-				TU000001TU000001TU000001 /* GameOverVCTests.swift */,
-				TV000001TV000001TV000001 /* GameSetupVCTests.swift */,
-				RV000001RV000001RV000001 /* RootVCTests.swift */,
-				TW000001TW000001TW000001 /* GameSetupViewTests.swift */,
 				TX000001TX000001TX000001 /* CardCVCellTests.swift */,
-				TS010001TS010001TS010001 /* CircularButtonSnapshotTests.swift */,
-				TS020001TS020001TS020001 /* GameHeaderViewSnapshotTests.swift */,
-				TS030001TS030001TS030001 /* LoadingViewSnapshotTests.swift */,
-				TS040001TS040001TS040001 /* GameOverViewSnapshotTests.swift */,
-				TS050001TS050001TS050001 /* SettingsViewSnapshotTests.swift */,
-				TS060001TS060001TS060001 /* GameViewSnapshotTests.swift */,
 				TS070001TS070001TS070001 /* CardCVCellSnapshotTests.swift */,
+				TS020001TS020001TS020001 /* GameHeaderViewSnapshotTests.swift */,
+				TS060001TS060001TS060001 /* GameViewSnapshotTests.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		GRPGOV001GRPGOV001GRPGOV001 /* GameOver */ = {
+			isa = PBXGroup;
+			children = (
+				TU000001TU000001TU000001 /* GameOverVCTests.swift */,
+				TS040001TS040001TS040001 /* GameOverViewSnapshotTests.swift */,
+			);
+			path = GameOver;
+			sourceTree = "<group>";
+		};
+		GRPGSU001GRPGSU001GRPGSU001 /* GameSetup */ = {
+			isa = PBXGroup;
+			children = (
+				TV000001TV000001TV000001 /* GameSetupVCTests.swift */,
+				TW000001TW000001TW000001 /* GameSetupViewTests.swift */,
+				TS050001TS050001TS050001 /* SettingsViewSnapshotTests.swift */,
+			);
+			path = GameSetup;
+			sourceTree = "<group>";
+		};
+		GRPLOA001GRPLOA001GRPLOA001 /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				TQ000001TQ000001TQ000001 /* LoadingVCTests.swift */,
+				TS030001TS030001TS030001 /* LoadingViewSnapshotTests.swift */,
+			);
+			path = Loading;
+			sourceTree = "<group>";
+		};
+		GRPMOD001GRPMOD001GRPMOD001 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				TE000001TE000001TE000001 /* CardDuplicatesTests.swift */,
+				TB000001TB000001TB000001 /* LevelTests.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		GRPVIE001GRPVIE001GRPVIE001 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				TS010001TS010001TS010001 /* CircularButtonSnapshotTests.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		TEST0005TEST0005TEST0005 /* SwiftIntroTests */ = {
+			isa = PBXGroup;
+			children = (
+				GRPAPP001GRPAPP001GRPAPP001 /* App */,
+				GRPFEA001GRPFEA001GRPFEA001 /* Features */,
+				GRPMOD001GRPMOD001GRPMOD001 /* Models */,
+				GRPDEP001GRPDEP001GRPDEP001 /* Dependencies */,
+				GRPVIE001GRPVIE001GRPVIE001 /* Views */,
+				GRPEXT001GRPEXT001GRPEXT001 /* Extensions */,
 			);
 			path = SwiftIntroTests;
 			sourceTree = "<group>";
@@ -669,7 +762,6 @@
 				TD000002TD000002TD000002 /* GameModelTests.swift in Sources */,
 				TE000002TE000002TE000002 /* CardDuplicatesTests.swift in Sources */,
 				TF000002TF000002TF000002 /* ArrayExtensionTests.swift in Sources */,
-				TG000002TG000002TG000002 /* DispatchExtensionTests.swift in Sources */,
 				TH000002TH000002TH000002 /* NSObjectExtensionTests.swift in Sources */,
 				TI000002TI000002TI000002 /* UIViewExtensionTests.swift in Sources */,
 				TJ000002TJ000002TJ000002 /* StringsTests.swift in Sources */,
