@@ -30,8 +30,11 @@ jobs:
       - uses: actions/checkout@v4
 
       # ── 1. Typos ────────────────────────────────────────────────────────────
+      - name: Install typos
+        run: brew install typos-cli
+
       - name: Check for typos
-        uses: crate-ci/typos@v1
+        run: typos
 
       # ── 2. SwiftFormat ──────────────────────────────────────────────────────
       - name: Install SwiftFormat
