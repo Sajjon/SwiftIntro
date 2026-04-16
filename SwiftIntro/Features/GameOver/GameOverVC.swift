@@ -38,7 +38,7 @@ final class GameOverVC: UIViewController {
     /// The root view; installed via `loadView()`.
     private let gameOverView = GameOverView()
 
-    /// Wired by the presenting controller (e.g. `GameSetupVC`) before the push.
+    /// Wired by the presenting controller (e.g. `RootVC`) before the push.
     weak var navigator: GameOverNavigatorProtocol?
 
     init(

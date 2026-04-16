@@ -1,5 +1,5 @@
 //
-//  SettingsViewTests.swift
+//  GameSetupViewTests.swift
 //  SwiftIntroTests
 //
 //  Copyright © 2016-2026 SwiftIntro. All rights reserved.
@@ -7,7 +7,7 @@
 //  All tests follow the Arrange-Act-Assert (AAA) pattern.
 //
 //  Notes on approach:
-//  - `SettingsView`'s controls are private, so they are located by type via
+//  - `GameSetupView`'s controls are private, so they are located by type via
 //    `findSubview(_:in:)` — a depth-first traversal of the view hierarchy.
 //  - Actions are fired with `sendActions(for:)` rather than simulating taps,
 //    so no window or layout pass is required.
@@ -19,7 +19,7 @@
 import UIKit
 import XCTest
 
-final class SettingsViewTests: XCTestCase {
+final class GameSetupViewTests: XCTestCase {
     // MARK: - Helpers
 
     /// Depth-first search for the first subview of the given type.

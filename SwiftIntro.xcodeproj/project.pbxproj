@@ -27,7 +27,6 @@
 		7B2F90AC1D00C88800613325 /* UIView_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2F90AB1D00C88800613325 /* UIView_Extension.swift */; };
 		7B4497EE1D189BA100E080C7 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497EC1D189BA100E080C7 /* Card.swift */; };
 		7B4497EF1D189BA100E080C7 /* CardDuplicates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497ED1D189BA100E080C7 /* CardDuplicates.swift */; };
-		PG000002PG000002PG000002 /* PreparedGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = PG000001PG000001PG000001 /* PreparedGame.swift */; };
 		7B4497F11D189BA900E080C7 /* GameOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497F01D189BA900E080C7 /* GameOutcome.swift */; };
 		7B4497F31D189BC000E080C7 /* GameConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497F21D189BC000E080C7 /* GameConfiguration.swift */; };
 		7B4497FA1D189C3400E080C7 /* CellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4497F91D189C3400E080C7 /* CellProtocol.swift */; };
@@ -60,6 +59,7 @@
 		FF080002FF080002FF080002 /* DependencyInjection+Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF080001FF080001FF080001 /* DependencyInjection+Registration.swift */; };
 		FFFE0003FFFE0003FFFE0003 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = FFFE0002FFFE0002FFFE0002 /* Factory */; };
 		LD010002LD010002LD010002 /* LoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = LD010001LD010001LD010001 /* LoadingViewModel.swift */; };
+		PG000002PG000002PG000002 /* PreparedGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = PG000001PG000001PG000001 /* PreparedGame.swift */; };
 		RC000002RC000002RC000002 /* RootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = RC000001RC000001RC000001 /* RootVC.swift */; };
 		RV000002RV000002RV000002 /* RootVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = RV000001RV000001RV000001 /* RootVCTests.swift */; };
 		SSST0003SSST0003SSST0003 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = SSST0002SSST0002SSST0002 /* SnapshotTesting */; };
@@ -90,7 +90,7 @@
 		TS070002TS070002TS070002 /* CardCVCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS070001TS070001TS070001 /* CardCVCellSnapshotTests.swift */; };
 		TU000002TU000002TU000002 /* GameOverVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TU000001TU000001TU000001 /* GameOverVCTests.swift */; };
 		TV000002TV000002TV000002 /* GameSetupVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TV000001TV000001TV000001 /* GameSetupVCTests.swift */; };
-		TW000002TW000002TW000002 /* SettingsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TW000001TW000001TW000001 /* SettingsViewTests.swift */; };
+		TW000002TW000002TW000002 /* GameSetupViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TW000001TW000001TW000001 /* GameSetupViewTests.swift */; };
 		TX000002TX000002TX000002 /* CardCVCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TX000001TX000001TX000001 /* CardCVCellTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -130,7 +130,6 @@
 		7B2F90AB1D00C88800613325 /* UIView_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView_Extension.swift; sourceTree = "<group>"; };
 		7B4497EC1D189BA100E080C7 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		7B4497ED1D189BA100E080C7 /* CardDuplicates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDuplicates.swift; sourceTree = "<group>"; };
-		PG000001PG000001PG000001 /* PreparedGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparedGame.swift; sourceTree = "<group>"; };
 		7B4497F01D189BA900E080C7 /* GameOutcome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOutcome.swift; sourceTree = "<group>"; };
 		7B4497F21D189BC000E080C7 /* GameConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameConfiguration.swift; sourceTree = "<group>"; };
 		7B4497F91D189C3400E080C7 /* CellProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellProtocol.swift; sourceTree = "<group>"; };
@@ -159,6 +158,7 @@
 		FF070001FF070001FF070001 /* Logger+SwiftIntro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Logger+SwiftIntro.swift"; sourceTree = "<group>"; };
 		FF080001FF080001FF080001 /* DependencyInjection+Registration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DependencyInjection+Registration.swift"; sourceTree = "<group>"; };
 		LD010001LD010001LD010001 /* LoadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewModel.swift; sourceTree = "<group>"; };
+		PG000001PG000001PG000001 /* PreparedGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparedGame.swift; sourceTree = "<group>"; };
 		RC000001RC000001RC000001 /* RootVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootVC.swift; sourceTree = "<group>"; };
 		RV000001RV000001RV000001 /* RootVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootVCTests.swift; sourceTree = "<group>"; };
 		TA000001TA000001TA000001 /* GameLogicTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLogicTests.swift; sourceTree = "<group>"; };
@@ -189,7 +189,7 @@
 		TS070001TS070001TS070001 /* CardCVCellSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCVCellSnapshotTests.swift; sourceTree = "<group>"; };
 		TU000001TU000001TU000001 /* GameOverVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverVCTests.swift; sourceTree = "<group>"; };
 		TV000001TV000001TV000001 /* GameSetupVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSetupVCTests.swift; sourceTree = "<group>"; };
-		TW000001TW000001TW000001 /* SettingsViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewTests.swift; sourceTree = "<group>"; };
+		TW000001TW000001TW000001 /* GameSetupViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSetupViewTests.swift; sourceTree = "<group>"; };
 		TX000001TX000001TX000001 /* CardCVCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCVCellTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -492,7 +492,7 @@
 				TU000001TU000001TU000001 /* GameOverVCTests.swift */,
 				TV000001TV000001TV000001 /* GameSetupVCTests.swift */,
 				RV000001RV000001RV000001 /* RootVCTests.swift */,
-				TW000001TW000001TW000001 /* SettingsViewTests.swift */,
+				TW000001TW000001TW000001 /* GameSetupViewTests.swift */,
 				TX000001TX000001TX000001 /* CardCVCellTests.swift */,
 				TS010001TS010001TS010001 /* CircularButtonSnapshotTests.swift */,
 				TS020001TS020001TS020001 /* GameHeaderViewSnapshotTests.swift */,
@@ -684,7 +684,7 @@
 				TU000002TU000002TU000002 /* GameOverVCTests.swift in Sources */,
 				TV000002TV000002TV000002 /* GameSetupVCTests.swift in Sources */,
 				RV000002RV000002RV000002 /* RootVCTests.swift in Sources */,
-				TW000002TW000002TW000002 /* SettingsViewTests.swift in Sources */,
+				TW000002TW000002TW000002 /* GameSetupViewTests.swift in Sources */,
 				TX000002TX000002TX000002 /* CardCVCellTests.swift in Sources */,
 				TS010002TS010002TS010002 /* CircularButtonSnapshotTests.swift in Sources */,
 				TS020002TS020002TS020002 /* GameHeaderViewSnapshotTests.swift in Sources */,

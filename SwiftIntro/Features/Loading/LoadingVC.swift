@@ -52,7 +52,7 @@ final class LoadingVC: UIViewController {
     }
 }
 
-// MARK: Overload
+// MARK: Override(s)
 
 extension LoadingVC {
     override func loadView() {
