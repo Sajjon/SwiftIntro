@@ -8,68 +8,70 @@
 
 import Foundation
 
-/// The full deck of cards used during a game session — every card appears exactly twice.
+/// The full deck of cards used during a game session — every card appears exactly twice,
+/// and the order is always freshly shuffled.
 ///
-/// Created by taking `CardSingles`, choosing enough unique cards to fill the board,
-/// duplicating each one, and shuffling the result.
+/// Construction is constrained: there is no way to build a `CardDuplicates` whose
+/// contents are not properly paired. The single private designated initializer asserts
+/// the invariant; both public inits route through it after performing a shuffle.
 struct CardDuplicates {
-    /// The shuffled, duplicated array of cards. Count is always even.
-    var memoryCards: [Card]
+    /// The shuffled, paired array of cards. Count is always even and non-zero.
+    let memoryCards: [Card]
 
-    /// Creates a deck directly from a pre-built array of (already duplicated) cards.
-    init(memoryCards: [Card]) {
-        self.memoryCards = memoryCards
+    /// Designated initializer — asserts the pair invariant.
+    ///
+    /// Callers must have already shuffled `cards`; this is enforced by making the
+    /// initializer `private` so every construction path funnels through a public
+    /// init that shuffles first.
+    private init(validated cards: [Card]) {
+        precondition(!cards.isEmpty, "Deck must not be empty")
+        precondition(cards.count.isMultiple(of: 2), "Deck must contain an even number of cards")
+        var frequency: [URL: Int] = [:]
+        for card in cards {
+            frequency[card.imageUrl, default: 0] += 1
+        }
+        precondition(
+            frequency.values.allSatisfy { $0 == 2 },
+            "Every card must appear exactly twice"
+        )
+        memoryCards = cards
     }
 
     /// Creates a deck from unique cards, duplicating and shuffling to fill the board
     /// defined by `config.level`.
+    ///
+    /// Preconditions that `singles.cards.count >= config.level.cardCount / 2`; otherwise
+    /// the deck would be shorter than the grid derived from `Level`, risking out-of-bounds
+    /// access during cell configuration.
     init(
         singles: CardSingles,
         config: GameConfiguration
     ) {
-        self.init(memoryCards: makeMemoryCards(
-            from: singles,
-            cardCount: config.level.cardCount
-        ))
+        let requiredPairs = config.level.cardCount / 2
+        let chosen = singles.cards.choose(requiredPairs)
+        precondition(
+            chosen.count == requiredPairs,
+            "Not enough unique cards for level \(config.level): need \(requiredPairs) uniques, got \(chosen.count)"
+        )
+        // Each image appears exactly twice — once per matching pair.
+        var shuffled = chosen.flatMap { [$0, $0] }
+        shuffled.shuffle()
+        self.init(validated: shuffled)
+    }
+
+    /// Rebuilds a deck from already-paired cards and re-shuffles them.
+    ///
+    /// Used on game-over → restart, so the player sees a fresh layout of the same images.
+    init(reshuffling cards: [Card]) {
+        var shuffled = cards
+        shuffled.shuffle()
+        self.init(validated: shuffled)
     }
 }
 
 extension CardDuplicates {
-    /// Total number of cards in the deck (always even).
+    /// Total number of cards in the deck (always even and non-zero).
     var count: Int {
         memoryCards.count
     }
-
-    /// Accesses a card by its flat (row-major) index in the deck.
-    subscript(index: Int) -> Card {
-        memoryCards[index]
-    }
-
-    /// Shuffles the deck in-place. Used when restarting a game with the same images.
-    mutating func shuffle() {
-        memoryCards.shuffle()
-    }
-}
-
-/// Builds a shuffled, paired deck from a set of unique cards.
-///
-/// - Parameters:
-///   - singles: The pool of unique cards to draw from.
-///   - cardCount: Total cards the board requires (must be even; half this many unique images are used).
-/// - Returns: A shuffled array where each chosen image appears exactly twice.
-private func makeMemoryCards(
-    from singles: CardSingles,
-    cardCount: Int
-) -> [Card] {
-    let singles = singles.cards
-    // Pick half as many unique images as the board needs total slots.
-    // `choose` already caps at the pool size if the pool is smaller.
-    let chosen = singles.choose(cardCount / 2)
-    var duplicated: [Card] = []
-    for card in chosen {
-        // Each image appears exactly twice — once for each half of the matching pair.
-        duplicated.append(contentsOf: [card, card])
-    }
-    duplicated.shuffle()
-    return duplicated
 }

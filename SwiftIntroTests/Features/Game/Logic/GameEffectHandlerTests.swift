@@ -232,7 +232,8 @@ final class GameEffectHandlerTests: XCTestCase {
             exp.fulfill()
         }
         let connection = handler.connect { _ in }
-        let deck = CardDuplicates(memoryCards: [])
+        let card = Card(imageUrl: URL(string: "https://a.test/0.jpg")!)
+        let deck = CardDuplicates(reshuffling: [card, card])
         let outcome = GameOutcome(level: .easy, clickCount: 7, cards: deck)
 
         // Act

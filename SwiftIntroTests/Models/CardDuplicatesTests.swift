@@ -19,39 +19,50 @@ final class CardDuplicatesTests: XCTestCase {
     private let url2 = URL(string: "https://example.com/2.jpg")!
     private let url3 = URL(string: "https://example.com/3.jpg")!
 
-    // MARK: - init(memoryCards:)
+    // MARK: - init(reshuffling:)
 
-    func test_initWithMemoryCards_preservesCardCount() {
+    func test_initReshuffling_preservesCardCount() {
         // Arrange
-        let cards = [Card(imageUrl: url1), Card(imageUrl: url2)]
+        let cards = [url1, url1, url2, url2].map { Card(imageUrl: $0) }
 
         // Act
-        let deck = CardDuplicates(memoryCards: cards)
+        let deck = CardDuplicates(reshuffling: cards)
 
         // Assert
-        XCTAssertEqual(deck.count, 2)
+        XCTAssertEqual(deck.count, 4)
     }
 
-    func test_initWithMemoryCards_preservesFirstCardUrl() {
+    func test_initReshuffling_preservesUrl1Frequency() {
         // Arrange
-        let cards = [Card(imageUrl: url1), Card(imageUrl: url2)]
+        let cards = [url1, url1, url2, url2, url3, url3].map { Card(imageUrl: $0) }
 
         // Act
-        let deck = CardDuplicates(memoryCards: cards)
+        let deck = CardDuplicates(reshuffling: cards)
 
         // Assert
-        XCTAssertEqual(deck[0].imageUrl, url1)
+        XCTAssertEqual(deck.memoryCards.filter { $0.imageUrl == url1 }.count, 2)
     }
 
-    func test_initWithMemoryCards_preservesSecondCardUrl() {
+    func test_initReshuffling_preservesUrl2Frequency() {
         // Arrange
-        let cards = [Card(imageUrl: url1), Card(imageUrl: url2)]
+        let cards = [url1, url1, url2, url2, url3, url3].map { Card(imageUrl: $0) }
 
         // Act
-        let deck = CardDuplicates(memoryCards: cards)
+        let deck = CardDuplicates(reshuffling: cards)
 
         // Assert
-        XCTAssertEqual(deck[1].imageUrl, url2)
+        XCTAssertEqual(deck.memoryCards.filter { $0.imageUrl == url2 }.count, 2)
+    }
+
+    func test_initReshuffling_preservesUrl3Frequency() {
+        // Arrange
+        let cards = [url1, url1, url2, url2, url3, url3].map { Card(imageUrl: $0) }
+
+        // Act
+        let deck = CardDuplicates(reshuffling: cards)
+
+        // Assert
+        XCTAssertEqual(deck.memoryCards.filter { $0.imageUrl == url3 }.count, 2)
     }
 
     // MARK: - init(singles:config:)
@@ -111,76 +122,10 @@ final class CardDuplicatesTests: XCTestCase {
     func test_count_equalsMemoryCardsCount() {
         // Arrange
         let cards = [url1, url2, url1, url2].map { Card(imageUrl: $0) }
+        let deck = CardDuplicates(reshuffling: cards)
 
-        // Act
-        let deck = CardDuplicates(memoryCards: cards)
-
-        // Assert
+        // Act + Assert
         XCTAssertEqual(deck.count, deck.memoryCards.count)
-    }
-
-    // MARK: - subscript
-
-    func test_subscript_returnsCardAtIndex() {
-        // Arrange
-        let cards = [Card(imageUrl: url1), Card(imageUrl: url2), Card(imageUrl: url3)]
-        let deck = CardDuplicates(memoryCards: cards)
-
-        // Act
-        let card = deck[1]
-
-        // Assert
-        XCTAssertEqual(card.imageUrl, url2)
-    }
-
-    // MARK: - shuffle()
-
-    func test_shuffle_preservesCardCount() {
-        // Arrange
-        var deck = CardDuplicates(memoryCards: [url1, url2, url1, url2].map { Card(imageUrl: $0) })
-        let countBefore = deck.count
-
-        // Act
-        deck.shuffle()
-
-        // Assert
-        XCTAssertEqual(deck.count, countBefore)
-    }
-
-    func test_shuffle_preservesUrl1Frequency() {
-        // Arrange
-        var deck = CardDuplicates(memoryCards: [url1, url1, url2, url2, url3, url3].map { Card(imageUrl: $0) })
-
-        // Act
-        deck.shuffle()
-
-        // Assert
-        let count = deck.memoryCards.filter { $0.imageUrl == url1 }.count
-        XCTAssertEqual(count, 2)
-    }
-
-    func test_shuffle_preservesUrl2Frequency() {
-        // Arrange
-        var deck = CardDuplicates(memoryCards: [url1, url1, url2, url2, url3, url3].map { Card(imageUrl: $0) })
-
-        // Act
-        deck.shuffle()
-
-        // Assert
-        let count = deck.memoryCards.filter { $0.imageUrl == url2 }.count
-        XCTAssertEqual(count, 2)
-    }
-
-    func test_shuffle_preservesUrl3Frequency() {
-        // Arrange
-        var deck = CardDuplicates(memoryCards: [url1, url1, url2, url2, url3, url3].map { Card(imageUrl: $0) })
-
-        // Act
-        deck.shuffle()
-
-        // Assert
-        let count = deck.memoryCards.filter { $0.imageUrl == url3 }.count
-        XCTAssertEqual(count, 2)
     }
 
     // MARK: - Helpers

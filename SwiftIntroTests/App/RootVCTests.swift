@@ -19,7 +19,11 @@ final class RootVCTests: XCTestCase {
     // MARK: - Helpers
 
     private func makeCards(count: Int) -> CardDuplicates {
-        CardDuplicates(memoryCards: (0 ..< count).map { Card(imageUrl: URL(string: "https://a.test/\($0).jpg")!) })
+        let paired = (0 ..< count / 2).flatMap { i -> [Card] in
+            let card = Card(imageUrl: URL(string: "https://a.test/\(i).jpg")!)
+            return [card, card]
+        }
+        return CardDuplicates(reshuffling: paired)
     }
 
     // MARK: - init

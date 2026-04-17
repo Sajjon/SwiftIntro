@@ -38,7 +38,7 @@ final class RootVC: UINavigationController {
 extension RootVC: GameSetupNavigatorProtocol {
     /// Pushes the loading screen onto the stack to begin data fetching.
     func navigateToLoading(config: GameConfiguration) {
-        logNav.info("Pushing LoadingVC — query: '\(config.searchQuery)', level: \(config.level)")
+        logNav.info("Pushing LoadingVC — config: \(config)")
         let loadingVC = LoadingVC(config: config)
         loadingVC.navigator = self
         pushViewController(loadingVC, animated: true)
@@ -52,7 +52,7 @@ extension RootVC: LoadingNavigatorProtocol {
     func navigateToGame(_ game: PreparedGame) {
         logNav
             .info(
-                "Replacing LoadingVC with GameVC — level: \(game.config.level), cards: \(game.cards.memoryCards.count)"
+                "Replacing LoadingVC with GameVC — level: \(game.config.level), cards: \(game.cards.count)"
             )
         let gameVC = GameVC(game)
         gameVC.navigator = self
@@ -82,12 +82,13 @@ extension RootVC: GameNavigatorProtocol {
 // MARK: - GameOverNavigatorProtocol
 
 extension RootVC: GameOverNavigatorProtocol {
-    /// Replaces `GameOverVC` + `GameVC` with a new `GameVC` using the same images reshuffled.
+    /// Replaces `GameOverVC` + `GameVC` with a new `GameVC` reusing the same deck in its existing order.
+    ///
+    /// The deck is intentionally **not** reshuffled here — reshuffling on restart is left as a challenge
+    /// (see "Medium" features in README.md).
     func restartGame(_ game: PreparedGame) {
-        logNav.info("Restarting game — replacing GameOverVC + GameVC with a fresh GameVC (same images, reshuffled)")
-        var shuffledCards = game.cards
-        shuffledCards.shuffle()
-        let gameVC = GameVC(PreparedGame(config: game.config, cards: shuffledCards))
+        logNav.info("Restarting game — replacing GameOverVC + GameVC with a fresh GameVC (same images, same order)")
+        let gameVC = GameVC(game)
         gameVC.navigator = self
         var vcs = viewControllers
         guard vcs.count >= 2 else {

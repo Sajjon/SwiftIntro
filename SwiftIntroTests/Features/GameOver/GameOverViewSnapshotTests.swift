@@ -16,10 +16,11 @@ final class GameOverViewSnapshotTests: XCTestCase {
         level: Level = .easy,
         clickCount: Int = 10
     ) -> GameOutcome {
-        let cards = (0 ..< level.cardCount).map { i in
-            Card(imageUrl: URL(string: "https://a.test/\(i).jpg")!)
+        let paired = (0 ..< level.cardCount / 2).flatMap { i -> [Card] in
+            let card = Card(imageUrl: URL(string: "https://a.test/\(i).jpg")!)
+            return [card, card]
         }
-        let deck = CardDuplicates(memoryCards: cards)
+        let deck = CardDuplicates(reshuffling: paired)
         return GameOutcome(level: level, clickCount: clickCount, cards: deck)
     }
 

@@ -14,23 +14,29 @@ concurrency:
 
 jobs:
 
-  # ── 1. Spell-check ──────────────────────────────────────────────────────────
-  typos:
-    name: Typos
-    runs-on: ubuntu-latest
+  ci:
+    name: CI
+    runs-on: macos-26
+    env:
+      RESULT_BUNDLE: .build/TestResults.xcresult
+      COV_XML: .build/coverage.xml
+      SCHEME: SwiftIntro
+      PROJECT: SwiftIntro.xcodeproj
+      SIM_DEVICE: iPhone 17
+      SIM_OS: "26.1"
+      SWIFTLINT_VERSION: "0.63.2"
+
     steps:
       - uses: actions/checkout@v4
+
+      # ── 1. Typos ────────────────────────────────────────────────────────────
+      - name: Install typos
+        run: HOMEBREW_NO_AUTO_UPDATE=1 brew install typos-cli
 
       - name: Check for typos
-        uses: crate-ci/typos@v1
+        run: typos
 
-  # ── 2. SwiftFormat ──────────────────────────────────────────────────────────
-  swiftformat:
-    name: SwiftFormat
-    runs-on: macos-15
-    steps:
-      - uses: actions/checkout@v4
-
+      # ── 2. SwiftFormat ──────────────────────────────────────────────────────
       - name: Install SwiftFormat
         run: brew install swiftformat
 
@@ -38,16 +44,7 @@ jobs:
         # --lint exits non-zero if any file would be reformatted, without writing changes.
         run: swiftformat --lint SwiftIntro
 
-  # ── 3. SwiftLint ────────────────────────────────────────────────────────────
-  swiftlint:
-    name: SwiftLint
-    runs-on: macos-15
-    env:
-      # Keep in sync with the version installed locally via Homebrew.
-      SWIFTLINT_VERSION: "0.63.2"
-    steps:
-      - uses: actions/checkout@v4
-
+      # ── 3. SwiftLint ────────────────────────────────────────────────────────
       - name: Install SwiftLint ${{ env.SWIFTLINT_VERSION }}
         run: |
           curl -fsSL \
@@ -61,21 +58,7 @@ jobs:
         # that appear inline in the PR diff view.
         run: swiftlint lint --strict --reporter github-actions-logging
 
-  # ── 4. Test + coverage ──────────────────────────────────────────────────────
-  coverage:
-    name: Test & Coverage
-    runs-on: macos-26
-    env:
-      RESULT_BUNDLE: .build/TestResults.xcresult
-      COV_XML: .build/coverage.xml
-      SCHEME: SwiftIntro
-      PROJECT: SwiftIntro.xcodeproj
-      SIM_DEVICE: iPhone 17
-      SIM_OS: "26.1"
-
-    steps:
-      - uses: actions/checkout@v4
-
+      # ── 4. Test + coverage ──────────────────────────────────────────────────
       - name: Select Xcode 26.1.1
         run: sudo xcode-select -s /Applications/Xcode_26.1.1.app/Contents/Developer
 
