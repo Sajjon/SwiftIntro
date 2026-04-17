@@ -168,7 +168,7 @@ private extension MemoryDataSourceAndDelegate {
  
 1. Change the color ❤️💛💚💙💜 of the start game button.
 1. Change the title of the start game button.
-1. Change the the backgroundcolor of the cards.
+1. Change the background color of the cards.
 1. Change the duration of the flip card animation.
 1. Switch the position of the _Restart_ button with the _Quit_ button.
 
@@ -177,7 +177,7 @@ private extension MemoryDataSourceAndDelegate {
 
 1. Change the flip card animation from using a horizontal flip to a vertical.
 1. Change the _Quit_ button title, which currently is a text with the char _X_, to use an SF Symbol image instead. 
-1. Set the background of the memory Card to be show an image instead of just a color
+1. Set the background of the memory Card to show an image instead of just a color
 1. Save the best score (lowest _clickCount_ for each level) a user has scored and present this score in the _GameOverVC_, persisted.
 1. It is currently possible for a user to flip a third card while the flip animation of the two previous cards has not yet finished. Address this issue.
 1. Create a timer that counts the time for a game session. Display this time in the _GameOverVC_ after the game has finished, you don't need to display it while playing.
@@ -187,14 +187,14 @@ private extension MemoryDataSourceAndDelegate {
 1. When you press the _Restart_ button from _GameOverVC_ the cards will have the same position as before, this makes it easy to cheat! Your task is to shuffle the cards before restarting the game.  
 1. Implement white space handling for the search query textfield.
 1. Like Indiana Jones - we really dislike snakes - prevent snakes from being searched on and inform user if they try.
-1. Change the feedback message in _GameOverVC_ from _Well done_ to a dynamic title that changes according to how well it went. Some examples strings: _Awesome_, _Not sooo bad_, _That was Horrible_ etc. This string should not be directly dependent on only _Level_, or only _clickCount_, but rather..?
-1. Make it possible to set the number of cards to a custom number. Currently the number of cards are determined base on which difficulty level you chose in the GameSetupVC. 
-1. Enable Landscape mode for all the views.
-1. Fetch the images from another source than Wikimedia, e.g. Unsplash which requires API Key. Update code project to **securely** handle API key and secrets.	
+1. Change the feedback message in _GameOverVC_ from _Well done_ to a dynamic title that changes according to how well it went. Some example strings: _Awesome_, _Not sooo bad_, _That was Horrible_, etc. This string should not be directly dependent on only _Level_ or only _clickCount_, but rather..?
+1. Make it possible to set the number of cards to a custom number. Currently, the number of cards is determined based on which difficulty level you chose in the GameSetupVC.
+1. Enable landscape mode for all views.
+1. Fetch the images from another source than Wikimedia, e.g. Unsplash, which requires an API key. Update the project code to **securely** handle API keys and secrets.
 
 ### iPadOS
 #### Multi-window
-Lets add an iPad only feature, where we can see the cards we have already matched, in another window.
+Let's add an iPad-only feature where we can see the cards we have already matched in another window.
 
 ## Swift techniques
 ### `@dynamicMemberLookup`

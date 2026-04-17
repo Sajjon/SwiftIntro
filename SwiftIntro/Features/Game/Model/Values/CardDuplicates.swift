@@ -39,13 +39,20 @@ struct CardDuplicates {
 
     /// Creates a deck from unique cards, duplicating and shuffling to fill the board
     /// defined by `config.level`.
+    ///
+    /// Preconditions that `singles.cards.count >= config.level.cardCount / 2`; otherwise
+    /// the deck would be shorter than the grid derived from `Level`, risking out-of-bounds
+    /// access during cell configuration.
     init(
         singles: CardSingles,
         config: GameConfiguration
     ) {
-        // Pick half as many unique images as the board needs total slots;
-        // `choose` caps at the pool size if the pool is smaller.
-        let chosen = singles.cards.choose(config.level.cardCount / 2)
+        let requiredPairs = config.level.cardCount / 2
+        let chosen = singles.cards.choose(requiredPairs)
+        precondition(
+            chosen.count == requiredPairs,
+            "Not enough unique cards for level \(config.level): need \(requiredPairs) uniques, got \(chosen.count)"
+        )
         // Each image appears exactly twice — once per matching pair.
         var shuffled = chosen.flatMap { [$0, $0] }
         shuffled.shuffle()

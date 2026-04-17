@@ -82,11 +82,12 @@ extension RootVC: GameNavigatorProtocol {
 // MARK: - GameOverNavigatorProtocol
 
 extension RootVC: GameOverNavigatorProtocol {
-    /// Replaces `GameOverVC` + `GameVC` with a new `GameVC` using the same images.
+    /// Replaces `GameOverVC` + `GameVC` with a new `GameVC` reusing the same deck in its existing order.
     ///
-    /// The deck is already freshly shuffled — `CardDuplicates` enforces that invariant on construction.
+    /// The deck is intentionally **not** reshuffled here — reshuffling on restart is left as a challenge
+    /// (see "Medium" features in README.md).
     func restartGame(_ game: PreparedGame) {
-        logNav.info("Restarting game — replacing GameOverVC + GameVC with a fresh GameVC (same images, reshuffled)")
+        logNav.info("Restarting game — replacing GameOverVC + GameVC with a fresh GameVC (same images, same order)")
         let gameVC = GameVC(game)
         gameVC.navigator = self
         var vcs = viewControllers
