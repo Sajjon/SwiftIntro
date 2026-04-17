@@ -18,6 +18,7 @@
 		48DEC8BC2F90C9E300DEBF95 /* ImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DEC8BB2F90C9E300DEBF95 /* ImageFetcher.swift */; };
 		48DEC8BD2F90C9E300DEBF95 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DEC8BA2F90C9E300DEBF95 /* ImageCache.swift */; };
 		48DEC8C02F90C9F000DEBF95 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DEC8BE2F90C9F000DEBF95 /* HTTPClient.swift */; };
+		48EF26602F925B3F00247ACF /* GameSetupViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EF265F2F925B3F00247ACF /* GameSetupViewSnapshotTests.swift */; };
 		7B21A5B01CFF5C17002E5EE5 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5AC1CFF5C17002E5EE5 /* App.swift */; };
 		7B21A5B41CFF5CAC002E5EE5 /* WikimediaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5B31CFF5CAC002E5EE5 /* WikimediaClient.swift */; };
 		7B21A5B81CFF5E7B002E5EE5 /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B21A5B71CFF5E7B002E5EE5 /* GameVC.swift */; };
@@ -84,7 +85,6 @@
 		TS020002TS020002TS020002 /* GameHeaderViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS020001TS020001TS020001 /* GameHeaderViewSnapshotTests.swift */; };
 		TS030002TS030002TS030002 /* LoadingViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS030001TS030001TS030001 /* LoadingViewSnapshotTests.swift */; };
 		TS040002TS040002TS040002 /* GameOverViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS040001TS040001TS040001 /* GameOverViewSnapshotTests.swift */; };
-		TS050002TS050002TS050002 /* SettingsViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS050001TS050001TS050001 /* SettingsViewSnapshotTests.swift */; };
 		TS060002TS060002TS060002 /* GameViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS060001TS060001TS060001 /* GameViewSnapshotTests.swift */; };
 		TS070002TS070002TS070002 /* CardCVCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TS070001TS070001TS070001 /* CardCVCellSnapshotTests.swift */; };
 		TU000002TU000002TU000002 /* GameOverVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TU000001TU000001TU000001 /* GameOverVCTests.swift */; };
@@ -120,6 +120,7 @@
 		48DEC8BA2F90C9E300DEBF95 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		48DEC8BB2F90C9E300DEBF95 /* ImageFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFetcher.swift; sourceTree = "<group>"; };
 		48DEC8BE2F90C9F000DEBF95 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		48EF265F2F925B3F00247ACF /* GameSetupViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSetupViewSnapshotTests.swift; sourceTree = "<group>"; };
 		7B21A5AC1CFF5C17002E5EE5 /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		7B21A5B31CFF5CAC002E5EE5 /* WikimediaClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikimediaClient.swift; sourceTree = "<group>"; };
 		7B21A5B71CFF5E7B002E5EE5 /* GameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
@@ -182,7 +183,6 @@
 		TS020001TS020001TS020001 /* GameHeaderViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHeaderViewSnapshotTests.swift; sourceTree = "<group>"; };
 		TS030001TS030001TS030001 /* LoadingViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewSnapshotTests.swift; sourceTree = "<group>"; };
 		TS040001TS040001TS040001 /* GameOverViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverViewSnapshotTests.swift; sourceTree = "<group>"; };
-		TS050001TS050001TS050001 /* SettingsViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewSnapshotTests.swift; sourceTree = "<group>"; };
 		TS060001TS060001TS060001 /* GameViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewSnapshotTests.swift; sourceTree = "<group>"; };
 		TS070001TS070001TS070001 /* CardCVCellSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCVCellSnapshotTests.swift; sourceTree = "<group>"; };
 		TU000001TU000001TU000001 /* GameOverVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverVCTests.swift; sourceTree = "<group>"; };
@@ -552,9 +552,9 @@
 		GRPGSU001GRPGSU001GRPGSU001 /* GameSetup */ = {
 			isa = PBXGroup;
 			children = (
+				48EF265F2F925B3F00247ACF /* GameSetupViewSnapshotTests.swift */,
 				TV000001TV000001TV000001 /* GameSetupVCTests.swift */,
 				TW000001TW000001TW000001 /* GameSetupViewTests.swift */,
-				TS050001TS050001TS050001 /* SettingsViewSnapshotTests.swift */,
 			);
 			path = GameSetup;
 			sourceTree = "<group>";
@@ -782,9 +782,9 @@
 				TS020002TS020002TS020002 /* GameHeaderViewSnapshotTests.swift in Sources */,
 				TS030002TS030002TS030002 /* LoadingViewSnapshotTests.swift in Sources */,
 				TS040002TS040002TS040002 /* GameOverViewSnapshotTests.swift in Sources */,
-				TS050002TS050002TS050002 /* SettingsViewSnapshotTests.swift in Sources */,
 				TS060002TS060002TS060002 /* GameViewSnapshotTests.swift in Sources */,
 				TS070002TS070002TS070002 /* CardCVCellSnapshotTests.swift in Sources */,
+				48EF26602F925B3F00247ACF /* GameSetupViewSnapshotTests.swift in Sources */,
 			);
 		};
 /* End PBXSourcesBuildPhase section */
