@@ -120,12 +120,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "e.g. cats, mountains, space"
+            "value" : "e.g. dogs, mountains, space"
           }
         },
         "sv" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "t.ex. katter, berg, rymden"
           }
         }

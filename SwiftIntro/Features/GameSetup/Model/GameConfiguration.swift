@@ -14,7 +14,7 @@ struct GameConfiguration {
     var level: Level = .normal
 
     /// The Wikimedia Commons search term used to fetch card images.
-    var searchQuery: String = "cats"
+    var searchQuery: String = "dogs"
 }
 
 extension GameConfiguration: CustomStringConvertible {

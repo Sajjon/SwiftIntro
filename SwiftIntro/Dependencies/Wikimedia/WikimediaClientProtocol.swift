@@ -15,7 +15,7 @@ protocol WikimediaClientProtocol {
     /// the results as a set of unique `Card` values.
     ///
     /// - Parameters:
-    ///   - searchQuery: The search term (e.g. "cats") forwarded to the Wikimedia API.
+    ///   - searchQuery: The search term (e.g. "dogs") forwarded to the Wikimedia API.
     ///   - done: Called on an arbitrary background queue with `.success(CardSingles)`
     ///     on success, or `.failure(Error)` if the network request or JSON decoding fails.
     func findImages(
