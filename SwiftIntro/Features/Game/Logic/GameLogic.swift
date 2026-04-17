@@ -120,13 +120,13 @@ private extension GameLogic {
             .notice(
                 "Game over — all \(newModel.totalPairs) pairs matched in \(newModel.clickCount) clicks (level: \(newModel.level))"
             )
-        // Reconstruct the deck from image URLs so the game-over screen can restart
+        // Rebuild the deck from image URLs so the game-over screen can restart
         // with the same images in a freshly shuffled order.
         let cards = newModel.cards.map(\.card)
         let outcome = GameOutcome(
             level: newModel.level,
             clickCount: newModel.clickCount,
-            cards: CardDuplicates(memoryCards: cards)
+            cards: CardDuplicates(reshuffling: cards)
         )
         return .next(newModel, effects: [.flipCard(index: index, faceUp: true), .navigateToGameOver(outcome: outcome)])
     }

@@ -52,7 +52,7 @@ extension RootVC: LoadingNavigatorProtocol {
     func navigateToGame(_ game: PreparedGame) {
         logNav
             .info(
-                "Replacing LoadingVC with GameVC — level: \(game.config.level), cards: \(game.cards.memoryCards.count)"
+                "Replacing LoadingVC with GameVC — level: \(game.config.level), cards: \(game.cards.count)"
             )
         let gameVC = GameVC(game)
         gameVC.navigator = self
@@ -82,12 +82,12 @@ extension RootVC: GameNavigatorProtocol {
 // MARK: - GameOverNavigatorProtocol
 
 extension RootVC: GameOverNavigatorProtocol {
-    /// Replaces `GameOverVC` + `GameVC` with a new `GameVC` using the same images reshuffled.
+    /// Replaces `GameOverVC` + `GameVC` with a new `GameVC` using the same images.
+    ///
+    /// The deck is already freshly shuffled — `CardDuplicates` enforces that invariant on construction.
     func restartGame(_ game: PreparedGame) {
         logNav.info("Restarting game — replacing GameOverVC + GameVC with a fresh GameVC (same images, reshuffled)")
-        var shuffledCards = game.cards
-        shuffledCards.shuffle()
-        let gameVC = GameVC(PreparedGame(config: game.config, cards: shuffledCards))
+        let gameVC = GameVC(game)
         gameVC.navigator = self
         var vcs = viewControllers
         guard vcs.count >= 2 else {

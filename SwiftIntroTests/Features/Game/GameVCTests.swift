@@ -42,10 +42,14 @@ final class GameVCTests: XCTestCase {
         Card(imageUrl: URL(string: "https://a.test/\(index).jpg")!)
     }
 
-    /// Returns a `CardDuplicates` deck with `count` distinct cards (not paired — suitable for
-    /// direct `GameVC` construction without requiring a real shuffle).
+    /// Returns a `CardDuplicates` deck of `count` cards (must be even) where each
+    /// image appears exactly twice, satisfying the deck's pair invariant.
     private func makeCards(count: Int) -> CardDuplicates {
-        CardDuplicates(memoryCards: (0 ..< count).map { makeCard(index: $0) })
+        let paired = (0 ..< count / 2).flatMap { i -> [Card] in
+            let card = makeCard(index: i)
+            return [card, card]
+        }
+        return CardDuplicates(reshuffling: paired)
     }
 
     private func makeVC(level: Level = .easy) -> GameVC {
@@ -302,23 +306,12 @@ final class GameVCTests: XCTestCase {
     // MARK: - navigateToGameOver
 
     func test_navigateToGameOver_callsNavigatorWithOutcome() {
-        // Arrange — build properly paired cards so all 3 easy pairs can be matched.
-        // Adjacent indices share a URL: (0,1), (2,3), (4,5).
-        let pairURL: (Int) -> URL = { URL(string: "https://a.test/pair\($0).jpg")! }
-        let pairedCards = CardDuplicates(memoryCards: (0 ..< 3).flatMap { i -> [Card] in
-            let url = pairURL(i)
-            return [Card(imageUrl: url), Card(imageUrl: url)]
-        })
+        // Arrange — 3 paired cards (easy = 3 pairs). Deck is shuffled, so locate
+        // matching index pairs by URL after construction.
+        let pairedCards = makePairedCards(pairCount: 3)
+        let pairs = pairIndices(in: pairedCards)
         let vc = GameVC(PreparedGame(config: GameConfiguration(level: .easy), cards: pairedCards))
-        final class SpyNavigator: GameNavigatorProtocol {
-            var onNavigateToGameOver: (() -> Void)?
-            private(set) var lastOutcome: GameOutcome?
-            func navigateToGameOver(outcome: GameOutcome) {
-                lastOutcome = outcome
-                onNavigateToGameOver?()
-            }
-        }
-        let spy = SpyNavigator()
+        let spy = SpyGameNavigator()
         vc.navigator = spy
         _ = vc.view
         let exp = expectation(description: "navigateToGameOver called")
@@ -326,14 +319,46 @@ final class GameVCTests: XCTestCase {
 
         // Act — tap each pair; the last match triggers the navigator via ImmediateClock
         let ds = dataSourceAndDelegate(of: vc)
-        for i in stride(from: 0, to: Level.easy.cardCount, by: 2) {
-            ds.onCardTapped?(i)
-            ds.onCardTapped?(i + 1)
+        for (first, second) in pairs {
+            ds.onCardTapped?(first)
+            ds.onCardTapped?(second)
         }
 
         // Assert — ImmediateClock fires on the next main-queue cycle, well within 1 s
         waitForExpectations(timeout: 1)
         XCTAssertNotNil(spy.lastOutcome)
         vc.viewDidDisappear(false)
+    }
+
+    // MARK: - Pairing helpers
+
+    private func makePairedCards(pairCount: Int) -> CardDuplicates {
+        let cards = (0 ..< pairCount).flatMap { i -> [Card] in
+            let card = Card(imageUrl: URL(string: "https://a.test/pair\(i).jpg")!)
+            return [card, card]
+        }
+        return CardDuplicates(reshuffling: cards)
+    }
+
+    private func pairIndices(in deck: CardDuplicates) -> [(Int, Int)] {
+        var seen: [URL: Int] = [:]
+        var pairs: [(Int, Int)] = []
+        for (idx, card) in deck.memoryCards.enumerated() {
+            if let first = seen[card.imageUrl] {
+                pairs.append((first, idx))
+            } else {
+                seen[card.imageUrl] = idx
+            }
+        }
+        return pairs
+    }
+}
+
+private final class SpyGameNavigator: GameNavigatorProtocol {
+    var onNavigateToGameOver: (() -> Void)?
+    private(set) var lastOutcome: GameOutcome?
+    func navigateToGameOver(outcome: GameOutcome) {
+        lastOutcome = outcome
+        onNavigateToGameOver?()
     }
 }

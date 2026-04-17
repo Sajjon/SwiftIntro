@@ -45,7 +45,11 @@ final class GameOverVCTests: XCTestCase {
     }
 
     private func makeCards(count: Int) -> CardDuplicates {
-        CardDuplicates(memoryCards: (0 ..< count).map { makeCard(index: $0) })
+        let paired = (0 ..< count / 2).flatMap { i -> [Card] in
+            let card = makeCard(index: i)
+            return [card, card]
+        }
+        return CardDuplicates(reshuffling: paired)
     }
 
     private func makeOutcome(
