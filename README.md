@@ -200,8 +200,11 @@ Let's add an iPad-only feature where we can see the cards we have already matche
 ### `@dynamicMemberLookup`
 Split immutable values from mutable ones in `GameModel` and use `@dynamicMemberLookup` to make this virtually identical to what we had.
 
-### Span + Value Generics
+### InlineArray + Value Generics
+This is a terrible idea for this project, but interesting Swift exercise to see if we can replace usage of `Array<Card>` (dynamically sized) with a statically sized `InlineArray<N; Card>` - since we are only allowing a certain fixed amount of cards.
+
 ### Typed Throws
+Upgrade error to typed throws.
 
 # ClaudeIntro
 ## Hooks
