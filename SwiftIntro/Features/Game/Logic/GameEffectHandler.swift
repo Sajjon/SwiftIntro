@@ -9,17 +9,11 @@ import Factory
 import MobiusCore
 import UIKit
 
-/// Executes `GameEffect`s — all side effects (animations, timers, navigation) live here.
+/// Executes `GameEffect<N>`s — all side effects (animations, timers, navigation) live here.
 ///
-/// `GameEffectHandler` implements `Connectable<GameEffect, GameEvent>`, which is the
-/// Mobius contract for the effect-handler side of the loop. The framework calls
-/// `connect(_:)` once when the loop starts and provides a `dispatch` closure the
-/// handler uses to feed new events (e.g. `.flipBackCards`) back into the loop.
-///
-/// It also caches the latest `GameModel` so the UIKit data source can ask
-/// "can this card be selected?" and "how should this cell look?" without
-/// coupling the data source to the Mobius loop directly.
-final class GameEffectHandler {
+/// Generic over the compile-time card count `N`, so that the cached `GameModel<N>` and
+/// the outcome carried by `.navigateToGameOver` are all sized consistently.
+final class GameEffectHandler<let N: Int> {
     /// The collection view managed by the game screen.
     /// Held weakly to avoid a retain cycle with the view controller.
     weak var collectionView: UICollectionView?
@@ -28,14 +22,16 @@ final class GameEffectHandler {
     let level: Level
 
     /// Called when the game is won, to trigger navigation.
-    var onNavigateToGameOver: ((GameOutcome) -> Void)?
+    ///
+    /// Takes a concrete `GameOutcome<N>`; the owning `GameVC<N>` is responsible for
+    /// wrapping it into an `AnyGameOutcome` before handing it to the navigator.
+    var onNavigateToGameOver: ((GameOutcome<N>) -> Void)?
 
     /// Injected clock — controls how delayed dispatches are scheduled.
     /// `MainQueueClock` in production; `ImmediateClock` in tests.
     @Injected(\.clock) private var clock
 
     /// Cancellable work item for the delayed flip-back timer.
-    /// Stored so it can be cancelled if the loop stops before the delay fires.
     private var flipBackWorkItem: DispatchWorkItem?
 
     /// The most recent model snapshot, updated on every Mobius loop tick.
@@ -43,13 +39,10 @@ final class GameEffectHandler {
     /// Pre-seeded with the initial model so `configureCell` and `canSelectCard`
     /// work on the very first `willDisplay` call, before the loop's first
     /// asynchronous model delivery arrives.
-    private var currentModel: GameModel?
+    private var currentModel: GameModel<N>?
 
-    /// - Parameters:
-    ///   - initialModel: The starting model, used to configure cells on first display
-    ///     before the Mobius loop delivers its first asynchronous model update.
     init(
-        initialModel: GameModel
+        initialModel: GameModel<N>
     ) {
         level = initialModel.level
         currentModel = initialModel
@@ -57,7 +50,7 @@ final class GameEffectHandler {
 
     /// Stores the latest model so closure-based queries from the data source reflect
     /// current game state (flip status, match status).
-    func update(with model: GameModel) {
+    func update(with model: GameModel<N>) {
         currentModel = model
     }
 
@@ -70,9 +63,6 @@ final class GameEffectHandler {
     }
 
     /// Configures `cell` to reflect the current visual state of the card at `index`.
-    ///
-    /// Called from `willDisplay` in the data source, which fires whenever a cell
-    /// enters the visible area of the collection view.
     func configureCell(
         _ cell: CardCVCell,
         at index: Int
@@ -85,16 +75,10 @@ final class GameEffectHandler {
 // MARK: - Connectable
 
 extension GameEffectHandler: Connectable {
-    typealias Input = GameEffect
+    typealias Input = GameEffect<N>
     typealias Output = GameEvent
 
-    /// Called once by `MobiusController` when the loop starts.
-    ///
-    /// - Parameter consumer: The event dispatch closure — call it to send events
-    ///   (e.g. `.flipBackCards`) back into the Mobius loop.
-    /// - Returns: A `Connection` whose `acceptClosure` handles each incoming effect
-    ///   and whose `disposeClosure` cancels any pending timers on teardown.
-    func connect(_ consumer: @escaping (GameEvent) -> Void) -> Connection<GameEffect> {
+    func connect(_ consumer: @escaping (GameEvent) -> Void) -> Connection<GameEffect<N>> {
         Connection(
             acceptClosure: { [weak self] effect in
                 self?.handle(effect, dispatch: consumer)
@@ -111,7 +95,7 @@ extension GameEffectHandler: Connectable {
 private extension GameEffectHandler {
     /// Routes an incoming effect to the appropriate handler.
     func handle(
-        _ effect: GameEffect,
+        _ effect: GameEffect<N>,
         dispatch: @escaping (GameEvent) -> Void
     ) {
         logGame.debug("Handling effect: \(effect)")
@@ -146,16 +130,14 @@ private extension GameEffectHandler {
         dispatch: @escaping (GameEvent) -> Void
     ) {
         logGame.debug("Scheduling flip-back for cards \(index1) and \(index2) after 1 s")
-        // The returned work item is stored so stop() can cancel it before the delay fires.
         flipBackWorkItem = clock.schedule(after: 1.0) {
             dispatch(.flipBackCards(index1: index1, index2: index2))
         }
     }
 
     /// Fires `onNavigateToGameOver` after a short delay so the final flip animation finishes first.
-    func handleNavigateToGameOver(outcome: GameOutcome) {
+    func handleNavigateToGameOver(outcome: GameOutcome<N>) {
         logGame.info("Final flip complete — scheduling navigation to game-over screen after 1 s delay")
-        // Short delay lets the final flip animation complete before navigating away.
         clock.schedule(after: 1.0) { [weak self] in
             logGame.debug("Firing onNavigateToGameOver callback")
             self?.onNavigateToGameOver?(outcome)
@@ -163,9 +145,6 @@ private extension GameEffectHandler {
     }
 
     /// Converts a row-major flat index into a `UICollectionView` `IndexPath`.
-    ///
-    /// The collection view uses sections for rows and items for columns:
-    /// `section = flatIndex / columnCount`, `item = flatIndex % columnCount`.
     func indexPath(for flatIndex: Int) -> IndexPath {
         IndexPath(
             item: flatIndex % level.columnCount,

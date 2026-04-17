@@ -44,7 +44,7 @@ final class LoadingViewModel {
     // MARK: - Navigation
 
     /// Called on the main thread when images are cached and the game is ready to start.
-    var onNavigateToGame: ((PreparedGame) -> Void)?
+    var onNavigateToGame: ((AnyPreparedGame) -> Void)?
 
     // MARK: - Init
 
@@ -107,14 +107,34 @@ extension LoadingViewModel {
         }
     }
 
+    // swiftlint:disable:next function_body_length
     private func handleFetchSuccess(singles: CardSingles) {
-        let cards = CardDuplicates(singles: singles, config: config)
+        // Dispatch the runtime-selected `Level` into a compile-time `N`. This is the one
+        // place in the pipeline where `Level` is resolved into a `CardDuplicates<N>` of
+        // known size; every downstream type is fully specialised from here on.
+        let prepared: AnyPreparedGame = switch config.level {
+        case .easy:
+            .easy(PreparedGame<6>(
+                config: config,
+                cards: CardDuplicates<6>(singles: singles, config: config)
+            ))
+        case .normal:
+            .normal(PreparedGame<12>(
+                config: config,
+                cards: CardDuplicates<12>(singles: singles, config: config)
+            ))
+        case .hard:
+            .hard(PreparedGame<20>(
+                config: config,
+                cards: CardDuplicates<20>(singles: singles, config: config)
+            ))
+        }
         let urls = singles.cards.map(\.imageUrl)
         logNet.debug("Prefetching \(urls.count) image URL(s) into cache")
         imageCache.prefetchImages(urls) { [weak self] in
             logNet.info("All images in memory cache — navigating to game")
             guard let self else { return }
-            onNavigateToGame?(PreparedGame(config: config, cards: cards))
+            onNavigateToGame?(prepared)
         }
     }
 }

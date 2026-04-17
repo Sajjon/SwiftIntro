@@ -12,7 +12,7 @@ import UIKit
 /// `RootVC` owns the `UINavigationController` stack and handles every screen
 /// transition in the game flow:
 ///
-///     Boot → GameSetupVC → LoadingVC → GameVC → GameOverVC → GameSetupVC
+///     Boot → GameSetupVC → LoadingVC → GameVC<N> → GameOverVC → GameSetupVC
 ///
 /// All navigator protocols are implemented here so that individual view
 /// controllers stay navigation-agnostic — they call a protocol method and
@@ -48,14 +48,13 @@ extension RootVC: GameSetupNavigatorProtocol {
 // MARK: - LoadingNavigatorProtocol
 
 extension RootVC: LoadingNavigatorProtocol {
-    /// Replaces `LoadingVC` with `GameVC` so the player cannot back-swipe to the loading screen.
-    func navigateToGame(_ game: PreparedGame) {
+    /// Replaces `LoadingVC` with `GameVC<N>` so the player cannot back-swipe to the loading screen.
+    func navigateToGame(_ game: AnyPreparedGame) {
         logNav
             .info(
-                "Replacing LoadingVC with GameVC — level: \(game.config.level), cards: \(game.cards.count)"
+                "Replacing LoadingVC with GameVC — level: \(game.config.level), cards: \(game.cardCount)"
             )
-        let gameVC = GameVC(game)
-        gameVC.navigator = self
+        let gameVC = makeGameVC(from: game)
         var vcs = viewControllers
         guard !vcs.isEmpty else {
             logNav.error("navigateToGame: navigation stack is empty — cannot replace last VC")
@@ -70,7 +69,7 @@ extension RootVC: LoadingNavigatorProtocol {
 
 extension RootVC: GameNavigatorProtocol {
     /// Pushes `GameOverVC` after the final flip animation completes.
-    func navigateToGameOver(outcome: GameOutcome) {
+    func navigateToGameOver(outcome: AnyGameOutcome) {
         logNav.info("Pushing GameOverVC — clicks: \(outcome.clickCount), level: \(outcome.level)")
         let config = GameConfiguration(level: outcome.level)
         let gameOverVC = GameOverVC(config: config, outcome: outcome)
@@ -83,13 +82,9 @@ extension RootVC: GameNavigatorProtocol {
 
 extension RootVC: GameOverNavigatorProtocol {
     /// Replaces `GameOverVC` + `GameVC` with a new `GameVC` reusing the same deck in its existing order.
-    ///
-    /// The deck is intentionally **not** reshuffled here — reshuffling on restart is left as a challenge
-    /// (see "Medium" features in README.md).
-    func restartGame(_ game: PreparedGame) {
+    func restartGame(_ game: AnyPreparedGame) {
         logNav.info("Restarting game — replacing GameOverVC + GameVC with a fresh GameVC (same images, same order)")
-        let gameVC = GameVC(game)
-        gameVC.navigator = self
+        let gameVC = makeGameVC(from: game)
         var vcs = viewControllers
         guard vcs.count >= 2 else {
             logNav.error("restartGame: navigation stack too shallow — expected at least 2")
@@ -105,4 +100,35 @@ extension RootVC: GameOverNavigatorProtocol {
         logNav.info("Quitting game — popping to GameSetupVC (root)")
         popToRootViewController(animated: true)
     }
+}
+
+// MARK: - Private
+
+private extension RootVC {
+    // swiftlint:disable function_body_length
+
+    /// Dispatches on the `AnyPreparedGame` case to construct the matching `GameVC<N>`,
+    /// supplying the `wrapOutcome` closure that re-erases `GameOutcome<N>` back into
+    /// `AnyGameOutcome` at game-over time. The body is a pure 3-case dispatch, so
+    /// splitting it into per-level helpers would only add indirection.
+    func makeGameVC(from game: AnyPreparedGame) -> UIViewController {
+        let vc: UIViewController
+        switch game {
+        case let .easy(g):
+            let gameVC = GameVC<6>(g, wrapOutcome: AnyGameOutcome.easy)
+            gameVC.navigator = self
+            vc = gameVC
+        case let .normal(g):
+            let gameVC = GameVC<12>(g, wrapOutcome: AnyGameOutcome.normal)
+            gameVC.navigator = self
+            vc = gameVC
+        case let .hard(g):
+            let gameVC = GameVC<20>(g, wrapOutcome: AnyGameOutcome.hard)
+            gameVC.navigator = self
+            vc = gameVC
+        }
+        return vc
+    }
+
+    // swiftlint:enable function_body_length
 }

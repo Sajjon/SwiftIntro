@@ -10,11 +10,10 @@
 //  - Assert:  verify a single observable outcome (1 line)
 //
 
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
 final class LevelTests: XCTestCase {
-
     // MARK: - rowCount
 
     func test_easy_rowCount_isThree() {
@@ -95,7 +94,7 @@ final class LevelTests: XCTestCase {
         let count = level.cardCount
 
         // Assert
-        XCTAssertEqual(count, 6)   // 2 columns × 3 rows
+        XCTAssertEqual(count, 6) // 2 columns × 3 rows
     }
 
     func test_normal_cardCount_isTwelve() {
@@ -106,7 +105,7 @@ final class LevelTests: XCTestCase {
         let count = level.cardCount
 
         // Assert
-        XCTAssertEqual(count, 12)  // 3 columns × 4 rows
+        XCTAssertEqual(count, 12) // 3 columns × 4 rows
     }
 
     func test_hard_cardCount_isTwenty() {
@@ -117,7 +116,7 @@ final class LevelTests: XCTestCase {
         let count = level.cardCount
 
         // Assert
-        XCTAssertEqual(count, 20)  // 4 columns × 5 rows
+        XCTAssertEqual(count, 20) // 4 columns × 5 rows
     }
 
     func test_cardCount_equalsRowsTimesColumns_forEasy() {

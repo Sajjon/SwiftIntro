@@ -81,7 +81,7 @@ final class WikimediaClientTests: XCTestCase {
         var receivedSingles: CardSingles?
 
         // Act
-		wikimediaClient.findImages(with: "cats") { result in
+        wikimediaClient.findImages(with: "cats") { result in
             if case let .success(singles) = result { receivedSingles = singles }
             exp.fulfill()
         }

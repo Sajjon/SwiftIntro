@@ -10,11 +10,10 @@
 //  - Assert:  verify a single observable outcome (1 line)
 //
 
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
 final class CardDuplicatesTests: XCTestCase {
-
     private let url1 = URL(string: "https://example.com/1.jpg")!
     private let url2 = URL(string: "https://example.com/2.jpg")!
     private let url3 = URL(string: "https://example.com/3.jpg")!
@@ -25,8 +24,8 @@ final class CardDuplicatesTests: XCTestCase {
         // Arrange
         let cards = [url1, url1, url2, url2].map { Card(imageUrl: $0) }
 
-        // Act
-        let deck = CardDuplicates(reshuffling: cards)
+        // Act — `N` is picked up from the explicit return type of the deck binding.
+        let deck = CardDuplicates<4>(reshuffling: cards)
 
         // Assert
         XCTAssertEqual(deck.count, 4)
@@ -37,10 +36,10 @@ final class CardDuplicatesTests: XCTestCase {
         let cards = [url1, url1, url2, url2, url3, url3].map { Card(imageUrl: $0) }
 
         // Act
-        let deck = CardDuplicates(reshuffling: cards)
+        let deck = CardDuplicates<6>(reshuffling: cards)
 
         // Assert
-        XCTAssertEqual(deck.memoryCards.filter { $0.imageUrl == url1 }.count, 2)
+        XCTAssertEqual(deck.asArray.count(where: { $0.imageUrl == url1 }), 2)
     }
 
     func test_initReshuffling_preservesUrl2Frequency() {
@@ -48,10 +47,10 @@ final class CardDuplicatesTests: XCTestCase {
         let cards = [url1, url1, url2, url2, url3, url3].map { Card(imageUrl: $0) }
 
         // Act
-        let deck = CardDuplicates(reshuffling: cards)
+        let deck = CardDuplicates<6>(reshuffling: cards)
 
         // Assert
-        XCTAssertEqual(deck.memoryCards.filter { $0.imageUrl == url2 }.count, 2)
+        XCTAssertEqual(deck.asArray.count(where: { $0.imageUrl == url2 }), 2)
     }
 
     func test_initReshuffling_preservesUrl3Frequency() {
@@ -59,10 +58,10 @@ final class CardDuplicatesTests: XCTestCase {
         let cards = [url1, url1, url2, url2, url3, url3].map { Card(imageUrl: $0) }
 
         // Act
-        let deck = CardDuplicates(reshuffling: cards)
+        let deck = CardDuplicates<6>(reshuffling: cards)
 
         // Assert
-        XCTAssertEqual(deck.memoryCards.filter { $0.imageUrl == url3 }.count, 2)
+        XCTAssertEqual(deck.asArray.count(where: { $0.imageUrl == url3 }), 2)
     }
 
     // MARK: - init(singles:config:)
@@ -73,7 +72,7 @@ final class CardDuplicatesTests: XCTestCase {
         let config = GameConfiguration(level: .easy, searchQuery: "test")
 
         // Act
-        let deck = CardDuplicates(singles: singles, config: config)
+        let deck = CardDuplicates<6>(singles: singles, config: config)
 
         // Assert — easy = 2×3 = 6 cards (3 pairs)
         XCTAssertEqual(deck.count, 6)
@@ -85,7 +84,7 @@ final class CardDuplicatesTests: XCTestCase {
         let config = GameConfiguration(level: .normal, searchQuery: "test")
 
         // Act
-        let deck = CardDuplicates(singles: singles, config: config)
+        let deck = CardDuplicates<12>(singles: singles, config: config)
 
         // Assert — normal = 3×4 = 12 cards (6 pairs)
         XCTAssertEqual(deck.count, 12)
@@ -97,7 +96,7 @@ final class CardDuplicatesTests: XCTestCase {
         let config = GameConfiguration(level: .hard, searchQuery: "test")
 
         // Act
-        let deck = CardDuplicates(singles: singles, config: config)
+        let deck = CardDuplicates<20>(singles: singles, config: config)
 
         // Assert — hard = 4×5 = 20 cards (10 pairs)
         XCTAssertEqual(deck.count, 20)
@@ -109,30 +108,32 @@ final class CardDuplicatesTests: XCTestCase {
         let config = GameConfiguration(level: .easy, searchQuery: "test")
 
         // Act
-        let deck = CardDuplicates(singles: singles, config: config)
+        let deck = CardDuplicates<6>(singles: singles, config: config)
 
         // Assert — build a frequency map and verify every URL appears exactly twice
         var frequency: [URL: Int] = [:]
-        for card in deck.memoryCards { frequency[card.imageUrl, default: 0] += 1 }
+        for card in deck.asArray {
+            frequency[card.imageUrl, default: 0] += 1
+        }
         XCTAssertTrue(frequency.values.allSatisfy { $0 == 2 }, "Every image must appear exactly twice")
     }
 
     // MARK: - count
 
-    func test_count_equalsMemoryCardsCount() {
+    func test_count_equalsCompileTimeN() {
         // Arrange
         let cards = [url1, url2, url1, url2].map { Card(imageUrl: $0) }
-        let deck = CardDuplicates(reshuffling: cards)
+        let deck = CardDuplicates<4>(reshuffling: cards)
 
-        // Act + Assert
-        XCTAssertEqual(deck.count, deck.memoryCards.count)
+        // Act + Assert — `count` is derived from the compile-time parameter `N`.
+        XCTAssertEqual(deck.count, 4)
     }
 
     // MARK: - Helpers
 
     /// Creates a `CardSingles` pool with `count` unique image URLs.
     private func makeSingles(count: Int) -> CardSingles {
-        let cards = (0..<count).map { i in Card(imageUrl: URL(string: "https://example.com/\(i).jpg")!) }
+        let cards = (0 ..< count).map { i in Card(imageUrl: URL(string: "https://example.com/\(i).jpg")!) }
         return CardSingles(cards: cards)
     }
 }

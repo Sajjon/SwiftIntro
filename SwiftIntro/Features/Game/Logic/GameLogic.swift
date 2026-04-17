@@ -12,8 +12,12 @@ import MobiusCore
 /// `GameLogic` is a namespace (caseless enum) for the Mobius `update` function.
 /// It is stateless and side-effect-free, making it straightforward to unit-test
 /// without mocking any UIKit or networking infrastructure.
+///
+/// The update function is generic over the compile-time card count `N`, which
+/// parameterises both the `GameModel<N>` it operates on and the `GameEffect<N>`
+/// it produces.
 enum GameLogic {
-    /// Produces the next `GameModel` and any `GameEffect`s in response to a `GameEvent`.
+    /// Produces the next `GameModel<N>` and any `GameEffect<N>`s in response to a `GameEvent`.
     ///
     /// Called by the Mobius loop on its internal queue — never on the main thread.
     ///
@@ -21,10 +25,10 @@ enum GameLogic {
     ///   - model: The current game state.
     ///   - event: The input that triggered this update.
     /// - Returns: A `Next` value containing the updated model and/or effects to run.
-    static func update(
-        model: GameModel,
+    static func update<let N: Int>(
+        model: GameModel<N>,
         event: GameEvent
-    ) -> Next<GameModel, GameEffect> {
+    ) -> Next<GameModel<N>, GameEffect<N>> {
         switch event {
         case let .cardTapped(index):
             handleCardTapped(index: index, model: model)
@@ -38,13 +42,13 @@ enum GameLogic {
 
 private extension GameLogic {
     /// Validates the tap, then delegates to `applyFlip`.
-    static func handleCardTapped(
+    static func handleCardTapped<let N: Int>(
         index: Int,
-        model: GameModel
-    ) -> Next<GameModel, GameEffect> {
+        model: GameModel<N>
+    ) -> Next<GameModel<N>, GameEffect<N>> {
         logGame.debug("Card tapped at index \(index)")
-        guard index < model.cards.count else {
-            logGame.debug("Tap ignored — index \(index) is out of bounds (card count: \(model.cards.count))")
+        guard index < model.cardCount else {
+            logGame.debug("Tap ignored — index \(index) is out of bounds (card count: \(model.cardCount))")
             return .noChange
         }
         guard !model.cards[index].isFlipped, !model.cards[index].isMatched else {
@@ -55,10 +59,10 @@ private extension GameLogic {
     }
 
     /// Increments click count, flips the card, then routes to pair evaluation or stores it as pending.
-    static func applyFlip(
+    static func applyFlip<let N: Int>(
         index: Int,
-        model: GameModel
-    ) -> Next<GameModel, GameEffect> {
+        model: GameModel<N>
+    ) -> Next<GameModel<N>, GameEffect<N>> {
         var newModel = model
         newModel.clickCount += 1
         newModel.cards[index].isFlipped = true
@@ -74,11 +78,11 @@ private extension GameLogic {
     }
 
     /// Compares the two face-up cards and returns either a match or a flip-back effect.
-    static func evaluatePair(
+    static func evaluatePair<let N: Int>(
         index: Int,
         pendingIndex: Int,
-        newModel: GameModel
-    ) -> Next<GameModel, GameEffect> {
+        newModel: GameModel<N>
+    ) -> Next<GameModel<N>, GameEffect<N>> {
         let isMatchingPair = newModel.isCard(at: index, matchingCardAt: pendingIndex)
         if isMatchingPair {
             logGame.debug("Pair match! Indices \(pendingIndex) and \(index) are the same card")
@@ -92,11 +96,11 @@ private extension GameLogic {
     }
 
     /// Marks both cards matched; triggers game-over if all pairs are found.
-    static func handleMatch(
+    static func handleMatch<let N: Int>(
         index: Int,
         pendingIndex: Int,
-        newModel: GameModel
-    ) -> Next<GameModel, GameEffect> {
+        newModel: GameModel<N>
+    ) -> Next<GameModel<N>, GameEffect<N>> {
         var newModel = newModel
         newModel.cards[index].isMatched = true
         newModel.cards[pendingIndex].isMatched = true
@@ -112,31 +116,31 @@ private extension GameLogic {
     }
 
     /// Builds the game-over `Next` value, reconstructing the deck for a potential restart.
-    static func gameOverNext(
+    static func gameOverNext<let N: Int>(
         index: Int,
-        newModel: GameModel
-    ) -> Next<GameModel, GameEffect> {
+        newModel: GameModel<N>
+    ) -> Next<GameModel<N>, GameEffect<N>> {
         logGame
             .notice(
                 "Game over — all \(newModel.totalPairs) pairs matched in \(newModel.clickCount) clicks (level: \(newModel.level))"
             )
         // Rebuild the deck from image URLs so the game-over screen can restart
         // with the same images in a freshly shuffled order.
-        let cards = newModel.cards.map(\.card)
-        let outcome = GameOutcome(
+        let cardsInline = InlineArray<N, Card> { i in newModel.cards[i].card }
+        let outcome = GameOutcome<N>(
             level: newModel.level,
             clickCount: newModel.clickCount,
-            cards: CardDuplicates(reshuffling: cards)
+            cards: CardDuplicates<N>(reshuffling: cardsInline)
         )
         return .next(newModel, effects: [.flipCard(index: index, faceUp: true), .navigateToGameOver(outcome: outcome)])
     }
 
     /// Flips both cards face-down after the delayed timer fires.
-    static func handleFlipBack(
+    static func handleFlipBack<let N: Int>(
         index1: Int,
         index2: Int,
-        model: GameModel
-    ) -> Next<GameModel, GameEffect> {
+        model: GameModel<N>
+    ) -> Next<GameModel<N>, GameEffect<N>> {
         logGame.debug("Flip-back timer fired — returning cards \(index1) and \(index2) face-down")
         var newModel = model
         newModel.cards[index1].isFlipped = false

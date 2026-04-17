@@ -18,25 +18,35 @@ import XCTest
 final class GameLoopTests: XCTestCase {
     // MARK: - Helpers
 
-    private func makeCard(url: URL = URL(string: "https://a.test/img.jpg")!) -> CardModel {
-        CardModel(card: Card(imageUrl: url))
+    private func makeCard(index: Int) -> CardModel {
+        CardModel(card: Card(imageUrl: URL(string: "https://a.test/\(index).jpg")!))
     }
 
-    private func makeModel(level: Level = .easy) -> GameModel {
-        let cards = (0 ..< level.cardCount).map { i in
-            CardModel(card: Card(imageUrl: URL(string: "https://a.test/\(i).jpg")!))
-        }
-        return GameModel(cards: cards, level: level)
+    /// Builds a default easy (6-card) model. Used for most tests that only need
+    /// a valid starting model and don't care about the level specifically.
+    private func makeEasyModel() -> GameModel<6> {
+        let cards = (0 ..< 6).map { i in makeCard(index: i) }
+        return GameModel<6>(cards: cards, level: .easy)
+    }
+
+    private func makeNormalModel() -> GameModel<12> {
+        let cards = (0 ..< 12).map { i in makeCard(index: i) }
+        return GameModel<12>(cards: cards, level: .normal)
+    }
+
+    private func makeHardModel() -> GameModel<20> {
+        let cards = (0 ..< 20).map { i in makeCard(index: i) }
+        return GameModel<20>(cards: cards, level: .hard)
     }
 
     // MARK: - init
 
     func test_init_exposesCorrectLevel() {
         // Arrange
-        let model = makeModel(level: .normal)
+        let model = makeNormalModel()
 
         // Act
-        let loop = GameLoop(initialModel: model)
+        let loop = GameLoop<12>(initialModel: model)
 
         // Assert
         XCTAssertEqual(loop.level, .normal)
@@ -44,10 +54,10 @@ final class GameLoopTests: XCTestCase {
 
     func test_init_levelMatchesEasy() {
         // Arrange
-        let model = makeModel(level: .easy)
+        let model = makeEasyModel()
 
         // Act
-        let loop = GameLoop(initialModel: model)
+        let loop = GameLoop<6>(initialModel: model)
 
         // Assert
         XCTAssertEqual(loop.level, .easy)
@@ -55,10 +65,10 @@ final class GameLoopTests: XCTestCase {
 
     func test_init_levelMatchesHard() {
         // Arrange
-        let model = makeModel(level: .hard)
+        let model = makeHardModel()
 
         // Act
-        let loop = GameLoop(initialModel: model)
+        let loop = GameLoop<20>(initialModel: model)
 
         // Assert
         XCTAssertEqual(loop.level, .hard)
@@ -68,8 +78,7 @@ final class GameLoopTests: XCTestCase {
 
     func test_canSelectCard_returnsTrueForUnmatchedCard() {
         // Arrange
-        let model = makeModel(level: .easy)
-        let loop = GameLoop(initialModel: model)
+        let loop = GameLoop<6>(initialModel: makeEasyModel())
 
         // Act
         let result = loop.canSelectCard(at: 0)
@@ -80,8 +89,8 @@ final class GameLoopTests: XCTestCase {
 
     func test_canSelectCard_returnsFalseAfterUpdate() {
         // Arrange
-        var model = makeModel(level: .easy)
-        let loop = GameLoop(initialModel: model)
+        var model = makeEasyModel()
+        let loop = GameLoop<6>(initialModel: model)
 
         // Act — mark first card matched and push the update through
         model.cards[0].isMatched = true
@@ -95,8 +104,8 @@ final class GameLoopTests: XCTestCase {
 
     func test_update_doesNotCrash() {
         // Arrange
-        let model = makeModel(level: .easy)
-        let loop = GameLoop(initialModel: model)
+        let model = makeEasyModel()
+        let loop = GameLoop<6>(initialModel: model)
 
         // Act + Assert
         XCTAssertNoThrow(loop.update(with: model))
@@ -106,8 +115,8 @@ final class GameLoopTests: XCTestCase {
 
     func test_start_doesNotCrash() {
         // Arrange
-        let loop = GameLoop(initialModel: makeModel())
-        let view = AnyConnectable<GameModel, GameEvent> { _ in
+        let loop = GameLoop<6>(initialModel: makeEasyModel())
+        let view = AnyConnectable<GameModel<6>, GameEvent> { _ in
             Connection(acceptClosure: { _ in }, disposeClosure: {})
         }
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -119,8 +128,8 @@ final class GameLoopTests: XCTestCase {
 
     func test_stop_afterStart_doesNotCrash() {
         // Arrange
-        let loop = GameLoop(initialModel: makeModel())
-        let view = AnyConnectable<GameModel, GameEvent> { _ in
+        let loop = GameLoop<6>(initialModel: makeEasyModel())
+        let view = AnyConnectable<GameModel<6>, GameEvent> { _ in
             Connection(acceptClosure: { _ in }, disposeClosure: {})
         }
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -132,15 +141,15 @@ final class GameLoopTests: XCTestCase {
 
     func test_start_deliversInitialModelToView() {
         // Arrange
-        let model = makeModel(level: .easy)
-        let loop = GameLoop(initialModel: model)
+        let model = makeEasyModel()
+        let loop = GameLoop<6>(initialModel: model)
         let exp = expectation(description: "model delivered to view")
         exp.assertForOverFulfill = false
-        var receivedModel: GameModel?
-        let view = AnyConnectable<GameModel, GameEvent> { _ in
+        var receivedCardCount: Int?
+        let view = AnyConnectable<GameModel<6>, GameEvent> { _ in
             Connection(
                 acceptClosure: { model in
-                    receivedModel = model
+                    receivedCardCount = model.cards.count
                     exp.fulfill()
                 },
                 disposeClosure: {}
@@ -153,14 +162,14 @@ final class GameLoopTests: XCTestCase {
 
         // Assert
         waitForExpectations(timeout: 1)
-        XCTAssertEqual(receivedModel?.cards.count, model.cards.count)
+        XCTAssertEqual(receivedCardCount, model.cards.count)
         loop.stop()
     }
 
     func test_start_onNavigateToGameOver_isStoredAndCallable() {
         // Arrange
-        let loop = GameLoop(initialModel: makeModel())
-        let view = AnyConnectable<GameModel, GameEvent> { _ in
+        let loop = GameLoop<6>(initialModel: makeEasyModel())
+        let view = AnyConnectable<GameModel<6>, GameEvent> { _ in
             Connection(acceptClosure: { _ in }, disposeClosure: {})
         }
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -178,7 +187,7 @@ final class GameLoopTests: XCTestCase {
 
     func test_configureCell_doesNotCrashBeforeStart() {
         // Arrange — loop not started; effectHandler is pre-seeded with initial model
-        let loop = GameLoop(initialModel: makeModel())
+        let loop = GameLoop<6>(initialModel: makeEasyModel())
         let cell = CardCVCell(frame: CGRect(origin: .zero, size: CGSize(width: 80, height: 100)))
 
         // Act + Assert
@@ -187,8 +196,8 @@ final class GameLoopTests: XCTestCase {
 
     func test_configureCell_doesNotCrashAfterStart() {
         // Arrange
-        let loop = GameLoop(initialModel: makeModel())
-        let view = AnyConnectable<GameModel, GameEvent> { _ in
+        let loop = GameLoop<6>(initialModel: makeEasyModel())
+        let view = AnyConnectable<GameModel<6>, GameEvent> { _ in
             Connection(acceptClosure: { _ in }, disposeClosure: {})
         }
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())

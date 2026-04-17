@@ -29,7 +29,7 @@ final class GameViewSnapshotTests: XCTestCase {
     func test_gameView_renderedWithEasyModel() {
         // Arrange
         let cards = makeCards(count: 6)
-        let model = GameModel(cards: cards, level: .easy)
+        let model = GameModel<6>(cards: cards, level: .easy)
         let view = GameView()
         view.render(model)
 
@@ -44,7 +44,7 @@ final class GameViewSnapshotTests: XCTestCase {
         var cards = makeCards(count: 6)
         cards[0].isMatched = true
         cards[1].isMatched = true
-        var model = GameModel(cards: cards, level: .easy)
+        var model = GameModel<6>(cards: cards, level: .easy)
         model.matches = 1
         _ = model // suppress unused warning
         let view = GameView()

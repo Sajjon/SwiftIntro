@@ -11,32 +11,32 @@ import UIKit
 
 // MARK: - GameNavigatorProtocol
 
-/// Handles navigation triggered by `GameVC` when the player wins.
+/// Handles navigation triggered by `GameVC<N>` when the player wins.
 ///
-/// Conforming to this protocol rather than coupling directly to `UINavigationController`
-/// keeps `GameVC` navigation-agnostic and makes it trivially testable.
+/// The navigator takes an `AnyGameOutcome` (type-erased) so the conforming navigator
+/// does not need to be generic over `N`.
 protocol GameNavigatorProtocol: AnyObject {
     /// Called on the main thread once the final card-flip animation completes.
-    func navigateToGameOver(outcome: GameOutcome)
+    func navigateToGameOver(outcome: AnyGameOutcome)
 }
 
 // MARK: - GameVC
 
-/// The game screen view controller.
+/// The game screen view controller, generic over the compile-time card count `N`.
 ///
-/// `GameVC` is a pure view in the Mobius sense — it implements `Connectable` to
-/// render `GameModel` and dispatch `GameEvent`s, but owns no loop infrastructure.
-/// The `MobiusController` and `GameEffectHandler` live inside `GameLoop`.
-final class GameVC: UIViewController {
+/// `GameVC<N>` is a pure view in the Mobius sense — it implements
+/// `Connectable` to render `GameModel<N>` and dispatch `GameEvent`s, but owns
+/// no loop infrastructure. The `MobiusController` and `GameEffectHandler<N>`
+/// live inside `GameLoop<N>`.
+final class GameVC<let N: Int>: UIViewController {
     // MARK: Properties
 
     /// Injected image cache — used to check whether card images are ready before
     /// allowing cell configuration to proceed.
     @Injected(\.imageCache) private var imageCache
 
-    /// Owns the Mobius loop for this game session. Update and query operations are
-    /// forwarded through here so `GameVC` stays loop-infrastructure-free.
-    private let loop: GameLoop
+    /// Owns the Mobius loop for this game session.
+    private let loop: GameLoop<N>
 
     /// The root view; installed via `loadView()`.
     private let gameView = GameView()
@@ -44,15 +44,25 @@ final class GameVC: UIViewController {
     /// The UIKit data source and delegate — sized from `loop.level` in `init`.
     private let dataSourceAndDelegate: MemoryDataSourceAndDelegate
 
-    /// Wired by the presenting controller (e.g. `GameSetupVC`) before the push.
+    /// Wraps a concrete `GameOutcome<N>` into an `AnyGameOutcome` for the navigator.
+    /// Injected at init time because a generic method body cannot pick the correct
+    /// `AnyGameOutcome` case from `N` without conditional extensions on specific `N` values.
+    private let wrapOutcome: (GameOutcome<N>) -> AnyGameOutcome
+
+    /// Wired by the presenting controller before the push.
     weak var navigator: GameNavigatorProtocol?
 
     // MARK: Inits
 
-    init(_ game: PreparedGame) {
-        let cardModels = game.cards.memoryCards.map(CardModel.init)
-        let loop = GameLoop(initialModel: GameModel(cards: cardModels, level: game.config.level))
+    init(
+        _ game: PreparedGame<N>,
+        wrapOutcome: @escaping (GameOutcome<N>) -> AnyGameOutcome
+    ) {
+        let cardModelsArray = game.cards.asArray.map(CardModel.init)
+        let cardModels = InlineArray<N, CardModel> { i in cardModelsArray[i] }
+        let loop = GameLoop<N>(initialModel: GameModel<N>(cards: cardModels, level: game.config.level))
         self.loop = loop
+        self.wrapOutcome = wrapOutcome
         dataSourceAndDelegate = MemoryDataSourceAndDelegate(
             rows: loop.level.rowCount,
             columns: loop.level.columnCount
@@ -64,11 +74,14 @@ final class GameVC: UIViewController {
     required init?(coder _: NSCoder) {
         fatalError()
     }
-}
 
-// MARK: - Override
+    // MARK: Overrides
 
-extension GameVC {
+    //
+    // Overrides live in the main class body rather than an extension because
+    // extensions of generic classes cannot contain `@objc` members, and
+    // `UIViewController`'s overridable lifecycle methods are `@objc`.
+
     /// Installs `GameView` as the root view instead of the default plain `UIView`.
     override func loadView() {
         view = gameView
@@ -76,7 +89,6 @@ extension GameVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Logger interpolation is @autoclosure → closure context; compiler needs self.
         // swiftformat:disable:next redundantSelf
         logGame.notice("Game started — level: \(self.loop.level.debugDescription)")
         setupCollectionView()
@@ -94,16 +106,10 @@ extension GameVC {
 // MARK: - Connectable
 
 extension GameVC: Connectable {
-    typealias Input = GameModel
+    typealias Input = GameModel<N>
     typealias Output = GameEvent
 
-    /// Called by `MobiusController` (via `GameLoop.start`) when the view connects.
-    ///
-    /// - Parameter consumer: Dispatch closure — call it with a `GameEvent` to inject
-    ///   input into the loop (e.g. when a card is tapped).
-    /// - Returns: A `Connection<GameModel>` whose `acceptClosure` renders each new model
-    ///   and whose `disposeClosure` cleans up the tap handler on disconnect.
-    func connect(_ consumer: @escaping (GameEvent) -> Void) -> Connection<GameModel> {
+    func connect(_ consumer: @escaping (GameEvent) -> Void) -> Connection<GameModel<N>> {
         logGame.debug("GameVC connecting to Mobius loop — wiring card-tap dispatch")
         dataSourceAndDelegate.onCardTapped = { consumer(.cardTapped(index: $0)) }
         return Connection(
@@ -129,7 +135,8 @@ private extension GameVC {
             view: self,
             collectionView: gameView.collectionView,
             onNavigateToGameOver: { [weak self] outcome in
-                self?.navigator?.navigateToGameOver(outcome: outcome)
+                guard let self else { return }
+                navigator?.navigateToGameOver(outcome: wrapOutcome(outcome))
             }
         )
     }

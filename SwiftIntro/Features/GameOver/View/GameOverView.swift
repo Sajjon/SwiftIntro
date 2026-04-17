@@ -49,7 +49,7 @@ final class GameOverView: UIView {
     }
 
     /// Updates model-driven UI — called once by `GameOverVC` after the outcome is known.
-    func render(_ outcome: GameOutcome) {
+    func render(_ outcome: AnyGameOutcome) {
         scoreLabel.text = String(localized: .GameOver.clickScore(score: outcome.clickCount))
     }
 }

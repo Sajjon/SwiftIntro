@@ -39,7 +39,10 @@ final class GameView: UIView {
     }
 
     /// Updates all model-driven UI — called by the Mobius loop `acceptClosure` on every model update.
-    func render(_ model: GameModel) {
+    ///
+    /// Generic over `N` so the same render path handles every `GameModel<N>` size
+    /// without an extra type-erasure layer.
+    func render<let N: Int>(_ model: GameModel<N>) {
         headerView.scoreLabel.text = String(
             localized: .Game.pairsFoundUnformatted(pairsFound: model.matches, totalPairs: model.totalPairs)
         )

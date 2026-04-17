@@ -56,10 +56,21 @@ cyclomatic_complexity:
 
 # Allow common iOS/UIKit abbreviations (iv = imageView, cv = collectionView)
 # and single-letter loop indices (i) that are idiomatic Swift.
+#
+# `N` is the conventional name for value-generic integer parameters
+# (`<let N: Int>`). Short enum-case pattern bindings (`g`, `o`, `d`) are
+# tolerated because their scope is a single match arm — longer names add
+# noise without clarifying anything. `j` is the inner loop index paired
+# with `i` in the Fisher-Yates shuffle.
 identifier_name:
   min_length:
     warning: 2
     error: 1
   excluded:
     - i
+    - j
     - id
+    - N
+    - g
+    - o
+    - d

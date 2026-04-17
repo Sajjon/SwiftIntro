@@ -10,11 +10,10 @@
 //  - Assert:  verify a single observable outcome (1 line)
 //
 
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
 final class NSObjectExtensionTests: XCTestCase {
-
     // MARK: - className
 
     func test_className_stripsModulePrefix() {

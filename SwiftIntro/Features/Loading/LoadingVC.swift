@@ -13,7 +13,7 @@ import UIKit
 
 /// Handles navigation triggered by `LoadingVC` once data loading is complete.
 protocol LoadingNavigatorProtocol: AnyObject {
-    func navigateToGame(_ game: PreparedGame)
+    func navigateToGame(_ game: AnyPreparedGame)
 }
 
 // MARK: - LoadingVC

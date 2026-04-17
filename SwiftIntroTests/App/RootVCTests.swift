@@ -15,15 +15,24 @@ import UIKit
 import XCTest
 
 final class RootVCTests: XCTestCase {
-
     // MARK: - Helpers
 
-    private func makeCards(count: Int) -> CardDuplicates {
-        let paired = (0 ..< count / 2).flatMap { i -> [Card] in
+    /// All RootVC navigation tests use the `.easy` path (6 cards) — the replacement
+    /// logic is identical for each level; picking one keeps helpers concise.
+    private func makeEasyCards() -> CardDuplicates<6> {
+        let paired = (0 ..< 3).flatMap { i -> [Card] in
             let card = Card(imageUrl: URL(string: "https://a.test/\(i).jpg")!)
             return [card, card]
         }
         return CardDuplicates(reshuffling: paired)
+    }
+
+    private func makeEasyPreparedGame() -> AnyPreparedGame {
+        .easy(PreparedGame<6>(config: GameConfiguration(), cards: makeEasyCards()))
+    }
+
+    private func makeEasyOutcome(clickCount: Int = 4) -> AnyGameOutcome {
+        .easy(GameOutcome<6>(level: .easy, clickCount: clickCount, cards: makeEasyCards()))
     }
 
     // MARK: - init
@@ -78,7 +87,7 @@ final class RootVCTests: XCTestCase {
     func test_navigateToGame_withEmptyStack_doesNotCrash() {
         let root = RootVC()
         root.setViewControllers([], animated: false)
-        XCTAssertNoThrow(root.navigateToGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6))))
+        XCTAssertNoThrow(root.navigateToGame(makeEasyPreparedGame()))
     }
 
     func test_navigateToGame_replacesTopVCWithGameVC() {
@@ -87,10 +96,10 @@ final class RootVCTests: XCTestCase {
         root.pushViewController(UIViewController(), animated: false)
 
         // Act
-        root.navigateToGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6)))
+        root.navigateToGame(makeEasyPreparedGame())
 
         // Assert — LoadingVC stand-in replaced; player cannot back-swipe to loading
-        XCTAssertTrue(root.topViewController is GameVC)
+        XCTAssertTrue(root.topViewController is GameVC<6>)
     }
 
     func test_navigateToGame_stackCountIsUnchanged() {
@@ -100,7 +109,7 @@ final class RootVCTests: XCTestCase {
         let countBefore = root.viewControllers.count
 
         // Act
-        root.navigateToGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6)))
+        root.navigateToGame(makeEasyPreparedGame())
 
         // Assert — replace (not push) keeps depth the same
         XCTAssertEqual(root.viewControllers.count, countBefore)
@@ -112,10 +121,10 @@ final class RootVCTests: XCTestCase {
         root.pushViewController(UIViewController(), animated: false)
 
         // Act
-        root.navigateToGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6)))
+        root.navigateToGame(makeEasyPreparedGame())
 
         // Assert
-        let gameVC = root.topViewController as? GameVC
+        let gameVC = root.topViewController as? GameVC<6>
         XCTAssertTrue(gameVC?.navigator === root)
     }
 
@@ -124,7 +133,7 @@ final class RootVCTests: XCTestCase {
     func test_navigateToGameOver_pushesGameOverVC() {
         // Arrange
         let root = RootVC()
-        let outcome = GameOutcome(level: .easy, clickCount: 4, cards: makeCards(count: 6))
+        let outcome = makeEasyOutcome()
 
         // Act
         root.navigateToGameOver(outcome: outcome)
@@ -137,7 +146,7 @@ final class RootVCTests: XCTestCase {
     func test_navigateToGameOver_setsNavigatorOnGameOverVC() {
         // Arrange
         let root = RootVC()
-        let outcome = GameOutcome(level: .easy, clickCount: 4, cards: makeCards(count: 6))
+        let outcome = makeEasyOutcome()
 
         // Act
         root.navigateToGameOver(outcome: outcome)
@@ -152,7 +161,7 @@ final class RootVCTests: XCTestCase {
 
     func test_restartGame_withShallowStack_doesNotCrash() {
         let root = RootVC()
-        XCTAssertNoThrow(root.restartGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6))))
+        XCTAssertNoThrow(root.restartGame(makeEasyPreparedGame()))
     }
 
     func test_restartGame_topVCIsGameVC() {
@@ -161,10 +170,10 @@ final class RootVCTests: XCTestCase {
         root.setViewControllers([GameSetupVC(), UIViewController(), UIViewController()], animated: false)
 
         // Act
-        root.restartGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6)))
+        root.restartGame(makeEasyPreparedGame())
 
         // Assert
-        XCTAssertTrue(root.topViewController is GameVC)
+        XCTAssertTrue(root.topViewController is GameVC<6>)
     }
 
     func test_restartGame_stackCountDecreasesByOne() {
@@ -174,7 +183,7 @@ final class RootVCTests: XCTestCase {
         root.setViewControllers(initial, animated: false)
 
         // Act
-        root.restartGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6)))
+        root.restartGame(makeEasyPreparedGame())
 
         // Assert — removeLast(2) + append(1) = net −1
         XCTAssertEqual(root.viewControllers.count, initial.count - 1)
@@ -194,9 +203,6 @@ final class RootVCTests: XCTestCase {
 
         // Act
         root.quitGame()
-        // `popToRootViewController(animated: true)` defers its stack update through the
-        // animation system; one run-loop pass lets UIKit commit the change synchronously
-        // in the headless test environment.
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.05))
 
         // Assert — only GameSetupVC remains

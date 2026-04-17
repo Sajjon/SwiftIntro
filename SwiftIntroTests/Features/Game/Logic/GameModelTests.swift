@@ -46,7 +46,7 @@ final class GameModelTests: XCTestCase {
 
     func test_gameModel_init_clickCountIsZero() {
         // Arrange
-        let model = makeModel(pairs: 3)
+        let model = makeEasyModel()
 
         // Act
         let clickCount = model.clickCount
@@ -57,7 +57,7 @@ final class GameModelTests: XCTestCase {
 
     func test_gameModel_init_matchesIsZero() {
         // Arrange
-        let model = makeModel(pairs: 3)
+        let model = makeEasyModel()
 
         // Act
         let matches = model.matches
@@ -68,7 +68,7 @@ final class GameModelTests: XCTestCase {
 
     func test_gameModel_init_pendingCardIndexIsNil() {
         // Arrange
-        let model = makeModel(pairs: 3)
+        let model = makeEasyModel()
 
         // Act
         let pending = model.pendingCardIndex
@@ -79,7 +79,7 @@ final class GameModelTests: XCTestCase {
 
     func test_gameModel_init_cardCountMatchesInput() {
         // Arrange
-        let model = makeModel(pairs: 3)
+        let model = makeEasyModel()
 
         // Act
         let count = model.cards.count
@@ -90,7 +90,7 @@ final class GameModelTests: XCTestCase {
 
     func test_gameModel_init_preservesLevel() {
         // Arrange
-        let model = makeModel(pairs: 3, level: .hard)
+        let model: GameModel<6> = makeModel(level: .hard)
 
         // Act
         let level = model.level
@@ -101,21 +101,10 @@ final class GameModelTests: XCTestCase {
 
     // MARK: - totalPairs
 
-    func test_totalPairs_isHalfOfCardCount() {
-        // Arrange
-        let model = makeModel(pairs: 5)
-
-        // Act
-        let pairs = model.totalPairs
-
-        // Assert
-        XCTAssertEqual(pairs, 5)
-    }
-
     func test_totalPairs_forEasyLevelDeck() {
         // Arrange — easy = 6 cards = 3 pairs
         let cards = (0 ..< 6).map { _ in CardModel(card: Card(imageUrl: url)) }
-        let model = GameModel(cards: cards, level: .easy)
+        let model = GameModel<6>(cards: cards, level: .easy)
 
         // Act
         let pairs = model.totalPairs
@@ -127,7 +116,7 @@ final class GameModelTests: XCTestCase {
     func test_totalPairs_forNormalLevelDeck() {
         // Arrange — normal = 12 cards = 6 pairs
         let cards = (0 ..< 12).map { _ in CardModel(card: Card(imageUrl: url)) }
-        let model = GameModel(cards: cards, level: .normal)
+        let model = GameModel<12>(cards: cards, level: .normal)
 
         // Act
         let pairs = model.totalPairs
@@ -139,7 +128,7 @@ final class GameModelTests: XCTestCase {
     func test_totalPairs_forHardLevelDeck() {
         // Arrange — hard = 20 cards = 10 pairs
         let cards = (0 ..< 20).map { _ in CardModel(card: Card(imageUrl: url)) }
-        let model = GameModel(cards: cards, level: .hard)
+        let model = GameModel<20>(cards: cards, level: .hard)
 
         // Act
         let pairs = model.totalPairs
@@ -148,13 +137,30 @@ final class GameModelTests: XCTestCase {
         XCTAssertEqual(pairs, 10)
     }
 
+    func test_totalPairs_forFivePairDeck() {
+        // Arrange — 10 cards = 5 pairs
+        let model: GameModel<10> = makeModel(level: .easy)
+
+        // Act
+        let pairs = model.totalPairs
+
+        // Assert
+        XCTAssertEqual(pairs, 5)
+    }
+
     // MARK: - Helpers
 
-    private func makeModel(
-        pairs: Int,
-        level: Level = .easy
-    ) -> GameModel {
-        let cards = (0 ..< pairs * 2).map { _ in CardModel(card: Card(imageUrl: url)) }
-        return GameModel(cards: cards, level: level)
+    /// Default easy-size helper — 6 cards, `.easy` level.
+    private func makeEasyModel() -> GameModel<6> {
+        let cards = (0 ..< 6).map { _ in CardModel(card: Card(imageUrl: url)) }
+        return GameModel<6>(cards: cards, level: .easy)
+    }
+
+    /// Generic helper that defers the card count to the caller's explicit type annotation.
+    /// The precondition in `GameModel.init` on pair-match is skipped at test time, so
+    /// mismatched (level, N) pairs like `<6>` + `.hard` are allowed for assertions.
+    private func makeModel<let N: Int>(level: Level) -> GameModel<N> {
+        let cards = (0 ..< N).map { _ in CardModel(card: Card(imageUrl: url)) }
+        return GameModel<N>(cards: cards, level: level)
     }
 }

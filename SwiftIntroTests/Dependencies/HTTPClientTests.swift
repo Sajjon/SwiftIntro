@@ -34,24 +34,24 @@ private final class StubURLProtocol: URLProtocol {
         request
     }
 
-    // Dispatch callbacks to a background queue so URLSession always delivers the
-    // dataTask completion handler asynchronously — matching production behaviour and
-    // avoiding a potential deadlock between synchronous main-thread delivery and
-    // `waitForExpectations` on macOS 26.
+    /// Dispatch callbacks to a background queue so URLSession always delivers the
+    /// dataTask completion handler asynchronously — matching production behaviour and
+    /// avoiding a potential deadlock between synchronous main-thread delivery and
+    /// `waitForExpectations` on macOS 26.
     override func startLoading() {
         let result = StubURLProtocol.handler(request)
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
             if let error = result.error {
-                self.client?.urlProtocol(self, didFailWithError: error)
+                client?.urlProtocol(self, didFailWithError: error)
             } else {
                 if let response = result.response {
-                    self.client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+                    client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
                 }
                 if let data = result.data {
-                    self.client?.urlProtocol(self, didLoad: data)
+                    client?.urlProtocol(self, didLoad: data)
                 }
-                self.client?.urlProtocolDidFinishLoading(self)
+                client?.urlProtocolDidFinishLoading(self)
             }
         }
     }

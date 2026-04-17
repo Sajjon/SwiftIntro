@@ -11,24 +11,27 @@ import Foundation
 /// The full deck of cards used during a game session — every card appears exactly twice,
 /// and the order is always freshly shuffled.
 ///
+/// The compile-time value-generic parameter `N` is the total number of cards on the
+/// board and must be even. Stored inline (no heap allocation) via `InlineArray`.
+///
 /// Construction is constrained: there is no way to build a `CardDuplicates` whose
 /// contents are not properly paired. The single private designated initializer asserts
-/// the invariant; both public inits route through it after performing a shuffle.
-struct CardDuplicates {
-    /// The shuffled, paired array of cards. Count is always even and non-zero.
-    let memoryCards: [Card]
+/// the invariant; every public init routes through it after performing a shuffle.
+struct CardDuplicates<let N: Int> {
+    /// The shuffled, paired cards stored inline. `N` is the total card count (always even).
+    let memoryCards: InlineArray<N, Card>
 
     /// Designated initializer — asserts the pair invariant.
     ///
     /// Callers must have already shuffled `cards`; this is enforced by making the
     /// initializer `private` so every construction path funnels through a public
     /// init that shuffles first.
-    private init(validated cards: [Card]) {
-        precondition(!cards.isEmpty, "Deck must not be empty")
-        precondition(cards.count.isMultiple(of: 2), "Deck must contain an even number of cards")
+    private init(validated cards: InlineArray<N, Card>) {
+        precondition(N > 0, "Deck must not be empty")
+        precondition(N.isMultiple(of: 2), "Deck must contain an even number of cards")
         var frequency: [URL: Int] = [:]
-        for card in cards {
-            frequency[card.imageUrl, default: 0] += 1
+        for i in cards.indices {
+            frequency[cards[i].imageUrl, default: 0] += 1
         }
         precondition(
             frequency.values.allSatisfy { $0 == 2 },
@@ -37,41 +40,114 @@ struct CardDuplicates {
         memoryCards = cards
     }
 
-    /// Creates a deck from unique cards, duplicating and shuffling to fill the board
-    /// defined by `config.level`.
+    // swiftlint:disable function_body_length
+
+    /// Creates a deck from unique cards, duplicating and shuffling to fill the board.
     ///
-    /// Preconditions that `singles.cards.count >= config.level.cardCount / 2`; otherwise
-    /// the deck would be shorter than the grid derived from `Level`, risking out-of-bounds
-    /// access during cell configuration.
+    /// The caller must already know the compile-time `N`. `config.level.cardCount`
+    /// must equal `N`, otherwise this traps — validating that the runtime-selected
+    /// level matches the compile-time deck size is the caller's responsibility
+    /// (done in `LoadingViewModel` by dispatching on `Level`).
     init(
         singles: CardSingles,
         config: GameConfiguration
     ) {
-        let requiredPairs = config.level.cardCount / 2
+        precondition(
+            config.level.cardCount == N,
+            "Level \(config.level) needs \(config.level.cardCount) cards but N is \(N)"
+        )
+        let requiredPairs = N / 2
         let chosen = singles.cards.choose(requiredPairs)
         precondition(
             chosen.count == requiredPairs,
             "Not enough unique cards for level \(config.level): need \(requiredPairs) uniques, got \(chosen.count)"
         )
         // Each image appears exactly twice — once per matching pair.
-        var shuffled = chosen.flatMap { [$0, $0] }
-        shuffled.shuffle()
+        var paired = chosen.flatMap { [$0, $0] }
+        paired.shuffle()
+        var inline = InlineArray<N, Card> { i in paired[i] }
+        Self.shuffleInline(&inline)
+        self.init(validated: inline)
+    }
+
+    // swiftlint:enable function_body_length
+
+    /// Rebuilds a deck from an `InlineArray` of already-paired cards and re-shuffles them.
+    ///
+    /// Used on game-over → restart, so the player sees a fresh layout of the same images.
+    init(reshuffling cards: InlineArray<N, Card>) {
+        var shuffled = cards
+        Self.shuffleInline(&shuffled)
         self.init(validated: shuffled)
     }
 
-    /// Rebuilds a deck from already-paired cards and re-shuffles them.
-    ///
-    /// Used on game-over → restart, so the player sees a fresh layout of the same images.
+    /// Runtime-sized convenience — accepts `[Card]`, preconditions `count == N`, then
+    /// shuffles. Used by tests and by code paths that start from an `Array<Card>` and
+    /// have already decided on the compile-time `N`.
     init(reshuffling cards: [Card]) {
-        var shuffled = cards
-        shuffled.shuffle()
-        self.init(validated: shuffled)
+        precondition(cards.count == N, "Expected \(N) cards, got \(cards.count)")
+        let inline = InlineArray<N, Card> { i in cards[i] }
+        self.init(reshuffling: inline)
+    }
+
+    /// Fisher-Yates shuffle on an `InlineArray`. Extracted as a helper because
+    /// `InlineArray` does not conform to `MutableCollection` in Swift 6.2,
+    /// so the standard-library `shuffle()` is unavailable.
+    private static func shuffleInline(_ arr: inout InlineArray<N, Card>) {
+        guard N > 1 else { return }
+        for i in stride(from: N - 1, to: 0, by: -1) {
+            let j = Int.random(in: 0 ... i)
+            arr.swapAt(i, j)
+        }
     }
 }
 
 extension CardDuplicates {
-    /// Total number of cards in the deck (always even and non-zero).
+    /// Total number of cards in the deck — equal to the compile-time parameter `N`.
     var count: Int {
-        memoryCards.count
+        N
+    }
+
+    /// Number of matching pairs — `N / 2`.
+    var pairCount: Int {
+        N / 2
+    }
+
+    /// Materialize the deck into a plain `[Card]` array. Used at boundaries
+    /// where existing Array-based APIs (e.g. test helpers, filter/map) are needed.
+    var asArray: [Card] {
+        var out: [Card] = []
+        out.reserveCapacity(N)
+        for i in memoryCards.indices {
+            out.append(memoryCards[i])
+        }
+        return out
+    }
+}
+
+// MARK: - AnyCardDuplicates
+
+/// Runtime-dispatched wrapper around a `CardDuplicates<N>` whose `N` is one of the
+/// three `Level` sizes. Used at boundaries (navigation, view-model callbacks) where
+/// the compile-time `N` is not yet known.
+enum AnyCardDuplicates {
+    case easy(CardDuplicates<6>)
+    case normal(CardDuplicates<12>)
+    case hard(CardDuplicates<20>)
+
+    var level: Level {
+        switch self {
+        case .easy: .easy
+        case .normal: .normal
+        case .hard: .hard
+        }
+    }
+
+    var count: Int {
+        switch self {
+        case let .easy(d): d.count
+        case let .normal(d): d.count
+        case let .hard(d): d.count
+        }
     }
 }

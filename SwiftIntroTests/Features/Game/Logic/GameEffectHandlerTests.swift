@@ -59,27 +59,28 @@ final class GameEffectHandlerTests: XCTestCase {
         return card
     }
 
-    private func makeModel(
-        cards: [CardModel] = [],
-        level: Level = .easy
-    ) -> GameModel {
-        GameModel(cards: cards, level: level)
+    /// Builds a one-card "model" tagged `.easy`. The `.easy` level nominally requires 6
+    /// cards, but `GameModel.init` does not enforce that invariant, so a 1-card fixture
+    /// is sufficient for the handler tests (which only read `cards[0]`).
+    private func makeOneCardModel(_ card: CardModel) -> GameModel<1> {
+        GameModel<1>(cards: [card], level: .easy)
     }
 
-    private func makeHandler(
-        model: GameModel? = nil,
-        level: Level = .easy
-    ) -> GameEffectHandler {
-        let initialModel = model ?? makeModel(level: level)
-        return GameEffectHandler(initialModel: initialModel)
+    /// Builds a minimal single-card model for tests that don't read any card state.
+    /// Using N=1 (rather than N=0) sidesteps any zero-sized `InlineArray` edge cases.
+    private func makeMinimalModel() -> GameModel<1> {
+        GameModel<1>(cards: [makeCard()], level: .easy)
+    }
+
+    private func makeHandler<let N: Int>(model: GameModel<N>) -> GameEffectHandler<N> {
+        GameEffectHandler<N>(initialModel: model)
     }
 
     // MARK: - canSelectCard
 
     func test_canSelectCard_returnsTrueForUnmatchedCard() {
         // Arrange
-        let cards = [makeCard(isMatched: false)]
-        let handler = makeHandler(model: makeModel(cards: cards))
+        let handler = makeHandler(model: makeOneCardModel(makeCard(isMatched: false)))
 
         // Act
         let result = handler.canSelectCard(at: 0)
@@ -90,8 +91,7 @@ final class GameEffectHandlerTests: XCTestCase {
 
     func test_canSelectCard_returnsFalseForMatchedCard() {
         // Arrange
-        let cards = [makeCard(isMatched: true)]
-        let handler = makeHandler(model: makeModel(cards: cards))
+        let handler = makeHandler(model: makeOneCardModel(makeCard(isMatched: true)))
 
         // Act
         let result = handler.canSelectCard(at: 0)
@@ -104,11 +104,10 @@ final class GameEffectHandlerTests: XCTestCase {
 
     func test_update_canSelectCard_reflectsUpdatedModel() {
         // Arrange — initially unmatched
-        let cards = [makeCard(isMatched: false)]
-        let handler = makeHandler(model: makeModel(cards: cards))
+        let handler = makeHandler(model: makeOneCardModel(makeCard(isMatched: false)))
 
         // Act — update with a model where the card is now matched
-        var matched = makeModel(cards: cards)
+        var matched = makeOneCardModel(makeCard(isMatched: false))
         matched.cards[0].isMatched = true
         handler.update(with: matched)
 
@@ -120,7 +119,7 @@ final class GameEffectHandlerTests: XCTestCase {
 
     func test_connect_returnsNonNilConnection() {
         // Arrange
-        let handler = makeHandler()
+        let handler = makeHandler(model: makeMinimalModel())
 
         // Act
         let connection = handler.connect { _ in }
@@ -131,7 +130,7 @@ final class GameEffectHandlerTests: XCTestCase {
 
     func test_connect_disposeDoesNotCrashWithNoPendingWorkItem() {
         // Arrange
-        let handler = makeHandler()
+        let handler = makeHandler(model: makeMinimalModel())
         let connection = handler.connect { _ in }
 
         // Act + Assert — dispose must not crash when no flip-back timer is pending
@@ -142,7 +141,7 @@ final class GameEffectHandlerTests: XCTestCase {
 
     func test_connect_flipCardEffect_doesNotCrashWithNoCollectionView() {
         // Arrange — no collectionView assigned
-        let handler = makeHandler()
+        let handler = makeHandler(model: makeMinimalModel())
         let connection = handler.connect { _ in }
         let exp = expectation(description: "main queue drain")
 
@@ -162,7 +161,7 @@ final class GameEffectHandlerTests: XCTestCase {
             frame: CGRect(x: 0, y: 0, width: 300, height: 400),
             collectionViewLayout: UICollectionViewFlowLayout()
         )
-        let handler = makeHandler()
+        let handler = makeHandler(model: makeMinimalModel())
         handler.collectionView = cv
         let connection = handler.connect { _ in }
         let exp = expectation(description: "main queue drain")
@@ -181,7 +180,7 @@ final class GameEffectHandlerTests: XCTestCase {
 
     func test_connect_scheduleFlipBackEffect_dispatchesFlipBackEvent() {
         // Arrange
-        let handler = makeHandler()
+        let handler = makeHandler(model: makeMinimalModel())
         let exp = expectation(description: "flipBackCards event dispatched")
         var receivedEvent: GameEvent?
         let connection = handler.connect { event in
@@ -205,7 +204,7 @@ final class GameEffectHandlerTests: XCTestCase {
 
     func test_connect_scheduleFlipBackEffect_canBeCancelledByDispose() {
         // Arrange
-        let handler = makeHandler()
+        let handler = makeHandler(model: makeMinimalModel())
         var didDispatch = false
         let connection = handler.connect { _ in didDispatch = true }
 
@@ -222,19 +221,23 @@ final class GameEffectHandlerTests: XCTestCase {
 
     // MARK: - navigateToGameOver effect (via connect)
 
-    func test_connect_navigateToGameOverEffect_callsOnNavigateToGameOver() {
-        // Arrange
-        let handler = makeHandler()
+    func test_connect_navigateToGameOverEffect_callsOnNavigateToGameOver() throws {
+        // Arrange — 2-card deck (1 pair) keeps the `CardDuplicates<2>` invariant happy.
+        let card = try Card(imageUrl: XCTUnwrap(URL(string: "https://a.test/0.jpg")))
+        let deck = CardDuplicates<2>(reshuffling: [card, card])
+        let model = GameModel<2>(
+            cards: [CardModel(card: card), CardModel(card: card)],
+            level: .easy
+        )
+        let handler = makeHandler(model: model)
         let exp = expectation(description: "navigate called")
-        var receivedOutcome: GameOutcome?
+        var receivedOutcome: GameOutcome<2>?
         handler.onNavigateToGameOver = { outcome in
             receivedOutcome = outcome
             exp.fulfill()
         }
         let connection = handler.connect { _ in }
-        let card = Card(imageUrl: URL(string: "https://a.test/0.jpg")!)
-        let deck = CardDuplicates(reshuffling: [card, card])
-        let outcome = GameOutcome(level: .easy, clickCount: 7, cards: deck)
+        let outcome = GameOutcome<2>(level: .easy, clickCount: 7, cards: deck)
 
         // Act
         connection.accept(.navigateToGameOver(outcome: outcome))

@@ -15,13 +15,25 @@ final class GameOverViewSnapshotTests: XCTestCase {
     private func makeOutcome(
         level: Level = .easy,
         clickCount: Int = 10
-    ) -> GameOutcome {
+    ) -> AnyGameOutcome {
         let paired = (0 ..< level.cardCount / 2).flatMap { i -> [Card] in
             let card = Card(imageUrl: URL(string: "https://a.test/\(i).jpg")!)
             return [card, card]
         }
-        let deck = CardDuplicates(reshuffling: paired)
-        return GameOutcome(level: level, clickCount: clickCount, cards: deck)
+        switch level {
+        case .easy:
+            return .easy(GameOutcome<6>(
+                level: level, clickCount: clickCount, cards: CardDuplicates(reshuffling: paired)
+            ))
+        case .normal:
+            return .normal(GameOutcome<12>(
+                level: level, clickCount: clickCount, cards: CardDuplicates(reshuffling: paired)
+            ))
+        case .hard:
+            return .hard(GameOutcome<20>(
+                level: level, clickCount: clickCount, cards: CardDuplicates(reshuffling: paired)
+            ))
+        }
     }
 
     func test_gameOverView_defaultAppearance() {

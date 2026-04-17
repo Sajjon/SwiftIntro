@@ -21,3 +21,8 @@
 
 # Exclusions
 --exclude SwiftIntro/Models/Generated
+# GameEffect.swift is a `<let N: Int>`-generic enum — SwiftFormat 0.61's parser
+# loses track of scope inside its body and either trips on the closing `}` or
+# mangles indentation/doc comments. Formatted by hand until a newer SwiftFormat
+# release handles value-generic enums correctly.
+--exclude SwiftIntro/Features/Game/Logic/GameEffect.swift

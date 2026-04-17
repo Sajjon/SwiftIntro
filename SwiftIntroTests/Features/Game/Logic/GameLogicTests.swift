@@ -11,27 +11,28 @@
 //
 
 import MobiusCore
-import XCTest
 @testable import SwiftIntro
+import XCTest
 
 final class GameLogicTests: XCTestCase {
-
     // MARK: - Fixtures
 
     private let urlA = URL(string: "https://example.com/a.jpg")!
     private let urlB = URL(string: "https://example.com/b.jpg")!
     private let urlC = URL(string: "https://example.com/c.jpg")!
 
-    /// Returns a `GameModel` with three pairs (6 cards): urlA×2, urlB×2, urlC×2.
-    private func threePairModel() -> GameModel {
+    /// Returns a `GameModel<6>` with three pairs: urlA×2, urlB×2, urlC×2.
+    private func threePairModel() -> GameModel<6> {
         let cards = [urlA, urlA, urlB, urlB, urlC, urlC].map { CardModel(card: Card(imageUrl: $0)) }
-        return GameModel(cards: cards, level: .easy)
+        return GameModel<6>(cards: cards, level: .easy)
     }
 
-    /// Returns a `GameModel` with exactly one pair: two cards sharing `urlA`.
-    private func onePairModel() -> GameModel {
+    /// Returns a `GameModel<2>` with exactly one pair: two cards sharing `urlA`.
+    /// The level tag is intentionally loose here — these fixtures exercise `update`
+    /// in isolation without needing a valid full-size board.
+    private func onePairModel() -> GameModel<2> {
         let cards = [urlA, urlA].map { CardModel(card: Card(imageUrl: $0)) }
-        return GameModel(cards: cards, level: .easy)
+        return GameModel<2>(cards: cards, level: .easy)
     }
 
     // MARK: - Out-of-bounds tap
@@ -164,7 +165,7 @@ final class GameLogicTests: XCTestCase {
         let result = GameLogic.update(model: model, event: .cardTapped(index: 0))
 
         // Assert
-        guard case .flipCard(let index, let faceUp) = result.effects.first else {
+        guard case let .flipCard(index, faceUp) = result.effects.first else {
             return XCTFail("Expected .flipCard effect")
         }
         XCTAssertEqual(index, 0)
@@ -210,7 +211,7 @@ final class GameLogicTests: XCTestCase {
 
         // Assert
         let hasFlip = result.effects.contains {
-            if case .flipCard(let i, let faceUp) = $0 { return i == 2 && faceUp }
+            if case let .flipCard(i, faceUp) = $0 { return i == 2 && faceUp }
             return false
         }
         XCTAssertTrue(hasFlip, "Expected .flipCard(index: 2, faceUp: true)")
@@ -227,7 +228,7 @@ final class GameLogicTests: XCTestCase {
 
         // Assert
         let hasSchedule = result.effects.contains {
-            if case .scheduleFlipBack(let i1, let i2) = $0 { return i1 == 0 && i2 == 2 }
+            if case let .scheduleFlipBack(i1, i2) = $0 { return i1 == 0 && i2 == 2 }
             return false
         }
         XCTAssertTrue(hasSchedule, "Expected .scheduleFlipBack(index1: 0, index2: 2)")
@@ -348,7 +349,7 @@ final class GameLogicTests: XCTestCase {
     func test_cardTapped_lastMatch_navigateOutcomeCarriesLevel() {
         // Arrange
         let cards = [urlA, urlA].map { CardModel(card: Card(imageUrl: $0)) }
-        var model = GameModel(cards: cards, level: .hard)
+        var model = GameModel<2>(cards: cards, level: .hard)
         model.pendingCardIndex = 0
         model.cards[0].isFlipped = true
 
@@ -356,7 +357,7 @@ final class GameLogicTests: XCTestCase {
         let result = GameLogic.update(model: model, event: .cardTapped(index: 1))
 
         // Assert
-        guard case .navigateToGameOver(let outcome) = result.effects.first(where: {
+        guard case let .navigateToGameOver(outcome) = result.effects.first(where: {
             if case .navigateToGameOver = $0 { return true }; return false
         }) else { return XCTFail("Expected .navigateToGameOver") }
         XCTAssertEqual(outcome.level, .hard)
@@ -373,7 +374,7 @@ final class GameLogicTests: XCTestCase {
         let result = GameLogic.update(model: model, event: .cardTapped(index: 1))
 
         // Assert — tap itself increments clickCount before the outcome is built
-        guard case .navigateToGameOver(let outcome) = result.effects.first(where: {
+        guard case let .navigateToGameOver(outcome) = result.effects.first(where: {
             if case .navigateToGameOver = $0 { return true }; return false
         }) else { return XCTFail("Expected .navigateToGameOver") }
         XCTAssertEqual(outcome.clickCount, 6)
@@ -417,10 +418,10 @@ final class GameLogicTests: XCTestCase {
         let result = GameLogic.update(model: model, event: .flipBackCards(index1: 0, index2: 2))
 
         // Assert
-        let flipDownCount = result.effects.filter {
-            if case .flipCard(_, let faceUp) = $0 { return !faceUp }
+        let flipDownCount = result.effects.count(where: {
+            if case let .flipCard(_, faceUp) = $0 { return !faceUp }
             return false
-        }.count
+        })
         XCTAssertEqual(flipDownCount, 2)
     }
 

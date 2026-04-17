@@ -12,7 +12,6 @@ import UIKit
 import XCTest
 
 final class GameSetupVCTests: XCTestCase {
-
     // MARK: - Helpers
 
     private func gameSetupView(of vc: GameSetupVC) -> GameSetupView {
@@ -51,7 +50,9 @@ final class GameSetupVCTests: XCTestCase {
         // Arrange
         final class SpyNavigator: GameSetupNavigatorProtocol {
             var receivedConfig: GameConfiguration?
-            func navigateToLoading(config: GameConfiguration) { receivedConfig = config }
+            func navigateToLoading(config: GameConfiguration) {
+                receivedConfig = config
+            }
         }
         let vc = GameSetupVC()
         let spy = SpyNavigator()

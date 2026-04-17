@@ -23,9 +23,9 @@ import XCTest
 private final class SpyNavigator: GameOverNavigatorProtocol {
     private(set) var restartGameCalled = false
     private(set) var quitGameCalled = false
-    private(set) var lastGame: PreparedGame?
+    private(set) var lastGame: AnyPreparedGame?
 
-    func restartGame(_ game: PreparedGame) {
+    func restartGame(_ game: AnyPreparedGame) {
         restartGameCalled = true
         lastGame = game
     }
@@ -44,8 +44,11 @@ final class GameOverVCTests: XCTestCase {
         Card(imageUrl: URL(string: "https://a.test/\(index).jpg")!)
     }
 
-    private func makeCards(count: Int) -> CardDuplicates {
-        let paired = (0 ..< count / 2).flatMap { i -> [Card] in
+    /// Tests always use `.easy` (6 cards). Making this generic over `N` would require
+    /// every test method to carry a compile-time `N`; at test scope, fixing one size
+    /// is simpler and exercises the same code paths.
+    private func makeEasyCards() -> CardDuplicates<6> {
+        let paired = (0 ..< 3).flatMap { i -> [Card] in
             let card = makeCard(index: i)
             return [card, card]
         }
@@ -55,17 +58,19 @@ final class GameOverVCTests: XCTestCase {
     private func makeOutcome(
         level: Level = .easy,
         clickCount: Int = 5
-    ) -> GameOutcome {
-        GameOutcome(
+    ) -> AnyGameOutcome {
+        // All tests use `.easy` below, so we only need the 6-card case.
+        precondition(level == .easy, "Test helper only supports easy; extend if needed")
+        return .easy(GameOutcome<6>(
             level: level,
             clickCount: clickCount,
-            cards: makeCards(count: level.cardCount)
-        )
+            cards: makeEasyCards()
+        ))
     }
 
     private func makeVC(
         config: GameConfiguration = GameConfiguration(level: .easy),
-        outcome: GameOutcome? = nil
+        outcome: AnyGameOutcome? = nil
     ) -> GameOverVC {
         GameOverVC(config: config, outcome: outcome ?? makeOutcome())
     }
@@ -176,8 +181,8 @@ final class GameOverVCTests: XCTestCase {
         // Act
         gameOverView(of: vc).onRestart?()
 
-        // Assert
-        XCTAssertEqual(spy.lastGame?.cards.memoryCards.count, outcome.cards.memoryCards.count)
+        // Assert — the navigator receives an AnyPreparedGame whose card count equals the outcome's.
+        XCTAssertEqual(spy.lastGame?.cardCount, 6)
     }
 
     func test_onRestart_withoutNavigator_doesNotCrash() {

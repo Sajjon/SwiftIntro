@@ -59,10 +59,10 @@ private final class StubImageCache: ImageCacheProtocol {
 
 private final class SpyNavigator: LoadingNavigatorProtocol {
     private(set) var navigateToGameCallCount = 0
-    private(set) var lastGame: PreparedGame?
+    private(set) var lastGame: AnyPreparedGame?
     var onNavigateToGame: (() -> Void)?
 
-    func navigateToGame(_ game: PreparedGame) {
+    func navigateToGame(_ game: AnyPreparedGame) {
         navigateToGameCallCount += 1
         lastGame = game
         onNavigateToGame?()
@@ -233,10 +233,10 @@ final class LoadingVCTests: XCTestCase {
         // Act
         _ = vc.view
 
-        // Assert
+        // Assert — easy level carries a 6-card deck; the wrapper exposes its count.
         waitForExpectations(timeout: 1)
-        XCTAssertNotNil(spy.lastGame?.cards)
-        XCTAssertFalse(spy.lastGame?.cards.memoryCards.isEmpty ?? true)
+        XCTAssertNotNil(spy.lastGame)
+        XCTAssertGreaterThan(spy.lastGame?.cardCount ?? 0, 0)
     }
 
     func test_navigateToGame_withNoNavigator_doesNotCrash() {

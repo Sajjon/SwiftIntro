@@ -10,24 +10,17 @@ import UIKit
 
 /// Owns and manages the full Mobius loop for a single game session.
 ///
-/// `GameLoop` groups `MobiusController` and `GameEffectHandler` so that `GameVC`
-/// can remain a pure view — it implements `Connectable` but knows nothing about
-/// loop infrastructure. Create one `GameLoop` per game session and discard it when
-/// the session ends.
-final class GameLoop {
-    /// Handles all side effects: flip animations, the flip-back timer, and game-over navigation.
-    private let effectHandler: GameEffectHandler
+/// `GameLoop` groups `MobiusController<GameModel<N>, GameEvent, GameEffect<N>>` and
+/// `GameEffectHandler<N>` so `GameVC<N>` can remain a pure view.
+final class GameLoop<let N: Int> {
+    private let effectHandler: GameEffectHandler<N>
 
-    /// The Mobius loop controller — drives the `update → effect → event` cycle.
-    private let controller: MobiusController<GameModel, GameEvent, GameEffect>
+    private let controller: MobiusController<GameModel<N>, GameEvent, GameEffect<N>>
 
     /// Builds the complete Mobius loop from the given initial model.
-    ///
-    /// `effectHandler` is pre-seeded with `initialModel` so cell configuration works
-    /// on the very first `willDisplay` call, before the loop's first async model delivery.
-    init(initialModel: GameModel) {
+    init(initialModel: GameModel<N>) {
         logGame.debug("GameLoop initializing — level: \(initialModel.level), pairs: \(initialModel.totalPairs)")
-        let effectHandler = GameEffectHandler(initialModel: initialModel)
+        let effectHandler = GameEffectHandler<N>(initialModel: initialModel)
         self.effectHandler = effectHandler
         controller = Mobius
             .loop(update: GameLogic.update, effectHandler: effectHandler)
@@ -38,8 +31,7 @@ final class GameLoop {
 // MARK: Computed Properties
 
 extension GameLoop {
-    /// The difficulty level for this session — exposed so `GameVC` can size the grid
-    /// without storing `GameConfiguration` or `CardDuplicates` separately.
+    /// The difficulty level for this session.
     var level: Level {
         effectHandler.level
     }
@@ -48,18 +40,11 @@ extension GameLoop {
 extension GameLoop {
     /// Connects the view to the loop, wires the effect handler's UIKit dependencies,
     /// and starts the Mobius loop.
-    ///
-    /// Call this from `viewDidLoad` after the collection view is ready.
-    ///
-    /// - Parameters:
-    ///   - view: The `Connectable` view that renders `GameModel` and dispatches `GameEvent`s.
-    ///   - collectionView: The card grid — used by the effect handler to find cells for flip animations.
-    ///   - onNavigateToGameOver: Called on the main thread when the player wins.
     func start<View: Connectable>(
         view: View,
         collectionView: UICollectionView,
-        onNavigateToGameOver: @escaping (GameOutcome) -> Void
-    ) where View.Input == GameModel, View.Output == GameEvent {
+        onNavigateToGameOver: @escaping (GameOutcome<N>) -> Void
+    ) where View.Input == GameModel<N>, View.Output == GameEvent {
         logGame.debug("GameLoop starting — connecting view and effect handler")
         effectHandler.collectionView = collectionView
         effectHandler.onNavigateToGameOver = onNavigateToGameOver
@@ -69,9 +54,6 @@ extension GameLoop {
     }
 
     /// Stops the loop and disconnects the view, cancelling any pending timers.
-    ///
-    /// Idempotent — safe to call more than once; subsequent calls are no-ops.
-    /// Call this from `viewDidDisappear`.
     func stop() {
         guard controller.running else {
             logGame.debug("GameLoop.stop() called but loop is not running — skipping")
@@ -82,9 +64,8 @@ extension GameLoop {
         controller.disconnectView()
     }
 
-    /// Forwards the latest model to the effect handler so `canSelectCard` and
-    /// `configureCell` reflect current game state.
-    func update(with model: GameModel) {
+    /// Forwards the latest model to the effect handler.
+    func update(with model: GameModel<N>) {
         effectHandler.update(with: model)
     }
 

@@ -10,6 +10,8 @@
 //  - Assert:  verify a single observable outcome (1 line)
 //
 //  Notes on approach:
+//  - All tests use the `.easy` (6-card) variant. The generic VC plumbing is
+//    identical across levels; one concrete size keeps the helpers readable.
 //  - `_ = vc.view` triggers loadView + viewDidLoad (starts the Mobius loop).
 //  - `vc.viewDidDisappear(false)` stops the loop after each such test.
 //  - `dataSourceAndDelegate` is retrieved via the collectionView's dataSource
@@ -42,44 +44,41 @@ final class GameVCTests: XCTestCase {
         Card(imageUrl: URL(string: "https://a.test/\(index).jpg")!)
     }
 
-    /// Returns a `CardDuplicates` deck of `count` cards (must be even) where each
-    /// image appears exactly twice, satisfying the deck's pair invariant.
-    private func makeCards(count: Int) -> CardDuplicates {
-        let paired = (0 ..< count / 2).flatMap { i -> [Card] in
+    /// Returns a 6-card `CardDuplicates<6>` where each image appears twice,
+    /// satisfying the deck's pair invariant.
+    private func makeEasyCards() -> CardDuplicates<6> {
+        let paired = (0 ..< 3).flatMap { i -> [Card] in
             let card = makeCard(index: i)
             return [card, card]
         }
-        return CardDuplicates(reshuffling: paired)
+        return CardDuplicates<6>(reshuffling: paired)
     }
 
-    private func makeVC(level: Level = .easy) -> GameVC {
-        GameVC(PreparedGame(
-            config: GameConfiguration(level: level),
-            cards: makeCards(count: level.cardCount)
-        ))
+    private func makeVC() -> GameVC<6> {
+        GameVC<6>(
+            PreparedGame<6>(config: GameConfiguration(level: .easy), cards: makeEasyCards()),
+            wrapOutcome: AnyGameOutcome.easy
+        )
     }
 
-    private func makeModel(
-        level: Level = .easy,
-        matches: Int = 0
-    ) -> GameModel {
-        let cards = (0 ..< level.cardCount).map {
+    private func makeEasyModel(matches: Int = 0) -> GameModel<6> {
+        let cards = (0 ..< 6).map {
             CardModel(card: Card(imageUrl: URL(string: "https://a.test/\($0).jpg")!))
         }
-        var model = GameModel(cards: cards, level: level)
+        var model = GameModel<6>(cards: cards, level: .easy)
         model.matches = matches
         return model
     }
 
     /// Casts `vc.view` to `GameView`. Crashes the test if the type is wrong.
-    private func gameView(of vc: GameVC) -> GameView {
+    private func gameView(of vc: GameVC<6>) -> GameView {
         // swiftlint:disable:next force_cast
         vc.view as! GameView
     }
 
     /// Retrieves the `MemoryDataSourceAndDelegate` from the collection view's `dataSource`
     /// property. Only valid after `viewDidLoad` has run.
-    private func dataSourceAndDelegate(of vc: GameVC) -> MemoryDataSourceAndDelegate {
+    private func dataSourceAndDelegate(of vc: GameVC<6>) -> MemoryDataSourceAndDelegate {
         // swiftlint:disable:next force_cast
         gameView(of: vc).collectionView.dataSource as! MemoryDataSourceAndDelegate
     }
@@ -92,15 +91,33 @@ final class GameVCTests: XCTestCase {
     }
 
     func test_init_easy_doesNotCrash() {
-        XCTAssertNoThrow(makeVC(level: .easy))
+        XCTAssertNoThrow(makeVC())
     }
 
     func test_init_normal_doesNotCrash() {
-        XCTAssertNoThrow(makeVC(level: .normal))
+        // 12-card normal deck
+        let paired = (0 ..< 6).flatMap { i -> [Card] in
+            let card = makeCard(index: i)
+            return [card, card]
+        }
+        let deck = CardDuplicates<12>(reshuffling: paired)
+        XCTAssertNoThrow(GameVC<12>(
+            PreparedGame<12>(config: GameConfiguration(level: .normal), cards: deck),
+            wrapOutcome: AnyGameOutcome.normal
+        ))
     }
 
     func test_init_hard_doesNotCrash() {
-        XCTAssertNoThrow(makeVC(level: .hard))
+        // 20-card hard deck
+        let paired = (0 ..< 10).flatMap { i -> [Card] in
+            let card = makeCard(index: i)
+            return [card, card]
+        }
+        let deck = CardDuplicates<20>(reshuffling: paired)
+        XCTAssertNoThrow(GameVC<20>(
+            PreparedGame<20>(config: GameConfiguration(level: .hard), cards: deck),
+            wrapOutcome: AnyGameOutcome.hard
+        ))
     }
 
     // MARK: - loadView
@@ -205,10 +222,10 @@ final class GameVCTests: XCTestCase {
         }
 
         // Act — fire the wired closure directly, bypassing UICollectionView
-        dataSourceAndDelegate(of: vc).onCardTapped?(7)
+        dataSourceAndDelegate(of: vc).onCardTapped?(2)
 
         // Assert
-        XCTAssertEqual(receivedIndex, 7)
+        XCTAssertEqual(receivedIndex, 2)
         conn.dispose()
         vc.viewDidDisappear(false)
     }
@@ -239,7 +256,7 @@ final class GameVCTests: XCTestCase {
         let conn = vc.connect { _ in }
 
         // Act
-        conn.accept(makeModel())
+        conn.accept(makeEasyModel())
 
         // Assert — render() always sets the score label to a non-nil string
         XCTAssertNotNil(gameView(of: vc).headerView.scoreLabel.text)
@@ -254,7 +271,7 @@ final class GameVCTests: XCTestCase {
         let conn = vc.connect { _ in }
 
         // Act
-        conn.accept(makeModel(matches: 2))
+        conn.accept(makeEasyModel(matches: 2))
 
         // Assert — the score label text contains the current match count
         XCTAssertTrue(gameView(of: vc).headerView.scoreLabel.text?.contains("2") ?? false)
@@ -308,9 +325,12 @@ final class GameVCTests: XCTestCase {
     func test_navigateToGameOver_callsNavigatorWithOutcome() {
         // Arrange — 3 paired cards (easy = 3 pairs). Deck is shuffled, so locate
         // matching index pairs by URL after construction.
-        let pairedCards = makePairedCards(pairCount: 3)
+        let pairedCards = makePairedEasyCards()
         let pairs = pairIndices(in: pairedCards)
-        let vc = GameVC(PreparedGame(config: GameConfiguration(level: .easy), cards: pairedCards))
+        let vc = GameVC<6>(
+            PreparedGame<6>(config: GameConfiguration(level: .easy), cards: pairedCards),
+            wrapOutcome: AnyGameOutcome.easy
+        )
         let spy = SpyGameNavigator()
         vc.navigator = spy
         _ = vc.view
@@ -332,18 +352,19 @@ final class GameVCTests: XCTestCase {
 
     // MARK: - Pairing helpers
 
-    private func makePairedCards(pairCount: Int) -> CardDuplicates {
-        let cards = (0 ..< pairCount).flatMap { i -> [Card] in
+    private func makePairedEasyCards() -> CardDuplicates<6> {
+        let cards = (0 ..< 3).flatMap { i -> [Card] in
             let card = Card(imageUrl: URL(string: "https://a.test/pair\(i).jpg")!)
             return [card, card]
         }
-        return CardDuplicates(reshuffling: cards)
+        return CardDuplicates<6>(reshuffling: cards)
     }
 
-    private func pairIndices(in deck: CardDuplicates) -> [(Int, Int)] {
+    private func pairIndices(in deck: CardDuplicates<6>) -> [(Int, Int)] {
         var seen: [URL: Int] = [:]
         var pairs: [(Int, Int)] = []
-        for (idx, card) in deck.memoryCards.enumerated() {
+        for idx in deck.memoryCards.indices {
+            let card = deck.memoryCards[idx]
             if let first = seen[card.imageUrl] {
                 pairs.append((first, idx))
             } else {
@@ -356,8 +377,8 @@ final class GameVCTests: XCTestCase {
 
 private final class SpyGameNavigator: GameNavigatorProtocol {
     var onNavigateToGameOver: (() -> Void)?
-    private(set) var lastOutcome: GameOutcome?
-    func navigateToGameOver(outcome: GameOutcome) {
+    private(set) var lastOutcome: AnyGameOutcome?
+    func navigateToGameOver(outcome: AnyGameOutcome) {
         lastOutcome = outcome
         onNavigateToGameOver?()
     }
