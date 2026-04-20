@@ -23,7 +23,11 @@ final class GameSetupVC: UIViewController {
     private let gameSetupView = GameSetupView()
 
     weak var navigator: GameSetupNavigatorProtocol?
+}
 
+// MARK: Override
+
+extension GameSetupVC {
     override func loadView() {
         view = gameSetupView
     }

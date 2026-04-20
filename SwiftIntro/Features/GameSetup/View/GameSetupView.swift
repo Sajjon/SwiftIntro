@@ -17,10 +17,10 @@ final class GameSetupView: UIView {
     private let titleLabel = UILabel()
 
     /// Label above the search query text field.
-    private let usernameLabel = UILabel()
+    private let wikimediaQueryLabel = UILabel()
 
     /// Text field where the player enters the Wikimedia Commons search query.
-    private let usernameTextField = UITextField()
+    private let wikimediaQueryTextField = UITextField()
 
     /// Label above the difficulty segmented control.
     private let segmentTitleLabel = UILabel()
@@ -72,16 +72,20 @@ private extension GameSetupView {
     func configureControls() {
         titleLabel.font = .boldSystemFont(ofSize: 24)
         titleLabel.textAlignment = .center
-        usernameTextField.borderStyle = .roundedRect
-        usernameTextField.autocorrectionType = .no
-        usernameTextField.autocapitalizationType = .none
+        wikimediaQueryTextField.borderStyle = .roundedRect
+        wikimediaQueryTextField.autocorrectionType = .no
+        wikimediaQueryTextField.autocapitalizationType = .none
     }
 
     /// Returns the vertical stack that arranges all controls from top to bottom.
     func makeStack() -> UIStackView {
         let stack = UIStackView(arrangedSubviews: [
-            titleLabel, usernameLabel, usernameTextField,
-            segmentTitleLabel, levelSegmentedControl, startGameButton,
+            titleLabel,
+            wikimediaQueryLabel,
+            wikimediaQueryTextField,
+            segmentTitleLabel,
+            levelSegmentedControl,
+            startGameButton,
         ])
         stack.axis = .vertical
         stack.spacing = 16
@@ -93,8 +97,8 @@ private extension GameSetupView {
     /// level segment title derived from the corresponding `Level` case.
     func setupLocalizedStrings() {
         titleLabel.text = String(localized: .GameSetup.title)
-        usernameTextField.placeholder = String(localized: .GameSetup.usernamePlaceholder)
-        usernameLabel.text = String(localized: .GameSetup.username)
+        wikimediaQueryTextField.placeholder = String(localized: .GameSetup.usernamePlaceholder)
+        wikimediaQueryLabel.text = String(localized: .GameSetup.username)
         segmentTitleLabel.text = String(localized: .GameSetup.level)
         startGameButton.setLocalizedTitle(String(localized: .GameSetup.startGame))
         setupLevelSegmentTitles()
@@ -115,7 +119,7 @@ private extension GameSetupView {
 
     /// Seeds the controls with the default `GameConfiguration` values on first display.
     func populateViews() {
-        usernameTextField.text = config.searchQuery
+        wikimediaQueryTextField.text = config.searchQuery
         levelSegmentedControl.selectedSegmentIndex = config.level.segmentedControlIndex
     }
 
@@ -126,7 +130,7 @@ private extension GameSetupView {
 
     /// Reads the text field, updates `config.searchQuery` if non-empty, then fires `onStartGame`.
     @objc func startGameTapped() {
-        if let query = usernameTextField.text, !query.isEmpty {
+        if let query = wikimediaQueryTextField.text, !query.isEmpty {
             config.searchQuery = query
         }
         onStartGame?(config)

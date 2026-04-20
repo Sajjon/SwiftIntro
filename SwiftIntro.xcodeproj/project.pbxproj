@@ -68,6 +68,7 @@
 		TB000002TB000002TB000002 /* LevelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TB000001TB000001TB000001 /* LevelTests.swift */; };
 		TC000002TC000002TC000002 /* WikimediaRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TC000001TC000001TC000001 /* WikimediaRouterTests.swift */; };
 		TD000002TD000002TD000002 /* GameModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TD000001TD000001TD000001 /* GameModelTests.swift */; };
+		TY000002TY000002TY000002 /* GameEffectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TY000001TY000001TY000001 /* GameEffectTests.swift */; };
 		TE000002TE000002TE000002 /* CardDuplicatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TE000001TE000001TE000001 /* CardDuplicatesTests.swift */; };
 		TF000002TF000002TF000002 /* ArrayExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TF000001TF000001TF000001 /* ArrayExtensionTests.swift */; };
 		TH000002TH000002TH000002 /* NSObjectExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TH000001TH000001TH000001 /* NSObjectExtensionTests.swift */; };
@@ -165,6 +166,7 @@
 		TB000001TB000001TB000001 /* LevelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelTests.swift; sourceTree = "<group>"; };
 		TC000001TC000001TC000001 /* WikimediaRouterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikimediaRouterTests.swift; sourceTree = "<group>"; };
 		TD000001TD000001TD000001 /* GameModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameModelTests.swift; sourceTree = "<group>"; };
+		TY000001TY000001TY000001 /* GameEffectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEffectTests.swift; sourceTree = "<group>"; };
 		TE000001TE000001TE000001 /* CardDuplicatesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDuplicatesTests.swift; sourceTree = "<group>"; };
 		TEST0002TEST0002TEST0002 /* SwiftIntroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftIntroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		TF000001TF000001TF000001 /* ArrayExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensionTests.swift; sourceTree = "<group>"; };
@@ -524,6 +526,7 @@
 				TD000001TD000001TD000001 /* GameModelTests.swift */,
 				TL000001TL000001TL000001 /* GameEffectHandlerTests.swift */,
 				TM000001TM000001TM000001 /* GameLoopTests.swift */,
+				TY000001TY000001TY000001 /* GameEffectTests.swift */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -760,6 +763,7 @@
 				TB000002TB000002TB000002 /* LevelTests.swift in Sources */,
 				TC000002TC000002TC000002 /* WikimediaRouterTests.swift in Sources */,
 				TD000002TD000002TD000002 /* GameModelTests.swift in Sources */,
+				TY000002TY000002TY000002 /* GameEffectTests.swift in Sources */,
 				TE000002TE000002TE000002 /* CardDuplicatesTests.swift in Sources */,
 				TF000002TF000002TF000002 /* ArrayExtensionTests.swift in Sources */,
 				TH000002TH000002TH000002 /* NSObjectExtensionTests.swift in Sources */,

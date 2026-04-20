@@ -22,8 +22,8 @@ final class RootVC: UINavigationController {
         logNav.debug("RootVC initializing — GameSetupVC will be root")
         let gameSetupVC = GameSetupVC()
         super.init(rootViewController: gameSetupVC)
-        isNavigationBarHidden = true
         gameSetupVC.navigator = self
+        isNavigationBarHidden = true
         logNav.debug("RootVC ready — navigation stack: [GameSetupVC]")
     }
 
@@ -41,6 +41,7 @@ extension RootVC: GameSetupNavigatorProtocol {
         logNav.info("Pushing LoadingVC — config: \(config)")
         let loadingVC = LoadingVC(config: config)
         loadingVC.navigator = self
+        isNavigationBarHidden = false
         pushViewController(loadingVC, animated: true)
     }
 }
