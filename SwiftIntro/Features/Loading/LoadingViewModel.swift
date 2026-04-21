@@ -15,30 +15,20 @@ import UIKit
 /// `LoadingVC` creates a `Diffuser<Phase>` and injects it at init time, so state
 /// changes flow directly to `LoadingView` with no optionality or separate `start` wiring.
 final class LoadingViewModel {
-    // MARK: - Phase
-
-    /// The two visual states the loading screen can be in.
-    enum Phase {
-        /// Spinner shown — either fetching data or pre-warming the image cache.
-        case loading
-        /// Something went wrong — show the error message and retry button.
-        case failed(Error)
-    }
-
     // MARK: - Dependencies
 
-    @Injected(\.wikimediaClient) private var wikimediaClient
-    @Injected(\.imageCache) private var imageCache
+    @Injected(\.wikimediaClient) private var wikimediaClient: WikimediaClientProtocol
+    @Injected(\.imageCache) private var imageCache: ImageCacheProtocol
 
     // MARK: - State
 
     private let config: GameConfiguration
-    private let diffuser: Diffuser<Phase>
+    private let onPhaseChange: (Phase) -> Void
 
     /// Current visual phase. Every assignment is automatically pushed to the view
     /// via the diffuser — no optional unwrap, no manual `run` call at the call site.
     private var phase: Phase = .loading {
-        didSet { diffuser.run(phase) }
+        didSet { onPhaseChange(phase) }
     }
 
     // MARK: - Navigation
@@ -50,10 +40,22 @@ final class LoadingViewModel {
 
     init(
         config: GameConfiguration,
-        diffuser: Diffuser<Phase>
+        onPhaseChange: @escaping (Phase) -> Void
     ) {
         self.config = config
-        self.diffuser = diffuser
+        self.onPhaseChange = onPhaseChange
+    }
+}
+
+// MARK: - Phase
+
+extension LoadingViewModel {
+    /// The two visual states the loading screen can be in.
+    enum Phase {
+        /// Spinner shown — either fetching data or pre-warming the image cache.
+        case loading
+        /// Something went wrong — show the error message and retry button.
+        case failed(Swift.Error)
     }
 }
 
@@ -65,7 +67,6 @@ extension LoadingViewModel {
         // Logger interpolation is @autoclosure → closure context; compiler needs self.
         // swiftformat:disable:next redundantSelf
         logNet.info("LoadingViewModel starting — config: \(self.config)")
-        diffuser.run(phase)
         fetchData()
     }
 

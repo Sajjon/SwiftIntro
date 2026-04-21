@@ -14,11 +14,15 @@ import Foundation
 /// Uses `HTTPClientProtocol` (injected via Factory) to fetch raw JSON, then decodes
 /// it with `Codable` into `CardSingles`. The Wikimedia response types are private
 /// to this file — callers only ever see `CardSingles`.
-final class WikimediaClient: WikimediaClientProtocol {
+final class WikimediaClient {
     /// Injected HTTP transport layer. Using the protocol allows test doubles to be
     /// substituted without touching URLSession or any real networking.
     @Injected(\.httpClient) private var httpClient
+}
 
+// MARK: - WikimediaClientProtocol
+
+extension WikimediaClient: WikimediaClientProtocol {
     func findImages(
         with searchQuery: String,
         done: @escaping (Result<CardSingles, Swift.Error>) -> Void

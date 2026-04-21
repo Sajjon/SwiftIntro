@@ -97,8 +97,8 @@ private extension GameSetupView {
     /// level segment title derived from the corresponding `Level` case.
     func setupLocalizedStrings() {
         titleLabel.text = String(localized: .GameSetup.title)
-        wikimediaQueryTextField.placeholder = String(localized: .GameSetup.usernamePlaceholder)
-        wikimediaQueryLabel.text = String(localized: .GameSetup.username)
+        wikimediaQueryTextField.placeholder = String(localized: .GameSetup.wikimediaQueryPlaceholder)
+        wikimediaQueryLabel.text = String(localized: .GameSetup.wikimediaQuery)
         segmentTitleLabel.text = String(localized: .GameSetup.level)
         startGameButton.setLocalizedTitle(String(localized: .GameSetup.startGame))
         setupLevelSegmentTitles()
@@ -126,6 +126,8 @@ private extension GameSetupView {
     /// Updates `config.level` when the player changes the segmented control.
     @objc func changedLevel(_ sender: UISegmentedControl) {
         config.level = Level(segmentedControlIndex: sender.selectedSegmentIndex)
+        // swiftformat:disable:next redundantSelf
+        logGame.debug("Changed difficulty level to \(self.config.level)")
     }
 
     /// Reads the text field, updates `config.searchQuery` if non-empty, then fires `onStartGame`.
