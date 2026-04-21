@@ -35,14 +35,12 @@ final class LoadingVC: UIViewController {
     init(config: GameConfiguration) {
         let view = LoadingView()
         loadingView = view
-        let vm = LoadingViewModel(
-            config: config,
-            diffuser: .intoAlways { phase in
-                view.render(phase)
-            }
-        )
-        viewModel = vm
-        view.onRetry = { [weak vm] in vm?.retry() }
+        viewModel = LoadingViewModel(
+            config: config
+        ) { [weak view] phase in
+            view?.render(phase)
+        }
+        view.onRetry = { [weak viewModel] in viewModel?.retry() }
         super.init(nibName: nil, bundle: nil)
     }
 

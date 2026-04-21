@@ -97,7 +97,7 @@
         }
       }
     },
-    "Username" : {
+    "WikimediaQuery" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -114,7 +114,7 @@
         }
       }
     },
-    "UsernamePlaceholder" : {
+    "WikimediaQueryPlaceholder" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -125,7 +125,7 @@
         },
         "sv" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "t.ex. katter, berg, rymden"
           }
         }
