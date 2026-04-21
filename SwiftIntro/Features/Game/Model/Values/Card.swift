@@ -11,7 +11,7 @@ import Foundation
 /// A unique card in the memory game, identified solely by the image shown on its face.
 ///
 /// Two `Card` values with the same `imageUrl` are considered a matching pair.
-struct Card: Equatable {
+struct Card: Equatable, Hashable {
     /// The remote URL of the image displayed when this card is face-up.
     let imageUrl: URL
 }

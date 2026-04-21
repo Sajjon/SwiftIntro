@@ -138,7 +138,10 @@ private extension GameVC {
     func setupCollectionView() {
         gameView.collectionView.dataSource = dataSourceAndDelegate
         gameView.collectionView.delegate = dataSourceAndDelegate
-        gameView.collectionView.register(CardCVCell.self, forCellWithReuseIdentifier: CardCVCell.cellIdentifier)
+        gameView.collectionView.register(
+            CardCVCell.self,
+            forCellWithReuseIdentifier: CardCVCell.cellIdentifier
+        )
         wireDataSourceClosures()
     }
 

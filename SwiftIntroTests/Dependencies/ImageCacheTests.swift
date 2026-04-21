@@ -114,7 +114,7 @@ final class CacheTests: XCTestCase {
         cache.prefetchImages([url1, url2]) { doneNotExpected.fulfill() }
 
         // Assert — inverted expectation fails (test fails) if done fires within the timeout
-        waitForExpectations(timeout: 0.5)
+        waitForExpectations(timeout: 0.1)
     }
 
     func test_prefetchImages_nilDoneDoesNotCrash() throws {
@@ -126,6 +126,6 @@ final class CacheTests: XCTestCase {
         // Allow the group.notify to fire before tearDown resets the stub
         let waiter = expectation(description: "main queue drain")
         DispatchQueue.main.async { waiter.fulfill() }
-        waitForExpectations(timeout: 0.5)
+        waitForExpectations(timeout: 0.1)
     }
 }

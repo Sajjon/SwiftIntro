@@ -10,7 +10,7 @@
 ///
 /// Each element appears exactly once — no pairs yet.
 /// Use `CardDuplicates` when you need the shuffled, duplicated deck used during play.
-struct CardSingles {
+struct CardSingles: Hashable {
     /// The unique cards returned by the API, one per image URL.
     let cards: [Card]
 }
