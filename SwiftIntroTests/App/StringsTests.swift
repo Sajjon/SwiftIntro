@@ -33,11 +33,11 @@ final class StringsTests: XCTestCase {
     }
 
     func test_usernamePlaceholder_isNonEmpty() {
-        XCTAssertFalse(String(localized: .GameSetup.usernamePlaceholder).isEmpty)
+        XCTAssertFalse(String(localized: .GameSetup.wikimediaQueryPlaceholder).isEmpty)
     }
 
     func test_username_isNonEmpty() {
-        XCTAssertFalse(String(localized: .GameSetup.username).isEmpty)
+        XCTAssertFalse(String(localized: .GameSetup.wikimediaQuery).isEmpty)
     }
 
     func test_easy_isNonEmpty() {

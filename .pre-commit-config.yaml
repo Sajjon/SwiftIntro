@@ -37,7 +37,7 @@ repos:
             name: Swift unit tests
             # Run the full test suite before every push, not on every commit,
             # because xcodebuild is slow.
-            entry: bash -c 'command -v just >/dev/null || { echo "just not installed — skipping (see scripts/setup.sh)"; exit 0; }; just test'
+            entry: bash -c 'set -eo pipefail; command -v just >/dev/null || { echo "just not installed — skipping (see scripts/setup.sh)"; exit 0; }; exec just test'
             language: system
             pass_filenames: false
             stages: [pre-push]

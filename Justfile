@@ -4,7 +4,7 @@
 #   brew install just xcpretty
 #   CI only: brew install xcresultparser  (converts xcresult → Cobertura for Codecov)
 
-set shell := ["zsh", "-cu"]
+set shell := ["zsh", "-euo", "pipefail", "-c"]
 
 project    := "SwiftIntro.xcodeproj"
 scheme     := "SwiftIntro"
