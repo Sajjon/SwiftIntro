@@ -27,8 +27,12 @@ final class LoadingViewModel {
 
     /// Current visual phase. Every assignment is automatically pushed to the view
     /// via the diffuser — no optional unwrap, no manual `run` call at the call site.
-    private var phase: Phase = .loading {
-        didSet { onPhaseChange(phase) }
+    private var phase: Phase = .initial {
+        didSet {
+            // swiftformat:disable:next redundantSelf
+            logApp.debug("phase: \(self.phase)")
+            onPhaseChange(phase)
+        }
     }
 
     // MARK: - Navigation
@@ -52,10 +56,21 @@ final class LoadingViewModel {
 extension LoadingViewModel {
     /// The two visual states the loading screen can be in.
     enum Phase {
+        case initial
         /// Spinner shown — either fetching data or pre-warming the image cache.
         case loading
         /// Something went wrong — show the error message and retry button.
         case failed(Swift.Error)
+    }
+}
+
+extension LoadingViewModel.Phase: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .initial: "Initial"
+        case .loading: "Loading"
+        case let .failed(error): "Failed: \(error)"
+        }
     }
 }
 
@@ -90,7 +105,7 @@ extension LoadingViewModel {
 
 extension LoadingViewModel {
     private func fetchData() {
-        // Logger interpolation is @autoclosure → closure context; compiler needs self.
+        phase = .loading
         // swiftformat:disable:next redundantSelf
         logNet.debug("Fetching images from Wikimedia for query: '\(self.config.searchQuery)'")
         wikimediaClient.findImages(with: config.searchQuery) { [weak self] result in

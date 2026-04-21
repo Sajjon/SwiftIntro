@@ -48,6 +48,8 @@ extension LoadingView {
     /// Updates the view to match `phase`.
     func render(_ phase: LoadingViewModel.Phase) {
         switch phase {
+        case .initial:
+            logApp.trace("LoadingView -> phase: initial => NOOP")
         case .loading:
             setLoadingVisible(true)
         case .failed:
