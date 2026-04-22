@@ -47,10 +47,13 @@ cov-detailed: _run-cov
 
 # ── Formatting ────────────────────────────────────────────────────────────────
 
-# Auto-format all Swift sources in-place; silently skips any tool not installed.
+# Auto-format all Swift sources in-place, then lint with the same flags CI uses
+# so any unfixable violations (e.g. multiline_parameters) fail locally instead
+# of slipping through to CI. Silently skips any tool not installed.
 fmt:
     @if command -v swiftformat >/dev/null 2>&1; then swiftformat SwiftIntro; fi
     @if command -v swiftlint  >/dev/null 2>&1; then swiftlint --fix --force-exclude; fi
+    @if command -v swiftlint  >/dev/null 2>&1; then swiftlint lint --strict --force-exclude; fi
 
 # ── Internal ──────────────────────────────────────────────────────────────────
 

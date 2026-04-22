@@ -63,7 +63,7 @@ extension RootVC: LoadingNavigatorProtocol {
             return
         }
         vcs[vcs.count - 1] = gameVC
-        setViewControllers(vcs, animated: false)
+        setViewControllers(vcs, animated: true)
     }
 }
 

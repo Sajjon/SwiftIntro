@@ -88,6 +88,7 @@ final class RootVCTests: XCTestCase {
 
         // Act
         root.navigateToGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6)))
+        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.05))
 
         // Assert — LoadingVC stand-in replaced; player cannot back-swipe to loading
         XCTAssertTrue(root.topViewController is GameVC)
@@ -113,6 +114,7 @@ final class RootVCTests: XCTestCase {
 
         // Act
         root.navigateToGame(PreparedGame(config: GameConfiguration(), cards: makeCards(count: 6)))
+        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.05))
 
         // Assert
         let gameVC = root.topViewController as? GameVC

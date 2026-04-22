@@ -45,7 +45,9 @@ private extension WikimediaClient {
             done(.failure(error))
         case let .success(data):
             do {
-                try done(.success(WikimediaClient.parse(data)))
+                let parsed = try WikimediaClient.parse(data)
+                logNet.debug("WikimediaClient parsed: \(parsed.hashValue)")
+                done(.success(parsed))
             } catch {
                 done(.failure(error))
             }

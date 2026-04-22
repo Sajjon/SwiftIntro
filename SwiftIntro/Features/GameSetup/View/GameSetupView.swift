@@ -14,22 +14,22 @@ import UIKit
 /// `GameSetupVC` for navigation.
 final class GameSetupView: UIView {
     /// Displays the app title at the top of the game setup screen.
-    private let titleLabel = UILabel()
+    private lazy var titleLabel = UILabel()
 
     /// Label above the search query text field.
-    private let wikimediaQueryLabel = UILabel()
+    private lazy var wikimediaQueryLabel = UILabel()
 
     /// Text field where the player enters the Wikimedia Commons search query.
-    private let wikimediaQueryTextField = UITextField()
+    private lazy var wikimediaQueryTextField = UITextField()
 
     /// Label above the difficulty segmented control.
-    private let segmentTitleLabel = UILabel()
+    private lazy var segmentTitleLabel = UILabel()
 
     /// Lets the player choose Easy, Normal, or Hard; titles are populated in `setupLocalizedStrings()`.
-    private let levelSegmentedControl = UISegmentedControl(items: ["", "", ""])
+    private lazy var levelSegmentedControl = UISegmentedControl(items: ["", "", ""])
 
     /// Tapped to begin data loading and start the game.
-    private let startGameButton = UIButton(type: .system)
+    private lazy var startGameButton = UIButton(type: .system)
 
     /// The configuration built from the current control values.
     /// Updated incrementally as the player changes the level segment or text field.

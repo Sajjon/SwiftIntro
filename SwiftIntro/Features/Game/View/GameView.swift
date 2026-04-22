@@ -13,10 +13,10 @@ import UIKit
 /// All visual state is derived from `GameModel` via `render(_:)` — no state is stored here.
 final class GameView: UIView {
     /// The header bar that displays the current match score.
-    let headerView = GameHeaderView()
+    lazy var headerView = GameHeaderView()
 
     /// The grid of card cells. Exposed so `GameVC` can assign its data source and delegate.
-    let collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         // Uniform spacing between rows and between columns.
         layout.minimumLineSpacing = 8
@@ -37,11 +37,18 @@ final class GameView: UIView {
     required init?(coder _: NSCoder) {
         fatalError()
     }
+}
 
+// MARK: Internal
+
+extension GameView {
     /// Updates all model-driven UI — called by the Mobius loop `acceptClosure` on every model update.
     func render(_ model: GameModel) {
         headerView.scoreLabel.text = String(
-            localized: .Game.pairsFoundUnformatted(pairsFound: model.matches, totalPairs: model.totalPairs)
+            localized: .Game.pairsFoundUnformatted(
+                pairsFound: model.matches,
+                totalPairs: model.totalPairs
+            )
         )
     }
 }

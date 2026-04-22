@@ -107,16 +107,14 @@ extension CardCVCell {
 
     /// Stretches both image views to fill the content view edge-to-edge.
     private func activateImageViewConstraints() {
-        NSLayoutConstraint.activate([
-            cardFrontImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            cardFrontImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            cardFrontImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            cardFrontImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            cardBackImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            cardBackImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            cardBackImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            cardBackImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-        ])
+        for cardView in [cardFrontImageView, cardBackImageView] {
+            NSLayoutConstraint.activate([
+                cardView.topAnchor.constraint(equalTo: contentView.topAnchor),
+                cardView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                cardView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                cardView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            ])
+        }
     }
 }
 
