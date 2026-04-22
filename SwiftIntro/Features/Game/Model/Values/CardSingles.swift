@@ -14,7 +14,10 @@ struct CardSingles: Hashable {
     /// The unique cards returned by the API, one per image URL.
     let cards: [Card]
 
-    static func == (lhs: Self, rhs: Self) -> Bool {
+    static func == (
+        lhs: Self,
+        rhs: Self
+    ) -> Bool {
         Set(lhs.cards) == Set(rhs.cards)
     }
 
