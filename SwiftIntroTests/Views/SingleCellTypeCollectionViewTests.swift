@@ -12,13 +12,6 @@ import XCTest
 final class SingleCellTypeCollectionViewTests: XCTestCase {
     // MARK: - make
 
-	func apa() {
-		let string = "A cool string"
-		if string != "A cool string" {
-			print("Not A cool string")
-		}
-	}
-
     func test_make_returnsInstanceOfExpectedType() {
         // Act
         let cv = SingleCellTypeCollectionView<CardCVCell>.make()

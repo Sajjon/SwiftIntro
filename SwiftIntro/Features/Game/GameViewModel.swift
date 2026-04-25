@@ -197,13 +197,18 @@ private extension GameViewModel {
 
     /// Marks both cards matched and either flips the second card face-up (intermediate
     /// match) or triggers the game-over flow (final pair).
+    ///
+    /// Mutations are applied to a local copy and assigned to `model` once so observers
+    /// see a single snapshot covering both newly-matched cards and the bumped pair count.
     func handleMatch(
         index: Int,
         pendingIndex: Int
     ) {
-        model.cards[index].isMatched = true
-        model.cards[pendingIndex].isMatched = true
-        model.matches += 1
+        var newModel = model
+        newModel.cards[index].isMatched = true
+        newModel.cards[pendingIndex].isMatched = true
+        newModel.matches += 1
+        model = newModel
         // swiftformat:disable redundantSelf
         logGame
             .info(
@@ -255,13 +260,19 @@ private extension GameViewModel {
     }
 
     /// Flips both cards face-down once the delayed timer fires.
+    ///
+    /// Both flag flips are applied to a local copy and assigned to `model` once so
+    /// observers don't briefly see a half-updated state with one card face-up and one
+    /// card face-down.
     func flipBackCards(
         index1: Int,
         index2: Int
     ) {
         logGame.debug("Flip-back timer fired — returning cards \(index1) and \(index2) face-down")
-        model.cards[index1].isFlipped = false
-        model.cards[index2].isFlipped = false
+        var newModel = model
+        newModel.cards[index1].isFlipped = false
+        newModel.cards[index2].isFlipped = false
+        model = newModel
         onFlipCard?(index1, false)
         onFlipCard?(index2, false)
     }
