@@ -18,12 +18,12 @@ struct CardDuplicates {
     /// The shuffled, paired array of cards. Count is always even and non-zero.
     let memoryCards: [Card]
 
-    /// Designated initializer — asserts the pair invariant.
+    /// Designated initializer — asserts the pair invariant and preserves `cards` order.
     ///
-    /// Callers must have already shuffled `cards`; this is enforced by making the
-    /// initializer `private` so every construction path funnels through a public
-    /// init that shuffles first.
-    private init(validated cards: [Card]) {
+    /// Callers who need a shuffled deck should use `init(reshuffling:)` or
+    /// `init(singles:config:)`. This initializer is used directly by tests that
+    /// rely on a specific deterministic card order.
+    init(ordered cards: [Card]) {
         precondition(!cards.isEmpty, "Deck must not be empty")
         precondition(cards.count.isMultiple(of: 2), "Deck must contain an even number of cards")
         var frequency: [URL: Int] = [:]
@@ -56,7 +56,7 @@ struct CardDuplicates {
         // Each image appears exactly twice — once per matching pair.
         var shuffled = chosen.flatMap { [$0, $0] }
         shuffled.shuffle()
-        self.init(validated: shuffled)
+        self.init(ordered: shuffled)
     }
 
     /// Rebuilds a deck from already-paired cards and re-shuffles them.
@@ -65,7 +65,7 @@ struct CardDuplicates {
     init(reshuffling cards: [Card]) {
         var shuffled = cards
         shuffled.shuffle()
-        self.init(validated: shuffled)
+        self.init(ordered: shuffled)
     }
 }
 

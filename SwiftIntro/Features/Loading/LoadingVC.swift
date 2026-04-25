@@ -6,7 +6,6 @@
 //  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 
-import Diffuser
 import UIKit
 
 // MARK: - LoadingNavigatorProtocol
@@ -20,11 +19,11 @@ protocol LoadingNavigatorProtocol: AnyObject {
 
 /// Installs `LoadingView`, wires the retry tap, and owns `LoadingViewModel`.
 ///
-/// The diffuser is created here and injected into the view model at init time,
-/// so the view model never holds an optional diffuser.
+/// The VC is a thin wiring layer: it forwards retry taps to the view model and
+/// renders phase updates back onto the view. All state lives in the view model.
 final class LoadingVC: UIViewController {
     /// Content view
-    private let loadingView: LoadingView
+    private let loadingView = LoadingView()
 
     /// ViewModel with logic
     private let viewModel: LoadingViewModel
@@ -33,14 +32,7 @@ final class LoadingVC: UIViewController {
     weak var navigator: LoadingNavigatorProtocol?
 
     init(config: GameConfiguration) {
-        let view = LoadingView()
-        loadingView = view
-        viewModel = LoadingViewModel(
-            config: config
-        ) { [weak view] phase in
-            view?.render(phase)
-        }
-        view.onRetry = { [weak viewModel] in viewModel?.retry() }
+        viewModel = LoadingViewModel(config: config)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -60,10 +52,15 @@ extension LoadingVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         logNet.debug("LoadingVC loaded — starting data fetch")
-        viewModel.onNavigateToGame = { [weak self] game in
-            self?.navigator?.navigateToGame(game)
-        }
-        viewModel.start()
+        loadingView.onRetry = { [weak viewModel] in viewModel?.retry() }
+        viewModel.start(
+            onPhaseChange: { [weak self] phase in
+                self?.loadingView.render(phase)
+            },
+            onNavigateToGame: { [weak self] game in
+                self?.navigator?.navigateToGame(game)
+            }
+        )
     }
 
     override func viewDidDisappear(_ animated: Bool) {

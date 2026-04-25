@@ -73,8 +73,7 @@ extension RootVC: GameNavigatorProtocol {
     /// Pushes `GameOverVC` after the final flip animation completes.
     func navigateToGameOver(outcome: GameOutcome) {
         logNav.info("Pushing GameOverVC — clicks: \(outcome.clickCount), level: \(outcome.level)")
-        let config = GameConfiguration(level: outcome.level)
-        let gameOverVC = GameOverVC(config: config, outcome: outcome)
+        let gameOverVC = GameOverVC(outcome: outcome)
         gameOverVC.navigator = self
         pushViewController(gameOverVC, animated: true)
     }

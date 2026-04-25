@@ -270,9 +270,58 @@ final class LoadingVCTests: XCTestCase {
         XCTAssertEqual(spy.navigateToGameCallCount, 0)
     }
 
+    // MARK: - retry button @objc target
+
+    func test_retryButton_invokesOnRetryClosure() throws {
+        // Arrange — view is loaded so the retry button target is wired
+        apiStub.result = .failure(URLError(.unknown))
+        let vc = makeVC()
+        _ = vc.view
+        let loadingView = try XCTUnwrap(vc.view as? LoadingView)
+        var retryCalled = false
+        loadingView.onRetry = { retryCalled = true }
+
+        // Act — send the same action UIKit fires on tap so @objc retryTapped runs
+        let retryButton = firstButton(in: loadingView)
+        retryButton?.sendActions(for: .touchUpInside)
+
+        // Assert
+        XCTAssertTrue(retryCalled)
+    }
+
+    /// Depth-first search for the first `UIButton` subview — LoadingView's retry button is private.
+    private func firstButton(in view: UIView) -> UIButton? {
+        if let btn = view as? UIButton { return btn }
+        for sub in view.subviews {
+            if let btn = firstButton(in: sub) { return btn }
+        }
+        return nil
+    }
+
+    // MARK: - viewDidDisappear
+
+    func test_viewDidDisappear_stopsViewModel_clearsNavigationCallback() {
+        // Arrange — navigator set, fetch pending; disappearing before it completes must
+        // drop the navigation callback so the ex-navigator is never invoked.
+        apiStub.result = .success(makeCards(count: 3))
+        let vc = makeVC()
+        let spy = SpyNavigator()
+        vc.navigator = spy
+        _ = vc.view
+
+        // Act — disappear immediately, then drain
+        vc.viewDidDisappear(false)
+        let drain = expectation(description: "main queue drain")
+        DispatchQueue.main.async { drain.fulfill() }
+        waitForExpectations(timeout: 1)
+
+        // Assert — stop() cleared the callback so navigation never fires
+        XCTAssertEqual(spy.navigateToGameCallCount, 0)
+    }
+
     // MARK: - retry
 
-    func test_retry_afterFailure_callsFindImagesAgain() {
+    func test_retry_afterFailure_callsFindImagesAgain() throws {
         // Arrange — first call fails, second call succeeds
         apiStub.result = .failure(URLError(.unknown))
         let vc = makeVC(query: "cats")
@@ -293,8 +342,8 @@ final class LoadingVCTests: XCTestCase {
         spy.onNavigateToGame = { navExp.fulfill() }
 
         // Act — simulate the retry button tap via onRetry on the LoadingView
-        // swiftlint:disable:next force_cast
-        (vc.view as! LoadingView).onRetry?()
+        let loadingView = try XCTUnwrap(vc.view as? LoadingView, "Expected vc.view to be LoadingView")
+        loadingView.onRetry?()
 
         // Assert
         waitForExpectations(timeout: 1)

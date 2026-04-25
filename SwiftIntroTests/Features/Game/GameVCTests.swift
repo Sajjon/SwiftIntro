@@ -10,17 +10,18 @@
 //  - Assert:  verify a single observable outcome (1 line)
 //
 //  Notes on approach:
-//  - `_ = vc.view` triggers loadView + viewDidLoad (starts the Mobius loop).
-//  - `vc.viewDidDisappear(false)` stops the loop after each such test.
-//  - `dataSourceAndDelegate` is retrieved via the collectionView's dataSource
-//    property, which is set to it during `setupCollectionView`.
-//  - `connect` is called a second time in some tests to capture events with a
-//    test-controlled consumer; this overwrites the loop's internal wiring of
-//    `onCardTapped`, which is safe in a test context.
+//  - `_ = vc.view` triggers `loadView()` and installs `GameView`, wiring the data
+//    source/delegate closures through to the view model.
+//  - The initial `onModelChanged` callback (which renders the score label) fires
+//    later from `viewWillAppear` via `viewModel.start(...)`, so tests that assert
+//    on the rendered score must invoke `viewWillAppear(_:)` explicitly.
+//  - `vc.viewDidDisappear(false)` calls `viewModel.stop()`, cancelling any pending
+//    flip-back timers.
+//  - `dataSourceAndDelegate` is retrieved via the collection view's dataSource
+//    property, which is set when `GameView` is initialised.
 //
 
 import Factory
-import MobiusCore
 @testable import SwiftIntro
 import UIKit
 import XCTest
@@ -59,29 +60,51 @@ final class GameVCTests: XCTestCase {
         ))
     }
 
-    private func makeModel(
-        level: Level = .easy,
-        matches: Int = 0
-    ) -> GameModel {
-        let cards = (0 ..< level.cardCount).map {
-            CardModel(card: Card(imageUrl: URL(string: "https://a.test/\($0).jpg")!))
-        }
-        var model = GameModel(cards: cards, level: level)
-        model.matches = matches
-        return model
+    /// Casts `vc.view` to `GameView`. Throws if the type is wrong so the test
+    /// terminates immediately rather than continuing with a stand-in instance.
+    private func gameView(
+        of vc: GameVC,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) throws -> GameView {
+        try XCTUnwrap(
+            vc.view as? GameView,
+            "Expected vc.view to be GameView, got \(type(of: vc.view))",
+            file: file,
+            line: line
+        )
     }
 
-    /// Casts `vc.view` to `GameView`. Crashes the test if the type is wrong.
-    private func gameView(of vc: GameVC) -> GameView {
-        // swiftlint:disable:next force_cast
-        vc.view as! GameView
+    /// Locates the card grid's `UICollectionView` by traversing `GameView`'s
+    /// subviews. `GameView.collectionView` is private by design, so tests reach
+    /// it through the view hierarchy rather than adding a test-only accessor.
+    private func collectionView(
+        of vc: GameVC,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) throws -> UICollectionView {
+        try XCTUnwrap(
+            gameView(of: vc, file: file, line: line)
+                .subviews.compactMap { $0 as? UICollectionView }.first,
+            "No UICollectionView found in GameView subviews",
+            file: file,
+            line: line
+        )
     }
 
     /// Retrieves the `MemoryDataSourceAndDelegate` from the collection view's `dataSource`
     /// property. Only valid after `viewDidLoad` has run.
-    private func dataSourceAndDelegate(of vc: GameVC) -> MemoryDataSourceAndDelegate {
-        // swiftlint:disable:next force_cast
-        gameView(of: vc).collectionView.dataSource as! MemoryDataSourceAndDelegate
+    private func dataSourceAndDelegate(
+        of vc: GameVC,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) throws -> MemoryDataSourceAndDelegate {
+        try XCTUnwrap(
+            try collectionView(of: vc, file: file, line: line).dataSource as? MemoryDataSourceAndDelegate,
+            "Expected dataSource to be MemoryDataSourceAndDelegate",
+            file: file,
+            line: line
+        )
     }
 
     // MARK: - init
@@ -112,7 +135,7 @@ final class GameVCTests: XCTestCase {
 
     // MARK: - viewDidLoad
 
-    func test_viewDidLoad_setsCollectionViewDataSource() {
+    func test_viewDidLoad_setsCollectionViewDataSource() throws {
         // Arrange
         let vc = makeVC()
 
@@ -120,11 +143,11 @@ final class GameVCTests: XCTestCase {
         _ = vc.view
 
         // Assert
-        XCTAssertNotNil(gameView(of: vc).collectionView.dataSource)
+        XCTAssertNotNil(try collectionView(of: vc).dataSource)
         vc.viewDidDisappear(false)
     }
 
-    func test_viewDidLoad_setsCollectionViewDelegate() {
+    func test_viewDidLoad_setsCollectionViewDelegate() throws {
         // Arrange
         let vc = makeVC()
 
@@ -132,11 +155,11 @@ final class GameVCTests: XCTestCase {
         _ = vc.view
 
         // Assert
-        XCTAssertNotNil(gameView(of: vc).collectionView.delegate)
+        XCTAssertNotNil(try collectionView(of: vc).delegate)
         vc.viewDidDisappear(false)
     }
 
-    func test_viewDidLoad_dataSourceIsMemoryDataSourceAndDelegate() {
+    func test_viewDidLoad_dataSourceIsMemoryDataSourceAndDelegate() throws {
         // Arrange
         let vc = makeVC()
 
@@ -144,31 +167,56 @@ final class GameVCTests: XCTestCase {
         _ = vc.view
 
         // Assert
-        XCTAssertTrue(gameView(of: vc).collectionView.dataSource is MemoryDataSourceAndDelegate)
+        XCTAssertTrue(try collectionView(of: vc).dataSource is MemoryDataSourceAndDelegate)
         vc.viewDidDisappear(false)
     }
 
-    func test_viewDidLoad_canSelectCardClosureIsWired() {
+    func test_viewDidLoad_canSelectCardClosure_returnsTrueForUnmatchedCard() throws {
         // Arrange
         let vc = makeVC()
 
         // Act
         _ = vc.view
 
-        // Assert — the closure is set so the data source can gate taps
-        XCTAssertNotNil(dataSourceAndDelegate(of: vc).canSelectCard)
+        // Assert — the closure is wired to the view model; a fresh deck has no matched cards
+        XCTAssertTrue(try dataSourceAndDelegate(of: vc).canSelectCard(0))
         vc.viewDidDisappear(false)
     }
 
-    func test_viewDidLoad_configureCellClosureIsWired() {
+    func test_viewDidLoad_configureCellClosure_doesNotCrash() throws {
+        // Arrange
+        let vc = makeVC()
+        _ = vc.view
+        let cell = CardCVCell(frame: CGRect(origin: .zero, size: CGSize(width: 80, height: 100)))
+        let ds = try dataSourceAndDelegate(of: vc)
+
+        // Act + Assert — the closure is wired to the view model
+        XCTAssertNoThrow(ds.configureCell(cell, 0))
+        vc.viewDidDisappear(false)
+    }
+
+    func test_viewDidLoad_onCardTappedClosure_doesNotCrash() throws {
         // Arrange
         let vc = makeVC()
 
-        // Act
+        // Act + Assert — the closure is wired to the view model
+        _ = vc.view
+        let ds = try dataSourceAndDelegate(of: vc)
+        XCTAssertNoThrow(ds.onCardTapped(0))
+        vc.viewDidDisappear(false)
+    }
+
+    func test_viewWillAppear_setsScoreLabelText() throws {
+        // Arrange — start() (invoked from viewWillAppear) fires the initial
+        // onModelChanged so the score renders.
+        let vc = makeVC()
         _ = vc.view
 
-        // Assert — the closure is set so cells are configured on willDisplay
-        XCTAssertNotNil(dataSourceAndDelegate(of: vc).configureCell)
+        // Act
+        vc.viewWillAppear(false)
+
+        // Assert
+        XCTAssertNotNil(try gameView(of: vc).headerView.scoreLabel.text)
         vc.viewDidDisappear(false)
     }
 
@@ -193,135 +241,64 @@ final class GameVCTests: XCTestCase {
         XCTAssertNoThrow(vc.viewDidDisappear(false))
     }
 
-    // MARK: - connect
+    // MARK: - data source closures
 
-    func test_connect_onCardTapped_dispatchesCardTappedIndex() {
+    func test_canSelectCard_closure_returnsTrueForUnmatchedCard() throws {
         // Arrange
         let vc = makeVC()
         _ = vc.view
-        var receivedIndex: Int?
-        let conn = vc.connect { event in
-            if case let .cardTapped(index) = event { receivedIndex = index }
-        }
-
-        // Act — fire the wired closure directly, bypassing UICollectionView
-        dataSourceAndDelegate(of: vc).onCardTapped?(7)
-
-        // Assert
-        XCTAssertEqual(receivedIndex, 7)
-        conn.dispose()
-        vc.viewDidDisappear(false)
-    }
-
-    func test_connect_onCardTapped_dispatchesCorrectIndexForEachCall() {
-        // Arrange
-        let vc = makeVC()
-        _ = vc.view
-        var indices: [Int] = []
-        let conn = vc.connect { event in
-            if case let .cardTapped(index) = event { indices.append(index) }
-        }
 
         // Act
-        dataSourceAndDelegate(of: vc).onCardTapped?(0)
-        dataSourceAndDelegate(of: vc).onCardTapped?(3)
+        let result = try dataSourceAndDelegate(of: vc).canSelectCard(0)
 
-        // Assert
-        XCTAssertEqual(indices, [0, 3])
-        conn.dispose()
+        // Assert — fresh deck has no matched cards
+        XCTAssertTrue(result)
         vc.viewDidDisappear(false)
     }
 
-    func test_connect_acceptClosure_setsScoreLabelText() {
-        // Arrange
-        let vc = makeVC()
-        _ = vc.view
-        let conn = vc.connect { _ in }
-
-        // Act
-        conn.accept(makeModel())
-
-        // Assert — render() always sets the score label to a non-nil string
-        XCTAssertNotNil(gameView(of: vc).headerView.scoreLabel.text)
-        conn.dispose()
-        vc.viewDidDisappear(false)
-    }
-
-    func test_connect_acceptClosure_reflectsMatchCountInScoreLabel() {
-        // Arrange
-        let vc = makeVC()
-        _ = vc.view
-        let conn = vc.connect { _ in }
-
-        // Act
-        conn.accept(makeModel(matches: 2))
-
-        // Assert — the score label text contains the current match count
-        XCTAssertTrue(gameView(of: vc).headerView.scoreLabel.text?.contains("2") ?? false)
-        conn.dispose()
-        vc.viewDidDisappear(false)
-    }
-
-    func test_connect_disposeClosure_nilsOnCardTapped() {
-        // Arrange
-        let vc = makeVC()
-        _ = vc.view
-        let conn = vc.connect { _ in }
-        XCTAssertNotNil(dataSourceAndDelegate(of: vc).onCardTapped)
-
-        // Act
-        conn.dispose()
-
-        // Assert — disposeClosure clears the closure so taps are silenced after disconnect
-        XCTAssertNil(dataSourceAndDelegate(of: vc).onCardTapped)
-        vc.viewDidDisappear(false)
-    }
-
-    // MARK: - wireDataSourceClosures
-
-    func test_canSelectCard_closure_returnsTrueForUnmatchedCard() {
-        // Arrange
-        let vc = makeVC()
-        _ = vc.view
-
-        // Act — invoke the canSelectCard closure body wired in wireDataSourceClosures
-        let result = dataSourceAndDelegate(of: vc).canSelectCard?(0)
-
-        // Assert — fresh model has no matched cards
-        XCTAssertEqual(result, true)
-        vc.viewDidDisappear(false)
-    }
-
-    func test_configureCell_closure_doesNotCrash() {
+    func test_configureCell_closure_doesNotCrash() throws {
         // Arrange
         let vc = makeVC()
         _ = vc.view
         let cell = CardCVCell(frame: CGRect(origin: .zero, size: CGSize(width: 80, height: 100)))
+        let ds = try dataSourceAndDelegate(of: vc)
 
-        // Act + Assert — invoke the configureCell closure body wired in wireDataSourceClosures
-        XCTAssertNoThrow(dataSourceAndDelegate(of: vc).configureCell?(cell, 0))
+        // Act + Assert
+        XCTAssertNoThrow(ds.configureCell(cell, 0))
+        vc.viewDidDisappear(false)
+    }
+
+    func test_onCardTapped_closure_doesNotCrash() throws {
+        // Arrange
+        let vc = makeVC()
+        _ = vc.view
+        let ds = try dataSourceAndDelegate(of: vc)
+
+        // Act + Assert — invoking the tap should drive the view model without crashing
+        XCTAssertNoThrow(ds.onCardTapped(0))
         vc.viewDidDisappear(false)
     }
 
     // MARK: - navigateToGameOver
 
-    func test_navigateToGameOver_callsNavigatorWithOutcome() {
-        // Arrange — 3 paired cards (easy = 3 pairs). Deck is shuffled, so locate
-        // matching index pairs by URL after construction.
+    func test_navigateToGameOver_callsNavigatorWithOutcome() throws {
+        // Arrange — easy = 3 pairs. Build a deck and locate matching index pairs by URL.
         let pairedCards = makePairedCards(pairCount: 3)
         let pairs = pairIndices(in: pairedCards)
         let vc = GameVC(PreparedGame(config: GameConfiguration(level: .easy), cards: pairedCards))
         let spy = SpyGameNavigator()
         vc.navigator = spy
         _ = vc.view
+        // viewWillAppear wires the navigator callback via viewModel.start(...)
+        vc.viewWillAppear(false)
         let exp = expectation(description: "navigateToGameOver called")
         spy.onNavigateToGameOver = { exp.fulfill() }
 
         // Act — tap each pair; the last match triggers the navigator via ImmediateClock
-        let ds = dataSourceAndDelegate(of: vc)
+        let ds = try dataSourceAndDelegate(of: vc)
         for (first, second) in pairs {
-            ds.onCardTapped?(first)
-            ds.onCardTapped?(second)
+            ds.onCardTapped(first)
+            ds.onCardTapped(second)
         }
 
         // Assert — ImmediateClock fires on the next main-queue cycle, well within 1 s

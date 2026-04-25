@@ -120,9 +120,4 @@ extension CardCVCell {
 
 // MARK: - CellProtocol
 
-extension CardCVCell: CellProtocol {
-    /// Reuse identifier derived from the class name, matching the `register` call in `GameVC`.
-    static var cellIdentifier: String {
-        className
-    }
-}
+extension CardCVCell: CellProtocol {}

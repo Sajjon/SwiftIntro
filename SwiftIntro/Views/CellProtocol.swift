@@ -6,14 +6,18 @@
 //  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 
-import UIKit
-
 /// A collection view cell that can supply its own reuse identifier.
 ///
-/// Conforming types (e.g. `CardCVCell`) derive `cellIdentifier` from `NSObject.className`,
-/// keeping the identifier and the `register(_:forCellWithReuseIdentifier:)` call in sync
-/// automatically.
+/// A default implementation derives the identifier from the type name via
+/// `String(describing:)`, so conforming cells do not have to declare one
+/// explicitly. The identifier has no module prefix and no force-unwraps.
 protocol CellProtocol {
     /// The string used to register and dequeue this cell type.
     static var cellIdentifier: String { get }
+}
+
+extension CellProtocol {
+    static var cellIdentifier: String {
+        String(describing: Self.self)
+    }
 }

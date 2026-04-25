@@ -21,7 +21,11 @@ final class GameOverViewSnapshotTests: XCTestCase {
             return [card, card]
         }
         let deck = CardDuplicates(reshuffling: paired)
-        return GameOutcome(level: level, clickCount: clickCount, cards: deck)
+        return GameOutcome(
+            config: GameConfiguration(level: level),
+            clickCount: clickCount,
+            cards: deck
+        )
     }
 
     func test_gameOverView_defaultAppearance() {

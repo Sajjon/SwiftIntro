@@ -78,11 +78,16 @@ private extension GameOverView {
         }
     }
 
+    /// Diameter applied to the circular restart and quit buttons.
+    static var circularButtonDiameter: CGFloat {
+        80
+    }
+
     /// Wires tap targets for the restart and quit buttons and fixes their circular dimensions.
     func configureButtons() {
         restartButton.addTarget(self, action: #selector(restartTapped), for: .touchUpInside)
         quitButton.addTarget(self, action: #selector(quitTapped), for: .touchUpInside)
-        constrainButtonSizes(to: 80)
+        constrainButtonSizes(to: Self.circularButtonDiameter)
     }
 
     /// Fixes both buttons to an explicit `size × size` square so they stay perfectly circular.

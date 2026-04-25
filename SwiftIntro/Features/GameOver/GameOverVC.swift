@@ -29,10 +29,7 @@ protocol GameOverNavigatorProtocol: AnyObject {
 /// Thin by design: renders the outcome into `GameOverView` and delegates all
 /// navigation to `navigator`. No navigation logic lives here.
 final class GameOverVC: UIViewController {
-    /// The configuration from the completed game, passed to `navigator` on restart.
-    private let config: GameConfiguration
-
-    /// The result of the completed game — click count, level, and the card deck.
+    /// The result of the completed game — config, click count, and the card deck.
     private let outcome: GameOutcome
 
     /// The root view; installed via `loadView()`.
@@ -41,11 +38,7 @@ final class GameOverVC: UIViewController {
     /// Wired by the presenting controller (e.g. `RootVC`) before the push.
     weak var navigator: GameOverNavigatorProtocol?
 
-    init(
-        config: GameConfiguration,
-        outcome: GameOutcome
-    ) {
-        self.config = config
+    init(outcome: GameOutcome) {
         self.outcome = outcome
         super.init(nibName: nil, bundle: nil)
     }
@@ -68,7 +61,7 @@ final class GameOverVC: UIViewController {
         gameOverView.onRestart = { [weak self] in
             guard let self else { return }
             logGame.info("Player chose Restart — starting new game with same images")
-            navigator?.restartGame(PreparedGame(config: config, cards: outcome.cards))
+            navigator?.restartGame(PreparedGame(config: outcome.config, cards: outcome.cards))
         }
         gameOverView.onQuit = { [weak self] in
             guard let self else { return }

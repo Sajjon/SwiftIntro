@@ -11,32 +11,46 @@ import UIKit
 /// Pure UIKit adapter — no game state or logic lives here.
 ///
 /// All decisions (can this cell be selected? how should it look?) are delegated
-/// outward via closures, which are implemented by `GameEffectHandler`.
+/// outward via closures, which are implemented by `GameViewModel`.
 ///
 /// `NSObject` is required because `UICollectionViewDataSource` and
 /// `UICollectionViewDelegate` are `@objc` protocols.
 final class MemoryDataSourceAndDelegate: NSObject {
+    typealias OnCardTapped = (Int) -> Void
+    typealias CanSelectCard = (Int) -> Bool
+    typealias ConfigureCell = (CardCVCell, Int) -> Void
+
     /// Number of rows on the board (= number of collection view sections).
     private let numberOfRows: Int
 
     /// Number of columns on the board (= number of items per section).
     private let numberOfColumns: Int
 
+    /// Pure layout math for square card sizing.
+    private let gridLayout: CardGridLayout
+
     /// Called when the player taps a valid, selectable card. Receives the flat index.
-    var onCardTapped: ((Int) -> Void)?
+    let onCardTapped: OnCardTapped
 
     /// Returns `true` if the card at the given flat index may be selected right now.
-    var canSelectCard: ((Int) -> Bool)?
+    let canSelectCard: CanSelectCard
 
     /// Configures the given cell to match the current visual state of the card at `index`.
-    var configureCell: ((CardCVCell, Int) -> Void)?
+    let configureCell: ConfigureCell
 
     init(
         rows: Int,
-        columns: Int
+        columns: Int,
+        canSelectCard: @escaping CanSelectCard,
+        configureCell: @escaping ConfigureCell,
+        onCardTapped: @escaping OnCardTapped
     ) {
         numberOfRows = rows
         numberOfColumns = columns
+        gridLayout = CardGridLayout(rows: rows, columns: columns)
+        self.canSelectCard = canSelectCard
+        self.configureCell = configureCell
+        self.onCardTapped = onCardTapped
     }
 }
 
@@ -46,46 +60,6 @@ private extension MemoryDataSourceAndDelegate {
     /// Converts an `IndexPath` (section = row, item = column) to a row-major flat index.
     func flatIndex(for indexPath: IndexPath) -> Int {
         indexPath.item + numberOfColumns * indexPath.section
-    }
-
-    /// Returns the square side length that fits all cards in the visible grid,
-    /// respecting both the horizontal and vertical spacing constraints.
-    func calculateCardSize(
-        _ flowLayout: UICollectionViewFlowLayout,
-        collectionView: UICollectionView
-    ) -> CGSize {
-        // Use the smaller of the two axis-maximum sizes so cards are always square
-        // and never overflow in either direction.
-        let side = min(
-            calculateMinimumHeight(flowLayout, collectionView: collectionView),
-            calculateMinimumWidth(flowLayout, collectionView: collectionView)
-        )
-        return CGSize(width: side, height: side)
-    }
-
-    /// Maximum card height that fits all rows in the available vertical space.
-    func calculateMinimumHeight(
-        _ flowLayout: UICollectionViewFlowLayout,
-        collectionView: UICollectionView
-    ) -> CGFloat {
-        let rows = CGFloat(numberOfRows)
-        // Total vertical space consumed by section insets and inter-row spacing.
-        let spacing = flowLayout.sectionInset.top + flowLayout.sectionInset.bottom
-            + flowLayout.minimumLineSpacing * (rows - 1)
-        // `trunc` avoids sub-pixel cell sizes that can cause layout rounding artefacts.
-        return trunc((collectionView.bounds.height - spacing) / rows)
-    }
-
-    /// Maximum card width that fits all columns in the available horizontal space.
-    func calculateMinimumWidth(
-        _ flowLayout: UICollectionViewFlowLayout,
-        collectionView: UICollectionView
-    ) -> CGFloat {
-        let columns = CGFloat(numberOfColumns)
-        // Total horizontal space consumed by section insets and inter-column spacing.
-        let spacing = flowLayout.sectionInset.left + flowLayout.sectionInset.right
-            + flowLayout.minimumInteritemSpacing * (columns - 1)
-        return trunc((collectionView.bounds.width - spacing) / columns)
     }
 }
 
@@ -111,7 +85,10 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         // Dequeue only — actual configuration happens in `willDisplay` so that
         // cells are re-configured each time they enter the visible area.
-        collectionView.dequeueReusableCell(withReuseIdentifier: CardCVCell.cellIdentifier, for: indexPath)
+        collectionView.dequeueReusableCell(
+            withReuseIdentifier: CardCVCell.cellIdentifier,
+            for: indexPath
+        )
     }
 }
 
@@ -124,8 +101,8 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
     ) {
         let index = flatIndex(for: indexPath)
         // Gate on canSelectCard so matched cards cannot be tapped a second time.
-        guard canSelectCard?(index) == true else { return }
-        onCardTapped?(index)
+        guard canSelectCard(index) else { return }
+        onCardTapped(index)
     }
 
     func collectionView(
@@ -137,7 +114,7 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegate {
         // it fires every time a cell becomes visible, ensuring Kingfisher image loading
         // is triggered even after cells are recycled via the reuse pool.
         guard let cell = cell as? CardCVCell else { return }
-        configureCell?(cell, flatIndex(for: indexPath))
+        configureCell(cell, flatIndex(for: indexPath))
     }
 }
 
@@ -160,6 +137,7 @@ extension MemoryDataSourceAndDelegate: UICollectionViewDelegateFlowLayout {
         sizeForItemAt _: IndexPath
     ) -> CGSize {
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
-        return calculateCardSize(flowLayout, collectionView: collectionView)
+        let side = gridLayout.squareSide(in: collectionView.bounds.size, flowLayout: flowLayout)
+        return CGSize(width: side, height: side)
     }
 }

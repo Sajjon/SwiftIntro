@@ -19,9 +19,18 @@ final class MemoryDataSourceAndDelegateTests: XCTestCase {
 
     private func makeDS(
         rows: Int = 2,
-        columns: Int = 3
+        columns: Int = 3,
+        canSelectCard: @escaping MemoryDataSourceAndDelegate.CanSelectCard = { _ in false },
+        configureCell: @escaping MemoryDataSourceAndDelegate.ConfigureCell = { _, _ in },
+        onCardTapped: @escaping MemoryDataSourceAndDelegate.OnCardTapped = { _ in }
     ) -> MemoryDataSourceAndDelegate {
-        MemoryDataSourceAndDelegate(rows: rows, columns: columns)
+        MemoryDataSourceAndDelegate(
+            rows: rows,
+            columns: columns,
+            canSelectCard: canSelectCard,
+            configureCell: configureCell,
+            onCardTapped: onCardTapped
+        )
     }
 
     private func makeCV(
@@ -87,11 +96,14 @@ final class MemoryDataSourceAndDelegateTests: XCTestCase {
 
     func test_didSelectItemAt_callsOnCardTapped_whenCanSelect() {
         // Arrange
-        let ds = makeDS(rows: 2, columns: 3)
-        let (cv, _) = makeCV()
         var tappedIndex: Int?
-        ds.canSelectCard = { _ in true }
-        ds.onCardTapped = { tappedIndex = $0 }
+        let ds = makeDS(
+            rows: 2,
+            columns: 3,
+            canSelectCard: { _ in true },
+            onCardTapped: { tappedIndex = $0 }
+        )
+        let (cv, _) = makeCV()
 
         // Act — section=0, item=1 → flatIndex = 0*3 + 1 = 1
         ds.collectionView(cv, didSelectItemAt: IndexPath(item: 1, section: 0))
@@ -102,11 +114,14 @@ final class MemoryDataSourceAndDelegateTests: XCTestCase {
 
     func test_didSelectItemAt_doesNotCallOnCardTapped_whenCannotSelect() {
         // Arrange
-        let ds = makeDS(rows: 2, columns: 3)
-        let (cv, _) = makeCV()
         var tappedIndex: Int?
-        ds.canSelectCard = { _ in false }
-        ds.onCardTapped = { tappedIndex = $0 }
+        let ds = makeDS(
+            rows: 2,
+            columns: 3,
+            canSelectCard: { _ in false },
+            onCardTapped: { tappedIndex = $0 }
+        )
+        let (cv, _) = makeCV()
 
         // Act
         ds.collectionView(cv, didSelectItemAt: IndexPath(item: 2, section: 1))
@@ -115,28 +130,16 @@ final class MemoryDataSourceAndDelegateTests: XCTestCase {
         XCTAssertNil(tappedIndex)
     }
 
-    func test_didSelectItemAt_doesNotCallOnCardTapped_whenCanSelectIsNil() {
-        // Arrange
-        let ds = makeDS(rows: 2, columns: 3)
-        let (cv, _) = makeCV()
-        var tappedIndex: Int?
-        // canSelectCard deliberately not set
-        ds.onCardTapped = { tappedIndex = $0 }
-
-        // Act
-        ds.collectionView(cv, didSelectItemAt: IndexPath(item: 0, section: 0))
-
-        // Assert
-        XCTAssertNil(tappedIndex)
-    }
-
     func test_didSelectItemAt_flatIndexIsCorrect() {
         // Arrange — rows=3, columns=4 → section=2, item=3 → flatIndex = 2*4+3 = 11
-        let ds = makeDS(rows: 3, columns: 4)
-        let (cv, _) = makeCV()
         var tappedIndex: Int?
-        ds.canSelectCard = { _ in true }
-        ds.onCardTapped = { tappedIndex = $0 }
+        let ds = makeDS(
+            rows: 3,
+            columns: 4,
+            canSelectCard: { _ in true },
+            onCardTapped: { tappedIndex = $0 }
+        )
+        let (cv, _) = makeCV()
 
         // Act
         ds.collectionView(cv, didSelectItemAt: IndexPath(item: 3, section: 2))
@@ -149,10 +152,13 @@ final class MemoryDataSourceAndDelegateTests: XCTestCase {
 
     func test_willDisplay_callsConfigureCell_withCorrectIndex() {
         // Arrange — section=0, item=2 → flatIndex = 0*3+2 = 2
-        let ds = makeDS(rows: 2, columns: 3)
-        let (cv, _) = makeCV()
         var configuredIndex: Int?
-        ds.configureCell = { _, index in configuredIndex = index }
+        let ds = makeDS(
+            rows: 2,
+            columns: 3,
+            configureCell: { _, index in configuredIndex = index }
+        )
+        let (cv, _) = makeCV()
         let cell = CardCVCell(frame: CGRect(origin: .zero, size: CGSize(width: 80, height: 100)))
 
         // Act
@@ -164,10 +170,9 @@ final class MemoryDataSourceAndDelegateTests: XCTestCase {
 
     func test_willDisplay_doesNotCallConfigureCell_forNonCardCVCell() {
         // Arrange
-        let ds = makeDS()
-        let (cv, _) = makeCV()
         var configuredIndex: Int?
-        ds.configureCell = { _, index in configuredIndex = index }
+        let ds = makeDS(configureCell: { _, index in configuredIndex = index })
+        let (cv, _) = makeCV()
         let cell = UICollectionViewCell() // not a CardCVCell
 
         // Act
@@ -179,10 +184,13 @@ final class MemoryDataSourceAndDelegateTests: XCTestCase {
 
     func test_willDisplay_flatIndexIsCorrect() {
         // Arrange — rows=2, columns=3 → section=1, item=2 → flatIndex = 1*3+2 = 5
-        let ds = makeDS(rows: 2, columns: 3)
-        let (cv, _) = makeCV()
         var configuredIndex: Int?
-        ds.configureCell = { _, index in configuredIndex = index }
+        let ds = makeDS(
+            rows: 2,
+            columns: 3,
+            configureCell: { _, index in configuredIndex = index }
+        )
+        let (cv, _) = makeCV()
         let cell = CardCVCell(frame: CGRect(origin: .zero, size: CGSize(width: 80, height: 100)))
 
         // Act

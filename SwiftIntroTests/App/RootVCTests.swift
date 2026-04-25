@@ -126,7 +126,11 @@ final class RootVCTests: XCTestCase {
     func test_navigateToGameOver_pushesGameOverVC() {
         // Arrange
         let root = RootVC()
-        let outcome = GameOutcome(level: .easy, clickCount: 4, cards: makeCards(count: 6))
+        let outcome = GameOutcome(
+            config: GameConfiguration(level: .easy),
+            clickCount: 4,
+            cards: makeCards(count: 6)
+        )
 
         // Act
         root.navigateToGameOver(outcome: outcome)
@@ -139,7 +143,11 @@ final class RootVCTests: XCTestCase {
     func test_navigateToGameOver_setsNavigatorOnGameOverVC() {
         // Arrange
         let root = RootVC()
-        let outcome = GameOutcome(level: .easy, clickCount: 4, cards: makeCards(count: 6))
+        let outcome = GameOutcome(
+            config: GameConfiguration(level: .easy),
+            clickCount: 4,
+            cards: makeCards(count: 6)
+        )
 
         // Act
         root.navigateToGameOver(outcome: outcome)
