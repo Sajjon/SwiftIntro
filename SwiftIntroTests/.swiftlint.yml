@@ -12,3 +12,11 @@ function_body_length:
 file_length:
   warning: 500
   error: 500
+
+# Tests routinely use single-letter names for short-lived locals (`vc`, `vm`,
+# `cv`, `ds`, `a`, `b`) where a longer name would just add noise. Lower the
+# floor to 1 char in test code only — production code keeps the stricter rule.
+identifier_name:
+  min_length:
+    warning: 1
+    error: 1

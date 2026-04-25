@@ -13,7 +13,9 @@
 struct CardSingles: Hashable {
     /// The unique cards returned by the API, one per image URL.
     let cards: [Card]
+}
 
+extension CardSingles {
     static func == (
         lhs: Self,
         rhs: Self

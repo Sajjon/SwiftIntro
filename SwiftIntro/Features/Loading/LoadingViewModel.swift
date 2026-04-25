@@ -5,16 +5,19 @@
 //  Copyright © 2016-2026 SwiftIntro. All rights reserved.
 //
 
-import Diffuser
 import Factory
 import UIKit
 
 /// Drives the loading screen — fetches data, pre-warms the image cache, and
 /// navigates to the game when ready.
 ///
-/// `LoadingVC` creates a `Diffuser<Phase>` and injects it at init time, so state
-/// changes flow directly to `LoadingView` with no optionality or separate `start` wiring.
+/// The view model is the single source of truth for the loading phase. `LoadingVC`
+/// only renders snapshots delivered through `onPhaseChange` and navigates via
+/// `onNavigateToGame` — no state lives in the view layer.
 final class LoadingViewModel {
+    typealias OnPhaseChange = (Phase) -> Void
+    typealias OnNavigateToGame = (PreparedGame) -> Void
+
     // MARK: - Dependencies
 
     @Injected(\.wikimediaClient) private var wikimediaClient: WikimediaClientProtocol
@@ -23,31 +26,28 @@ final class LoadingViewModel {
     // MARK: - State
 
     private let config: GameConfiguration
-    private let onPhaseChange: (Phase) -> Void
 
-    /// Current visual phase. Every assignment is automatically pushed to the view
-    /// via the diffuser — no optional unwrap, no manual `run` call at the call site.
-    private var phase: Phase = .initial {
+    /// Current visual phase. Every assignment is pushed to the view via `onPhaseChange`.
+    private var phase: Phase = .loading {
         didSet {
             // swiftformat:disable:next redundantSelf
             logApp.debug("phase: \(self.phase)")
-            onPhaseChange(phase)
+            onPhaseChange?(phase)
         }
     }
 
-    // MARK: - Navigation
+    // MARK: - Callbacks
 
-    /// Called on the main thread when images are cached and the game is ready to start.
-    var onNavigateToGame: ((PreparedGame) -> Void)?
+    /// Fires whenever the phase changes — used by `LoadingView.render(_:)`.
+    var onPhaseChange: OnPhaseChange?
+
+    /// Fires once images are cached and the game is ready to start.
+    var onNavigateToGame: OnNavigateToGame?
 
     // MARK: - Init
 
-    init(
-        config: GameConfiguration,
-        onPhaseChange: @escaping (Phase) -> Void
-    ) {
+    init(config: GameConfiguration) {
         self.config = config
-        self.onPhaseChange = onPhaseChange
     }
 }
 
@@ -56,7 +56,6 @@ final class LoadingViewModel {
 extension LoadingViewModel {
     /// The two visual states the loading screen can be in.
     enum Phase {
-        case initial
         /// Spinner shown — either fetching data or pre-warming the image cache.
         case loading
         /// Something went wrong — show the error message and retry button.
@@ -67,7 +66,6 @@ extension LoadingViewModel {
 extension LoadingViewModel.Phase: CustomStringConvertible {
     var description: String {
         switch self {
-        case .initial: "Initial"
         case .loading: "Loading"
         case let .failed(error): "Failed: \(error)"
         }
@@ -77,9 +75,17 @@ extension LoadingViewModel.Phase: CustomStringConvertible {
 // MARK: - Lifecycle
 
 extension LoadingViewModel {
-    /// Renders the initial state and kicks off the data fetch.
-    func start() {
-        // Logger interpolation is @autoclosure → closure context; compiler needs self.
+    /// Wires the callbacks, pushes the initial phase out, and kicks off the data fetch.
+    ///
+    /// The initial `.loading` render flows through `fetchData()` → `phase = .loading` →
+    /// `didSet`, so there's no explicit `onPhaseChange(phase)` call here to avoid
+    /// double-firing the callback for the same phase.
+    func start(
+        onPhaseChange: @escaping OnPhaseChange,
+        onNavigateToGame: @escaping OnNavigateToGame
+    ) {
+        self.onPhaseChange = onPhaseChange
+        self.onNavigateToGame = onNavigateToGame
         // swiftformat:disable:next redundantSelf
         logNet.info("LoadingViewModel starting — config: \(self.config)")
         fetchData()
@@ -87,16 +93,19 @@ extension LoadingViewModel {
 
     /// Clears callbacks. Call from `viewDidDisappear`.
     func stop() {
-        logNet.debug("LoadingViewModel stopping — clearing navigation callback")
+        logNet.debug("LoadingViewModel stopping — clearing callbacks")
+        onPhaseChange = nil
         onNavigateToGame = nil
     }
 
     // MARK: - User actions
 
     /// Called when the player taps "Retry" after a failure.
+    ///
+    /// `fetchData()` sets `phase = .loading` internally, which drives the `didSet`
+    /// that notifies the view, so no explicit phase assignment is needed here.
     func retry() {
         logNet.info("Player tapped Retry — re-fetching images")
-        phase = .loading
         fetchData()
     }
 }
@@ -128,9 +137,13 @@ extension LoadingViewModel {
         let urls = singles.cards.map(\.imageUrl)
         logNet.debug("Prefetching \(urls.count) image URL(s) into cache")
         imageCache.prefetchImages(urls) { [weak self] in
-            logNet.info("All images in memory cache — navigating to game")
             guard let self else { return }
-            onNavigateToGame?(PreparedGame(config: config, cards: cards))
+            guard let onNavigateToGame else {
+                logNav.warning("Image prefetch completed but onNavigateToGame is nil — navigation skipped")
+                return
+            }
+            logNet.info("All images in memory cache — navigating to game")
+            onNavigateToGame(PreparedGame(config: config, cards: cards))
         }
     }
 }

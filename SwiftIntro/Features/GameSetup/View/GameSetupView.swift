@@ -9,9 +9,9 @@ import UIKit
 
 /// The setup game screen view — collects game configuration from the player before starting.
 ///
-/// Manages its own `GameConfiguration` state internally and calls `onStartGame`
-/// when the player taps the start button, passing the fully-built config out to
-/// `GameSetupVC` for navigation.
+/// The view holds no `GameConfiguration` state of its own: when the player taps
+/// the start button, the current control values are read and a fresh
+/// `GameConfiguration` is built and delivered via `onStartGame`.
 final class GameSetupView: UIView {
     /// Displays the app title at the top of the game setup screen.
     private lazy var titleLabel = UILabel()
@@ -30,10 +30,6 @@ final class GameSetupView: UIView {
 
     /// Tapped to begin data loading and start the game.
     private lazy var startGameButton = UIButton(type: .system)
-
-    /// The configuration built from the current control values.
-    /// Updated incrementally as the player changes the level segment or text field.
-    private var config = GameConfiguration()
 
     /// Called when the player taps "Start Game". Receives the finalized `GameConfiguration`.
     var onStartGame: ((GameConfiguration) -> Void)?
@@ -111,30 +107,23 @@ private extension GameSetupView {
         }
     }
 
-    /// Attaches `@objc` action handlers to the segmented control and start button.
+    /// Attaches the `@objc` action handler to the start button.
     func wireTargets() {
-        levelSegmentedControl.addTarget(self, action: #selector(changedLevel(_:)), for: .valueChanged)
         startGameButton.addTarget(self, action: #selector(startGameTapped), for: .touchUpInside)
     }
 
     /// Seeds the controls with the default `GameConfiguration` values on first display.
     func populateViews() {
-        wikimediaQueryTextField.text = config.searchQuery
-        levelSegmentedControl.selectedSegmentIndex = config.level.segmentedControlIndex
+        let defaults = GameConfiguration()
+        wikimediaQueryTextField.text = defaults.searchQuery
+        levelSegmentedControl.selectedSegmentIndex = defaults.level.segmentedControlIndex
     }
 
-    /// Updates `config.level` when the player changes the segmented control.
-    @objc func changedLevel(_ sender: UISegmentedControl) {
-        config.level = Level(segmentedControlIndex: sender.selectedSegmentIndex)
-        // swiftformat:disable:next redundantSelf
-        logGame.debug("Changed difficulty level to \(self.config.level)")
-    }
-
-    /// Reads the text field, updates `config.searchQuery` if non-empty, then fires `onStartGame`.
+    /// Reads the current control values and delivers a fresh `GameConfiguration` to `onStartGame`.
     @objc func startGameTapped() {
-        if let query = wikimediaQueryTextField.text, !query.isEmpty {
-            config.searchQuery = query
-        }
-        onStartGame?(config)
+        let level = Level(segmentedControlIndex: levelSegmentedControl.selectedSegmentIndex)
+        let defaults = GameConfiguration()
+        let query = wikimediaQueryTextField.text.flatMap { $0.isEmpty ? nil : $0 } ?? defaults.searchQuery
+        onStartGame?(GameConfiguration(level: level, searchQuery: query))
     }
 }

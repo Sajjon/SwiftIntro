@@ -29,11 +29,6 @@ struct GameModel {
     /// When the player taps a second card, this index is compared to determine a match.
     var pendingCardIndex: Int?
 
-    /// Total number of pairs on the board. Game ends when `matches == totalPairs`.
-    var totalPairs: Int {
-        cards.count / 2
-    }
-
     init(
         cards: [CardModel],
         level: Level
@@ -47,6 +42,11 @@ struct GameModel {
 }
 
 extension GameModel {
+    /// Total number of pairs on the board. Game ends when `matches == totalPairs`.
+    var totalPairs: Int {
+        cards.count / 2
+    }
+
     func isCard(
         at index: Int,
         matchingCardAt otherCardIndex: Int

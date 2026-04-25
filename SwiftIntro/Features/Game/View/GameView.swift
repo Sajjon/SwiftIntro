@@ -15,20 +15,19 @@ final class GameView: UIView {
     /// The header bar that displays the current match score.
     lazy var headerView = GameHeaderView()
 
-    /// The grid of card cells. Exposed so `GameVC` can assign its data source and delegate.
-    lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        // Uniform spacing between rows and between columns.
-        layout.minimumLineSpacing = 8
-        layout.minimumInteritemSpacing = 8
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .black
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        return cv
-    }()
+    /// The grid of card cells. The data source and delegate are injected at init
+    /// time, so this stays encapsulated inside `GameView`.
+    private let collectionView: SingleCellTypeCollectionView<CardCVCell>
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(
+        collectionViewDataSource: (any UICollectionViewDataSource)? = nil,
+        collectionViewDelegate: (any UICollectionViewDelegate)? = nil
+    ) {
+        collectionView = SingleCellTypeCollectionView(
+            dataSource: collectionViewDataSource,
+            delegate: collectionViewDelegate
+        )
+        super.init(frame: .zero)
         backgroundColor = .black
         setupLayout()
     }
@@ -39,10 +38,21 @@ final class GameView: UIView {
     }
 }
 
-// MARK: Internal
-
 extension GameView {
-    /// Updates all model-driven UI — called by the Mobius loop `acceptClosure` on every model update.
+    func animateFlip(
+        at indexPath: IndexPath,
+        isFaceUp: Bool
+    ) {
+        guard let cell = collectionView.cellForItemAt(indexPath) else {
+            logGame.warning("animateFlip skipped — no visible cell at \(indexPath) (likely off-screen)")
+            return
+        }
+        cell.animateFlip(faceUp: isFaceUp)
+    }
+
+    /// Updates all model-driven UI — invoked from `GameViewModel.onModelChanged`
+    /// whenever the view model emits a new `GameModel` snapshot (first via
+    /// `GameViewModel.start`, then on every subsequent state change).
     func render(_ model: GameModel) {
         headerView.scoreLabel.text = String(
             localized: .Game.pairsFoundUnformatted(

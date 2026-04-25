@@ -9,11 +9,10 @@
 import Foundation
 
 extension NSObject {
-    /// The unqualified class name, derived by stripping the module prefix from `NSStringFromClass`.
+    /// The unqualified class name, without the module prefix.
     ///
     /// For example, `SwiftIntro.CardCVCell` becomes `"CardCVCell"`.
-    /// Used as a stable reuse identifier for collection view cells via `CellProtocol`.
     static var className: String {
-        NSStringFromClass(self).components(separatedBy: ".").last!
+        String(describing: self)
     }
 }

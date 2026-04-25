@@ -57,23 +57,31 @@ final class GameOverVCTests: XCTestCase {
         clickCount: Int = 5
     ) -> GameOutcome {
         GameOutcome(
-            level: level,
+            config: GameConfiguration(level: level),
             clickCount: clickCount,
             cards: makeCards(count: level.cardCount)
         )
     }
 
     private func makeVC(
-        config: GameConfiguration = GameConfiguration(level: .easy),
         outcome: GameOutcome? = nil
     ) -> GameOverVC {
-        GameOverVC(config: config, outcome: outcome ?? makeOutcome())
+        GameOverVC(outcome: outcome ?? makeOutcome())
     }
 
-    /// Casts `vc.view` to `GameOverView`. Crashes the test if the type is wrong.
-    private func gameOverView(of vc: GameOverVC) -> GameOverView {
-        // swiftlint:disable:next force_cast
-        vc.view as! GameOverView
+    /// Casts `vc.view` to `GameOverView`. Throws if the type is wrong so the test
+    /// terminates immediately rather than continuing with a stand-in instance.
+    private func gameOverView(
+        of vc: GameOverVC,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) throws -> GameOverView {
+        try XCTUnwrap(
+            vc.view as? GameOverView,
+            "Expected vc.view to be GameOverView, got \(type(of: vc.view))",
+            file: file,
+            line: line
+        )
     }
 
     /// Recursively collects every `CircularButton` in the view hierarchy, depth-first.
@@ -102,7 +110,7 @@ final class GameOverVCTests: XCTestCase {
 
     // MARK: - viewDidLoad
 
-    func test_viewDidLoad_wiresOnRestart() {
+    func test_viewDidLoad_wiresOnRestart() throws {
         // Arrange
         let vc = makeVC()
 
@@ -110,10 +118,10 @@ final class GameOverVCTests: XCTestCase {
         _ = vc.view
 
         // Assert
-        XCTAssertNotNil(gameOverView(of: vc).onRestart)
+        XCTAssertNotNil(try gameOverView(of: vc).onRestart)
     }
 
-    func test_viewDidLoad_wiresOnQuit() {
+    func test_viewDidLoad_wiresOnQuit() throws {
         // Arrange
         let vc = makeVC()
 
@@ -121,12 +129,12 @@ final class GameOverVCTests: XCTestCase {
         _ = vc.view
 
         // Assert
-        XCTAssertNotNil(gameOverView(of: vc).onQuit)
+        XCTAssertNotNil(try gameOverView(of: vc).onQuit)
     }
 
     // MARK: - onQuit
 
-    func test_onQuit_callsNavigatorQuitGame() {
+    func test_onQuit_callsNavigatorQuitGame() throws {
         // Arrange
         let vc = makeVC()
         let spy = SpyNavigator()
@@ -134,24 +142,24 @@ final class GameOverVCTests: XCTestCase {
         _ = vc.view
 
         // Act
-        gameOverView(of: vc).onQuit?()
+        try gameOverView(of: vc).onQuit?()
 
         // Assert
         XCTAssertTrue(spy.quitGameCalled)
     }
 
-    func test_onQuit_withoutNavigator_doesNotCrash() {
+    func test_onQuit_withoutNavigator_doesNotCrash() throws {
         // Arrange — navigator intentionally not set
         let vc = makeVC()
         _ = vc.view
 
         // Act + Assert
-        XCTAssertNoThrow(gameOverView(of: vc).onQuit?())
+        XCTAssertNoThrow(try gameOverView(of: vc).onQuit?())
     }
 
     // MARK: - onRestart
 
-    func test_onRestart_callsNavigatorRestartGame() {
+    func test_onRestart_callsNavigatorRestartGame() throws {
         // Arrange
         let vc = makeVC()
         let spy = SpyNavigator()
@@ -159,13 +167,13 @@ final class GameOverVCTests: XCTestCase {
         _ = vc.view
 
         // Act
-        gameOverView(of: vc).onRestart?()
+        try gameOverView(of: vc).onRestart?()
 
         // Assert
         XCTAssertTrue(spy.restartGameCalled)
     }
 
-    func test_onRestart_passesOutcomeCardsToNavigator() {
+    func test_onRestart_passesOutcomeCardsToNavigator() throws {
         // Arrange
         let outcome = makeOutcome(level: .easy)
         let vc = makeVC(outcome: outcome)
@@ -174,46 +182,48 @@ final class GameOverVCTests: XCTestCase {
         _ = vc.view
 
         // Act
-        gameOverView(of: vc).onRestart?()
+        try gameOverView(of: vc).onRestart?()
 
         // Assert
         XCTAssertEqual(spy.lastGame?.cards.memoryCards.count, outcome.cards.memoryCards.count)
     }
 
-    func test_onRestart_withoutNavigator_doesNotCrash() {
+    func test_onRestart_withoutNavigator_doesNotCrash() throws {
         // Arrange — navigator intentionally not set
         let vc = makeVC()
         _ = vc.view
 
         // Act + Assert
-        XCTAssertNoThrow(gameOverView(of: vc).onRestart?())
+        XCTAssertNoThrow(try gameOverView(of: vc).onRestart?())
     }
 
     // MARK: - @objc button targets
 
-    func test_restartButton_invokesOnRestartClosure() {
+    func test_restartButton_invokesOnRestartClosure() throws {
         // Arrange
         let vc = makeVC()
         _ = vc.view
+        let view = try gameOverView(of: vc)
         var restartCalled = false
-        gameOverView(of: vc).onRestart = { restartCalled = true }
+        view.onRestart = { restartCalled = true }
 
         // Act — trigger the @objc target-action registered on the restart button
-        findCircularButtons(in: gameOverView(of: vc)).first?.sendActions(for: .touchUpInside)
+        findCircularButtons(in: view).first?.sendActions(for: .touchUpInside)
 
         // Assert
         XCTAssertTrue(restartCalled)
     }
 
-    func test_quitButton_invokesOnQuitClosure() {
+    func test_quitButton_invokesOnQuitClosure() throws {
         // Arrange
         let vc = makeVC()
         _ = vc.view
+        let view = try gameOverView(of: vc)
         var quitCalled = false
-        gameOverView(of: vc).onQuit = { quitCalled = true }
+        view.onQuit = { quitCalled = true }
 
         // Act — trigger the @objc target-action registered on the quit button
-        findCircularButtons(in: gameOverView(of: vc)).last?.sendActions(for: .touchUpInside)
+        findCircularButtons(in: view).last?.sendActions(for: .touchUpInside)
 
         // Assert
         XCTAssertTrue(quitCalled)

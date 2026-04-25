@@ -28,3 +28,9 @@ comment:
   layout: "reach,diff,flags,files"
   behavior: default
   require_changes: true        # Only comment when coverage actually changes
+
+# Test code is excluded from coverage measurement — coverage of the tests
+# themselves is meaningless (tests don't test their own assertions), and
+# letting them count would artificially deflate or inflate the score.
+ignore:
+  - "SwiftIntroTests/**"
